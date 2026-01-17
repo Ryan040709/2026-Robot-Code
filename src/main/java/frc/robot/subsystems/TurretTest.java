@@ -38,6 +38,12 @@ public class TurretTest extends SubsystemBase {
 
     private final double NinetyDegreeRotation = 33.73877;
 
+    public final int Hx = 0;
+    public final int Hy = 0;
+    public final int Rx = 0;
+    public final int Ry = 0;
+    public final int theta = 0;
+
     //
     //private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
 
@@ -96,7 +102,7 @@ public class TurretTest extends SubsystemBase {
         m_turret.getConfigurator().apply(motorConfig);
 
     }
-    
+
     public void MoveMotor(double targetSpeed){
         if(m_turret.getPosition().getValueAsDouble()>-goldenAngle || m_turret.getPosition().getValueAsDouble()<goldenAngle){
             m_turret.set(targetSpeed);
@@ -134,8 +140,16 @@ m_poseEstimator.addVisionMeasurement(
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
     }
 
+    @Override 
+    public void Periodic() {
+        double diffX = (Hx-Rx);
+        double diffY = (Hy-Ry);
+        double turretHubAngle = (Math.atan2(diffY, diffY));
+    }
+    //red hub is 182.1" from the driver stations and 317.7/2 from side wall
+
     //run to golden angle
-    //basic stuff, could probably be made better
+    //basic goofy ahh stuff, could probably be made better
 
 
     public void zeroPosition(){
