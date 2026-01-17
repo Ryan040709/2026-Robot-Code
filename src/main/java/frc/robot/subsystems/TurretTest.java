@@ -42,16 +42,21 @@ public class TurretTest extends SubsystemBase {
     // said motor's pos, request stuff hi brian
     private PositionVoltage m_request = new PositionVoltage(0);
 
-    private final double goldenAngle = 33.73877 / 90;
+    private final double maxAngle = 33.73877 / 90;
+
+    private double goldenAngle = 0;
 
     private final double NinetyDegreeRotation = 33.73877;
 
     public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
     public final double redHy = 4.62534;
     public final double blueHy = 11.89482;
-    public final double Rx = 0;
-    public final double Ry = 0;
-    public final double theta = 0;
+    public double Rx = 0;
+    public double Ry = 0;
+
+    public double turretHubAngle = 0;
+
+    public double theta = 0;
     public boolean isBlue = true;
 
     //im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or smth else now its 2:14 
@@ -116,8 +121,8 @@ public class TurretTest extends SubsystemBase {
     }
 
     public void MoveMotor(double targetSpeed) {
-        if (m_turret.getPosition().getValueAsDouble() > -goldenAngle
-                || m_turret.getPosition().getValueAsDouble() < goldenAngle) {
+        if (m_turret.getPosition().getValueAsDouble() > -maxAngle
+                || m_turret.getPosition().getValueAsDouble() < maxAngle) {
             m_turret.set(targetSpeed);
         } else {
             m_turret.set(0);
@@ -137,7 +142,7 @@ public class TurretTest extends SubsystemBase {
 
         double yaw = gyroYaw.in(Degrees);
 
-        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw+180, 0.0, 0.0, 0.0, 0.0, 0.0);
 
         // Get the pose estimate now plz
         LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
@@ -169,13 +174,36 @@ public class TurretTest extends SubsystemBase {
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
+<<<<<<< Updated upstream
         // Push values to SmartDashboard like these
+=======
+        Rx = botpose[0];
+        SmartDashboard.putNumber("Rx", Rx);
+        Ry = botpose[2];
+        SmartDashboard.putNumber("Ry", Ry);
+
+        //if (isBlue == (true)) {
+            double theta = yaw;
+
+            double diffX = (Hx - Rx);
+            double diffY = (blueHy - Ry);
+            double turretHubAngle = (Math.atan2(diffX, diffY));
+            double goldenAngle = (turretHubAngle-theta);
+        //}
+
+        SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
+        SmartDashboard.putNumber("Golden Angle", goldenAngle);
+
+        // Push values to SmartDashboard
+>>>>>>> Stashed changes
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
         SmartDashboard.putNumber("Limelight Y (m)", botpose[1]);
         SmartDashboard.putNumber("Limelight Z (m)", botpose[2]);
         SmartDashboard.putNumber("Limelight Roll (deg)", botpose[3]);
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
+
+        //SmartDashboard.putNumber("Limelight X (m)", m_turret);
 
     }
 
@@ -216,9 +244,28 @@ public class TurretTest extends SubsystemBase {
         m_turret.setPosition(0);
     }
 
-    public void setPosition(double angle) {
+    public void setPosition() {
         // private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition(angle * (ticksPerAngle)));
+
+                Angle gyroYaw = m_gyro.getYaw().getValue();
+
+        double yaw = gyroYaw.in(Degrees);
+
+            double theta = yaw;
+
+            double diffX = (Hx - Rx);
+            double diffY = (blueHy - Ry);
+            double turretHubAngle = (Math.atan2(diffX, diffY));
+            double goldenAngle = (turretHubAngle-theta);
+
+        m_turret.setControl(m_request.withPosition((goldenAngle * (ticksPerAngle))));
+    }
+
+        public void setToZero() {
+        // private final double position = angle*(ticksPerAngle);
+
+
+        m_turret.setControl(m_request.withPosition((0 * (ticksPerAngle))));
     }
 
 
