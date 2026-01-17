@@ -1,4 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
+// Copyright (c) FIRST and other WPILib contributors. so dont mess with us
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -32,11 +32,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 //import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
+//#swervesbeswervey
 
 //
 
 public class TurretTest extends SubsystemBase {
-    // our motor
+    // our motor exploded
     private TalonFX m_turret = new TalonFX(10);
     // said motor's pos, request stuff hi brian
     private PositionVoltage m_request = new PositionVoltage(0);
@@ -53,7 +54,7 @@ public class TurretTest extends SubsystemBase {
     public final double theta = 0;
     public boolean isBlue = true;
 
-    //
+    //im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or smth else now its 2:14 
     // private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
 
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
@@ -75,6 +76,7 @@ public class TurretTest extends SubsystemBase {
                                                                 // in degrees
 
     public TurretTest() {
+        //pid things
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 0.75;
         motorConfig.MotorOutput.PeakReverseDutyCycle = -0.75;
@@ -93,19 +95,19 @@ public class TurretTest extends SubsystemBase {
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -35;
 
-        // Voltage
+        // Voltage things
         motorConfig.Voltage.PeakForwardVoltage = 16;
         motorConfig.Voltage.PeakReverseVoltage = -16;
-        // Differential Constants
+        // Differential Constants and things like that
         motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
         motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
         motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        // Motion Magic
+        // Motion Magic things
         motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
         motorConfig.MotionMagic.MotionMagicAcceleration = 150;
         motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
         motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        // Torque Current
+        // Torque Current things
         motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 
@@ -137,14 +139,14 @@ public class TurretTest extends SubsystemBase {
 
         LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-        // Get the pose estimate
+        // Get the pose estimate now plz
         LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
                 .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
-        // Add it to your pose estimator
+        // Add it to your pose estimator right now
 
         // LimelightHelpers.PoseEstimate
-
+        // well hello there
         // m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5,
         // 9999999));
         // m_poseEstimator.addVisionMeasurement(
@@ -157,15 +159,6 @@ public class TurretTest extends SubsystemBase {
 
         // golden angle math
         // golden angle math
-        if (isBlue == (true)) {
-            double diffX = (Hx - Rx);
-            double diffY = (blueHy - Ry);
-            double turretHubAngle = (Math.atan2(diffX, diffY));
-        } else {
-            double diffX = (Hx - Rx);
-            double diffY = (redHy - Ry);
-            double turretHubAngle = (Math.atan2(diffX, diffY));
-        }
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
@@ -176,7 +169,7 @@ public class TurretTest extends SubsystemBase {
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
-        // Push values to SmartDashboard
+        // Push values to SmartDashboard like these
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
         SmartDashboard.putNumber("Limelight Y (m)", botpose[1]);
         SmartDashboard.putNumber("Limelight Z (m)", botpose[2]);
@@ -186,11 +179,38 @@ public class TurretTest extends SubsystemBase {
 
     }
 
+    public double SetTheta() {
+        //remember to come back to this
+        return 0;
+    }
+
+    public Pose2d robotPose2d() {
+        return new Pose2d();
+    }
+
+    public double distanceToHub() {
+
+        if (isBlue) {
+            double diffX = (Hx - Rx);
+            double diffY = (blueHy - Ry);
+            return Math.hypot(diffX, diffY);
+        } else {
+            double diffX = (Hx - Rx);
+            double diffY = (redHy - Ry);
+            return Math.hypot(diffX, diffY);
+        }
+    
+    }
+
+    public double DistancetoRpms(double distanceInMeters) {
+        return 0;
+    }
+
     // red hub is 182.1" from the driver stations and 158.9 from side wall.
     // full field is 651.22"
 
     // run to golden angle
-    // basic stuff, probably could probably be made better probably
+    // basic stuff, probably could probably be probably made better probably so probably yeah probably uhh probably
 
     public void zeroPosition() {
         m_turret.setPosition(0);
@@ -200,4 +220,22 @@ public class TurretTest extends SubsystemBase {
         // private final double position = angle*(ticksPerAngle);
         m_turret.setControl(m_request.withPosition(angle * (ticksPerAngle)));
     }
+
+
+
+    public double calculateAngleToHub() {
+        if (isBlue) {
+            double diffX = (Hx - Rx);
+            double diffY = (blueHy - Ry);
+        return (Math.atan2(diffX, diffY));
+        } else {
+            double diffX = (Hx - Rx);
+            double diffY = (redHy - Ry);
+        return (Math.atan2(diffX, diffY));
+        }
+    }
+
 }
+//
+//
+//
