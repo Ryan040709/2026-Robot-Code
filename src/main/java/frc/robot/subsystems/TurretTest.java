@@ -33,16 +33,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 //import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
 
+//
 
-
-/** Add your docs here. */
 public class TurretTest extends SubsystemBase {
-    //our motor
+    // our motor
     private TalonFX m_turret = new TalonFX(10);
-    //said motor's pos, request stuff
+    // said motor's pos, request stuff hi brian
     private PositionVoltage m_request = new PositionVoltage(0);
 
-    
     private final double goldenAngle = 33.73877 / 90;
 
     private final double NinetyDegreeRotation = 33.73877;
@@ -56,32 +54,33 @@ public class TurretTest extends SubsystemBase {
     public boolean isBlue = true;
 
     //
-    //private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
+    // private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
 
-        private final double ticksPerAngle = NinetyDegreeRotation / 90;
+    private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
     public static int kPigeonId = 14;
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio"); // Pigeon is on roboRIO CAN Bus with device ID 1
-    
 
-    //limelight goofy ahh stuff
+    // limelight goofy ahh stuff
     // Basic targeting data
-    double tx = LimelightHelpers.getTX("limelight-turret");  // Horizontal offset from crosshair to target in degrees
-    double ty = LimelightHelpers.getTY("limelight-turret");  // Vertical offset from crosshair to target in degrees
-    double ta = LimelightHelpers.getTA("limelight-turret");  // Target area (0% to 100% of image)
+    double tx = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
+    double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
+    double ta = LimelightHelpers.getTA("limelight-turret"); // Target area (0% to 100% of image)
     boolean hasTarget = LimelightHelpers.getTV("limelight-turret"); // Do you have a valid target?
 
-    double txnc = LimelightHelpers.getTXNC("limelight-turret");  // Horizontal offset from principal pixel/point to target in degrees
-    double tync = LimelightHelpers.getTYNC("limelight-turret");  // Vertical  offset from principal pixel/point to target in degrees
+    double txnc = LimelightHelpers.getTXNC("limelight-turret"); // Horizontal offset from principal pixel/point to
+                                                                // target in degrees
+    double tync = LimelightHelpers.getTYNC("limelight-turret"); // Vertical offset from principal pixel/point to target
+                                                                // in degrees
 
-    public TurretTest(){
+    public TurretTest() {
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 0.75;
         motorConfig.MotorOutput.PeakReverseDutyCycle = -0.75;
         motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        motorConfig.Slot0.kP = 1; 
-        motorConfig.Slot0.kI = 0.15; 
+        motorConfig.Slot0.kP = 1;
+        motorConfig.Slot0.kI = 0.15;
         motorConfig.Slot0.kD = 0;
         motorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         motorConfig.CurrentLimits.StatorCurrentLimit = 100;
@@ -94,72 +93,71 @@ public class TurretTest extends SubsystemBase {
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -35;
 
-        //Voltage
+        // Voltage
         motorConfig.Voltage.PeakForwardVoltage = 16;
         motorConfig.Voltage.PeakReverseVoltage = -16;
-        //Differential Constants
+        // Differential Constants
         motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
         motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
         motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        //Motion Magic
+        // Motion Magic
         motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
         motorConfig.MotionMagic.MotionMagicAcceleration = 150;
         motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
         motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        //Torque Current
+        // Torque Current
         motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 
         m_turret.getConfigurator().apply(motorConfig);
 
     }
-    
-    public void MoveMotor(double targetSpeed){
-        if(m_turret.getPosition().getValueAsDouble()>-goldenAngle || m_turret.getPosition().getValueAsDouble()<goldenAngle){
+
+    public void MoveMotor(double targetSpeed) {
+        if (m_turret.getPosition().getValueAsDouble() > -goldenAngle
+                || m_turret.getPosition().getValueAsDouble() < goldenAngle) {
             m_turret.set(targetSpeed);
-        }
-        else{
+        } else {
             m_turret.set(0);
         }
-     
+
     }
-    //SmartDashboard.putNumber("Bridge Angle", bridgeTipper.getPosition());
-    
-    
+
+    // SmartDashboard.putNumber("Bridge Angle", bridgeTipper.getPosition());
+
     @Override
     public void periodic() {
-    //StatusSignal<Angle> robotYaw = m_gyro.getYaw();  
-    
-    //angle.in(Unit.degrees) robotYaw = m_gyro.getYaw(); 
+        // StatusSignal<Angle> robotYaw = m_gyro.getYaw();
 
-    Angle gyroYaw = m_gyro.getYaw().getValue(); 
+        // angle.in(Unit.degrees) robotYaw = m_gyro.getYaw();
 
-    double yaw = gyroYaw.in(Degrees);
-    
-    
+        Angle gyroYaw = m_gyro.getYaw().getValue();
 
-LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
+        double yaw = gyroYaw.in(Degrees);
 
-// Get the pose estimate
-LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
+        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
 
-// Add it to your pose estimator
+        // Get the pose estimate
+        LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
+                .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
-// LimelightHelpers.PoseEstimate
+        // Add it to your pose estimator
 
- //m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5, 9999999));
-// m_poseEstimator.addVisionMeasurement(
-//     limelightMeasurement.pose,
-//     limelightMeasurement.timestampSeconds
-// );
+        // LimelightHelpers.PoseEstimate
 
+        // m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5,
+        // 9999999));
+        // m_poseEstimator.addVisionMeasurement(
+        // limelightMeasurement.pose,
+        // limelightMeasurement.timestampSeconds
+        // );
 
-//SmartDashboard.putNumber("Megatag", m_turret.getPosition().getValueAsDouble());
+        // SmartDashboard.putNumber("Megatag",
+        // m_turret.getPosition().getValueAsDouble());
 
-
-//golden angle math
-        //golden angle math
-            if (isBlue == (true)) {
+        // golden angle math
+        // golden angle math
+        if (isBlue == (true)) {
             double diffX = (Hx - Rx);
             double diffY = (blueHy - Ry);
             double turretHubAngle = (Math.atan2(diffX, diffY));
@@ -169,17 +167,14 @@ LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPose
             double turretHubAngle = (Math.atan2(diffX, diffY));
         }
 
-
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
 
         Pose3d x = LimelightHelpers.getBotPose3d("limelight-turret");
 
-
-
-
         double[] defaultPose = new double[6];
-        double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose").getDoubleArray(defaultPose);
+        double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
+                .getDoubleArray(defaultPose);
 
         // Push values to SmartDashboard
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
@@ -188,17 +183,21 @@ LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers.getBotPose
         SmartDashboard.putNumber("Limelight Roll (deg)", botpose[3]);
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
+
     }
 
-    //run to golden angle
-    //basic stuff, could probably be made better
+    // red hub is 182.1" from the driver stations and 158.9 from side wall.
+    // full field is 651.22"
 
+    // run to golden angle
+    // basic stuff, probably could probably be made better probably
 
-    public void zeroPosition(){
+    public void zeroPosition() {
         m_turret.setPosition(0);
     }
-    public void setPosition( double angle){ 
-        //private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition(angle*(ticksPerAngle)));
+
+    public void setPosition(double angle) {
+        // private final double position = angle*(ticksPerAngle);
+        m_turret.setControl(m_request.withPosition(angle * (ticksPerAngle)));
     }
 }
