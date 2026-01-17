@@ -42,26 +42,27 @@ public class TurretTest extends SubsystemBase {
     // said motor's pos, request stuff hi brian
     private PositionVoltage m_request = new PositionVoltage(0);
 
-    private final double goldenAngle = 33.73877 / 90;
+    private final double maxAngle = 33.73877 / 90;
 
     private final double NinetyDegreeRotation = 33.73877;
 
     public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
     public final double redHy = 4.62534;
     public final double blueHy = 11.89482;
-    public final double Rx = 0;
-    public final double Ry = 0;
-    public final double theta = 0;
+    public double Rx = 0;
+    public double Ry = 0;
+    public double theta = 0;
     public boolean isBlue = true;
 
-    //im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or smth else now its 2:14 
+    // im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or
+    // smth else now its 2:14
     // private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
 
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
     public static int kPigeonId = 14;
 
-    private final Pigeon2 m_gyro = new Pigeon2(6, "rio"); // Pigeon is on roboRIO CAN Bus with device ID 1
+    private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
 
     // limelight goofy ahh stuff
     // Basic targeting data
@@ -76,7 +77,7 @@ public class TurretTest extends SubsystemBase {
                                                                 // in degrees
 
     public TurretTest() {
-        //pid things
+        // pid things
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 0.75;
         motorConfig.MotorOutput.PeakReverseDutyCycle = -0.75;
@@ -116,8 +117,8 @@ public class TurretTest extends SubsystemBase {
     }
 
     public void MoveMotor(double targetSpeed) {
-        if (m_turret.getPosition().getValueAsDouble() > -goldenAngle
-                || m_turret.getPosition().getValueAsDouble() < goldenAngle) {
+        if (m_turret.getPosition().getValueAsDouble() > -maxAngle
+                || m_turret.getPosition().getValueAsDouble() < maxAngle) {
             m_turret.set(targetSpeed);
         } else {
             m_turret.set(0);
@@ -177,10 +178,12 @@ public class TurretTest extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
 
+        SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
+
     }
 
     public double SetTheta() {
-        //remember to come back to this
+        // remember to come back to this
         return 0;
     }
 
@@ -199,7 +202,7 @@ public class TurretTest extends SubsystemBase {
             double diffY = (redHy - Ry);
             return Math.hypot(diffX, diffY);
         }
-    
+
     }
 
     public double DistancetoRpms(double distanceInMeters) {
@@ -210,7 +213,8 @@ public class TurretTest extends SubsystemBase {
     // full field is 651.22"
 
     // run to golden angle
-    // basic stuff, probably could probably be probably made better probably so probably yeah probably uhh probably
+    // basic stuff, probably could probably be probably made better probably so
+    // probably yeah probably uhh probably
 
     public void zeroPosition() {
         m_turret.setPosition(0);
@@ -218,20 +222,36 @@ public class TurretTest extends SubsystemBase {
 
     public void setPosition(double angle) {
         // private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition(angle * (ticksPerAngle)));
+        m_turret.setControl(m_request.withPosition(calculateAngleToHub() * (ticksPerAngle)));
     }
 
-
-
     public double calculateAngleToHub() {
+        double theta = m_gyro.getYaw().getValue().in(Degrees);
+
+        double[] defaultPose = new double[6];
+
+        double[] botpose = NetworkTableInstance.getDefault()
+                .getTable("limelight-turret")
+                .getEntry("botpose")
+                .getDoubleArray(defaultPose);
+
+        double Rx = botpose[0];
+        double Ry = botpose[1];
+
         if (isBlue) {
             double diffX = (Hx - Rx);
             double diffY = (blueHy - Ry);
-        return (Math.atan2(diffX, diffY));
+
+            double turretHubAngle = (Math.toDegrees(Math.atan2(diffX, diffY)));
+
+            return (turretHubAngle-theta);
         } else {
             double diffX = (Hx - Rx);
             double diffY = (redHy - Ry);
-        return (Math.atan2(diffX, diffY));
+
+            double turretHubAngle = (Math.toDegrees(Math.atan2(diffX, diffY)));
+
+            return (turretHubAngle-theta);
         }
     }
 
