@@ -135,10 +135,9 @@ public class TurretTest extends SubsystemBase {
     public void periodic() {
 
         Angle gyroYaw = m_gyro.getYaw().getValue();
+        theta = gyroYaw.in(Degrees);
 
-        double yaw = gyroYaw.in(Degrees);
-
-        robotPose = UpdateRobotPose2d(yaw);
+        robotPose = UpdateRobotPose2d(theta);
         Rx = robotPose.getX();
         Ry = robotPose.getY();
 
@@ -152,7 +151,7 @@ public class TurretTest extends SubsystemBase {
                 .getDoubleArray(defaultPose);
 
         // if (isBlue == (true)) {
-        double theta = yaw;
+
 
         double diffX = (Hx - Rx);
         double diffY = (blueHy - Ry);
@@ -246,26 +245,20 @@ public class TurretTest extends SubsystemBase {
     }
 
     public double calculateAngleToHub() {
-        double theta = m_gyro.getYaw().getValue().in(Degrees);
-
-        double[] defaultPose = new double[6];
-
-        double[] botpose = NetworkTableInstance.getDefault()
-                .getTable("limelight-turret")
-                .getEntry("botpose")
-                .getDoubleArray(defaultPose);
-
-        double Rx = botpose[0];
-        double Ry = botpose[1];
-
         if (isBlue) {
             double diffX = (Hx - Rx);
             double diffY = (blueHy - Ry);
-            return (Math.atan2(diffX, diffY));
+
+            turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
+
+            return (turretHubAngle-theta);
         } else {
             double diffX = (Hx - Rx);
             double diffY = (redHy - Ry);
-            return (Math.atan2(diffX, diffY));
+
+            turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
+
+            return (turretHubAngle-theta);
         }
     }
 }
