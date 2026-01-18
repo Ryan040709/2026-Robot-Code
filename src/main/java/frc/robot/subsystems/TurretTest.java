@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.Degrees;
 
 import java.lang.annotation.Target;
 
+import org.opencv.core.Mat;
+
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -21,6 +23,7 @@ import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.units.Unit;
@@ -37,9 +40,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 //
 
 public class TurretTest extends SubsystemBase {
-    // our motor exploded
     private TalonFX m_turret = new TalonFX(10);
-    // said motor's pos, request stuff hi brian
     private PositionVoltage m_request = new PositionVoltage(0);
 
     private final double maxAngle = 33.73877 / 90;
@@ -51,15 +52,17 @@ public class TurretTest extends SubsystemBase {
     public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
     public final double redHy = 4.62534;
     public final double blueHy = 11.89482;
-    public double Rx = 0;
-    public double Ry = 0;
+    public double Rx;
+    public double Ry;
+    public Pose2d robotPose;
 
     public double turretHubAngle = 0;
 
     public double theta = 0;
     public boolean isBlue = true;
 
-    //im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or smth else now its 2:14 
+    // im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or
+    // smth else now its 2:14
     // private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
 
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
@@ -81,7 +84,7 @@ public class TurretTest extends SubsystemBase {
                                                                 // in degrees
 
     public TurretTest() {
-        //pid things
+        // pid things
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 0.75;
         motorConfig.MotorOutput.PeakReverseDutyCycle = -0.75;
@@ -142,11 +145,9 @@ public class TurretTest extends SubsystemBase {
 
         double yaw = gyroYaw.in(Degrees);
 
-        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw+180, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-        // Get the pose estimate now plz
-        LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
-                .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
+        robotPose = UpdateRobotPose2d(yaw);
+        Rx = robotPose.getX();
+        Ry = robotPose.getY();
 
         // Add it to your pose estimator right now
 
@@ -174,28 +175,19 @@ public class TurretTest extends SubsystemBase {
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
-<<<<<<< Updated upstream
-        // Push values to SmartDashboard like these
-=======
-        Rx = botpose[0];
-        SmartDashboard.putNumber("Rx", Rx);
-        Ry = botpose[2];
-        SmartDashboard.putNumber("Ry", Ry);
+        // if (isBlue == (true)) {
+        double theta = yaw;
 
-        //if (isBlue == (true)) {
-            double theta = yaw;
-
-            double diffX = (Hx - Rx);
-            double diffY = (blueHy - Ry);
-            double turretHubAngle = (Math.atan2(diffX, diffY));
-            double goldenAngle = (turretHubAngle-theta);
-        //}
+        double diffX = (Hx - Rx);
+        double diffY = (blueHy - Ry);
+        double turretHubAngle = (Math.toDegrees(Math.atan2(diffX, diffY)));
+        double goldenAngle = (turretHubAngle - theta);
+        // }
 
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
         SmartDashboard.putNumber("Golden Angle", goldenAngle);
 
         // Push values to SmartDashboard
->>>>>>> Stashed changes
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
         SmartDashboard.putNumber("Limelight Y (m)", botpose[1]);
         SmartDashboard.putNumber("Limelight Z (m)", botpose[2]);
@@ -203,17 +195,32 @@ public class TurretTest extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
 
-        //SmartDashboard.putNumber("Limelight X (m)", m_turret);
+        // SmartDashboard.putNumber("Limelight X (m)", m_turret);
+
+        // setPosition();
 
     }
 
-    public double SetTheta() {
-        //remember to come back to this
-        return 0;
-    }
+    // public double SetTheta() {
 
-    public Pose2d robotPose2d() {
-        return new Pose2d();
+    // Angle gyroYaw = m_gyro.getYaw().getValue();
+    // double yaw = gyroYaw.in(Degrees);
+
+    // double theta = yaw;
+    // }
+
+    public Pose2d UpdateRobotPose2d(double yaw) {
+        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw + 180, 0.0, 0.0, 0.0, 0.0, 0.0);
+
+        LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
+                .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
+
+        if (limelightMeasurement.tagCount != 0) {
+            return limelightMeasurement.pose;
+        }
+        else
+            return robotPose;
+
     }
 
     public double distanceToHub() {
@@ -227,7 +234,7 @@ public class TurretTest extends SubsystemBase {
             double diffY = (redHy - Ry);
             return Math.hypot(diffX, diffY);
         }
-    
+
     }
 
     public double DistancetoRpms(double distanceInMeters) {
@@ -238,47 +245,38 @@ public class TurretTest extends SubsystemBase {
     // full field is 651.22"
 
     // run to golden angle
-    // basic stuff, probably could probably be probably made better probably so probably yeah probably uhh probably
+    // basic stuff, probably could probably be probably made better probably so
+    // probably yeah probably uhh probably
 
     public void zeroPosition() {
         m_turret.setPosition(0);
     }
 
     public void setPosition() {
-        // private final double position = angle*(ticksPerAngle);
+        // // private final double position = angle*(ticksPerAngle);
+        // Angle gyroYaw = m_gyro.getYaw().getValue();
+        // double yaw = gyroYaw.in(Degrees);
 
-                Angle gyroYaw = m_gyro.getYaw().getValue();
-
-        double yaw = gyroYaw.in(Degrees);
-
-            double theta = yaw;
-
-            double diffX = (Hx - Rx);
-            double diffY = (blueHy - Ry);
-            double turretHubAngle = (Math.atan2(diffX, diffY));
-            double goldenAngle = (turretHubAngle-theta);
+        // distanceToHub();
 
         m_turret.setControl(m_request.withPosition((goldenAngle * (ticksPerAngle))));
     }
 
-        public void setToZero() {
+    public void setToZero() {
         // private final double position = angle*(ticksPerAngle);
-
 
         m_turret.setControl(m_request.withPosition((0 * (ticksPerAngle))));
     }
-
-
 
     public double calculateAngleToHub() {
         if (isBlue) {
             double diffX = (Hx - Rx);
             double diffY = (blueHy - Ry);
-        return (Math.atan2(diffX, diffY));
+            return (Math.atan2(diffX, diffY));
         } else {
             double diffX = (Hx - Rx);
             double diffY = (redHy - Ry);
-        return (Math.atan2(diffX, diffY));
+            return (Math.atan2(diffX, diffY));
         }
     }
 
