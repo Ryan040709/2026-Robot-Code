@@ -45,7 +45,6 @@ public class TurretTest extends SubsystemBase {
 
     private final double maxAngle = 33.73877 / 90;
 
-    private double goldenAngle = 0;
     private final double NinetyDegreeRotation = 33.73877;
 
     public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
