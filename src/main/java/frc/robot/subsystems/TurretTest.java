@@ -46,12 +46,11 @@ public class TurretTest extends SubsystemBase {
     private final double maxAngle = 33.73877 / 90;
 
     private double goldenAngle = 0;
-
     private final double NinetyDegreeRotation = 33.73877;
 
     public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
-    public final double redHy = 4.62534;
-    public final double blueHy = 11.89482;
+    public final double redHy = 11.98482;
+    public final double blueHy = 4.62534;
     public double Rx;
     public double Ry;
     public Pose2d robotPose;
@@ -69,7 +68,7 @@ public class TurretTest extends SubsystemBase {
 
     public static int kPigeonId = 14;
 
-    private final Pigeon2 m_gyro = new Pigeon2(6, "rio"); // Pigeon is on roboRIO CAN Bus with device ID 1
+    private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
 
     // limelight goofy ahh stuff
     // Basic targeting data
@@ -133,13 +132,8 @@ public class TurretTest extends SubsystemBase {
 
     }
 
-    // SmartDashboard.putNumber("Bridge Angle", bridgeTipper.getPosition());
-
     @Override
     public void periodic() {
-        // StatusSignal<Angle> robotYaw = m_gyro.getYaw();
-
-        // angle.in(Unit.degrees) robotYaw = m_gyro.getYaw();
 
         Angle gyroYaw = m_gyro.getYaw().getValue();
 
@@ -148,23 +142,6 @@ public class TurretTest extends SubsystemBase {
         robotPose = UpdateRobotPose2d(yaw);
         Rx = robotPose.getX();
         Ry = robotPose.getY();
-
-        // Add it to your pose estimator right now
-
-        // LimelightHelpers.PoseEstimate
-        // well hello there
-        // m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5,
-        // 9999999));
-        // m_poseEstimator.addVisionMeasurement(
-        // limelightMeasurement.pose,
-        // limelightMeasurement.timestampSeconds
-        // );
-
-        // SmartDashboard.putNumber("Megatag",
-        // m_turret.getPosition().getValueAsDouble());
-
-        // golden angle math
-        // golden angle math
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
@@ -194,6 +171,8 @@ public class TurretTest extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Roll (deg)", botpose[3]);
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
+        SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
+
 
         // SmartDashboard.putNumber("Limelight X (m)", m_turret);
 
@@ -221,6 +200,11 @@ public class TurretTest extends SubsystemBase {
         else
             return robotPose;
 
+    }
+
+    public double SetTheta() {
+        // remember to come back to this
+        return 0;
     }
 
     public double distanceToHub() {
@@ -253,22 +237,28 @@ public class TurretTest extends SubsystemBase {
     }
 
     public void setPosition() {
-        // // private final double position = angle*(ticksPerAngle);
-        // Angle gyroYaw = m_gyro.getYaw().getValue();
-        // double yaw = gyroYaw.in(Degrees);
-
-        // distanceToHub();
-
-        m_turret.setControl(m_request.withPosition((goldenAngle * (ticksPerAngle))));
+        // private final double position = angle*(ticksPerAngle);
+        m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
 
-    public void setToZero() {
+        public void setToZero() {
         // private final double position = angle*(ticksPerAngle);
-
-        m_turret.setControl(m_request.withPosition((0 * (ticksPerAngle))));
+        m_turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
     }
 
     public double calculateAngleToHub() {
+        double theta = m_gyro.getYaw().getValue().in(Degrees);
+
+        double[] defaultPose = new double[6];
+
+        double[] botpose = NetworkTableInstance.getDefault()
+                .getTable("limelight-turret")
+                .getEntry("botpose")
+                .getDoubleArray(defaultPose);
+
+        double Rx = botpose[0];
+        double Ry = botpose[1];
+
         if (isBlue) {
             double diffX = (Hx - Rx);
             double diffY = (blueHy - Ry);
@@ -279,8 +269,8 @@ public class TurretTest extends SubsystemBase {
             return (Math.atan2(diffX, diffY));
         }
     }
-
 }
+
 //
 //
 //
