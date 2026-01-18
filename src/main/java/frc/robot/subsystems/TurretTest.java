@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Degrees;
+import static edu.wpi.first.units.Units.Radians;
 
 import java.lang.annotation.Target;
 
@@ -19,6 +20,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -52,7 +54,7 @@ public class TurretTest extends SubsystemBase {
     public final double blueHy = 4.62534;
     public double Rx;
     public double Ry;
-    public Pose2d robotPose;
+    public Pose2d robotPose = new Pose2d();
 
     public double turretHubAngle = 0;
 
@@ -135,7 +137,7 @@ public class TurretTest extends SubsystemBase {
     public void periodic() {
 
         Angle gyroYaw = m_gyro.getYaw().getValue();
-        theta = gyroYaw.in(Degrees);
+        theta = MathUtil.inputModulus(gyroYaw.in(Degrees), -180, 180);
 
         robotPose = UpdateRobotPose2d(theta);
         Rx = robotPose.getX();
@@ -162,6 +164,9 @@ public class TurretTest extends SubsystemBase {
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
         SmartDashboard.putNumber("Golden Angle", goldenAngle);
 
+        SmartDashboard.putNumber("Gyro Angle", theta);
+        SmartDashboard.putNumber("Turret Angle", m_turret.getPosition().getValueAsDouble()/(ticksPerAngle));
+
         // Push values to SmartDashboard
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
         SmartDashboard.putNumber("Limelight Y (m)", botpose[1]);
@@ -187,10 +192,10 @@ public class TurretTest extends SubsystemBase {
     // }
 
     public Pose2d UpdateRobotPose2d(double yaw) {
-        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw + 180, 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
 
         LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
-                .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
+        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
         if (limelightMeasurement.tagCount != 0) {
             return limelightMeasurement.pose;
@@ -230,13 +235,19 @@ public class TurretTest extends SubsystemBase {
     // basic stuff, probably could probably be probably made better probably so
     // probably yeah probably uhh probably
 
+
+
     public void zeroPosition() {
         m_turret.setPosition(0);
     }
 
+    public void zeroGyro() {
+    m_gyro.setYaw(0);
+    }
+
     public void setPosition() {
         // private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
+        m_turret.setControl(m_request.withPosition(-(calculateAngleToHub()) * (ticksPerAngle)));
     }
 
         public void setToZero() {
@@ -251,14 +262,14 @@ public class TurretTest extends SubsystemBase {
 
             turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
 
-            return (turretHubAngle-theta);
+            return (turretHubAngle);
         } else {
             double diffX = (Hx - Rx);
             double diffY = (redHy - Ry);
 
             turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
 
-            return (turretHubAngle-theta);
+            return (turretHubAngle);
         }
     }
 }
