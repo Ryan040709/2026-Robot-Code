@@ -95,7 +95,9 @@ public class RobotContainer {
 //manual zeroing i dunno
         manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
 //set to run to x position i dunno
-        manipulatorController.y().whileTrue(Commands.run(() -> turretTest.setPosition(45), turretTest));
+        manipulatorController.y().whileTrue(Commands.run(() -> turretTest.setPosition(), turretTest));
+
+        manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
         
     }

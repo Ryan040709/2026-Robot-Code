@@ -47,8 +47,8 @@ public class TurretTest extends SubsystemBase {
     private final double NinetyDegreeRotation = 33.73877;
 
     public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
-    public final double redHy = 4.62534;
-    public final double blueHy = 11.89482;
+    public final double redHy = 11.89482;
+    public final double blueHy = 4.62534;
     public double Rx = 0;
     public double Ry = 0;
     public double theta = 0;
@@ -126,40 +126,18 @@ public class TurretTest extends SubsystemBase {
 
     }
 
-    // SmartDashboard.putNumber("Bridge Angle", bridgeTipper.getPosition());
-
     @Override
     public void periodic() {
-        // StatusSignal<Angle> robotYaw = m_gyro.getYaw();
-
-        // angle.in(Unit.degrees) robotYaw = m_gyro.getYaw();
 
         Angle gyroYaw = m_gyro.getYaw().getValue();
 
         double yaw = gyroYaw.in(Degrees);
 
-        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
+        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw+180, 0.0, 0.0, 0.0, 0.0, 0.0);
 
         // Get the pose estimate now plz
         LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
                 .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
-
-        // Add it to your pose estimator right now
-
-        // LimelightHelpers.PoseEstimate
-        // well hello there
-        // m_poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.5, .5,
-        // 9999999));
-        // m_poseEstimator.addVisionMeasurement(
-        // limelightMeasurement.pose,
-        // limelightMeasurement.timestampSeconds
-        // );
-
-        // SmartDashboard.putNumber("Megatag",
-        // m_turret.getPosition().getValueAsDouble());
-
-        // golden angle math
-        // golden angle math
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
@@ -170,7 +148,6 @@ public class TurretTest extends SubsystemBase {
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
-        // Push values to SmartDashboard like these
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
         SmartDashboard.putNumber("Limelight Y (m)", botpose[1]);
         SmartDashboard.putNumber("Limelight Z (m)", botpose[2]);
@@ -220,10 +197,16 @@ public class TurretTest extends SubsystemBase {
         m_turret.setPosition(0);
     }
 
-    public void setPosition(double angle) {
+    public void setPosition() {
         // private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition(calculateAngleToHub() * (ticksPerAngle)));
+        m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
+
+        public void setToZero() {
+        // private final double position = angle*(ticksPerAngle);
+        m_turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
+    }
+
 
     public double calculateAngleToHub() {
         double theta = m_gyro.getYaw().getValue().in(Degrees);
