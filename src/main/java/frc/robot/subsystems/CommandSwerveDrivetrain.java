@@ -186,6 +186,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
 
         setUpPoseEstimater();
+        PathPlannerSetup();
 
     }
 
@@ -214,6 +215,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
 
         setUpPoseEstimater();
+        PathPlannerSetup();
 
     }
 
@@ -257,6 +259,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
 
         setUpPoseEstimater();
+        PathPlannerSetup();
 
     }
 
