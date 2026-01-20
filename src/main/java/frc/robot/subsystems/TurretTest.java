@@ -99,9 +99,9 @@ public class TurretTest extends SubsystemBase {
         motorConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
         motorConfig.CurrentLimits.SupplyCurrentLowerTime = 1;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 360;
+        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 35;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -360;
+        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -35;
 
         // Voltage things
         motorConfig.Voltage.PeakForwardVoltage = 16;
@@ -158,11 +158,11 @@ public class TurretTest extends SubsystemBase {
         double diffX = (Hx - Rx);
         double diffY = (blueHy - Ry);
         double turretHubAngle = (Math.toDegrees(Math.atan2(diffX, diffY)));
-        double goldenAngle = (calculateAngleToHub());
+        double goldenAngle = (turretHubAngle - theta);
         // }
 
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
-        //SmartDashboard.putNumber("Golden Angle", goldenAngle);
+        SmartDashboard.putNumber("Golden Angle", goldenAngle);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
         SmartDashboard.putNumber("Turret Angle", m_turret.getPosition().getValueAsDouble()/(ticksPerAngle));
@@ -197,7 +197,7 @@ public class TurretTest extends SubsystemBase {
         LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
         .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
-        if (limelightMeasurement != null && limelightMeasurement.tagCount != 0) {
+        if (limelightMeasurement.tagCount != 0) {
             return limelightMeasurement.pose;
         }
         else
@@ -247,7 +247,7 @@ public class TurretTest extends SubsystemBase {
 
     public void setPosition() {
         // private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
+        m_turret.setControl(m_request.withPosition(-(calculateAngleToHub()) * (ticksPerAngle)));
     }
 
         public void setToZero() {
@@ -260,16 +260,16 @@ public class TurretTest extends SubsystemBase {
             double diffX = (Hx - Rx);
             double diffY = (blueHy - Ry);
 
-            turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
+            turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
 
-            return MathUtil.inputModulus((turretHubAngle - theta), -180, 180);
+            return (turretHubAngle);
         } else {
             double diffX = (Hx - Rx);
             double diffY = (redHy - Ry);
 
-            turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
+            turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
 
-            return MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145);
+            return (turretHubAngle);
         }
     }
 }
