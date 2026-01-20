@@ -8,6 +8,7 @@ import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Radians;
 
 import java.lang.annotation.Target;
+import java.util.function.Supplier;
 
 import org.opencv.core.Mat;
 
@@ -47,6 +48,8 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 //
 
 public class TurretTest extends SubsystemBase {
+    private Supplier<Pose2d> poseSupplier;
+
     private TalonFX m_turret = new TalonFX(10);
     private PositionVoltage m_request = new PositionVoltage(0);
 
@@ -103,7 +106,9 @@ public class TurretTest extends SubsystemBase {
     double tync = LimelightHelpers.getTYNC("limelight-turret"); // Vertical offset from principal pixel/point to target
                                                                 // in degrees
 
-    public TurretTest() {
+    public TurretTest(Supplier<Pose2d> poseSupplier) {
+        this.poseSupplier = poseSupplier;
+
         // pid things
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 0.75;
@@ -156,12 +161,13 @@ public class TurretTest extends SubsystemBase {
     @Override
     public void periodic() {
 
-        Angle gyroYaw = m_gyro.getYaw().getValue();
-        theta = MathUtil.inputModulus(gyroYaw.in(Degrees), -180, 180);
+        // Angle gyroYaw = m_gyro.getYaw().getValue();
+        // theta = MathUtil.inputModulus(gyroYaw.in(Degrees), -180, 180);
 
-        robotPose = UpdateRobotPose2d(theta);
+        robotPose = UpdateRobotPose2d();
         Rx = robotPose.getX();
         Ry = robotPose.getY();
+        theta = robotPose.getRotation().getDegrees();
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
@@ -172,16 +178,6 @@ public class TurretTest extends SubsystemBase {
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
-        // if (isBlue == (true)) {
-
-        double diffX = (Hx - Rx);
-        double diffY = (blueHy - Ry);
-        double turretHubAngle = (Math.toDegrees(Math.atan2(diffX, diffY)));
-        double goldenAngle = (turretHubAngle - theta);
-        // }
-
-        SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
-        SmartDashboard.putNumber("Golden Angle", goldenAngle);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
         SmartDashboard.putNumber("Turret Angle", m_turret.getPosition().getValueAsDouble() / (ticksPerAngle));
@@ -209,16 +205,8 @@ public class TurretTest extends SubsystemBase {
     // double theta = yaw;
     // }
 
-    public Pose2d UpdateRobotPose2d(double yaw) {
-        LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
-
-        LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
-                .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
-
-        if (limelightMeasurement.tagCount != 0) {
-            return limelightMeasurement.pose;
-        } else
-            return robotPose;
+    public Pose2d UpdateRobotPose2d() {
+        return poseSupplier.get();
     }
 
     public double SetTheta() {
@@ -261,7 +249,7 @@ public class TurretTest extends SubsystemBase {
 
     public void setPosition() {
         // private final double position = angle*(ticksPerAngle);
-        m_turret.setControl(m_request.withPosition(-(calculateAngleToHub()) * (ticksPerAngle)));
+        m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
 
     public void setToZero() {
@@ -270,21 +258,19 @@ public class TurretTest extends SubsystemBase {
     }
 
     public double calculateAngleToHub() {
-        if (isBlue) {
-            double diffX = (Hx - Rx);
-            double diffY = (blueHy - Ry);
+        double tY = isBlue ? blueHy : redHy;
+        double diffX = (Hx - Rx);
+        double diffY = (tY - Ry);
+        turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
+        double goldenAngle = (turretHubAngle-theta);
 
-            turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
-
-            return (turretHubAngle);
-        } else {
-            double diffX = (Hx - Rx);
-            double diffY = (redHy - Ry);
-
-            turretHubAngle = Math.toDegrees(Math.atan2(diffX, diffY));
-
-            return (turretHubAngle);
-        }
+        SmartDashboard.putNumber("diffX", diffX);
+        SmartDashboard.putNumber("diffY", diffY);
+    
+        SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
+        SmartDashboard.putNumber("Golden Angle", goldenAngle);
+        return goldenAngle;
+        
     }
 }
 

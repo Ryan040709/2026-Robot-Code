@@ -270,6 +270,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 getModulePositions(true),
 
                 new Pose2d(3, 3, Rotation2d.fromDegrees(180)));
+
+        SmartDashboard.putData("Field", m_Fields);
     }
 
         // creating array for swerve module postions
@@ -286,6 +288,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return kinematics.toChassisSpeeds(getModuleStates());
     }
+
 
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {

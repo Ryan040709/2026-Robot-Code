@@ -6,10 +6,13 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import java.util.function.Supplier;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +27,6 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
 
 public class RobotContainer {
-    TurretTest turretTest = new TurretTest();
 
     private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
@@ -48,6 +50,8 @@ public class RobotContainer {
     private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+    TurretTest turretTest = new TurretTest(drivetrain::getPose);
 
     public RobotContainer() {
         
@@ -109,7 +113,7 @@ public class RobotContainer {
 //set to run to x position i dunno
         joystick.pov(0).whileTrue(Commands.run(() -> turretTest.setPosition(), turretTest));
 
-joystick.pov(90).whileTrue(Commands.run(() -> turretTest.zeroGyro(), turretTest));
+joystick.pov(90).whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))), drivetrain));
 
         manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
