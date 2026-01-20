@@ -22,8 +22,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -70,6 +75,21 @@ public class TurretTest extends SubsystemBase {
     public static int kPigeonId = 14;
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
+
+    //odometry stuff
+    //could probably be moved to swerve subsystem?
+
+        // setting the postions of our swerve modules for kinematics
+    private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
+    private Translation2d m_frontRightLocation = new Translation2d(.3429, -.3429);
+    private Translation2d m_backLeftLocation = new Translation2d(-.3429, .3429);
+    private Translation2d m_backRightLocation = new Translation2d(-.3429, -.3429);
+
+    private SwerveDriveOdometry m_odometry;
+
+        private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+            m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
+            m_backRightLocation);
 
     // limelight goofy ahh stuff
     // Basic targeting data
@@ -154,7 +174,6 @@ public class TurretTest extends SubsystemBase {
 
         // if (isBlue == (true)) {
 
-
         double diffX = (Hx - Rx);
         double diffY = (blueHy - Ry);
         double turretHubAngle = (Math.toDegrees(Math.atan2(diffX, diffY)));
@@ -162,10 +181,10 @@ public class TurretTest extends SubsystemBase {
         // }
 
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
-        //SmartDashboard.putNumber("Golden Angle", goldenAngle);
+        // SmartDashboard.putNumber("Golden Angle", goldenAngle);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
-        SmartDashboard.putNumber("Turret Angle", m_turret.getPosition().getValueAsDouble()/(ticksPerAngle));
+        SmartDashboard.putNumber("Turret Angle", m_turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
         // Push values to SmartDashboard
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
@@ -175,7 +194,6 @@ public class TurretTest extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
         SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
-
 
         // SmartDashboard.putNumber("Limelight X (m)", m_turret);
 
@@ -195,14 +213,12 @@ public class TurretTest extends SubsystemBase {
         LimelightHelpers.SetRobotOrientation("limelight-turret", yaw, 0.0, 0.0, 0.0, 0.0, 0.0);
 
         LimelightHelpers.PoseEstimate limelightMeasurement = LimelightHelpers
-        .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
+                .getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
         if (limelightMeasurement != null && limelightMeasurement.tagCount != 0) {
             return limelightMeasurement.pose;
-        }
-        else
+        } else
             return robotPose;
-
     }
 
     public double SetTheta() {
@@ -235,14 +251,12 @@ public class TurretTest extends SubsystemBase {
     // basic stuff, probably could probably be probably made better probably so
     // probably yeah probably uhh probably
 
-
-
     public void zeroPosition() {
         m_turret.setPosition(0);
     }
 
     public void zeroGyro() {
-    m_gyro.setYaw(0);
+        m_gyro.setYaw(0);
     }
 
     public void setPosition() {
@@ -250,7 +264,7 @@ public class TurretTest extends SubsystemBase {
         m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
 
-        public void setToZero() {
+    public void setToZero() {
         // private final double position = angle*(ticksPerAngle);
         m_turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
     }
