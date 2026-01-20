@@ -57,9 +57,9 @@ public class TurretTest extends SubsystemBase {
 
     private final double NinetyDegreeRotation = 33.73877;
 
-    public final double Hx = 4.03606;// THESE ARE IN METERS NOT INCHES
-    public final double redHy = 11.98482;
-    public final double blueHy = 4.62534;
+    public final double Hy = 4.03606;// THESE ARE IN METERS NOT INCHES
+    public final double redHx = 11.98482;
+    public final double blueHx = 4.62554;
     public double Rx;
     public double Ry;
     public Pose2d robotPose = new Pose2d();
@@ -124,9 +124,9 @@ public class TurretTest extends SubsystemBase {
         motorConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
         motorConfig.CurrentLimits.SupplyCurrentLowerTime = 1;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 35;
+        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (ticksPerAngle);
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -35;
+        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
 
         // Voltage things
         motorConfig.Voltage.PeakForwardVoltage = 16;
@@ -217,12 +217,12 @@ public class TurretTest extends SubsystemBase {
     public double distanceToHub() {
 
         if (isBlue) {
-            double diffX = (Hx - Rx);
-            double diffY = (blueHy - Ry);
+            double diffY = (Hy - Ry);
+            double diffX = (blueHx - Rx);
             return Math.hypot(diffX, diffY);
         } else {
-            double diffX = (Hx - Rx);
-            double diffY = (redHy - Ry);
+            double diffY = (Hy - Ry);
+            double diffX = (redHx - Rx);
             return Math.hypot(diffX, diffY);
         }
 
@@ -258,11 +258,12 @@ public class TurretTest extends SubsystemBase {
     }
 
     public double calculateAngleToHub() {
-        double tY = isBlue ? blueHy : redHy;
-        double diffX = (Hx - Rx);
-        double diffY = (tY - Ry);
+
+        double tX = isBlue ? blueHx : redHx;
+        double diffY = (Hy - Ry);
+        double diffX = (tX - Rx);
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-        double goldenAngle = (turretHubAngle-theta);
+        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145); //(turretHubAngle-theta);
 
         SmartDashboard.putNumber("diffX", diffX);
         SmartDashboard.putNumber("diffY", diffY);
