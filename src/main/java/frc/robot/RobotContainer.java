@@ -101,13 +101,12 @@ public class RobotContainer {
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        manipulatorController.leftTrigger(.05)
-        .whileTrue(Commands.run(() -> turretTest.MoveMotor(0.5), turretTest))
-        .whileFalse(Commands.run(() -> turretTest.MoveMotor(0), turretTest));
+        manipulatorController.leftTrigger(0.05)
+        .whileTrue(Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest));
 
-                manipulatorController.rightTrigger(.05)
-        .whileTrue(Commands.run(() -> turretTest.MoveMotor(-0.5), turretTest))
-        .whileFalse(Commands.run(() -> turretTest.MoveMotor(0), turretTest));
+        //         manipulatorController.rightTrigger(.05)
+        // .whileTrue(Commands.run(() -> turretTest.MoveMotor(-0.5), turretTest))
+        // .whileFalse(Commands.run(() -> turretTest.MoveMotor(0), turretTest));
 //manual zeroing i dunno
         manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
 //set to run to x position i dunno
