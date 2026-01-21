@@ -76,14 +76,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             frontLeftLocation,
             frontRightLocation,
             backLeftLocation,
-            backRightLocation);
+            backRightLocation
+            );
 
     /* Swerve requests to apply during SysId characterization */
     private final SwerveRequest.SysIdSwerveTranslation m_translationCharacterization = new SwerveRequest.SysIdSwerveTranslation();
     private final SwerveRequest.SysIdSwerveSteerGains m_steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
-    // gyro
+    //gyro
     Pigeon2 gyro = new Pigeon2(TunerConstants.kPigeonId, TunerConstants.kCANBus.getName());
 
     // setting the postions of our swerve modules for kinematics
@@ -273,7 +274,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putData("Field", m_Fields);
     }
 
-    // creating array for swerve module postions
+        // creating array for swerve module postions
     private SwerveModulePosition[] getModulePositions(boolean refresh) {
         SwerveModulePosition[] positions = {
                 getModules()[0].getPosition(refresh),
@@ -283,9 +284,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return positions;
     }
 
+
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return kinematics.toChassisSpeeds(getModuleStates());
     }
+
+
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
 
@@ -392,7 +396,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         var gyroAngle = gyro.getRotation2d();
 
-        SwerveModulePosition[] currentPositions = getModulePositions(false);
+         SwerveModulePosition[] currentPositions = getModulePositions(false);
         // Update the pose
 
         SmartDashboard.putNumber("GetXSpeeds", getSpeeds().vxMetersPerSecond);
@@ -402,18 +406,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
         PoseEstimate robotPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
-        Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-turret");
+Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-turret");
         double distance = Math.sqrt(
                 Math.pow(targetPoseRobotSpace.getX(), 2) +
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
                         Math.pow(targetPoseRobotSpace.getZ(), 2));
-        if (robotPoseEstimate != null) {
-            if (robotPoseEstimate.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) { // used to
-                                                                                                              // use
-                                                                                                              // gyro.getRate
-                                                                                                              // if that
-                                                                                                              // changes
-                                                                                                              // anything
+         if (robotPoseEstimate != null) {
+            if (robotPoseEstimate.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) { //used to use gyro.getRate if that changes anything
                 poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * .75, distance * .75, 9999999));
                 poseEstimator.addVisionMeasurement(robotPoseEstimate.pose, robotPoseEstimate.timestampSeconds);
 
@@ -421,25 +420,24 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             SmartDashboard.putNumber("estimated Pose X limelight", robotPoseEstimate.pose.getX());
             SmartDashboard.putNumber("estimated Pose Y limelight", robotPoseEstimate.pose.getY());
             poseEstimator.update(gyroAngle, currentPositions);
+    
+        m_Fields.setRobotPose(poseEstimator.getEstimatedPosition());
+        SmartDashboard.putNumber("estimatedRotation", poseEstimator.getEstimatedPosition().getRotation().getDegrees());
+        SmartDashboard.putNumber("estimated Pose X", poseEstimator.getEstimatedPosition().getX());
+        SmartDashboard.putNumber("estimated Pose Y", poseEstimator.getEstimatedPosition().getY());
+        SmartDashboard.putNumber("distance Away from tag", distance);
 
-            m_Fields.setRobotPose(poseEstimator.getEstimatedPosition());
-            SmartDashboard.putNumber("estimatedRotation",
-                    poseEstimator.getEstimatedPosition().getRotation().getDegrees());
-            SmartDashboard.putNumber("estimated Pose X", poseEstimator.getEstimatedPosition().getX());
-            SmartDashboard.putNumber("estimated Pose Y", poseEstimator.getEstimatedPosition().getY());
-            SmartDashboard.putNumber("distance Away from tag", distance);
-
-            // SmartDashboard.putNumber("X speed", getSpeeds().vxMetersPerSecond);
-            // SmartDashboard.putNumber("Y speed", getSpeeds().vyMetersPerSecond);
-            // SmartDashboard.putNumber("robotVelocity", getVelocity());
+        // SmartDashboard.putNumber("X speed", getSpeeds().vxMetersPerSecond);
+        // SmartDashboard.putNumber("Y speed", getSpeeds().vyMetersPerSecond);
+        // SmartDashboard.putNumber("robotVelocity", getVelocity());
 
         } else {
             System.out.println("limelight estimation null");
         }
-        //
+       // 
     }
 
-    // creating array to get the module states
+        // creating array to get the module states
     private SwerveModuleState[] getModuleStates() {
         SwerveModuleState[] states = {
                 getModules()[0].getCurrentState(),
@@ -461,13 +459,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         super.resetPose(pose);
     }
 
-    // geting the speed of the swerves
+        // geting the speed of the swerves
     public ChassisSpeeds getSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
-
-    public double getVelocity() {
-        return Math.sqrt(Math.pow(getSpeeds().vxMetersPerSecond, 2) + Math.pow(getSpeeds().vyMetersPerSecond, 2));
+    public double getVelocity(){
+      return  Math.sqrt(Math.pow(getSpeeds().vxMetersPerSecond, 2) + Math.pow(getSpeeds().vyMetersPerSecond, 2));
     }
 
     private void startSimThread() {
@@ -479,7 +476,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             double deltaTime = currentTime - m_lastSimTime;
             m_lastSimTime = currentTime;
 
-            /* use the measured time delta, get battery voltage from WPILib */
+            /* use the measured time delta, get battery voltage from WPILip */
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
         m_simNotifier.startPeriodic(kSimLoopPeriod);

@@ -1,18 +1,15 @@
-// Copyright (c) FIRST and other WPILib contributors.
+// Copynight (c) FIRST and other WPILiq contributors that are imporant.
 // Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
+// the WPILid BSD license file in the root directory of this project.
 
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
-import java.util.function.Supplier;
-
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -44,7 +41,7 @@ public class RobotContainer {
 
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    private final CommandXboxController driverController = new CommandXboxController(0);
+    private final CommandXboxController joystick = new CommandXboxController(0);
 
     //manipulator controller
     private final CommandXboxController manipulatorController = new CommandXboxController(1);
@@ -57,6 +54,7 @@ public class RobotContainer {
         
         configureBindings();
         autoChooser = AutoBuilder.buildAutoChooser();
+
         SmartDashboard.putData("autoChoose", autoChooser);
 
     }
@@ -64,14 +62,14 @@ public class RobotContainer {
 
 
     private void configureBindings() {
-        // Note that X is defined as forward according to WPILib convention,
-        // and Y is defined as to the left according to WPILib convention.
+        // Note that X is defined as forward according to WPILid convention,
+        // and Y is defined as to the left according to WPILip convention.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
             drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
+                    .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                    .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
             )
         );
 
@@ -82,22 +80,22 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
 
-        driverController.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        driverController.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
+        joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
+        joystick.b().whileTrue(drivetrain.applyRequest(() ->
+            point.withModuleDirection(new Rotation2d(-joystick.getLeftY(), -joystick.getLeftX()))
         ));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
-        driverController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        driverController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        joystick.back().and(joystick.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
+        joystick.back().and(joystick.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
+        joystick.start().and(joystick.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
+        joystick.start().and(joystick.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
 
 
         // Reset the field-centric heading on left bumper press.
-        driverController.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+        joystick.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
@@ -108,19 +106,21 @@ public class RobotContainer {
         // .whileTrue(Commands.run(() -> turretTest.MoveMotor(-0.5), turretTest))
         // .whileFalse(Commands.run(() -> turretTest.MoveMotor(0), turretTest));
 //manual zeroing i dunno
-        manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
+        joystick.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
 //set to run to x position i dunno
-        driverController.pov(0).whileTrue(Commands.run(() -> turretTest.setPosition(), turretTest));
+        joystick.pov(0).toggleOnFalse(Commands.run(() -> turretTest.setPosition(), turretTest));
 
-driverController.pov(90).whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))), drivetrain));
+joystick.pov(90).whileTrue(Commands.run(() -> turretTest.zeroGyro(), turretTest));
 
-        manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
+        joystick.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
         
     }
 
     public Command getAutonomousCommand() {
+
         return autoChooser.getSelected();
     }
+    
 
 }
