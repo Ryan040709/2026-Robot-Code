@@ -26,12 +26,12 @@ import frc.robot.subsystems.TurretTest;
 
 public class RobotContainer {
 
-    private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top
+                                                                                        // speed
+    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second
+                                                                                      // max angular velocity
 
     private final SendableChooser<Command> autoChooser;
-
-
 
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -44,7 +44,7 @@ public class RobotContainer {
 
     private final CommandXboxController driverController = new CommandXboxController(0);
 
-    //manipulator controller
+    // manipulator controller
     private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
@@ -52,7 +52,7 @@ public class RobotContainer {
     TurretTest turretTest = new TurretTest(drivetrain::getPose);
 
     public RobotContainer() {
-        
+
         configureBindings();
         autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -60,31 +60,30 @@ public class RobotContainer {
 
     }
 
-
-
     private void configureBindings() {
         // Note that X is defined as forward according to WPILid convention,
         // and Y is defined as to the left according to WPILip convention.
         drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
-            drivetrain.applyRequest(() ->
-                drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-            )
-        );
+                // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(() -> drive.withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive
+                                                                                                           // forward
+                                                                                                           // with
+                                                                                                           // negative Y
+                                                                                                           // (forward)
+                        .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
+                        .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive counterclockwise
+                                                                                            // with negative X (left)
+                ));
 
         // Idle while the robot is disabled. This ensures the configured
         // neutral mode is applied to the drive motors while disabled.
         final var idle = new SwerveRequest.Idle();
         RobotModeTriggers.disabled().whileTrue(
-            drivetrain.applyRequest(() -> idle).ignoringDisable(true)
-        );
+                drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
         driverController.a().whileTrue(drivetrain.applyRequest(() -> brake));
-        driverController.b().whileTrue(drivetrain.applyRequest(() ->
-            point.withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))
-        ));
+        driverController.b().whileTrue(drivetrain.applyRequest(() -> point
+                .withModuleDirection(new Rotation2d(-driverController.getLeftY(), -driverController.getLeftX()))));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
@@ -93,37 +92,36 @@ public class RobotContainer {
         driverController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         driverController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
-
-
         // Reset the field-centric heading on left bumper press.
         driverController.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
-        // manipulatorController.leftTrigger(0.05)
-        // .whileTrue(Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest));
+        manipulatorController.leftTrigger(0.05)
+        .whileTrue(Commands.run(() ->
+        turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest));
 
-        //         manipulatorController.rightTrigger(.05)
+        // manipulatorController.rightTrigger(.05)
         // .whileTrue(Commands.run(() -> turretTest.MoveMotor(-0.5), turretTest))
         // .whileFalse(Commands.run(() -> turretTest.MoveMotor(0), turretTest));
-//manual zeroing i dunno
+        // manual zeroing i dunno
         manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
-//set to run to x position i dunno
+        // set to run to x position i dunno
         driverController.pov(0).toggleOnFalse(Commands.run(() -> turretTest.setPosition(), turretTest));
 
-//driverController.pov(90).whileTrue(Commands.run(() -> turretTest.zeroGyro(), turretTest));
+        // driverController.pov(90).whileTrue(Commands.run(() -> turretTest.zeroGyro(),
+        // turretTest));
 
-driverController.pov(90).whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))), drivetrain));
+        driverController.pov(90)
+                .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))), drivetrain));
 
         manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
-        
     }
 
     public Command getAutonomousCommand() {
 
         return autoChooser.getSelected();
     }
-    
 
 }
