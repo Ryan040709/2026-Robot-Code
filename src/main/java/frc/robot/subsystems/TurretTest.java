@@ -112,8 +112,8 @@ public class TurretTest extends SubsystemBase {
 
         // pid things
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
-        motorConfig.MotorOutput.PeakForwardDutyCycle = 0.75;
-        motorConfig.MotorOutput.PeakReverseDutyCycle = -0.75;
+        motorConfig.MotorOutput.PeakForwardDutyCycle = 1;
+        motorConfig.MotorOutput.PeakReverseDutyCycle = -1;
         motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         motorConfig.Slot0.kP = 1;
         motorConfig.Slot0.kI = 0.15;
@@ -123,7 +123,7 @@ public class TurretTest extends SubsystemBase {
         motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         motorConfig.CurrentLimits.SupplyCurrentLimit = 100;
         motorConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
-        motorConfig.CurrentLimits.SupplyCurrentLowerTime = 1;
+        motorConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (ticksPerAngle);
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
