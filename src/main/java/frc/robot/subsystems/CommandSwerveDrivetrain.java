@@ -97,7 +97,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
             m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
             m_backRightLocation);
-    // setting up odemetry
+    // setting up odomitree
     private SwerveDrivePoseEstimator poseEstimator;
     private Field2d m_Fields = new Field2d();
     public HolonomicDriveController controller;

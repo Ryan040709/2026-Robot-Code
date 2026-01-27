@@ -95,7 +95,7 @@ public class TurretTest extends SubsystemBase {
             m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
             m_backRightLocation);
 
-    // limelight goofy ahh stuff
+    // limelight goofy ahh stufff
     // Basic targeting data
     double tx = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
@@ -210,11 +210,6 @@ public class TurretTest extends SubsystemBase {
         return poseSupplier.get();
     }
 
-    public double SetTheta() {
-        // remember to come back to this
-        return 0;
-    }
-
     public double distanceToHub() {
 
         if (isBlue) {
@@ -229,10 +224,6 @@ public class TurretTest extends SubsystemBase {
 
     }
 
-    public double DistancetoRpms(double distanceInMeters) {
-        return 0;
-    }
-
     // red hub is 182.1" from the driver stations and 158.9 from side wall.
     // full field is 651.22"
 
@@ -242,10 +233,6 @@ public class TurretTest extends SubsystemBase {
 
     public void zeroPosition() {
         m_turret.setPosition(0);
-    }
-
-    public void zeroGyro() {
-        m_gyro.setYaw(0);
     }
 
     public void setPosition() {
