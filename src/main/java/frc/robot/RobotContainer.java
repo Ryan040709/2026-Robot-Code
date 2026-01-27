@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
@@ -48,6 +49,8 @@ public class RobotContainer {
     private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+    boolean turretToggle = false;
 
     TurretTest turretTest = new TurretTest(drivetrain::getPose);
 
@@ -116,8 +119,29 @@ public class RobotContainer {
                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))), drivetrain));
 
         manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
+        
+// //experimental hub
+// turretTest.setDefaultCommand(Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest));
+
+// Trigger joystickInterruption = new Trigger(() -> Math.abs(manipulatorController.getLeftX()) > 0.1);
+
+// manipulatorController.pov(90).onTrue(Commands.run(() -> turretTest.setPosition(), turretTest).until(joystickInterruption));
+
 
     }
+
+    //@Override
+//     public void periodic() {
+//         // if (manipulatorController.a()) {
+
+//         // }
+//         if (manipulatorController.getLeftX() >= 0.1) {
+//                 Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest);
+//         }
+//         else {
+//                 Commands.run(() -> turretTest.setPosition(), turretTest);
+//         }
+//     }
 
     public Command getAutonomousCommand() {
 
