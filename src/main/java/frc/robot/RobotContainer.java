@@ -24,7 +24,7 @@ import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
-import frc.robot.subsystems.intake;
+import frc.robot.subsystems.intakeSubsystem;
 
 public class RobotContainer {
 
@@ -53,7 +53,7 @@ public class RobotContainer {
 
     TurretTest turretTest = new TurretTest(drivetrain::getPose);
 
-    intake intake = new intake();
+    intakeSubsystem intake = new intakeSubsystem();
 
     public RobotContainer() {
         NamedCommands.registerCommand("intake", new IntakeCommand());
