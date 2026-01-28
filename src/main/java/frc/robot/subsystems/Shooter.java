@@ -57,6 +57,8 @@ public class Shooter extends SubsystemBase {
 
     private TalonFX m_ShooterL = new TalonFX(15);
     private TalonFX m_ShooterR = new TalonFX(16);
+
+    private TalonFX m_Hood = new TalonFX(17);
     private PositionVoltage m_request = new PositionVoltage(0);
 
     private final double maxAngle = 33.73877 / 90;
@@ -127,50 +129,95 @@ public class Shooter extends SubsystemBase {
         this.poseSupplier = poseSupplier;
 
         // pid things
-        TalonFXConfiguration motorConfig = new TalonFXConfiguration();
-        motorConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        motorConfig.MotorOutput.PeakReverseDutyCycle = -1;
-        motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        motorConfig.Slot0.kP = 1;
-        motorConfig.Slot0.kI = 0.15;
-        motorConfig.Slot0.kD = 0;
-        motorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-        motorConfig.CurrentLimits.StatorCurrentLimit = 100;
-        motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        motorConfig.CurrentLimits.SupplyCurrentLimit = 100;
-        motorConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
-        motorConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        // motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 *
+        TalonFXConfiguration shooterConfig = new TalonFXConfiguration();
+        shooterConfig.MotorOutput.PeakForwardDutyCycle = 1;
+        shooterConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        shooterConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        shooterConfig.Slot0.kP = 1;
+        shooterConfig.Slot0.kI = 0.15;
+        shooterConfig.Slot0.kD = 0;
+        shooterConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+        shooterConfig.CurrentLimits.StatorCurrentLimit = 100;
+        shooterConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        shooterConfig.CurrentLimits.SupplyCurrentLimit = 100;
+        shooterConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
+        shooterConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
+        shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        // shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 *
         // (ticksPerAngle);
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        // motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 *
+        shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        // shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 *
         // (ticksPerAngle);
 
         // Voltage things
-        motorConfig.Voltage.PeakForwardVoltage = 16;
-        motorConfig.Voltage.PeakReverseVoltage = -16;
+        shooterConfig.Voltage.PeakForwardVoltage = 16;
+        shooterConfig.Voltage.PeakReverseVoltage = -16;
         // Differential Constants and things like that
-        motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
-        motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
-        motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
+        shooterConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
+        shooterConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
+        shooterConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
         // Motion Magic things
-        motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
-        motorConfig.MotionMagic.MotionMagicAcceleration = 150;
-        motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
-        motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
+        shooterConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
+        shooterConfig.MotionMagic.MotionMagicAcceleration = 150;
+        shooterConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
+        shooterConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
         // Torque Current things
-        motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
-        motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
+        shooterConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
+        shooterConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
         // Set shooter motor settings
-        motorConfig.MotorOutput.Inverted = Invert;
-        motorConfig.MotorOutput.PeakForwardDutyCycle = .5;
-        motorConfig.MotorOutput.PeakReverseDutyCycle = -.5;
-        motorConfig.MotorOutput.NeutralMode = Coast;
+        shooterConfig.MotorOutput.Inverted = Invert;
+        shooterConfig.MotorOutput.PeakForwardDutyCycle = .5;
+        shooterConfig.MotorOutput.PeakReverseDutyCycle = -.5;
+        shooterConfig.MotorOutput.NeutralMode = Coast;
 
-        m_ShooterL.getConfigurator().apply(motorConfig);
-        m_ShooterR.getConfigurator().apply(motorConfig);
+        m_ShooterL.getConfigurator().apply(shooterConfig);
+        m_ShooterR.getConfigurator().apply(shooterConfig);
 
+        // hood motor PID
+        TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
+        hoodConfig.MotorOutput.PeakForwardDutyCycle = 1;
+        hoodConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        hoodConfig.Slot0.kP = 1;
+        hoodConfig.Slot0.kI = 0.15;
+        hoodConfig.Slot0.kD = 0;
+        hoodConfig.CurrentLimits.StatorCurrentLimitEnable = true;
+        hoodConfig.CurrentLimits.StatorCurrentLimit = 100;
+        hoodConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        hoodConfig.CurrentLimits.SupplyCurrentLimit = 100;
+        hoodConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
+        hoodConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
+        hoodConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        hoodConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (ticksPerAngle);
+        hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
+
+        // Voltage things
+        hoodConfig.Voltage.PeakForwardVoltage = 16;
+        hoodConfig.Voltage.PeakReverseVoltage = -16;
+        // Differential Constants and things like that
+        hoodConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
+        hoodConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
+        hoodConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
+        // Motion Magic things
+        hoodConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
+        hoodConfig.MotionMagic.MotionMagicAcceleration = 150;
+        hoodConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
+        hoodConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
+        // Torque Current things
+        hoodConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
+        hoodConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
+
+        m_Hood.getConfigurator().apply(hoodConfig);
+
+    }
+
+    public void zeroHood() {
+        m_Hood.setPosition(0);
+    }
+
+    public void setHoodPosition() {
+        m_Hood.setPosition(calculateHoodPosition());
     }
 
     public void RuntoRPMs(double targetSpeed) {
@@ -203,21 +250,13 @@ public class Shooter extends SubsystemBase {
 
     public double DistancetoRpms(double distanceInMeters) {
 
-        double targetRPM = (1 / 2) * (calculateDistanceToHub()) + 10; 
-        //y=mx+b where "y" is the target RPM and "x" is the distance between the robot and target
+        double targetRPM = (1 / 2) * (calculateDistanceToHub()) + 10; // the slope is a placeholder
+        // y=mx+b where "y" is the target RPM and "x" is the distance between the robot
+        // and target
+        // to find the slope, determine positions and rpms that we know work on certain
+        // spots on the field, and create a line of best fit.
 
         return targetRPM;
-    }
-
-    // red hub is 182.1" from the driver stations and 158.9 from side wall.
-    // full field is 651.22"
-
-    // run to golden angle
-    // basic stuff, probably could probably be probably made better probably so
-    // probably yeah probably uhh probably
-
-    public void zeroGyro() {
-        m_gyro.setYaw(0);
     }
 
     public double calculateDistanceToHub() {
@@ -225,15 +264,53 @@ public class Shooter extends SubsystemBase {
         double tX = isBlue ? blueHx : redHx;
         double DistanceToTarget = Math.sqrt((Math.pow((Rx - tX), 2) + Math.pow((Ry - Hy), 2))); // (turretHubAngle-theta);
 
-        SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
         SmartDashboard.putNumber("Distance To Target", DistanceToTarget);
         return DistanceToTarget;
 
     }
 
-    public double calculateRPMs() {
+    public double calculateHoodPosition() {
 
-        return 0;
+        double zoneOne = 10; // TODO: change to actual zone number
+
+        double zoneTwo = 20; // TODO: change to actual zone number
+
+        double zoneThree = 30; // TODO: change to actual zone number
+
+        double zoneFour = 40; // TODO: change to actual zone number
+
+        double zoneFive = 50; // TODO: change to actual zone number
+
+        // hood positions
+        double zoneOnePosition = 10; // TODO: change to actual zone number
+
+        double zoneTwoPosition = 20; // TODO: change to actual zone number
+
+        double zoneThreePosition = 30; // TODO: change to actual zone number
+
+        double zoneFourPosition = 40; // TODO: change to actual zone number
+
+        double zoneFivePosition = 50; // TODO: change to actual zone number
+
+
+        // get the target distance
+        double distanceToTarget = calculateDistanceToHub();
+
+        double targetHoodPosition = 0;
+
+        if (zoneOne <= distanceToTarget) {
+            targetHoodPosition = zoneOnePosition;
+        } else if (zoneTwo <= distanceToTarget) {
+            targetHoodPosition = zoneTwoPosition;
+        } else if (zoneThree <= distanceToTarget) {
+            targetHoodPosition = zoneThreePosition;
+        } else if (zoneFour <= distanceToTarget) {
+            targetHoodPosition = zoneFourPosition;
+        } else if (zoneFive <= distanceToTarget) {
+            targetHoodPosition = zoneFivePosition;
+        }
+
+        return targetHoodPosition;
 
     }
 }
