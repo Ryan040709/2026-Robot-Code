@@ -113,7 +113,13 @@ public class RobotContainer {
 
         manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
-        manipulatorController.b().whileTrue(Commands.run(() -> intake.IntakeToTurretCommand(), intake));
+        manipulatorController.pov(0).whileTrue(Commands.run(() -> intake.IntakeToHopperCommand(), intake));
+
+        manipulatorController.pov(90).whileTrue(Commands.run(() -> intake.IntakeToTurretCommand(), intake));
+
+        manipulatorController.pov(180).whileTrue(Commands.run(() -> intake.HopperToTurretCommand(), intake));
+
+        manipulatorController.pov(360).whileTrue(Commands.run(() -> intake.HopperToIntakeCommand(), intake));
 
     }
 
