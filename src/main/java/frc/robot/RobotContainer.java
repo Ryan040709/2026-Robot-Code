@@ -20,15 +20,15 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.intake.Intake_HopperToIntake;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
 import frc.robot.subsystems.intakeSubsystem;
-import frc.robot.commands.Intake_IntakeToShooter;
-import frc.robot.commands.Intake_IntakeToHopper;
-import frc.robot.commands.Intake_HopperToIntake;
-import frc.robot.commands.Intake_HopperToShooter;
+import frc.robot.commands.intake.Intake_IntakeToShooter;
+import frc.robot.commands.intake.Intake_IntakeToHopper;
+import frc.robot.commands.intake.Intake_HopperToShooter;
 
 public class RobotContainer {
 
@@ -54,9 +54,9 @@ public class RobotContainer {
         private final CommandXboxController driverController = new CommandXboxController(0);
 
         Intake_HopperToIntake hopperToIntake = new Intake_HopperToIntake();
-        Intake_HopperToIntake hopperToShooter = new Intake_HopperToIntake();
-        Intake_HopperToIntake IntakeToHopper = new Intake_HopperToIntake();
-        Intake_HopperToIntake IntakeToShooter = new Intake_HopperToIntake();
+        Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter();
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
 
         // manipulator controller
         private final CommandXboxController manipulatorController = new CommandXboxController(1);
@@ -148,7 +148,7 @@ public class RobotContainer {
 
                 manipulatorController.pov(270).whileTrue(IntakeToShooter);
 
-                
+
         }
 
         public Command getAutonomousCommand() {

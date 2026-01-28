@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -7,7 +7,7 @@ import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.intakeSubsystem;
 
-public class Intake_IntakeToHopper extends Command {
+public class Intake_HopperToShooter extends Command {
 
     private TalonFX intakeMotor1 = new TalonFX(10);
     private TalonFX intakeMotor2 = new TalonFX(10);

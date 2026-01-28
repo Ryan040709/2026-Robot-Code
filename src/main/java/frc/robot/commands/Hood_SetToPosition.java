@@ -2,21 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.intake;
+package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.TurretTest;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Shooter_RunToRPM extends Command {
-  Shooter s_ShooterWheel; 
-  /** Creates a new Shooter_RunToRPM. */
-  public Shooter_RunToRPM(Shooter s_ShooterWheel) {
-    this.s_ShooterWheel = s_ShooterWheel;
-    addRequirements(s_ShooterWheel);
+public class Hood_SetToPosition extends Command {
+  TurretTest s_Hood; 
+  /** Creates a new Hood_RunToPosition. */
+  public Hood_SetToPosition(TurretTest s_Hood) {
+    this.s_Hood = s_Hood;
+    addRequirements(s_Hood);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,7 +29,7 @@ public class Shooter_RunToRPM extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_ShooterWheel.RuntoRPMs();
+    s_Hood.setPosition();
   }
 
   // Called once the command ends or is interrupted.

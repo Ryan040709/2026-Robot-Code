@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.intake;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
