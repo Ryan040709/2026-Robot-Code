@@ -53,7 +53,7 @@
       },
       "prevControl": {
         "x": 8.422360675937167,
-        "y": 0.347568447476954
+        "y": 0.3475684474769539
       },
       "nextControl": {
         "x": 2.8893374956773483,
@@ -236,7 +236,7 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "three shoot auto",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 89.94903787250432
