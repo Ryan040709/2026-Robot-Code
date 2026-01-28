@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TurretTest;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Hood_SetToPosition extends Command {
-  TurretTest s_Hood; 
-  /** Creates a new Hood_RunToPosition. */
-  public Hood_SetToPosition(TurretTest s_Hood) {
-    this.s_Hood = s_Hood;
-    addRequirements(s_Hood);
+public class Turret_TargetLocking extends Command {
+  TurretTest s_Turret; 
+  /** Creates a new Turret_TargetLocking. */
+  public Turret_TargetLocking(TurretTest s_Turret) {
+    this.s_Turret = s_Turret;
+    addRequirements(s_Turret);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,7 +29,7 @@ public class Hood_SetToPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_Hood.setPosition();
+    s_Turret.setPosition();
   }
 
   // Called once the command ends or is interrupted.
