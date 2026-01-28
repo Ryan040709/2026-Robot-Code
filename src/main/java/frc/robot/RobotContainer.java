@@ -18,12 +18,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
+import frc.robot.subsystems.intake;
 
 public class RobotContainer {
 
@@ -50,9 +50,9 @@ public class RobotContainer {
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-    boolean turretToggle = false;
-
     TurretTest turretTest = new TurretTest(drivetrain::getPose);
+
+    intake intake = new intake();
 
     public RobotContainer() {
 
@@ -113,6 +113,7 @@ public class RobotContainer {
 
         manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
+        manipulatorController.b().whileTrue(Commands.run(() -> intake.IntakeToTurretCommand(), intake));
 
     }
 
