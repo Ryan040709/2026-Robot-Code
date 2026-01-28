@@ -25,7 +25,7 @@ public class Intake_IntakeToHopper extends Command {
     @Override
     public void execute() {
         intakeSubsystem.MoveintakeMotor2(-0.5);
-        intakeSubsystem.MoveintakeMotor1(.5);
+        intakeSubsystem.MoveintakeMotor1(.5);//TODO update these
         hopperSubsystem.MoveHopperMotor(.5);
     }
 
