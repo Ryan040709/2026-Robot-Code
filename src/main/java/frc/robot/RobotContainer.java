@@ -103,45 +103,18 @@ public class RobotContainer {
         manipulatorController.leftTrigger(0.05)
         .whileTrue(Commands.run(() ->
         turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest));
-
-        // manipulatorController.rightTrigger(.05)
-        // .whileTrue(Commands.run(() -> turretTest.MoveMotor(-0.5), turretTest))
-        // .whileFalse(Commands.run(() -> turretTest.MoveMotor(0), turretTest));
         // manual zeroing i dunno
         manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
         // set to run to x position i dunno
         driverController.pov(0).toggleOnFalse(Commands.run(() -> turretTest.setPosition(), turretTest));
 
-        // driverController.pov(90).whileTrue(Commands.run(() -> turretTest.zeroGyro(),
-        // turretTest));
-
         driverController.pov(90)
                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))), drivetrain));
 
         manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
-        
-// //experimental hub
-// turretTest.setDefaultCommand(Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest));
-
-// Trigger joystickInterruption = new Trigger(() -> Math.abs(manipulatorController.getLeftX()) > 0.1);
-
-// manipulatorController.pov(90).onTrue(Commands.run(() -> turretTest.setPosition(), turretTest).until(joystickInterruption));
 
 
     }
-
-    //@Override
-//     public void periodic() {
-//         // if (manipulatorController.a()) {
-
-//         // }
-//         if (manipulatorController.getLeftX() >= 0.1) {
-//                 Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()), turretTest);
-//         }
-//         else {
-//                 Commands.run(() -> turretTest.setPosition(), turretTest);
-//         }
-//     }
 
     public Command getAutonomousCommand() {
 
