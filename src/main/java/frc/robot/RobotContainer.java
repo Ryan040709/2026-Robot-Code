@@ -25,12 +25,16 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
 import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.commands.Intake_IntakeToShooter;
+import frc.robot.commands.Intake_IntakeToHopper;
+import frc.robot.commands.Intake_HopperToIntake;
+import frc.robot.commands.Intake_HopperToShooter;
 
 public class RobotContainer {
 
         private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired
                                                                                             // top
-                                                                                            // speed
+        // speed
         private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per
                                                                                           // second
                                                                                           // max angular velocity
@@ -48,6 +52,11 @@ public class RobotContainer {
         private final Telemetry logger = new Telemetry(MaxSpeed);
 
         private final CommandXboxController driverController = new CommandXboxController(0);
+
+        Intake_HopperToIntake hopperToIntake = new Intake_HopperToIntake();
+        Intake_HopperToIntake hopperToShooter = new Intake_HopperToIntake();
+        Intake_HopperToIntake IntakeToHopper = new Intake_HopperToIntake();
+        Intake_HopperToIntake IntakeToShooter = new Intake_HopperToIntake();
 
         // manipulator controller
         private final CommandXboxController manipulatorController = new CommandXboxController(1);
@@ -131,14 +140,15 @@ public class RobotContainer {
 
                 manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
-                manipulatorController.pov(0).whileTrue(Commands.run(() -> intake.IntakeToHopperCommand(), intake));
+                manipulatorController.pov(0).whileTrue(hopperToShooter);
 
-                manipulatorController.pov(90).whileTrue(Commands.run(() -> intake.IntakeToTurretCommand(), intake));
+                manipulatorController.pov(90).whileTrue(hopperToIntake);
 
-                manipulatorController.pov(180).whileTrue(Commands.run(() -> intake.HopperToTurretCommand(), intake));
+                manipulatorController.pov(180).whileTrue(IntakeToHopper);
 
-                manipulatorController.pov(360).whileTrue(Commands.run(() -> intake.HopperToIntakeCommand(), intake));
+                manipulatorController.pov(270).whileTrue(IntakeToShooter);
 
+                
         }
 
         public Command getAutonomousCommand() {
