@@ -220,7 +220,7 @@ public class Shooter extends SubsystemBase {
         m_Hood.setPosition(calculateHoodPosition());
     }
 
-    public void RuntoRPMs(double targetSpeed) {
+    public void RuntoRPMs() {
         m_ShooterL.setControl(velocity.withVelocity(DistancetoRpms(calculateDistanceToHub())));
         m_ShooterR.setControl(velocity.withVelocity(-DistancetoRpms(calculateDistanceToHub())));
     }
