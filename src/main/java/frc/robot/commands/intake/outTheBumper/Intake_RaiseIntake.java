@@ -2,21 +2,21 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.turret;
+package frc.robot.commands.intake.outTheBumper;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.TurretTest;
+import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class Turret_ManualControl extends Command {
-  TurretTest s_Turret; 
-  /** Creates a new Turret_ManualControl. */
-  public Turret_ManualControl(TurretTest s_Turret) {
-    this.s_Turret = s_Turret;
-    addRequirements(s_Turret);
+public class Intake_RaiseIntake extends Command {
+  outOfBumperIntake s_outOfBumperIntake; 
+  /** Creates a new Hood_RunToPosition. */
+  public Intake_RaiseIntake(outOfBumperIntake s_outOfBumperIntake) {
+    this.s_outOfBumperIntake = s_outOfBumperIntake;
+    addRequirements(s_outOfBumperIntake);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,7 +29,7 @@ public class Turret_ManualControl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_Turret.MoveMotor(0);
+    s_outOfBumperIntake.raiseIntake();
   }
 
   // Called once the command ends or is interrupted.

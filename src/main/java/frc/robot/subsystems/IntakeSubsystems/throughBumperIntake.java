@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.IntakeSubsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.subsystems.HopperSubsystem;
 
-public class intakeSubsystem extends SubsystemBase {
+public class throughBumperIntake extends SubsystemBase {
 
     private TalonFX intakeMotor1 = new TalonFX(10);
     private TalonFX intakeMotor2 = new TalonFX(10);

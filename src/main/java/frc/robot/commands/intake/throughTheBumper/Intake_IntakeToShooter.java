@@ -1,19 +1,19 @@
-package frc.robot.commands.intake;
+package frc.robot.commands.intake.throughTheBumper;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
 import frc.robot.subsystems.HopperSubsystem;
-import frc.robot.subsystems.intakeSubsystem;
 
-public class Intake_IntakeToHopper extends Command {
+public class Intake_IntakeToShooter extends Command {
 
     private TalonFX intakeMotor1 = new TalonFX(10);
     private TalonFX intakeMotor2 = new TalonFX(10);
 
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
-    intakeSubsystem intakeSubsystem = new intakeSubsystem();
+    throughBumperIntake intakeSubsystem = new throughBumperIntake();
 
     // Called when the command is initially scheduled.
     @Override

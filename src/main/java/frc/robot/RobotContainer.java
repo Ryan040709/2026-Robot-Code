@@ -20,17 +20,17 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.commands.intake.Intake_HopperToIntake;
-import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
-import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
 import frc.robot.subsystems.Shooter;
-import frc.robot.commands.intake.Intake_IntakeToShooter;
-import frc.robot.commands.intake.Intake_IntakeToHopper;
-import frc.robot.commands.intake.Intake_HopperToShooter;
-import frc.robot.commands.Shooter_RunToRPM;
+import frc.robot.commands.intake.IntakeCommand;
+import frc.robot.commands.intake.throughTheBumper.Intake_HopperToIntake;
+import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
+import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
+import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
+import frc.robot.commands.shooter.Shooter_RunToRPM;
 
 public class RobotContainer {
 
@@ -71,7 +71,7 @@ public class RobotContainer {
 
         Shooter shooter = new Shooter(drivetrain::getPose);
 
-        intakeSubsystem intake = new intakeSubsystem();
+        throughBumperIntake intake = new throughBumperIntake();
 
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
 
