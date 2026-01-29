@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.intake.IntakeCommand;
@@ -31,6 +32,12 @@ import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
+//out of bumper intake commands
+import frc.robot.commands.intake.outTheBumper.Intake_LowerIntake;
+import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
+import frc.robot.commands.intake.outTheBumper.Intake_RunOuttake;
+import frc.robot.commands.intake.outTheBumper.Intake_RunIntake;
+import frc.robot.commands.intake.outTheBumper.Intake_StopIntake;
 
 public class RobotContainer {
 
@@ -60,8 +67,6 @@ public class RobotContainer {
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
         Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
 
-        
-
         // manipulator controller
         private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
@@ -73,7 +78,16 @@ public class RobotContainer {
 
         throughBumperIntake intake = new throughBumperIntake();
 
+        outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
+
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
+
+        // out of bumper intake commands
+        Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
+        Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
+        Intake_RunIntake intake_RunIntake = new Intake_RunIntake(OutOfBumperIntake);
+        Intake_StopIntake intake_StopIntake = new Intake_StopIntake(OutOfBumperIntake);
+        Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
 
         public RobotContainer() {
                 NamedCommands.registerCommand("intake", new IntakeCommand());
@@ -157,6 +171,10 @@ public class RobotContainer {
                 manipulatorController.pov(270).whileTrue(IntakeToShooter);
 
                 manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
+
+                // out of bumper intake commands
+                manipulatorController.leftBumper().whileTrue(intake_LowerIntake);
+                manipulatorController.rightBumper().whileTrue(intake_RaiseIntake);
 
         }
 
