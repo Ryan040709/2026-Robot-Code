@@ -38,6 +38,8 @@ import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_RunOuttake;
 import frc.robot.commands.intake.outTheBumper.Intake_RunIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_StopIntake;
+//turret commands
+import frc.robot.commands.turret.Turret_TargetLocking;
 
 public class RobotContainer {
 
@@ -82,6 +84,8 @@ public class RobotContainer {
 
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
 
+        Turret_TargetLocking turret_Locking = new Turret_TargetLocking(turretTest);
+
         // out of bumper intake commands
         Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
@@ -91,6 +95,8 @@ public class RobotContainer {
 
         public RobotContainer() {
                 NamedCommands.registerCommand("intake", new IntakeCommand());
+
+                NamedCommands.registerCommand("turret-locking", new Turret_TargetLocking(turretTest));
 
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();

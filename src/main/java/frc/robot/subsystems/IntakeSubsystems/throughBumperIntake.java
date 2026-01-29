@@ -56,4 +56,13 @@ public class throughBumperIntake extends SubsystemBase {
         });
     }
 
+    public Command IntakeStop() {
+        return runOnce(() -> {
+            MoveintakeMotor2(0);
+            MoveintakeMotor1(0);
+            hopperSubsystem.MoveHopperMotor(0);
+
+        });
+    }
+
 }
