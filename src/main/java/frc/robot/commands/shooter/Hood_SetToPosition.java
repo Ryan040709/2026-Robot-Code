@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.TurretTest;
+import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Hood_SetToPosition extends Command {
-  TurretTest s_Hood; 
+  Turret s_Hood; 
   /** Creates a new Hood_RunToPosition. */
-  public Hood_SetToPosition(TurretTest s_Hood) {
+  public Hood_SetToPosition(Turret s_Hood) {
     this.s_Hood = s_Hood;
     addRequirements(s_Hood);
     // Use addRequirements() here to declare subsystem dependencies.

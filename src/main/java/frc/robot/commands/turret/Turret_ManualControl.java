@@ -8,13 +8,13 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.TurretTest;
+import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Turret_ManualControl extends Command {
-  TurretTest s_Turret; 
+  Turret s_Turret; 
   /** Creates a new Turret_ManualControl. */
-  public Turret_ManualControl(TurretTest s_Turret) {
+  public Turret_ManualControl(Turret s_Turret) {
     this.s_Turret = s_Turret;
     addRequirements(s_Turret);
     // Use addRequirements() here to declare subsystem dependencies.

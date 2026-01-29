@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.TurretTest;
+import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.commands.intake.IntakeCommand;
@@ -67,7 +67,7 @@ public class RobotContainer {
 
         public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
-        TurretTest turretTest = new TurretTest(drivetrain::getPose);
+        Turret turretTest = new Turret(drivetrain::getPose);
 
         Shooter shooter = new Shooter(drivetrain::getPose);
 

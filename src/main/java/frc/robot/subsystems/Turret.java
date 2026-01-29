@@ -47,7 +47,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 //
 
-public class TurretTest extends SubsystemBase {
+public class Turret extends SubsystemBase {
     
     private Supplier<Pose2d> poseSupplier;
 
@@ -107,7 +107,7 @@ public class TurretTest extends SubsystemBase {
     double tync = LimelightHelpers.getTYNC("limelight-turret"); // Vertical offset from principal pixel/point to target
                                                                 // in degrees
 
-    public TurretTest(Supplier<Pose2d> poseSupplier) {
+    public Turret(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
         // pid things
