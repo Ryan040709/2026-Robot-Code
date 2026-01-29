@@ -227,7 +227,7 @@ public class Shooter extends SubsystemBase {
 
     @Override
     public void periodic() {
-
+        SmartDashboard.putNumber("Distance To Target", calculateDistanceToHub());
     }
 
     public Pose2d UpdateRobotPose2d() {
@@ -263,6 +263,8 @@ public class Shooter extends SubsystemBase {
 
         double tX = isBlue ? blueHx : redHx;
         double DistanceToTarget = Math.sqrt((Math.pow((Rx - tX), 2) + Math.pow((Ry - Hy), 2))); // (turretHubAngle-theta);
+        // uses point distance formula to determine the distance between the target and
+        // robot
 
         SmartDashboard.putNumber("Distance To Target", DistanceToTarget);
         return DistanceToTarget;
@@ -291,7 +293,6 @@ public class Shooter extends SubsystemBase {
         double zoneFourPosition = 40; // TODO: change to actual zone number
 
         double zoneFivePosition = 50; // TODO: change to actual zone number
-
 
         // get the target distance
         double distanceToTarget = calculateDistanceToHub();

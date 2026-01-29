@@ -26,9 +26,11 @@ import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretTest;
 import frc.robot.subsystems.intakeSubsystem;
+import frc.robot.subsystems.Shooter;
 import frc.robot.commands.intake.Intake_IntakeToShooter;
 import frc.robot.commands.intake.Intake_IntakeToHopper;
 import frc.robot.commands.intake.Intake_HopperToShooter;
+import frc.robot.commands.Shooter_RunToRPM;
 
 public class RobotContainer {
 
@@ -58,6 +60,8 @@ public class RobotContainer {
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
         Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
 
+        
+
         // manipulator controller
         private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
@@ -65,7 +69,11 @@ public class RobotContainer {
 
         TurretTest turretTest = new TurretTest(drivetrain::getPose);
 
+        Shooter shooter = new Shooter(drivetrain::getPose);
+
         intakeSubsystem intake = new intakeSubsystem();
+
+        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
 
         public RobotContainer() {
                 NamedCommands.registerCommand("intake", new IntakeCommand());
@@ -148,6 +156,7 @@ public class RobotContainer {
 
                 manipulatorController.pov(270).whileTrue(IntakeToShooter);
 
+                manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
 
         }
 

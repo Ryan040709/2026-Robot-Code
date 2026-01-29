@@ -19,8 +19,8 @@ public class Shooter_RunToRPM extends Command {
     addRequirements(s_ShooterWheel);
     // Use addRequirements() here to declare subsystem dependencies.
   }
-
-  // Called when the command is initially scheduled.
+  
+// Called when the command is initially scheduled.
   @Override
   public void initialize() {
 
