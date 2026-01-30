@@ -160,7 +160,7 @@ public class RobotContainer {
                 // manual zeroing i dunno
                 manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
                 // set to run to x position i dunno
-                driverController.pov(0).toggleOnFalse(Commands.run(() -> turretTest.setPosition(), turretTest));
+                driverController.pov(0).toggleOnFalse(turret_Locking);
 
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),

@@ -48,8 +48,8 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": 0.5,
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": 0.0,
       "command": {
         "type": "named",
         "data": {
