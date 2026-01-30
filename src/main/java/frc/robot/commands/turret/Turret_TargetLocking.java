@@ -12,6 +12,9 @@ import frc.robot.subsystems.Turret;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Turret_TargetLocking extends Command {
+
+boolean intakeValue = false;
+
   Turret s_Turret; 
   /** Creates a new Turret_TargetLocking. */
   public Turret_TargetLocking(Turret s_Turret) {
@@ -23,18 +26,24 @@ public class Turret_TargetLocking extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+intakeValue = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("shooter Tracking");
     s_Turret.setPosition();
+
+     SmartDashboard.putBoolean("turret", intakeValue);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+
+    intakeValue = false; 
+    SmartDashboard.putBoolean("turret", intakeValue);
 
   }
 

@@ -99,7 +99,7 @@
     },
     {
       "waypointRelativePos": 5,
-      "rotationDegrees": -90.0
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
@@ -130,5 +130,5 @@
     "velocity": 0,
     "rotation": 86.20022311571906
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

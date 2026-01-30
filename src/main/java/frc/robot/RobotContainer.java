@@ -96,7 +96,7 @@ public class RobotContainer {
         public RobotContainer() {
                 NamedCommands.registerCommand("intake", new IntakeCommand());
 
-                NamedCommands.registerCommand("turret-locking", new Turret_TargetLocking(turretTest));
+                NamedCommands.registerCommand("turret-locking", turret_Locking);
 
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
