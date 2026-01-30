@@ -23,7 +23,7 @@ public class outOfBumperIntake extends SubsystemBase {
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
     public outOfBumperIntake() {
-        // pid things
+
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 1;
         motorConfig.MotorOutput.PeakReverseDutyCycle = -1;
@@ -42,19 +42,18 @@ public class outOfBumperIntake extends SubsystemBase {
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140;
 
-        // Voltage things
         motorConfig.Voltage.PeakForwardVoltage = 16;
         motorConfig.Voltage.PeakReverseVoltage = -16;
-        // Differential Constants and things like that
+    
         motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
         motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
         motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        // Motion Magic things
+        
         motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
         motorConfig.MotionMagic.MotionMagicAcceleration = 150;
         motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
         motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        // Torque Current things
+        
         motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 

@@ -1,7 +1,3 @@
-  // Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -10,14 +6,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.Shooter;
 
-/* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Shooter_RunToRPM extends Command {
   Shooter s_ShooterWheel; 
   /** Creates a new Shooter_RunToRPM. */
   public Shooter_RunToRPM(Shooter s_ShooterWheel) {
     this.s_ShooterWheel = s_ShooterWheel;
     addRequirements(s_ShooterWheel);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
 // Called when the command is initially scheduled.

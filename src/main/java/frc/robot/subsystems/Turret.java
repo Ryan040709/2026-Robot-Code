@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILip contributors. so dont mess with us
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILid BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Degrees;
@@ -42,10 +38,6 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-//import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
-//#swervesbeswervey
-
-//
 
 public class Turret extends SubsystemBase {
     
@@ -58,7 +50,7 @@ public class Turret extends SubsystemBase {
 
     private final double NinetyDegreeRotation = 33.73877;
 
-    public final double Hy = 4.03606;// THESE ARE IN METERS NOT INCHES
+    public final double Hy = 4.03606;
     public final double redHx = 11.98482;
     public final double blueHx = 4.62554;
     public double Rx;
@@ -70,18 +62,11 @@ public class Turret extends SubsystemBase {
     public double theta = 0;
     public boolean isBlue = true;
 
-    // im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or
-    // smth else now its 2:14
-    // private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
-
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
     public static int kPigeonId = 14;
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
-
-    //odometry stuff
-    //could probably be moved to swerve subsystem???
 
         // setting the postions of our swerve modules for kinematics
     private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
@@ -94,8 +79,6 @@ public class Turret extends SubsystemBase {
         private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
             m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
             m_backRightLocation);
-
-    // limelight goofy ahh stufff
     // Basic targeting data
     double tx = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
@@ -110,7 +93,7 @@ public class Turret extends SubsystemBase {
     public Turret(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
-        // pid things
+        // pid
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = 1;
         motorConfig.MotorOutput.PeakReverseDutyCycle = -1;
@@ -129,19 +112,19 @@ public class Turret extends SubsystemBase {
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
 
-        // Voltage things
+        // Voltage
         motorConfig.Voltage.PeakForwardVoltage = 16;
         motorConfig.Voltage.PeakReverseVoltage = -16;
-        // Differential Constants and things like that
+        // Differential Constants
         motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
         motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
         motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        // Motion Magic things
+        // Motion Magic
         motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
         motorConfig.MotionMagic.MotionMagicAcceleration = 150;
         motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
         motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        // Torque Current things
+        // Torque Current
         motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 
@@ -161,9 +144,6 @@ public class Turret extends SubsystemBase {
 
     @Override
     public void periodic() {
-
-        // Angle gyroYaw = m_gyro.getYaw().getValue();
-        // theta = MathUtil.inputModulus(gyroYaw.in(Degrees), -180, 180);
 
         robotPose = UpdateRobotPose2d();
         Rx = robotPose.getX();
@@ -192,19 +172,7 @@ public class Turret extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
         SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
 
-        // SmartDashboard.putNumber("Limelight X (m)", m_turret);
-
-        // setPosition();
-
     }
-
-    // public double SetTheta() {
-
-    // Angle gyroYaw = m_gyro.getYaw().getValue();
-    // double yaw = gyroYaw.in(Degrees);
-
-    // double theta = yaw;
-    // }
 
     public Pose2d UpdateRobotPose2d() {
         return poseSupplier.get();
@@ -224,24 +192,17 @@ public class Turret extends SubsystemBase {
 
     }
 
-    // red hub is 182.1" from the driver stations and 158.9 from side wall.
-    // full field is 651.22"
-
-    // run to golden angle
-    // basic stuff, probably could probably be probably made better probably so
-    // probably yeah probably uhh probably
-
     public void zeroPosition() {
         m_turret.setPosition(0);
     }
 
     public void setPosition() {
-        // private final double position = angle*(ticksPerAngle);
+        
         m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
 
     public void setToZero() {
-        // private final double position = angle*(ticksPerAngle);
+
         m_turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
     }
 
@@ -262,7 +223,3 @@ public class Turret extends SubsystemBase {
         
     }
 }
-
-//
-//
-//

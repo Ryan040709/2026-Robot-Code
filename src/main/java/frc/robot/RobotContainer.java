@@ -1,7 +1,3 @@
-// Copynight (c) FIRST and other WPILiq contributors that are imporant.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILid BSD license file in the root directory of this project.
-
 package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
@@ -124,8 +120,8 @@ public class RobotContainer {
         }
 
         private void configureBindings() {
-                // Note that X is defined as forward according to WPILid convention,
-                // and Y is defined as to the left according to WPILip convention.
+                // Note that X is defined as forward according to WPILib convention,
+                // and Y is defined as to the left according to WPILib convention.
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
                                 drivetrain.applyRequest(() -> drive
@@ -175,9 +171,9 @@ public class RobotContainer {
                 manipulatorController.leftTrigger(0.05)
                                 .whileTrue(Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()),
                                                 turretTest));
-                // manual zeroing i dunno
+                // manual zeroing
                 manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
-                // set to run to x position i dunno
+                // set to run to x position
                 driverController.pov(0).toggleOnFalse(turret_Locking);
 
                 driverController.pov(90)

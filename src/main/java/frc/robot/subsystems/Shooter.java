@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILip contributors. so dont mess with us
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILid BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import static edu.wpi.first.units.Units.Degrees;
@@ -46,10 +42,6 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-//import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
-//#swervesbeswervey
-
-//
 
 public class Shooter extends SubsystemBase {
 
@@ -65,7 +57,7 @@ public class Shooter extends SubsystemBase {
 
     private final double NinetyDegreeRotation = 33.73877;
 
-    public final double Hy = 4.03606;// THESE ARE IN METERS NOT INCHES
+    public final double Hy = 4.03606;
     public final double redHx = 11.98482;
     public final double blueHx = 4.62554;
     public double Rx;
@@ -79,18 +71,11 @@ public class Shooter extends SubsystemBase {
 
     public boolean isToggle = true;
 
-    // im bored in need a task to do 1/17/2026 at 2:13 PM Saturday not monday or
-    // smth else now its 2:14
-    // private final double ticksPerAngleRatio = NinetyDegreeRotation*(360/90);
-
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
     public static int kPigeonId = 14;
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
-
-    // odometry stuff
-    // could probably be moved to swerve subsystem?
 
     // setting the postions of our swerve modules for kinematics
     private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
@@ -104,7 +89,6 @@ public class Shooter extends SubsystemBase {
             m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
             m_backRightLocation);
 
-    // limelight goofy ahh stuff
     // Basic targeting data
     double tx = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
@@ -115,10 +99,6 @@ public class Shooter extends SubsystemBase {
                                                                 // target in degrees
     double tync = LimelightHelpers.getTYNC("limelight-turret"); // Vertical offset from principal pixel/point to target
                                                                 // in degrees
-
-    // VelocityVoltage Velocity = new
-    // VelocityVoltage(0,0,false,0,0,false,false,false);
-
     VelocityVoltage velocity = new VelocityVoltage(0);
 
     InvertedValue Invert = InvertedValue.Clockwise_Positive;
@@ -128,7 +108,7 @@ public class Shooter extends SubsystemBase {
     public Shooter(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
-        // pid things
+        //pid
         TalonFXConfiguration shooterConfig = new TalonFXConfiguration();
         shooterConfig.MotorOutput.PeakForwardDutyCycle = 1;
         shooterConfig.MotorOutput.PeakReverseDutyCycle = -1;
@@ -143,25 +123,21 @@ public class Shooter extends SubsystemBase {
         shooterConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
         shooterConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
         shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        // shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 *
-        // (ticksPerAngle);
-        shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        // shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 *
-        // (ticksPerAngle);
 
-        // Voltage things
+        shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+
         shooterConfig.Voltage.PeakForwardVoltage = 16;
         shooterConfig.Voltage.PeakReverseVoltage = -16;
-        // Differential Constants and things like that
+        // Differential Constants
         shooterConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
         shooterConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
         shooterConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        // Motion Magic things
+        // Motion Magic
         shooterConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
         shooterConfig.MotionMagic.MotionMagicAcceleration = 150;
         shooterConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
         shooterConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        // Torque Current things
+        // Torque Current
         shooterConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         shooterConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
         // Set shooter motor settings
@@ -192,19 +168,19 @@ public class Shooter extends SubsystemBase {
         hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
 
-        // Voltage things
+        // Voltage
         hoodConfig.Voltage.PeakForwardVoltage = 16;
         hoodConfig.Voltage.PeakReverseVoltage = -16;
-        // Differential Constants and things like that
+        // Differential Constants
         hoodConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
         hoodConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
         hoodConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        // Motion Magic things
+        // Motion Magic
         hoodConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
         hoodConfig.MotionMagic.MotionMagicAcceleration = 150;
         hoodConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
         hoodConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        // Torque Current things
+        // Torque Current
         hoodConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         hoodConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 
@@ -262,7 +238,7 @@ public class Shooter extends SubsystemBase {
     public double calculateDistanceToHub() {
 
         double tX = isBlue ? blueHx : redHx;
-        double DistanceToTarget = Math.sqrt((Math.pow((Rx - tX), 2) + Math.pow((Ry - Hy), 2))); // (turretHubAngle-theta);
+        double DistanceToTarget = Math.sqrt((Math.pow((Rx - tX), 2) + Math.pow((Ry - Hy), 2)));
         // uses point distance formula to determine the distance between the target and
         // robot
 
@@ -315,7 +291,3 @@ public class Shooter extends SubsystemBase {
 
     }
 }
-
-//
-//
-//
