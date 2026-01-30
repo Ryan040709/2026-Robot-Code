@@ -32,6 +32,7 @@ import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
+import frc.robot.commands.shooter.Hood_SetToPosition;
 //out of bumper intake commands
 import frc.robot.commands.intake.outTheBumper.Intake_LowerIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
@@ -64,39 +65,56 @@ public class RobotContainer {
 
         private final CommandXboxController driverController = new CommandXboxController(0);
 
-        Intake_HopperToIntake hopperToIntake = new Intake_HopperToIntake();
-        Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter();
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
-
         // manipulator controller
         private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
         public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-
+        // turret subsystem
         Turret turretTest = new Turret(drivetrain::getPose);
-
+        // shooter subsystem
         Shooter shooter = new Shooter(drivetrain::getPose);
-
+        // in the bumper intake subsystem
         throughBumperIntake intake = new throughBumperIntake();
-
+        // out of bumper intake subsystem
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
 
+        // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
-
+        Hood_SetToPosition shooter_setToPosition = new Hood_SetToPosition(shooter);
+        // turret commands
         Turret_TargetLocking turret_Locking = new Turret_TargetLocking(turretTest);
-
         // out of bumper intake commands
         Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
         Intake_RunIntake intake_RunIntake = new Intake_RunIntake(OutOfBumperIntake);
         Intake_StopIntake intake_StopIntake = new Intake_StopIntake(OutOfBumperIntake);
         Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
+        // in the bumper intake commands
+        Intake_HopperToIntake hopperToIntake = new Intake_HopperToIntake();
+        Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter();
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
 
         public RobotContainer() {
                 NamedCommands.registerCommand("intake", new IntakeCommand());
-
+                // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
+                NamedCommands.registerCommand("turret-locking", turret_Locking);
+                // out of bumper intake commands
+                NamedCommands.registerCommand("intake-lower", intake_LowerIntake);
+                NamedCommands.registerCommand("intake-raise", intake_RaiseIntake);
+                NamedCommands.registerCommand("intake-intake", intake_RunIntake);
+                NamedCommands.registerCommand("intake-stop", intake_StopIntake);
+                NamedCommands.registerCommand("intake-stop", intake_RunOuttake);
+                // in the bumper intake commands
+                NamedCommands.registerCommand("intake-hopperToIntake", hopperToIntake);
+                NamedCommands.registerCommand("intake-hopperToShooter", hopperToShooter);
+                NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
+                NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
+                // shooter commands
+                NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
+                NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
+                // climber commands
 
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
