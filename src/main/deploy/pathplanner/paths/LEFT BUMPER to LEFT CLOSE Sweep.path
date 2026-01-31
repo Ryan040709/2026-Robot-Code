@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.5,
-        "y": 5.500153846153847
+        "y": 5.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.499999999999999,
-        "y": 5.500153846153847
+        "x": 4.499999999999998,
+        "y": 5.5
       },
       "isLocked": false,
       "linkedName": "trench to close sweep"
@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 5.75,
-        "y": 2.2
+        "y": 5.5
       },
       "prevControl": {
         "x": 4.987,
-        "y": 2.2
+        "y": 5.5
       },
       "nextControl": {
         "x": 6.0,
-        "y": 2.2
+        "y": 5.5
       },
       "isLocked": false,
       "linkedName": null
@@ -47,7 +47,7 @@
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": 45.0
+      "rotationDegrees": -45.0
     },
     {
       "waypointRelativePos": 2.0,

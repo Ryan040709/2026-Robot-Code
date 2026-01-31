@@ -1,0 +1,108 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Testing Pose"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Close LEFT-RIGHT SWIM shot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Trench TO Right CLOSE Sweep"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT Close CutSweep"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right CutSweep to Trench"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "2026 Autons",
+  "choreoAuto": false
+}

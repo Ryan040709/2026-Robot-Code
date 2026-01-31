@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.77,
+        "y": 6.023423076923077
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.77,
+        "y": 7.523423076923077
+      },
+      "isLocked": false,
+      "linkedName": "right close sweep end"
+    },
+    {
+      "anchor": {
+        "x": 3.932679487179488,
+        "y": 7.4653205128205125
+      },
+      "prevControl": {
+        "x": 4.932679487179488,
+        "y": 7.4653205128205125
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "trench close sweep end"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": true
+}

@@ -4,53 +4,53 @@
     {
       "anchor": {
         "x": 3.5,
-        "y": 5.500153846153847
+        "y": 2.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.499999999999998,
-        "y": 5.500153846153847
-      },
-      "isLocked": false,
-      "linkedName": "trench to close sweep"
-    },
-    {
-      "anchor": {
-        "x": 5.75,
-        "y": 5.500153846153847
-      },
-      "prevControl": {
-        "x": 4.987,
-        "y": 5.500153846153847
-      },
-      "nextControl": {
-        "x": 6.0,
-        "y": 5.500153846153847
+        "x": 4.499999999999999,
+        "y": 2.2
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.769987179487181,
-        "y": 6.790884615384616
+        "x": 5.75,
+        "y": 2.2
       },
       "prevControl": {
-        "x": 5.269987179487181,
-        "y": 6.790884615384616
+        "x": 4.987,
+        "y": 2.2
+      },
+      "nextControl": {
+        "x": 6.0,
+        "y": 2.2
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.77,
+        "y": 1.2
+      },
+      "prevControl": {
+        "x": 5.27,
+        "y": 1.2000000000000002
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "close middle sweep start"
+      "linkedName": "right close sweep start"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 1.0,
-      "rotationDegrees": -45.0
+      "rotationDegrees": 45.0
     },
     {
-      "waypointRelativePos": 2.0,
+      "waypointRelativePos": 1.75,
       "rotationDegrees": 90.0
     }
   ],
@@ -67,13 +67,13 @@
   },
   "goalEndState": {
     "velocity": 3.0,
-    "rotation": -90.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": -45.0
+    "rotation": 45.0
   },
   "useDefaultConstraints": true
 }

@@ -3,61 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.932679487179488,
-        "y": 7.4653205128205125
+        "x": 7.77,
+        "y": 3.75
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.932679487179488,
-        "y": 7.4653205128205125
+        "x": 6.769999999999996,
+        "y": 3.75
       },
       "isLocked": false,
-      "linkedName": "trench close sweep end"
+      "linkedName": "Right Close CutSweep END"
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 6.3989023203685305
+        "x": 5.450650602409639,
+        "y": 0.625
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 7.055829914709918
+        "x": 6.849397590361447,
+        "y": 0.6036987951807224
       },
       "nextControl": {
-        "x": 3.0,
-        "y": 5.741974726027144
+        "x": 4.201117003541187,
+        "y": 0.644028867513088
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.0,
-        "y": 1.601328448862239
+        "x": 3.516,
+        "y": 0.625
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 1.9125982864394835
-      },
-      "nextControl": {
-        "x": 3.0,
-        "y": 1.2900586112849943
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.5,
-        "y": 5.500153846153847
-      },
-      "prevControl": {
-        "x": 2.5,
-        "y": 5.500153846153847
+        "x": 4.516,
+        "y": 0.6249999999999999
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "trench to close sweep"
+      "linkedName": "right trench START"
     }
   ],
   "rotationTargets": [],
@@ -69,8 +53,8 @@
         "y": 4.03606
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 2.75,
+      "minWaypointRelativePos": 1.5,
+      "maxWaypointRelativePos": 1.5,
       "name": "Point Towards Zone"
     }
   ],
@@ -84,14 +68,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": -45.0
+    "velocity": 3.0,
+    "rotation": 45.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -90.0
+    "velocity": 3.0,
+    "rotation": 90.0
   },
   "useDefaultConstraints": true
 }
