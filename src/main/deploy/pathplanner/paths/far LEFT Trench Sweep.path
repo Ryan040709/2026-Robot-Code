@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.516,
-        "y": 0.625
+        "x": 7.85,
+        "y": 6.8999999999999995
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.515999999999998,
-        "y": 0.625
+        "x": 7.85,
+        "y": 6.001914037180144
       },
       "isLocked": false,
-      "linkedName": "right trench START"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.5023846153846168,
-        "y": 3.7094102564102567
+        "x": 7.85,
+        "y": 2.077
       },
       "prevControl": {
-        "x": 2.5023846153846168,
-        "y": 3.7094102564102567
+        "x": 7.85,
+        "y": 2.391821708671989
       },
       "nextControl": null,
       "isLocked": false,
@@ -30,18 +30,7 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 4.62554,
-        "y": 4.03606
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.75,
-      "name": "Point Towards Zone"
-    }
-  ],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
@@ -52,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 0.0
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -45.0
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

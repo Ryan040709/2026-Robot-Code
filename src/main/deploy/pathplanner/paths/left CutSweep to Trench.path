@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.516,
-        "y": 0.625
+        "x": 7.77,
+        "y": 4.35
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.515999999999998,
-        "y": 0.625
+        "x": 6.769999999999996,
+        "y": 4.35
       },
       "isLocked": false,
-      "linkedName": "right trench START"
+      "linkedName": "left close cutsweep end"
     },
     {
       "anchor": {
-        "x": 1.5023846153846168,
-        "y": 3.7094102564102567
+        "x": 5.653653846153848,
+        "y": 7.475
       },
       "prevControl": {
-        "x": 2.5023846153846168,
-        "y": 3.7094102564102567
+        "x": 7.052400834105645,
+        "y": 7.453698795180722
+      },
+      "nextControl": {
+        "x": 4.4041202472853955,
+        "y": 7.494028867513087
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.516,
+        "y": 7.475
+      },
+      "prevControl": {
+        "x": 4.516,
+        "y": 7.475
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "left trench start"
     }
   ],
   "rotationTargets": [],
@@ -37,8 +53,8 @@
         "y": 4.03606
       },
       "rotationOffset": 0.0,
-      "minWaypointRelativePos": 0.0,
-      "maxWaypointRelativePos": 0.75,
+      "minWaypointRelativePos": 1.5,
+      "maxWaypointRelativePos": 1.5,
       "name": "Point Towards Zone"
     }
   ],
@@ -53,13 +69,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 0.0
+    "rotation": -45.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -45.0
+    "velocity": 3.0,
+    "rotation": -90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
