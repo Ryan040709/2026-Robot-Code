@@ -95,7 +95,6 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake", new IntakeCommand());
                 // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
-                NamedCommands.registerCommand("turret-locking", turret_Locking);
                 // out of bumper intake commands
                 NamedCommands.registerCommand("intake-lower", intake_LowerIntake);
                 NamedCommands.registerCommand("intake-raise", intake_RaiseIntake);
