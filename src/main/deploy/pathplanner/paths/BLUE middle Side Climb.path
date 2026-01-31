@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.2698461538461547,
-        "y": 3.7094102564102567
+        "x": 3.516,
+        "y": 0.625
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.2698461538461525,
-        "y": 3.7094102564102567
+        "x": 2.515999999999998,
+        "y": 0.625
       },
       "isLocked": false,
-      "linkedName": "BLUE middle climb start"
+      "linkedName": "right trench START"
     },
     {
       "anchor": {
@@ -25,12 +25,23 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BLUE middle climb END"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.62554,
+        "y": 4.03606
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 0.0,
+      "maxWaypointRelativePos": 0.75,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
@@ -42,13 +53,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 45.0
   },
   "useDefaultConstraints": true
 }

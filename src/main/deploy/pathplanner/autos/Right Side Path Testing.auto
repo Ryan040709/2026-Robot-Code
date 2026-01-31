@@ -13,12 +13,6 @@
                 "data": {
                   "pathName": "Testing Pose"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "turret-locking"
-                }
               }
             ]
           }
@@ -31,12 +25,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "Close LEFT-RIGHT SWIM shot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "turret-locking"
                 }
               }
             ]
@@ -51,12 +39,6 @@
                 "data": {
                   "pathName": "Right Trench TO Right CLOSE Sweep"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "turret-locking"
-                }
               }
             ]
           }
@@ -69,12 +51,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "RIGHT Close CutSweep"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "turret-locking"
                 }
               }
             ]
@@ -89,11 +65,57 @@
                 "data": {
                   "pathName": "Right CutSweep to Trench"
                 }
-              },
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "turret-locking"
+                  "pathName": "Right Trench TO Right CLOSE Sweep"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RIGHT Close Sweep"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Right Close Sweep to LeftTRENCH"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "Close LEFT-RIGHT SWIM shot"
                 }
               }
             ]
