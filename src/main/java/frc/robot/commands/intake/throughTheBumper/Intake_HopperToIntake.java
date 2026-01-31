@@ -9,9 +9,6 @@ import frc.robot.subsystems.HopperSubsystem;
 
 public class Intake_HopperToIntake extends Command {
 
-    private TalonFX intakeMotor1 = new TalonFX(10);
-    private TalonFX intakeMotor2 = new TalonFX(10);
-
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
     throughBumperIntake intakeSubsystem = new throughBumperIntake();
 

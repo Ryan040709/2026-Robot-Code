@@ -3,9 +3,12 @@
   "robotLength": 0.6985,
   "holonomicMode": true,
   "pathFolders": [
+    "Auton Path Links",
     "three shoot auto"
   ],
-  "autoFolders": [],
+  "autoFolders": [
+    "2026 Autons"
+  ],
   "defaultMaxVel": 3.0,
   "defaultMaxAccel": 3.0,
   "defaultMaxAngVel": 540.0,
