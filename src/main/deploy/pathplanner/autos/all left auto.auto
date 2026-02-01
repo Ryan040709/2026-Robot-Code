@@ -35,18 +35,6 @@
                       "data": {
                         "pathName": "Left close Sweep to RightTRENCH"
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Close RIGHT-LEFT SWIM shot"
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Left Trench TO Left FAR Sweep"
-                      }
                     }
                   ]
                 }
