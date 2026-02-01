@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 7.77,
-        "y": 3.75
+        "y": 4.35
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.769999999999996,
-        "y": 3.75
+        "y": 4.35
       },
       "isLocked": false,
-      "linkedName": "Right Close CutSweep END"
+      "linkedName": "left close cutsweep end"
     },
     {
       "anchor": {
         "x": 5.653653846153848,
-        "y": 0.625
+        "y": 7.475
       },
       "prevControl": {
-        "x": 7.052400834105646,
-        "y": 0.6036987951807224
+        "x": 7.052400834105645,
+        "y": 7.453698795180722
       },
       "nextControl": {
         "x": 4.4041202472853955,
-        "y": 0.644028867513088
+        "y": 7.494028867513087
       },
       "isLocked": false,
       "linkedName": null
@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 3.516,
-        "y": 0.625
+        "y": 7.475
       },
       "prevControl": {
         "x": 4.516,
-        "y": 0.6249999999999999
+        "y": 7.475
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "right trench START"
+      "linkedName": "left trench start"
     }
   ],
   "rotationTargets": [],
@@ -75,7 +75,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
