@@ -53,7 +53,7 @@
       },
       "prevControl": {
         "x": 1.516,
-        "y": 0.625
+        "y": 0.6250000000000002
       },
       "nextControl": null,
       "isLocked": false,
@@ -84,14 +84,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
+    "velocity": 0,
     "rotation": 45.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
