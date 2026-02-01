@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 3.932679487179488,
-        "y": 7.4653205128205125
+        "y": 7.375
       },
       "prevControl": {
         "x": 4.932679487179488,
-        "y": 7.4653205128205125
+        "y": 7.375
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "trench close sweep end"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 3.0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

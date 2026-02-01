@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.932679487179488,
-        "y": 7.4653205128205125
+        "y": 7.375
       },
       "prevControl": null,
       "nextControl": {
         "x": 2.932679487179488,
-        "y": 7.4653205128205125
+        "y": 7.375
       },
       "isLocked": false,
       "linkedName": "trench close sweep end"
