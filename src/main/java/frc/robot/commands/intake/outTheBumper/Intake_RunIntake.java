@@ -23,7 +23,7 @@ public class Intake_RunIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_outOfBumperIntake.runIntake();
+    s_outOfBumperIntake.IntakeSpeed(1);
   }
 
   // Called once the command ends or is interrupted.

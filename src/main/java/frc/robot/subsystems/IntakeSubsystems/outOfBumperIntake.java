@@ -61,26 +61,15 @@ public class outOfBumperIntake extends SubsystemBase {
         pivotMotor1.getConfigurator().apply(motorConfig);
     }
 
-    public void lowerIntake() {
-        pivotMotor1.setControl(new PositionVoltage(10)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
-        pivotMotor2.setControl(new PositionVoltage(10)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
+    public void PrivotIntake(double targetPosition) {
+        pivotMotor1.setControl(new PositionVoltage(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
+        pivotMotor2.setControl(new PositionVoltage(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
     }
 
-    public void raiseIntake() {
-        pivotMotor1.setControl(new PositionVoltage(0)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
-        pivotMotor2.setControl(new PositionVoltage(0)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
+    public void IntakeSpeed(double speed) {
+       intake.set(speed);
     }
 
-    public void runIntake() {
-       intake.set(1);
-    }
-
-    public void runOuttake() {
-       intake.set(-1);
-    }
-
-    public void stopIntake() {
-       intake.set(0);
-    }
+    // my gosh it's so empty... it's UGLY!!!
 
 }

@@ -24,7 +24,7 @@ public class Intake_RaiseIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_outOfBumperIntake.raiseIntake();
+    s_outOfBumperIntake.PrivotIntake(0);
   }
 
   // Called once the command ends or is interrupted.
