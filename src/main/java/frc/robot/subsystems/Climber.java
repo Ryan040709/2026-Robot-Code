@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
@@ -67,7 +68,7 @@ public class Climber extends SubsystemBase {
 
         elevatorMotorA.getConfigurator().apply(climberConfigs);
         elevatorMotorB.getConfigurator().apply(climberConfigs);
-        // elevatorMotorB.setControl(new Follower(15, false));
+        elevatorMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); //sets the motor to be reversed... I think - Brian
         m_request = new MotionMagicVoltage(0);
 
     }
