@@ -93,7 +93,7 @@ public class Climber extends SubsystemBase {
     @Override
     public void periodic() {
         elevatorPosition = elevatorMotorA.getPosition().getValueAsDouble();
-        SmartDashboard.putNumber("elevator pos", elevatorPosition);
+        SmartDashboard.putNumber("climber pos", elevatorPosition);
 
     }
 
