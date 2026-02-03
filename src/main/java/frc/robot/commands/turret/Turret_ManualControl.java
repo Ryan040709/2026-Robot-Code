@@ -8,15 +8,15 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.TurretSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class Turret_ManualControl extends Command {
-  Turret s_Turret; 
+  TurretSubsystem TurretSubsystem; 
   /** Creates a new Turret_ManualControl. */
-  public Turret_ManualControl(Turret s_Turret) {
-    this.s_Turret = s_Turret;
-    addRequirements(s_Turret);
+  public Turret_ManualControl(TurretSubsystem turretSubsystem) {
+    this.TurretSubsystem = turretSubsystem;
+    addRequirements(turretSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -29,7 +29,7 @@ public class Turret_ManualControl extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_Turret.MoveMotor(0);
+    TurretSubsystem.MoveMotor(0);
   }
 
   // Called once the command ends or is interrupted.

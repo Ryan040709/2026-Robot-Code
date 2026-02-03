@@ -2,18 +2,18 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Climber;
+package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ClimberSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ClimberLower extends Command {
-  Climber climberSubsystem;
+  ClimberSubsystem ClimberSubsystem;
   int counter;
   /** Creates a new ElevatorLowPosision. */
-  public ClimberLower(Climber elevatorSubsystem) {
-    this.climberSubsystem = elevatorSubsystem;
+  public ClimberLower(ClimberSubsystem climberSubsystem) {
+    this.ClimberSubsystem = climberSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -30,11 +30,11 @@ public class ClimberLower extends Command {
     if(counter == 0){
 
     }
-    if(climberSubsystem.ElevatorPast(13)){
+    if(ClimberSubsystem.ClimberPast(13)){
       counter =1;
-    climberSubsystem.moveToPosition(0);
+    ClimberSubsystem.MoveToPosition(0);
     }
-    if(climberSubsystem.ElevatorPast(32)){
+    if(ClimberSubsystem.ClimberPast(32)){
 
     }
 
@@ -47,6 +47,6 @@ public class ClimberLower extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return climberSubsystem.AtGoalPosition(0);
+    return ClimberSubsystem.AtGoalPosition(0);
   }
 }

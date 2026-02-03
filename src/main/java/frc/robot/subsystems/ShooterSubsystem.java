@@ -43,14 +43,14 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public class Shooter extends SubsystemBase {
+public class ShooterSubsystem extends SubsystemBase {
 
     private Supplier<Pose2d> poseSupplier;
 
-    private TalonFX m_ShooterL = new TalonFX(15);
-    private TalonFX m_ShooterR = new TalonFX(16);
+    private TalonFX shooterMotorL = new TalonFX(15);
+    private TalonFX shooterMotorR = new TalonFX(16);
 
-    private TalonFX m_Hood = new TalonFX(17);
+    private TalonFX hood = new TalonFX(17);
     private PositionVoltage m_request = new PositionVoltage(0);
 
     private final double maxAngle = 33.73877 / 90;
@@ -75,7 +75,7 @@ public class Shooter extends SubsystemBase {
 
     public static int kPigeonId = 14;
 
-    private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
+    private final Pigeon2 gyro = new Pigeon2(6, "rio");
 
     // setting the postions of our swerve modules for kinematics
     private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
@@ -105,7 +105,7 @@ public class Shooter extends SubsystemBase {
     NeutralModeValue Coast = NeutralModeValue.Coast;
     NeutralModeValue Break = NeutralModeValue.Brake;
 
-    public Shooter(Supplier<Pose2d> poseSupplier) {
+    public ShooterSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
         //pid
@@ -146,8 +146,8 @@ public class Shooter extends SubsystemBase {
         shooterConfig.MotorOutput.PeakReverseDutyCycle = -.5;
         shooterConfig.MotorOutput.NeutralMode = Coast;
 
-        m_ShooterL.getConfigurator().apply(shooterConfig);
-        m_ShooterR.getConfigurator().apply(shooterConfig);
+        shooterMotorL.getConfigurator().apply(shooterConfig);
+        shooterMotorR.getConfigurator().apply(shooterConfig);
 
         // hood motor PID
         TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
@@ -184,21 +184,21 @@ public class Shooter extends SubsystemBase {
         hoodConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         hoodConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 
-        m_Hood.getConfigurator().apply(hoodConfig);
+        hood.getConfigurator().apply(hoodConfig);
 
     }
 
     public void zeroHood() {
-        m_Hood.setPosition(0);
+        hood.setPosition(0);
     }
 
     public void setHoodPosition() {
-        m_Hood.setPosition(calculateHoodPosition());
+        hood.setPosition(calculateHoodPosition());
     }
 
     public void RuntoRPMs() {
-        m_ShooterL.setControl(velocity.withVelocity(DistancetoRpms(calculateDistanceToHub())));
-        m_ShooterR.setControl(velocity.withVelocity(-DistancetoRpms(calculateDistanceToHub())));
+        shooterMotorL.setControl(velocity.withVelocity(DistancetoRpms(calculateDistanceToHub())));
+        shooterMotorR.setControl(velocity.withVelocity(-DistancetoRpms(calculateDistanceToHub())));
     }
 
     @Override

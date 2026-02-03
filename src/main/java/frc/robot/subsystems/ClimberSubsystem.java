@@ -19,25 +19,25 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 // TODO TEST MOTION MAGIC THEN DELETE TRAPEZOIDAL POSITIONING
 /** Add your docs here. */
-public class Climber extends SubsystemBase {
-    public final TalonFX elevatorMotorA = new TalonFX(11);
-    public final TalonFX elevatorMotorB = new TalonFX(12);
-    public final CANcoder elevatorCANcoder = new CANcoder(13);
+public class ClimberSubsystem extends SubsystemBase {
+    public final TalonFX climberMotorA = new TalonFX(11);
+    public final TalonFX climberMotorB = new TalonFX(12);
+    public final CANcoder climberCANcoder = new CANcoder(13);
 
     private DigitalInput bottomStop = new DigitalInput(1);
     private MotionMagicVoltage m_request;
 
-    public PIDController elevatorPID = new PIDController(1.1, 0, 0.13);
+    public PIDController climberPID = new PIDController(1.1, 0, 0.13);
 
     // variables
-    private double elevatorPosition;
+    private double climberPosition;
 
-    // like every value is stripped directly from the 2025 elevator... SHH don't
+    // like every value is stripped directly from the 2025 climber... SHH don't
     // tell anyone!!!
 
     // TODO connect feed forward to trapezoidal profile - needs to be tested
 
-    public Climber() {
+    public ClimberSubsystem() {
 
         TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
 
@@ -66,35 +66,35 @@ public class Climber extends SubsystemBase {
         motionMagicConfigs.MotionMagicAcceleration = 200; // Target acceleration of 160 rps/s (0.5 seconds)
         motionMagicConfigs.MotionMagicJerk = 0; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
-        elevatorMotorA.getConfigurator().apply(climberConfigs);
-        elevatorMotorB.getConfigurator().apply(climberConfigs);
-        elevatorMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); //sets the motor to be reversed... I think - Brian
+        climberMotorA.getConfigurator().apply(climberConfigs);
+        climberMotorB.getConfigurator().apply(climberConfigs);
+        climberMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); //sets the motor to be reversed... I think - Brian
         m_request = new MotionMagicVoltage(0);
 
     }
 
     public boolean AtGoalPosition(double GoalPosition) {
-        return MathUtil.isNear(GoalPosition, elevatorPosition, .5);
+        return MathUtil.isNear(GoalPosition, climberPosition, .5);
     }
 
-    public boolean ElevatorPast(double goalPosition) {
-        return elevatorPosition > goalPosition;
+    public boolean ClimberPast(double goalPosition) {
+        return climberPosition > goalPosition;
     }
 
-    public void moveToPosition(double newPosition) {
+    public void MoveToPosition(double newPosition) {
 
-        elevatorMotorA.setControl(m_request.withPosition(newPosition).withSlot(1));
+        climberMotorA.setControl(m_request.withPosition(newPosition).withSlot(1));
 
     }
 
     public void ResetEncoder() {
-        elevatorMotorA.setPosition(0);
+        climberMotorA.setPosition(0);
     }
 
     @Override
     public void periodic() {
-        elevatorPosition = elevatorMotorA.getPosition().getValueAsDouble();
-        SmartDashboard.putNumber("climber pos", elevatorPosition);
+        climberPosition = climberMotorA.getPosition().getValueAsDouble();
+        SmartDashboard.putNumber("climber pos", climberPosition);
 
     }
 

@@ -4,17 +4,17 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.TurretSubsystem;
 
 public class Turret_TargetLocking extends Command {
 
 boolean intakeValue = false;
 
-  Turret s_Turret; 
+  TurretSubsystem TurretSubsystem; 
   /** Creates a new Turret_TargetLocking. */
-  public Turret_TargetLocking(Turret s_Turret) {
-    this.s_Turret = s_Turret;
-    addRequirements(s_Turret);
+  public Turret_TargetLocking(TurretSubsystem turretSubsystem) {
+    this.TurretSubsystem = turretSubsystem;
+    addRequirements(turretSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 
@@ -28,7 +28,7 @@ intakeValue = true;
   @Override
   public void execute() {
     System.out.println("shooter Tracking");
-    s_Turret.setPosition();
+    TurretSubsystem.setPosition();
 
      SmartDashboard.putBoolean("turret", intakeValue);
   }

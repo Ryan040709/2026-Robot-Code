@@ -39,11 +39,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-public class Turret extends SubsystemBase {
+public class TurretSubsystem extends SubsystemBase {
     
     private Supplier<Pose2d> poseSupplier;
 
-    private TalonFX m_turret = new TalonFX(10);
+    private TalonFX turret = new TalonFX(10);
     private PositionVoltage m_request = new PositionVoltage(0);
 
     private final double maxAngle = 33.73877 / 90;
@@ -90,7 +90,7 @@ public class Turret extends SubsystemBase {
     double tync = LimelightHelpers.getTYNC("limelight-turret"); // Vertical offset from principal pixel/point to target
                                                                 // in degrees
 
-    public Turret(Supplier<Pose2d> poseSupplier) {
+    public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
         // pid
@@ -128,16 +128,16 @@ public class Turret extends SubsystemBase {
         motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
         motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
 
-        m_turret.getConfigurator().apply(motorConfig);
+        turret.getConfigurator().apply(motorConfig);
 
     }
 
     public void MoveMotor(double targetSpeed) {
-        if (m_turret.getPosition().getValueAsDouble() > -maxAngle
-                || m_turret.getPosition().getValueAsDouble() < maxAngle) {
-            m_turret.set(targetSpeed);
+        if (turret.getPosition().getValueAsDouble() > -maxAngle
+                || turret.getPosition().getValueAsDouble() < maxAngle) {
+            turret.set(targetSpeed);
         } else {
-            m_turret.set(0);
+            turret.set(0);
         }
 
     }
@@ -161,7 +161,7 @@ public class Turret extends SubsystemBase {
 
 
         SmartDashboard.putNumber("Gyro Angle", theta);
-        SmartDashboard.putNumber("Turret Angle", m_turret.getPosition().getValueAsDouble() / (ticksPerAngle));
+        SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
         // Push values to SmartDashboard
         SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
@@ -193,17 +193,17 @@ public class Turret extends SubsystemBase {
     }
 
     public void zeroPosition() {
-        m_turret.setPosition(0);
+        turret.setPosition(0);
     }
 
     public void setPosition() {
         
-        m_turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
+        turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
 
     public void setToZero() {
 
-        m_turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
+        turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
     }
 
     public double calculateAngleToHub() {

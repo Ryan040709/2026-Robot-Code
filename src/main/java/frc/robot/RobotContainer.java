@@ -18,10 +18,10 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToIntake;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
@@ -66,9 +66,9 @@ public class RobotContainer {
 
         public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
         // turret subsystem
-        Turret turretTest = new Turret(drivetrain::getPose);
+        TurretSubsystem turretTest = new TurretSubsystem(drivetrain::getPose);
         // shooter subsystem
-        Shooter shooter = new Shooter(drivetrain::getPose);
+        ShooterSubsystem shooter = new ShooterSubsystem(drivetrain::getPose);
         // in the bumper intake subsystem
         throughBumperIntake intake = new throughBumperIntake();
         // out of bumper intake subsystem
