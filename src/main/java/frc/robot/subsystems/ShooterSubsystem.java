@@ -40,7 +40,7 @@ import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -108,81 +108,77 @@ public class ShooterSubsystem extends SubsystemBase {
     public ShooterSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
-        //pid
+        // pid
         TalonFXConfiguration shooterConfig = new TalonFXConfiguration();
-        shooterConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        shooterConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        shooterConfig.MotorOutput.PeakForwardDutyCycle = Constants.ShooterSubsystem.Shooter_PeakForwardDutyCycle;
+        shooterConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Shooter_PeakReverseDutyCycle;
+        // motor "friction" type?
         shooterConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        shooterConfig.Slot0.kP = 1;
-        shooterConfig.Slot0.kI = 0.15;
-        shooterConfig.Slot0.kD = 0;
-        shooterConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-        shooterConfig.CurrentLimits.StatorCurrentLimit = 100;
-        shooterConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        shooterConfig.CurrentLimits.SupplyCurrentLimit = 100;
-        shooterConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
-        shooterConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
-        shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-
-        shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-
-        shooterConfig.Voltage.PeakForwardVoltage = 16;
-        shooterConfig.Voltage.PeakReverseVoltage = -16;
+        // regulars
+        shooterConfig.Slot0.kP = Constants.ShooterSubsystem.Shooter_Slot0_kP;
+        shooterConfig.Slot0.kI = Constants.ShooterSubsystem.Shooter_Slot0_kI;
+        shooterConfig.Slot0.kD = Constants.ShooterSubsystem.Shooter_Slot0_kD;
+        shooterConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.ShooterSubsystem.Shooter_StatorCurrentLimitEnable;
+        shooterConfig.CurrentLimits.StatorCurrentLimit = Constants.ShooterSubsystem.Shooter_CurrentLimit;
+        shooterConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ShooterSubsystem.Shooter_SupplyCurrentLimitEnable;
+        shooterConfig.CurrentLimits.SupplyCurrentLimit = Constants.ShooterSubsystem.Shooter_SupplyCurrentLimit;
+        shooterConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.ShooterSubsystem.Shooter_SupplyCurrentLowerLimit;
+        shooterConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.ShooterSubsystem.Shooter_SupplyCurrentLowerTime;
+        shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.ShooterSubsystem.Shooter_FowardSoftLimitEnable;
+        shooterConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140;
+        shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.ShooterSubsystem.Shooter_ReverseSoftLimitEnable;
+        shooterConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140;
+        // Voltage
+        shooterConfig.Voltage.PeakForwardVoltage = Constants.ShooterSubsystem.Shooter_PeakForwardVoltage;
+        shooterConfig.Voltage.PeakReverseVoltage = Constants.ShooterSubsystem.Shooter_PeakReverseVoltage;
         // Differential Constants
-        shooterConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
-        shooterConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
-        shooterConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
+        shooterConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.ShooterSubsystem.Shooter_PeakDifferentialDutyCycle;
+        shooterConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.ShooterSubsystem.Shooter_PeakDifferentialDutyCycle;
+        shooterConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.ShooterSubsystem.Shooter_PeakDifferentialVoltage;
         // Motion Magic
-        shooterConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
-        shooterConfig.MotionMagic.MotionMagicAcceleration = 150;
-        shooterConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
-        shooterConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
+        shooterConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Shooter_MotionMagicCruiseVelocity;
+        shooterConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Shooter_MotionMagicAcceleration;
+        shooterConfig.MotionMagic.MotionMagicExpo_kA = Constants.ShooterSubsystem.Shooter_MotionMagicExpo_kA;
+        shooterConfig.MotionMagic.MotionMagicExpo_kV = Constants.ShooterSubsystem.Shooter_MotionMagicExpo_kV;
         // Torque Current
-        shooterConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
-        shooterConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
-        // Set shooter motor settings
-        shooterConfig.MotorOutput.Inverted = Invert;
-        shooterConfig.MotorOutput.PeakForwardDutyCycle = .5;
-        shooterConfig.MotorOutput.PeakReverseDutyCycle = -.5;
-        shooterConfig.MotorOutput.NeutralMode = Coast;
-
-        shooterMotorL.getConfigurator().apply(shooterConfig);
-        shooterMotorR.getConfigurator().apply(shooterConfig);
+        shooterConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.ShooterSubsystem.Shooter_PeakForwardTorqueCurrent;
+        shooterConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.ShooterSubsystem.Shooter_PeakReverseTorqueCurrent;
 
         // hood motor PID
         TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
-        hoodConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        hoodConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        hoodConfig.MotorOutput.PeakForwardDutyCycle = Constants.ShooterSubsystem.Hood_PeakForwardDutyCycle;
+        hoodConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Hood_PeakReverseDutyCycle;
+        // motor "friction" type?
         hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        hoodConfig.Slot0.kP = 1;
-        hoodConfig.Slot0.kI = 0.15;
-        hoodConfig.Slot0.kD = 0;
-        hoodConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-        hoodConfig.CurrentLimits.StatorCurrentLimit = 100;
-        hoodConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        hoodConfig.CurrentLimits.SupplyCurrentLimit = 100;
-        hoodConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
-        hoodConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
-        hoodConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        hoodConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (ticksPerAngle);
-        hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
-
+        // regulars
+        hoodConfig.Slot0.kP = Constants.ShooterSubsystem.Hood_Slot0_kP;
+        hoodConfig.Slot0.kI = Constants.ShooterSubsystem.Hood_Slot0_kI;
+        hoodConfig.Slot0.kD = Constants.ShooterSubsystem.Hood_Slot0_kD;
+        hoodConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.ShooterSubsystem.Hood_StatorCurrentLimitEnable;
+        hoodConfig.CurrentLimits.StatorCurrentLimit = Constants.ShooterSubsystem.Hood_CurrentLimit;
+        hoodConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ShooterSubsystem.Hood_SupplyCurrentLimitEnable;
+        hoodConfig.CurrentLimits.SupplyCurrentLimit = Constants.ShooterSubsystem.Hood_SupplyCurrentLimit;
+        hoodConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.ShooterSubsystem.Hood_SupplyCurrentLowerLimit;
+        hoodConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.ShooterSubsystem.Hood_SupplyCurrentLowerTime;
+        hoodConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.ShooterSubsystem.Hood_FowardSoftLimitEnable;
+        hoodConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140;
+        hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.ShooterSubsystem.Hood_ReverseSoftLimitEnable;
+        hoodConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140;
         // Voltage
-        hoodConfig.Voltage.PeakForwardVoltage = 16;
-        hoodConfig.Voltage.PeakReverseVoltage = -16;
+        hoodConfig.Voltage.PeakForwardVoltage = Constants.ShooterSubsystem.Hood_PeakForwardVoltage;
+        hoodConfig.Voltage.PeakReverseVoltage = Constants.ShooterSubsystem.Hood_PeakReverseVoltage;
         // Differential Constants
-        hoodConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
-        hoodConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
-        hoodConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
+        hoodConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.ShooterSubsystem.Hood_PeakDifferentialDutyCycle;
+        hoodConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.ShooterSubsystem.Hood_PeakDifferentialDutyCycle;
+        hoodConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.ShooterSubsystem.Hood_PeakDifferentialVoltage;
         // Motion Magic
-        hoodConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
-        hoodConfig.MotionMagic.MotionMagicAcceleration = 150;
-        hoodConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
-        hoodConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
+        hoodConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Hood_MotionMagicCruiseVelocity;
+        hoodConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Hood_MotionMagicAcceleration;
+        hoodConfig.MotionMagic.MotionMagicExpo_kA = Constants.ShooterSubsystem.Hood_MotionMagicExpo_kA;
+        hoodConfig.MotionMagic.MotionMagicExpo_kV = Constants.ShooterSubsystem.Hood_MotionMagicExpo_kV;
         // Torque Current
-        hoodConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
-        hoodConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
+        hoodConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.ShooterSubsystem.Hood_PeakForwardTorqueCurrent;
+        hoodConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.ShooterSubsystem.Hood_PeakReverseTorqueCurrent;
 
         hood.getConfigurator().apply(hoodConfig);
 

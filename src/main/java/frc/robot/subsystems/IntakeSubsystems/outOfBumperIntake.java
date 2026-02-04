@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class outOfBumperIntake extends SubsystemBase {
@@ -24,41 +25,43 @@ public class outOfBumperIntake extends SubsystemBase {
 
     public outOfBumperIntake() {
 
-        TalonFXConfiguration motorConfig = new TalonFXConfiguration();
-        motorConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        motorConfig.MotorOutput.PeakReverseDutyCycle = -1;
-        motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        motorConfig.Slot0.kP = 1;
-        motorConfig.Slot0.kI = 0.15;
-        motorConfig.Slot0.kD = 0;
-        motorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-        motorConfig.CurrentLimits.StatorCurrentLimit = 100;
-        motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        motorConfig.CurrentLimits.SupplyCurrentLimit = 100;
-        motorConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
-        motorConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140;
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140;
+        TalonFXConfiguration pivotConfig = new TalonFXConfiguration();
+        pivotConfig.MotorOutput.PeakForwardDutyCycle = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakForwardDutyCycle;
+        pivotConfig.MotorOutput.PeakReverseDutyCycle = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakReverseDutyCycle;
+        // motor "friction" type?
+        pivotConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        // regulars
+        pivotConfig.Slot0.kP = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_Slot0_kP;
+        pivotConfig.Slot0.kI = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_Slot0_kI;
+        pivotConfig.Slot0.kD = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_Slot0_kD;
+        pivotConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_StatorCurrentLimitEnable;
+        pivotConfig.CurrentLimits.StatorCurrentLimit = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_CurrentLimit;
+        pivotConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_SupplyCurrentLimitEnable;
+        pivotConfig.CurrentLimits.SupplyCurrentLimit = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_SupplyCurrentLimit;
+        pivotConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_SupplyCurrentLowerLimit;
+        pivotConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_SupplyCurrentLowerTime;
+        pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_FowardSoftLimitEnable;
+        pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140;
+        pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_ReverseSoftLimitEnable;
+        pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140;
+        // Voltage
+        pivotConfig.Voltage.PeakForwardVoltage = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakForwardVoltage;
+        pivotConfig.Voltage.PeakReverseVoltage = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakReverseVoltage;
+        // Differential Constants
+        pivotConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakDifferentialDutyCycle;
+        pivotConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakDifferentialDutyCycle;
+        pivotConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakDifferentialVoltage;
+        // Motion Magic
+        pivotConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_MotionMagicCruiseVelocity;
+        pivotConfig.MotionMagic.MotionMagicAcceleration = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_MotionMagicAcceleration;
+        pivotConfig.MotionMagic.MotionMagicExpo_kA = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_MotionMagicExpo_kA;
+        pivotConfig.MotionMagic.MotionMagicExpo_kV = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_MotionMagicExpo_kV;
+        // Torque Current
+        pivotConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakForwardTorqueCurrent;
+        pivotConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_PeakReverseTorqueCurrent;
 
-        motorConfig.Voltage.PeakForwardVoltage = 16;
-        motorConfig.Voltage.PeakReverseVoltage = -16;
-    
-        motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
-        motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
-        motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
-        
-        motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
-        motorConfig.MotionMagic.MotionMagicAcceleration = 150;
-        motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
-        motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
-        
-        motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
-        motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
-
-        pivotMotor1.getConfigurator().apply(motorConfig);
-        pivotMotor1.getConfigurator().apply(motorConfig);
+        pivotMotor1.getConfigurator().apply(pivotConfig);
+        pivotMotor2.getConfigurator().apply(pivotConfig);
     }
 
     public void PrivotIntake(double targetPosition) {

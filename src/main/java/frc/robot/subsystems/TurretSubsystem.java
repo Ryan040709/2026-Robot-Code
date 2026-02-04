@@ -39,6 +39,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
+//our constants
+import frc.robot.Constants;
+
 public class TurretSubsystem extends SubsystemBase {
     
     private Supplier<Pose2d> poseSupplier;
@@ -95,38 +98,39 @@ public class TurretSubsystem extends SubsystemBase {
 
         // pid
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
-        motorConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        motorConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        motorConfig.MotorOutput.PeakForwardDutyCycle = Constants.TurretSubsystem.Turret_PeakForwardDutyCycle;
+        motorConfig.MotorOutput.PeakReverseDutyCycle = Constants.TurretSubsystem.Turret_PeakReverseDutyCycle;
+        //motor "friction" type?
         motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        motorConfig.Slot0.kP = 1;
-        motorConfig.Slot0.kI = 0.15;
-        motorConfig.Slot0.kD = 0;
-        motorConfig.CurrentLimits.StatorCurrentLimitEnable = true;
-        motorConfig.CurrentLimits.StatorCurrentLimit = 100;
-        motorConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        motorConfig.CurrentLimits.SupplyCurrentLimit = 100;
-        motorConfig.CurrentLimits.SupplyCurrentLowerLimit = 40;
-        motorConfig.CurrentLimits.SupplyCurrentLowerTime = -40;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        //regulars
+        motorConfig.Slot0.kP = Constants.TurretSubsystem.Turret_Slot0_kP;
+        motorConfig.Slot0.kI = Constants.TurretSubsystem.Turret_Slot0_kI;
+        motorConfig.Slot0.kD = Constants.TurretSubsystem.Turret_Slot0_kD;
+        motorConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.TurretSubsystem.Turret_StatorCurrentLimitEnable;
+        motorConfig.CurrentLimits.StatorCurrentLimit = Constants.TurretSubsystem.Turret_StatorCurrentLimit;
+        motorConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.TurretSubsystem.Turret_SupplyCurrentLimitEnable;
+        motorConfig.CurrentLimits.SupplyCurrentLimit = Constants.TurretSubsystem.Turret_SupplyCurrentLimit;
+        motorConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.TurretSubsystem.Turret_SupplyCurrentLowerLimit;
+        motorConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.TurretSubsystem.Turret_SupplyCurrentLowerTime;
+        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.TurretSubsystem.Turret_FowardSoftLimitEnable;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (ticksPerAngle);
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.TurretSubsystem.Turret_ReverseSoftLimitEnable;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
-
         // Voltage
-        motorConfig.Voltage.PeakForwardVoltage = 16;
-        motorConfig.Voltage.PeakReverseVoltage = -16;
+        motorConfig.Voltage.PeakForwardVoltage = Constants.TurretSubsystem.Turret_PeakForwardVoltage;
+        motorConfig.Voltage.PeakReverseVoltage = Constants.TurretSubsystem.Turret_PeakReverseVoltage;
         // Differential Constants
-        motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = 1;
-        motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = 800;
-        motorConfig.DifferentialConstants.PeakDifferentialVoltage = 16;
+        motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.TurretSubsystem.Turret_PeakDifferentialDutyCycle;
+        motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.TurretSubsystem.Turret_PeakDifferentialDutyCycle;
+        motorConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.TurretSubsystem.Turret_PeakDifferentialVoltage;
         // Motion Magic
-        motorConfig.MotionMagic.MotionMagicCruiseVelocity = 100;
-        motorConfig.MotionMagic.MotionMagicAcceleration = 150;
-        motorConfig.MotionMagic.MotionMagicExpo_kA = 0.10000000149011612;
-        motorConfig.MotionMagic.MotionMagicExpo_kV = 0.11999999731779099;
+        motorConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.TurretSubsystem.Turret_MotionMagicCruiseVelocity;
+        motorConfig.MotionMagic.MotionMagicAcceleration = Constants.TurretSubsystem.Turret_MotionMagicAcceleration;
+        motorConfig.MotionMagic.MotionMagicExpo_kA = Constants.TurretSubsystem.Turret_MotionMagicExpo_kA;
+        motorConfig.MotionMagic.MotionMagicExpo_kV = Constants.TurretSubsystem.Turret_MotionMagicExpo_kV;
         // Torque Current
-        motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = 800;
-        motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = -800;
+        motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.TurretSubsystem.Turret_PeakForwardTorqueCurrent;
+        motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.TurretSubsystem.Turret_PeakReverseTorqueCurrent;
 
         turret.getConfigurator().apply(motorConfig);
 

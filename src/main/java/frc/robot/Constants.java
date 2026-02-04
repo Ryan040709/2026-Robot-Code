@@ -30,7 +30,6 @@ import edu.wpi.first.wpilibj.DigitalSource;
 public final class Constants {
   public static final class TurretSubsystem {
 
-    public static int ALGAE_CAN = 18;
     public static double Turret_PeakForwardDutyCycle = 1;
     public static double Turret_PeakReverseDutyCycle = -1;
 
@@ -39,15 +38,13 @@ public final class Constants {
     public static double Turret_Slot0_kD = 0;
 
     public static boolean Turret_StatorCurrentLimitEnable = true;
-    public static double Turret_CurrentLimit = 100;
+    public static double Turret_StatorCurrentLimit = 100;
     public static boolean Turret_SupplyCurrentLimitEnable = true;
     public static double Turret_SupplyCurrentLimit = 100;
     public static double Turret_SupplyCurrentLowerLimit = 40;
     public static double Turret_SupplyCurrentLowerTime = -40;
     public static boolean Turret_FowardSoftLimitEnable = true;
-    public static double Turret_ForwardSoftLimitThreshold = 140; // * (ticksPerAngle);
     public static boolean Turret_ReverseSoftLimitEnable = true;
-    public static double Turret_ReverseSoftLimitThreshold = -140; // * (ticksPerAngle);
 
     // Voltage
     public static double Turret_PeakForwardVoltage = 16;
@@ -71,7 +68,6 @@ public final class Constants {
 
   public static final class OutOfBumperIntakeSubsystem {
 
-    public static int ALGAE_CAN = 18;
     public static double OutBumperPivot_PeakForwardDutyCycle = 1;
     public static double OutBumperPivot_PeakReverseDutyCycle = -1;
 
@@ -114,44 +110,43 @@ public final class Constants {
 
   public static final class ThroughBumperIntakeSubsystem {
 
-        public static int ALGAE_CAN = 18;
-    public static double ThroughBumperPivot_PeakForwardDutyCycle = 1;
-    public static double ThroughBumperPivot_PeakReverseDutyCycle = -1;
+    public static double ThroughBumperIntake_PeakForwardDutyCycle = 1;
+    public static double ThroughBumperIntake_PeakReverseDutyCycle = -1;
 
-    public static double ThroughBumperPivot_Slot0_kP = 1;
-    public static double ThroughBumperPivot_Slot0_kI = 0.15;
-    public static double ThroughBumperPivot_Slot0_kD = 0;
+    public static double ThroughBumperIntake_Slot0_kP = 1;
+    public static double ThroughBumperIntake_Slot0_kI = 0.15;
+    public static double ThroughBumperIntake_Slot0_kD = 0;
 
-    public static boolean ThroughBumperPivot_StatorCurrentLimitEnable = true;
-    public static double ThroughBumperPivot_CurrentLimit = 100;
-    public static boolean ThroughBumperPivot_SupplyCurrentLimitEnable = true;
-    public static double ThroughBumperPivot_SupplyCurrentLimit = 100;
-    public static double ThroughBumperPivot_SupplyCurrentLowerLimit = 40;
-    public static double ThroughBumperPivot_SupplyCurrentLowerTime = -40;
-    public static boolean ThroughBumperPivot_FowardSoftLimitEnable = true;
-    public static double ThroughBumperPivot_ForwardSoftLimitThreshold = 140;
-    public static boolean ThroughBumperPivot_ReverseSoftLimitEnable = true;
-    public static double ThroughBumperPivot_ReverseSoftLimitThreshold = -140;
+    public static boolean ThroughBumperIntake_StatorCurrentLimitEnable = true;
+    public static double ThroughBumperIntake_CurrentLimit = 100;
+    public static boolean ThroughBumperIntake_SupplyCurrentLimitEnable = true;
+    public static double ThroughBumperIntake_SupplyCurrentLimit = 100;
+    public static double ThroughBumperIntake_SupplyCurrentLowerLimit = 40;
+    public static double ThroughBumperIntake_SupplyCurrentLowerTime = -40;
+    public static boolean ThroughBumperIntake_FowardSoftLimitEnable = true;
+    public static double ThroughBumperIntake_ForwardSoftLimitThreshold = 140;
+    public static boolean ThroughBumperIntake_ReverseSoftLimitEnable = true;
+    public static double ThroughBumperIntake_ReverseSoftLimitThreshold = -140;
 
     // Voltage
-    public static double ThroughBumperPivot_PeakForwardVoltage = 16;
-    public static double ThroughBumperPivot_PeakReverseVoltage = -16;
+    public static double ThroughBumperIntake_PeakForwardVoltage = 16;
+    public static double ThroughBumperIntake_PeakReverseVoltage = -16;
     // Differential Constants
-    public static double ThroughBumperPivot_PeakDifferentialDutyCycle = 1;
-    public static double ThroughBumperPivot_PeakDifferentialTorqueCurrent = 800;
-    public static double ThroughBumperPivot_PeakDifferentialVoltage = 16;
+    public static double ThroughBumperIntake_PeakDifferentialDutyCycle = 1;
+    public static double ThroughBumperIntake_PeakDifferentialTorqueCurrent = 800;
+    public static double ThroughBumperIntake_PeakDifferentialVoltage = 16;
     // Motion Magic
-    public static double ThroughBumperPivot_MotionMagicCruiseVelocity = 100;
-    public static double ThroughBumperPivot_MotionMagicAcceleration = 150;
-    public static double ThroughBumperPivot_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
+    public static double ThroughBumperIntake_MotionMagicCruiseVelocity = 100;
+    public static double ThroughBumperIntake_MotionMagicAcceleration = 150;
+    public static double ThroughBumperIntake_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
                                                                                   // values come
     // from?
-    public static double ThroughBumperPivot_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
+    public static double ThroughBumperIntake_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
                                                                                   // values come
     // from?
     // Torque Current
-    public static double ThroughBumperPivot_PeakForwardTorqueCurrent = 800;
-    public static double ThroughBumperPivot_PeakReverseTorqueCurrent = -800;
+    public static double ThroughBumperIntake_PeakForwardTorqueCurrent = 800;
+    public static double ThroughBumperIntake_PeakReverseTorqueCurrent = -800;
 
   }
 
@@ -197,7 +192,6 @@ public final class Constants {
   public static final class ShooterSubsystem {
 
     //shooter stuff
-        public static int ALGAE_CAN = 18;
     public static double Shooter_PeakForwardDutyCycle = 1;
     public static double Shooter_PeakReverseDutyCycle = -1;
 
