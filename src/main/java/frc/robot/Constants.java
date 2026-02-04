@@ -151,41 +151,31 @@ public final class Constants {
   }
 
   public static final class ClimberSubsystem {
-    // fix all values
-    public static int ELEVATOR_MOTOR_A__CAN = 15;
-    public static int ELEVATOR_MOTOR_B__CAN = 22;
-    public static int ELEVATOR_ENCODER_CAN = 0;
     // fix PIDs later!!!!
-    public static double ELEVATOR_P = 1.1;
-    public static double ELEVATOR_I = 0;
-    public static double ELEVATOR_D = 0.13;// was .15
+    public static double Climber_kP = 1.1;
+    public static double Climber_kI = 0;
+    public static double Climber_kD = 0.13;// was .15
     // volts for static energy
-    public static double ELEVATOR_S = 0.06;
+    public static double Climber_kS = 0.06;
     // volts to overcome gravity
-    public static double ELEVATOR_G = 0.24;
+    public static double Climber_kG = 0.24;
     // volts * seconds / distance
-    public static double ELEVATOR_V = .1265;
+    public static double Climber_kV = 0.1265;
     // volts * seconds^2 / distance
-    public static double ELEVATOR_A = (0);
+    public static double Climber_kA = (0);
     // motion magic stuff
-    public static double MOTION_MAGIC_CRUISE_VELOCITY = 60;
-    public static double MOTION_MAGIC_ACCELERATION = 200;
-    public static double MOTION_MAGIC_JERK = 0;
+    public static double Climber_MotionMagicCruiseVelocity = 60;
+    public static double Climber_MotionMagicCruiseAcceleration = 200;
+    public static double Climber_MotionMagicJerk = 0;
 
     // fix all values
-    public static double ELEVATOR_SUPPLY_CURRENT_LIMIT = 80;// 60 before speed up
-    public static double ELEVATOR_FORWARD_PERCENT = .30;
-    public static double ELEVATOR_BACKWARD_PERCENT = -.30;
-    // constant for the following motor
-    public static boolean ELEVATOR_MOTOR_B_INVERSE = false;
-    // bottom stop channel
-    public static int BOTTOM_STOP_CHANNEL = 1;
+    public static double Climber_SupplyCurrentLimit = 80;// 60 before speed up
+    public static double Climber_ForwardPercent = 0.30;
+    public static double Climber_BackwardPercent = -0.30;
 
-    // Elevator Positions
-    public static double ELEVATOR_TROUGH_POSITION = 11;// 11 before
-    public static double ELEVATOR_LOW_POSITION = 16.5;// 16.25 before
-    public static double ELEVATOR_MID_POSITION = 25.6;// 24.5
-    public static double ELEVATOR_HIGH_POSITION = 37.3;// 37
+    // Climber Positions
+    public static double Climber_Up = 25;// 11 before
+    public static double Climber_Down = 0;
 
   }
 

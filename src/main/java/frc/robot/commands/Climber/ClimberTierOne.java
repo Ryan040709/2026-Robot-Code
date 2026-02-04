@@ -47,6 +47,6 @@ public class ClimberTierOne extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ClimberSubsystem.AtGoalPosition(37.3);
+    return ClimberSubsystem.AtGoalPosition(25);
   }
 }

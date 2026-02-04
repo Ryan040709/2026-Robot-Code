@@ -17,6 +17,9 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+//constants
+import frc.robot.Constants;
+
 // TODO TEST MOTION MAGIC THEN DELETE TRAPEZOIDAL POSITIONING
 /** Add your docs here. */
 public class ClimberSubsystem extends SubsystemBase {
@@ -40,18 +43,18 @@ public class ClimberSubsystem extends SubsystemBase {
         TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
 
         // stuff for feedforward
-        climberConfigs.Slot1.kS = 0.06; // volts
-        climberConfigs.Slot1.kG = 0.24; // volts
-        climberConfigs.Slot1.kV = 0.1265; // volts * seconds / distance
+        climberConfigs.Slot0.kS = Constants.ClimberSubsystem.Climber_kS; // volts
+        climberConfigs.Slot0.kG = Constants.ClimberSubsystem.Climber_kG; // volts
+        climberConfigs.Slot0.kV = Constants.ClimberSubsystem.Climber_kV; // volts * seconds / distance
         // A is potentially unneccesary
-        climberConfigs.Slot1.kA = (0); // volts * seconds^2 / distance
+        climberConfigs.Slot0.kA = Constants.ClimberSubsystem.Climber_kA; // volts * seconds^2 / distance
 
-        climberConfigs.Slot1.kP = 1.1;
-        climberConfigs.Slot1.kI = 0;
-        climberConfigs.Slot1.kD = 0.13;
+        climberConfigs.Slot0.kP = Constants.ClimberSubsystem.Climber_kP;
+        climberConfigs.Slot0.kI = Constants.ClimberSubsystem.Climber_kI;
+        climberConfigs.Slot0.kD = Constants.ClimberSubsystem.Climber_kD;
 
         climberConfigs.CurrentLimits.StatorCurrentLimitEnable = true;
-        climberConfigs.CurrentLimits.SupplyCurrentLimit = 80;
+        climberConfigs.CurrentLimits.SupplyCurrentLimit = Constants.ClimberSubsystem.Climber_SupplyCurrentLimit;
 
         climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
@@ -60,9 +63,9 @@ public class ClimberSubsystem extends SubsystemBase {
         // set Motion Magic settings
 
         var motionMagicConfigs = climberConfigs.MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = 60; // Target cruise velocity of 80 rps
-        motionMagicConfigs.MotionMagicAcceleration = 200; // Target acceleration of 160 rps/s (0.5 seconds)
-        motionMagicConfigs.MotionMagicJerk = 0; // Target jerk of 1600 rps/s/s (0.1 seconds)
+        motionMagicConfigs.MotionMagicCruiseVelocity = Constants.ClimberSubsystem.Climber_MotionMagicCruiseVelocity; // Target cruise velocity of 80 rps
+        motionMagicConfigs.MotionMagicAcceleration = Constants.ClimberSubsystem.Climber_MotionMagicCruiseAcceleration; // Target acceleration of 160 rps/s (0.5 seconds)
+        motionMagicConfigs.MotionMagicJerk = Constants.ClimberSubsystem.Climber_MotionMagicJerk; // Target jerk of 1600 rps/s/s (0.1 seconds)
 
         climberMotorA.getConfigurator().apply(climberConfigs);
         climberMotorB.getConfigurator().apply(climberConfigs);
