@@ -144,6 +144,9 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.ShooterSubsystem.Shooter_PeakForwardTorqueCurrent;
         shooterConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.ShooterSubsystem.Shooter_PeakReverseTorqueCurrent;
 
+        shooterMotorL.getConfigurator().apply(shooterConfig);
+        shooterMotorR.getConfigurator().apply(shooterConfig);
+
         // hood motor PID
         TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
         hoodConfig.MotorOutput.PeakForwardDutyCycle = Constants.ShooterSubsystem.Hood_PeakForwardDutyCycle;

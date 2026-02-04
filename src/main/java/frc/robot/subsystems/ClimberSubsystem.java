@@ -32,10 +32,8 @@ public class ClimberSubsystem extends SubsystemBase {
     // variables
     private double climberPosition;
 
-    // like every value is stripped directly from the 2025 climber... SHH don't
+    // like every value is stripped directly from the 2025 elevator... SHH don't
     // tell anyone!!!
-
-    // TODO connect feed forward to trapezoidal profile - needs to be tested
 
     public ClimberSubsystem() {
 
@@ -68,7 +66,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
         climberMotorA.getConfigurator().apply(climberConfigs);
         climberMotorB.getConfigurator().apply(climberConfigs);
-        climberMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); //sets the motor to be reversed... I think - Brian
+        climberMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); // sets the motor to be reversed... I
+                                                                                 // think - Brian
         m_request = new MotionMagicVoltage(0);
 
     }

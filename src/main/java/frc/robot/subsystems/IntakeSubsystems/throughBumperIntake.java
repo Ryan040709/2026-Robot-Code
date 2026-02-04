@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -17,6 +18,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class throughBumperIntake extends SubsystemBase {
+
+    VelocityVoltage velocity = new VelocityVoltage(0);
 
     private TalonFX intakeMotor1 = new TalonFX(10);
     private TalonFX intakeMotor2 = new TalonFX(10);
@@ -65,52 +68,53 @@ public class throughBumperIntake extends SubsystemBase {
     }
 
     public void MoveintakeMotor1(double targetSpeed) {
-        intakeMotor1.set(targetSpeed);
+        intakeMotor1.setControl(velocity.withVelocity(targetSpeed));
     }
 
     public void MoveintakeMotor2(double targetSpeed) {
-        intakeMotor2.set(targetSpeed);
+        intakeMotor2.setControl(velocity.withVelocity(-targetSpeed));
     }
 
-    public Command IntakeToHopperCommand() {
+    public Command IntakeToHopperCommand(double targetRPM) { //why were these commands??? couldn't they be functions?
         return runOnce(() -> {
-            MoveintakeMotor2(-0.5);
-            MoveintakeMotor1(.5);
+            //MoveintakeMotor2(-0.5);
+            MoveintakeMotor1(targetRPM);
+            MoveintakeMotor2(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
         });
     }
 
-    public Command IntakeToTurretCommand() {
+    public Command IntakeToTurretCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor2(-0.5);
-            MoveintakeMotor1(.5);
-            hopperSubsystem.MoveHopperMotor(.5);
-
-        });
-    }
-
-    public Command HopperToTurretCommand() {
-        return runOnce(() -> {
-            MoveintakeMotor2(-0.5);
-            MoveintakeMotor1(.5);
+            MoveintakeMotor1(targetRPM);
+            MoveintakeMotor2(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });
     }
 
-    public Command HopperToIntakeCommand() {
+    public Command HopperToTurretCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor2(-0.5);
-            MoveintakeMotor1(.5);
+            MoveintakeMotor1(targetRPM);
+            MoveintakeMotor2(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });
     }
 
-    public Command IntakeStop() {
+    public Command HopperToIntakeCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor2(0);
-            MoveintakeMotor1(0);
+            MoveintakeMotor1(targetRPM);
+            MoveintakeMotor2(targetRPM);
+            hopperSubsystem.MoveHopperMotor(.5);
+
+        });
+    }
+
+    public Command IntakeStop(double targetRPM) {
+        return runOnce(() -> {
+            MoveintakeMotor1(targetRPM);
+            MoveintakeMotor2(targetRPM);
             hopperSubsystem.MoveHopperMotor(0);
 
         });
