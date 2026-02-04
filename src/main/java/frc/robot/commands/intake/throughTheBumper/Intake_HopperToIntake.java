@@ -21,8 +21,7 @@ public class Intake_HopperToIntake extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.MoveintakeMotor2(-0.5);
-        intakeSubsystem.MoveintakeMotor1(.5);//TODO update these
+        intakeSubsystem.HopperToIntakeCommand(2500);
         hopperSubsystem.MoveHopperMotor(.5);
     }
 

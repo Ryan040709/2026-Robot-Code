@@ -86,7 +86,7 @@ public class throughBumperIntake extends SubsystemBase {
 
     public Command IntakeToTurretCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor1(targetRPM);
+            MoveintakeMotor1(-targetRPM);
             MoveintakeMotor2(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
@@ -96,7 +96,7 @@ public class throughBumperIntake extends SubsystemBase {
     public Command HopperToTurretCommand(double targetRPM) {
         return runOnce(() -> {
             MoveintakeMotor1(targetRPM);
-            MoveintakeMotor2(targetRPM);
+            MoveintakeMotor2(-targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });
@@ -104,8 +104,8 @@ public class throughBumperIntake extends SubsystemBase {
 
     public Command HopperToIntakeCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor1(targetRPM);
-            MoveintakeMotor2(targetRPM);
+            MoveintakeMotor1(-targetRPM);
+            MoveintakeMotor2(-targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });

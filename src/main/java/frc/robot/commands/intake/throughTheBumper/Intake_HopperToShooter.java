@@ -9,9 +9,6 @@ import frc.robot.subsystems.HopperSubsystem;
 
 public class Intake_HopperToShooter extends Command {
 
-    private TalonFX intakeMotor1 = new TalonFX(10);
-    private TalonFX intakeMotor2 = new TalonFX(10);
-
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
     throughBumperIntake intakeSubsystem = new throughBumperIntake();
 
@@ -24,8 +21,7 @@ public class Intake_HopperToShooter extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.MoveintakeMotor2(-0.5);
-        intakeSubsystem.MoveintakeMotor1(.5);//TODO update these
+        intakeSubsystem.HopperToTurretCommand(2500);
         hopperSubsystem.MoveHopperMotor(.5);
     }
 
