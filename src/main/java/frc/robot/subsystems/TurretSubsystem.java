@@ -144,6 +144,8 @@ double tagID = LimelightHelpers.getFiducialID("limelight-turret");
     @Override
     public void periodic() {
 
+        LimelightHelpers.SetFidcuial3DOffset("limelight-turret", 1, 1, 1);
+
         robotPose = UpdateRobotPose2d();
         Rx = robotPose.getX();
         Ry = robotPose.getY();
