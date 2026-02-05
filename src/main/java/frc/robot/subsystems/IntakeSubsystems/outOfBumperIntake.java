@@ -6,6 +6,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -16,6 +17,8 @@ import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class outOfBumperIntake extends SubsystemBase {
+
+    VelocityVoltage velocity = new VelocityVoltage(0);
 
     private TalonFX pivotMotor1 = new TalonFX(10);
     private TalonFX pivotMotor2 = new TalonFX(26);
@@ -69,8 +72,8 @@ public class outOfBumperIntake extends SubsystemBase {
         pivotMotor2.setControl(new PositionVoltage(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
     }
 
-    public void IntakeSpeed(double speed) {
-       intake.set(speed);
+    public void IntakeSpeed(double targetSpeed) {
+        intake.setControl(velocity.withVelocity(targetSpeed));
     }
 
     // my gosh it's so empty... it's UGLY!!!

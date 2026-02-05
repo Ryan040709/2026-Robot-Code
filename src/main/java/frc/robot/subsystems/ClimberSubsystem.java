@@ -63,9 +63,22 @@ public class ClimberSubsystem extends SubsystemBase {
         // set Motion Magic settings
 
         var motionMagicConfigs = climberConfigs.MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = Constants.ClimberSubsystem.Climber_MotionMagicCruiseVelocity; // Target cruise velocity of 80 rps
-        motionMagicConfigs.MotionMagicAcceleration = Constants.ClimberSubsystem.Climber_MotionMagicCruiseAcceleration; // Target acceleration of 160 rps/s (0.5 seconds)
-        motionMagicConfigs.MotionMagicJerk = Constants.ClimberSubsystem.Climber_MotionMagicJerk; // Target jerk of 1600 rps/s/s (0.1 seconds)
+        motionMagicConfigs.MotionMagicCruiseVelocity = Constants.ClimberSubsystem.Climber_MotionMagicCruiseVelocity; // Target
+                                                                                                                     // cruise
+                                                                                                                     // velocity
+                                                                                                                     // of
+                                                                                                                     // 80
+                                                                                                                     // rps
+        motionMagicConfigs.MotionMagicAcceleration = Constants.ClimberSubsystem.Climber_MotionMagicCruiseAcceleration; // Target
+                                                                                                                       // acceleration
+                                                                                                                       // of
+                                                                                                                       // 160
+                                                                                                                       // rps/s
+                                                                                                                       // (0.5
+                                                                                                                       // seconds)
+        motionMagicConfigs.MotionMagicJerk = Constants.ClimberSubsystem.Climber_MotionMagicJerk; // Target jerk of 1600
+                                                                                                 // rps/s/s (0.1
+                                                                                                 // seconds)
 
         climberMotorA.getConfigurator().apply(climberConfigs);
         climberMotorB.getConfigurator().apply(climberConfigs);

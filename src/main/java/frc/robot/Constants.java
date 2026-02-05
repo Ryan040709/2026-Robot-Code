@@ -106,6 +106,13 @@ public final class Constants {
     public static double OutBumperPivot_PeakForwardTorqueCurrent = 800;
     public static double OutBumperPivot_PeakReverseTorqueCurrent = -800;
 
+    // intake velocities
+    public static double OutBumperIntake_IntakeVelocity = 2500;
+
+    public static double OutBumperPivot_Up = 0; // when the motor is up, it's at its zero position
+
+    public static double OutBumperPivot_Down = 10; // when the motor moves down, its position goes up
+
   }
 
   public static final class ThroughBumperIntakeSubsystem {
@@ -139,14 +146,17 @@ public final class Constants {
     public static double ThroughBumperIntake_MotionMagicCruiseVelocity = 100;
     public static double ThroughBumperIntake_MotionMagicAcceleration = 150;
     public static double ThroughBumperIntake_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
-                                                                                  // values come
+    // values come
     // from?
     public static double ThroughBumperIntake_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
-                                                                                  // values come
+    // values come
     // from?
     // Torque Current
     public static double ThroughBumperIntake_PeakForwardTorqueCurrent = 800;
     public static double ThroughBumperIntake_PeakReverseTorqueCurrent = -800;
+
+    // intake velocities
+    public static double ThroughBumperIntake_IntakeVelocity = 2500;
 
   }
 
@@ -181,7 +191,7 @@ public final class Constants {
 
   public static final class ShooterSubsystem {
 
-    //shooter stuff
+    // shooter stuff
     public static double Shooter_PeakForwardDutyCycle = 1;
     public static double Shooter_PeakReverseDutyCycle = -1;
 
@@ -211,16 +221,16 @@ public final class Constants {
     public static double Shooter_MotionMagicCruiseVelocity = 100;
     public static double Shooter_MotionMagicAcceleration = 150;
     public static double Shooter_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
-                                                                                  // values come
+                                                                           // values come
     // from?
     public static double Shooter_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
-                                                                                  // values come
+                                                                           // values come
     // from?
     // Torque Current
     public static double Shooter_PeakForwardTorqueCurrent = 800;
     public static double Shooter_PeakReverseTorqueCurrent = -800;
 
-    //hood stuff
+    // hood stuff
     public static double Hood_PeakForwardDutyCycle = 1;
     public static double Hood_PeakReverseDutyCycle = -1;
 
@@ -250,10 +260,10 @@ public final class Constants {
     public static double Hood_MotionMagicCruiseVelocity = 100;
     public static double Hood_MotionMagicAcceleration = 150;
     public static double Hood_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
-                                                                                  // values come
+                                                                        // values come
     // from?
     public static double Hood_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
-                                                                                  // values come
+                                                                        // values come
     // from?
     // Torque Current
     public static double Hood_PeakForwardTorqueCurrent = 800;

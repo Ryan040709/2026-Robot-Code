@@ -26,7 +26,7 @@ public class throughBumperIntake extends SubsystemBase {
 
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
-        public throughBumperIntake() {
+    public throughBumperIntake() {
 
         TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
         intakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakForwardDutyCycle;
@@ -75,9 +75,9 @@ public class throughBumperIntake extends SubsystemBase {
         intakeMotor2.setControl(velocity.withVelocity(-targetSpeed));
     }
 
-    public Command IntakeToHopperCommand(double targetRPM) { //why were these commands??? couldn't they be functions?
+    public Command IntakeToHopperCommand(double targetRPM) { // why were these commands??? couldn't they be functions?
         return runOnce(() -> {
-            //MoveintakeMotor2(-0.5);
+            // MoveintakeMotor2(-0.5);
             MoveintakeMotor1(targetRPM);
             MoveintakeMotor2(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);

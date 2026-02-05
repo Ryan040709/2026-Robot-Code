@@ -6,13 +6,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 
+import frc.robot.Constants;
+
 public class Intake_LowerIntake extends Command {
-  outOfBumperIntake s_outOfBumperIntake; 
+  outOfBumperIntake s_outOfBumperIntake;
+
   /** Creates a new Hood_RunToPosition. */
   public Intake_LowerIntake(outOfBumperIntake s_outOfBumperIntake) {
     this.s_outOfBumperIntake = s_outOfBumperIntake;
     addRequirements(s_outOfBumperIntake);
-    
+
   }
 
   // Called when the command is initially scheduled.
@@ -24,7 +27,7 @@ public class Intake_LowerIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_outOfBumperIntake.PrivotIntake(10);
+    s_outOfBumperIntake.PrivotIntake(Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_Down);
   }
 
   // Called once the command ends or is interrupted.

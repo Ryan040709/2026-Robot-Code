@@ -22,7 +22,6 @@ import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.intake.IntakeCommand;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToIntake;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
@@ -92,7 +91,6 @@ public class RobotContainer {
         Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
 
         public RobotContainer() {
-                NamedCommands.registerCommand("intake", new IntakeCommand());
                 // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
                 // out of bumper intake commands

@@ -8,9 +8,10 @@ import frc.robot.subsystems.TurretSubsystem;
 
 public class Turret_TargetLocking extends Command {
 
-boolean intakeValue = false;
+  boolean intakeValue = false;
 
-  TurretSubsystem TurretSubsystem; 
+  TurretSubsystem TurretSubsystem;
+
   /** Creates a new Turret_TargetLocking. */
   public Turret_TargetLocking(TurretSubsystem turretSubsystem) {
     this.TurretSubsystem = turretSubsystem;
@@ -21,7 +22,7 @@ boolean intakeValue = false;
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-intakeValue = true;
+    intakeValue = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -30,14 +31,14 @@ intakeValue = true;
     System.out.println("shooter Tracking");
     TurretSubsystem.setPosition();
 
-     SmartDashboard.putBoolean("turret", intakeValue);
+    SmartDashboard.putBoolean("turret", intakeValue);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
 
-    intakeValue = false; 
+    intakeValue = false;
     SmartDashboard.putBoolean("turret", intakeValue);
 
   }

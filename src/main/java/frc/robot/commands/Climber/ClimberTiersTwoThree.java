@@ -11,6 +11,7 @@ import frc.robot.subsystems.ClimberSubsystem;
 public class ClimberTiersTwoThree extends Command {
   ClimberSubsystem ClimberSubsystem;
   int counter;
+
   /** Creates a new ElevatorLowPosision. */
   public ClimberTiersTwoThree(ClimberSubsystem climberSubsystem) {
     this.ClimberSubsystem = climberSubsystem;
@@ -21,20 +22,20 @@ public class ClimberTiersTwoThree extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    counter =0;
+    counter = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(counter == 0){
+    if (counter == 0) {
 
     }
-    if(ClimberSubsystem.ClimberPast(13)){
-      counter =1;
-    ClimberSubsystem.MoveToPosition(37.3);
+    if (ClimberSubsystem.ClimberPast(13)) {
+      counter = 1;
+      ClimberSubsystem.MoveToPosition(37.3);
     }
-    if(ClimberSubsystem.ClimberPast(32)){
+    if (ClimberSubsystem.ClimberPast(32)) {
 
     }
 
@@ -42,7 +43,8 @@ public class ClimberTiersTwoThree extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+  }
 
   // Returns true when the command should end.
   @Override

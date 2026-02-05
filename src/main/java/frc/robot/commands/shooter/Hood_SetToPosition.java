@@ -7,7 +7,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class Hood_SetToPosition extends Command {
-  ShooterSubsystem ShooterSubsystem; 
+  ShooterSubsystem ShooterSubsystem;
+
   /** Creates a new Shooter_RunToPosition. */
   public Hood_SetToPosition(ShooterSubsystem shooterSubsystem) {
     this.ShooterSubsystem = shooterSubsystem;

@@ -43,7 +43,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.Constants;
 
 public class TurretSubsystem extends SubsystemBase {
-    
+
     private Supplier<Pose2d> poseSupplier;
 
     private TalonFX turret = new TalonFX(10);
@@ -71,7 +71,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
 
-        // setting the postions of our swerve modules for kinematics
+    // setting the postions of our swerve modules for kinematics
     private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
     private Translation2d m_frontRightLocation = new Translation2d(.3429, -.3429);
     private Translation2d m_backLeftLocation = new Translation2d(-.3429, .3429);
@@ -79,7 +79,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     private SwerveDriveOdometry m_odometry;
 
-        private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
+    private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
             m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
             m_backRightLocation);
     // Basic targeting data
@@ -100,9 +100,9 @@ public class TurretSubsystem extends SubsystemBase {
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = Constants.TurretSubsystem.Turret_PeakForwardDutyCycle;
         motorConfig.MotorOutput.PeakReverseDutyCycle = Constants.TurretSubsystem.Turret_PeakReverseDutyCycle;
-        //motor "friction" type?
+        // motor "friction" type?
         motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        //regulars
+        // regulars
         motorConfig.Slot0.kP = Constants.TurretSubsystem.Turret_Slot0_kP;
         motorConfig.Slot0.kI = Constants.TurretSubsystem.Turret_Slot0_kI;
         motorConfig.Slot0.kD = Constants.TurretSubsystem.Turret_Slot0_kD;
@@ -163,7 +163,6 @@ public class TurretSubsystem extends SubsystemBase {
         double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
-
         SmartDashboard.putNumber("Gyro Angle", theta);
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
@@ -201,7 +200,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setPosition() {
-        
+
         turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
     }
 
@@ -216,14 +215,14 @@ public class TurretSubsystem extends SubsystemBase {
         double diffY = (Hy - Ry);
         double diffX = (tX - Rx);
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145); //(turretHubAngle-theta);
+        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145); // (turretHubAngle-theta);
 
         SmartDashboard.putNumber("diffX", diffX);
         SmartDashboard.putNumber("diffY", diffY);
-    
+
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
         SmartDashboard.putNumber("Golden Angle", goldenAngle);
         return goldenAngle;
-        
+
     }
 }
