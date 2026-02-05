@@ -71,19 +71,12 @@ public class TurretSubsystem extends SubsystemBase {
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
 
-    // setting the postions of our swerve modules for kinematics
-    private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
-    private Translation2d m_frontRightLocation = new Translation2d(.3429, -.3429);
-    private Translation2d m_backLeftLocation = new Translation2d(-.3429, .3429);
-    private Translation2d m_backRightLocation = new Translation2d(-.3429, -.3429);
 
     private SwerveDriveOdometry m_odometry;
 
-    private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
-            m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
-            m_backRightLocation);
-    // Basic targeting data
-    double tx = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
+    //double txTURRET = LimelightHelpers.getTX("limelight-tags");
+
+    double txTAGS = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
     double ta = LimelightHelpers.getTA("limelight-turret"); // Target area (0% to 100% of image)
     boolean hasTarget = LimelightHelpers.getTV("limelight-turret"); // Do you have a valid target?
@@ -201,7 +194,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void setPosition() {
 
-        turret.setControl(m_request.withPosition((calculateAngleToHub()) * (ticksPerAngle)));
+        turret.setControl(m_request.withPosition(((calculateAngleToHub()) * (ticksPerAngle)))); //+ txTAGS);
     }
 
     public void setToZero() {
