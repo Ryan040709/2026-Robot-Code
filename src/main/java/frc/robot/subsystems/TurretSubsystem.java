@@ -76,6 +76,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     //double txTURRET = LimelightHelpers.getTX("limelight-tags");
 
+double tagID = LimelightHelpers.getFiducialID("limelight-turret");
+
     double txTAGS = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
     double ta = LimelightHelpers.getTA("limelight-turret"); // Target area (0% to 100% of image)
@@ -146,6 +148,10 @@ public class TurretSubsystem extends SubsystemBase {
         Rx = robotPose.getX();
         Ry = robotPose.getY();
         theta = robotPose.getRotation().getDegrees();
+
+        double tagID = LimelightHelpers.getFiducialID("limelight-turret");
+
+        SmartDashboard.putNumber("tagID", tagID);
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
