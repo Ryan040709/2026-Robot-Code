@@ -271,6 +271,52 @@ public final class Constants {
 
   }
 
+  public static final class AprilTagPositions {
+    // setup for welded field map
+
+    // tag 18
+    public static double Tag18X = 182.11;
+    public static double Tag18Y = 135.09;
+    public static double Tag18Z = 44.25;
+    // tag 19
+    public static double Tag19X = 205.87;
+    public static double Tag19Y = 144.84;
+    public static double Tag19Z = 44.25;
+    // tag 20
+    public static double Tag20X = 205.87;
+    public static double Tag20Y = 158.84;
+    public static double Tag20Z = 44.25;
+    // tag 21
+    public static double Tag21X = 182.11;
+    public static double Tag21Y = 182.60;
+    public static double Tag21Z = 44.25;
+    // tag 22
+    public static double Tag22X = 182.11;
+    public static double Tag22Y = 182.60;
+    public static double Tag22Z = 44.25;
+    // tag 24
+    public static double Tag24X = 168.11;
+    public static double Tag24Y = 182.60;
+    public static double Tag24Z = 44.25;
+    public static double Tag24Rotation = 90;
+    // tag 25
+    public static double Tag25X = 158.34;
+    public static double Tag25Y = 172.84;
+    public static double Tag25Z = 44.25;
+    public static double Tag25Rotation = 180;
+    // tag 26
+    public static double Tag26X = 158.34;
+    public static double Tag26Y = 158.84;
+    public static double Tag26Z = 44.25;
+    public static double Tag26Rotation = 180;
+    // tag 27
+    public static double Tag27X = 168.11;
+    public static double Tag27Y = 135.09;
+    public static double Tag27Z = 44.25;
+    public static double Tag27Rotation = 270;
+
+  }
+
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }

@@ -58,6 +58,7 @@ public class TurretSubsystem extends SubsystemBase {
     public final double blueHx = 4.62554;
     public double Rx;
     public double Ry;
+    public double tagID;
     public Pose2d robotPose = new Pose2d();
 
     public double turretHubAngle = 0;
@@ -71,22 +72,21 @@ public class TurretSubsystem extends SubsystemBase {
 
     private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
 
-
     private SwerveDriveOdometry m_odometry;
 
-    //double txTURRET = LimelightHelpers.getTX("limelight-tags");
+    // double txTURRET = LimelightHelpers.getTX("limelight-tags");
 
-double tagID = LimelightHelpers.getFiducialID("limelight-turret");
+    // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
-    double txTAGS = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
-    double ty = LimelightHelpers.getTY("limelight-turret"); // Vertical offset from crosshair to target in degrees
-    double ta = LimelightHelpers.getTA("limelight-turret"); // Target area (0% to 100% of image)
-    boolean hasTarget = LimelightHelpers.getTV("limelight-turret"); // Do you have a valid target?
+    double txTAGS = LimelightHelpers.getTX("limelight-tags"); // Horizontal offset from crosshair to target in degrees
+    double ty = LimelightHelpers.getTY("limelight-tags"); // Vertical offset from crosshair to target in degrees
+    double ta = LimelightHelpers.getTA("limelight-tags"); // Target area (0% to 100% of image)
+    boolean hasTarget = LimelightHelpers.getTV("limelight-tags"); // Do you have a valid target?
 
-    double txnc = LimelightHelpers.getTXNC("limelight-turret"); // Horizontal offset from principal pixel/point to
-                                                                // target in degrees
-    double tync = LimelightHelpers.getTYNC("limelight-turret"); // Vertical offset from principal pixel/point to target
-                                                                // in degrees
+    double txnc = LimelightHelpers.getTXNC("limelight-tags"); // Horizontal offset from principal pixel/point to
+                                                              // target in degrees
+    double tync = LimelightHelpers.getTYNC("limelight-tags"); // Vertical offset from principal pixel/point to target
+                                                              // in degrees
 
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
@@ -144,24 +144,25 @@ double tagID = LimelightHelpers.getFiducialID("limelight-turret");
     @Override
     public void periodic() {
 
-        LimelightHelpers.SetFidcuial3DOffset("limelight-turret", 1, 1, 1);
+        // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 1);
 
         robotPose = UpdateRobotPose2d();
         Rx = robotPose.getX();
         Ry = robotPose.getY();
         theta = robotPose.getRotation().getDegrees();
+        tagID = LimelightHelpers.getFiducialID("limelight-turret");
 
-        double tagID = LimelightHelpers.getFiducialID("limelight-turret");
+        // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
         SmartDashboard.putNumber("tagID", tagID);
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
-        SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-turret"));
+        SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-tags"));
 
-        Pose3d x = LimelightHelpers.getBotPose3d("limelight-turret");
+        Pose3d x = LimelightHelpers.getBotPose3d("limelight-tags");
 
         double[] defaultPose = new double[6];
-        double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-turret").getEntry("botpose")
+        double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("botpose")
                 .getDoubleArray(defaultPose);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
@@ -175,6 +176,14 @@ double tagID = LimelightHelpers.getFiducialID("limelight-turret");
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
         SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
+
+        determine3dOffset();
+
+        // if (tagID == 19) {
+        // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 0, 0, 0);
+        // } else if (tagID == 25) {
+        // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 0);
+        // }
 
     }
 
@@ -201,13 +210,108 @@ double tagID = LimelightHelpers.getFiducialID("limelight-turret");
     }
 
     public void setPosition() {
-
-        turret.setControl(m_request.withPosition(((calculateAngleToHub()) * (ticksPerAngle)))); //+ txTAGS);
+        turret.setControl(m_request.withPosition(((calculateAngleToHub()) * (ticksPerAngle)))); // + txTAGS);
     }
 
     public void setToZero() {
 
         turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
+
+    }
+
+    public void determine3dOffset() {
+
+        double tagX = 0;
+        double tagY = 0;
+
+        double tagRotation = 0; // certain values must change to accomadate apriltag orientation
+
+        double fX = 0;
+        double fY = 0;
+        // not like f(x), "f" just stands for furthest
+        double sX = 0;
+        double sY = 0;
+
+        double offsetX = 0;
+        double offsetY = 0;
+
+        double rotatedX = 0;
+        double rotatedY = 0;
+        // rotated offsets so they can be tag-relative
+
+        if (tagID == 18) {
+            tagX = (Constants.AprilTagPositions.Tag18X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag18Y / 39.37);
+        } else if (tagID == 19) {
+            tagX = (Constants.AprilTagPositions.Tag19X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag19Y / 39.37);
+        } else if (tagID == 20) {
+            tagX = (Constants.AprilTagPositions.Tag20X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag20Y / 39.37);
+        } else if (tagID == 21) {
+            tagX = (Constants.AprilTagPositions.Tag21X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag21Y / 39.37);
+        } else if (tagID == 22) {
+            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+        } else if (tagID == 24) {
+            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag24Rotation;
+        } else if (tagID == 25) {
+            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag25Rotation;
+        } else if (tagID == 26) {
+            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag26Rotation;
+        } else if (tagID == 27) {
+            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag27Rotation;
+        }
+
+        if (Hy > tagY) {
+            fY = Hy;
+            sY = tagY;
+        } else if (tagY > Hy) {
+            fY = tagY;
+            sY = Hy;
+        }
+
+        if (blueHx > tagX) {
+            fX = blueHx;
+            sX = tagX;
+        } else if (tagX > blueHx) {
+            fX = tagX;
+            sX = blueHx;
+        }
+
+        offsetX = fX - sX;
+
+        offsetY = fY - sY;
+
+        // offsets are tag-relative, not field relative and should change depending on
+        // tag rotation
+        if (tagRotation == 180) {
+            rotatedX = -offsetX;
+            rotatedY = -offsetY;
+        } else if (tagRotation == 90) {
+            rotatedY = -offsetX;
+            rotatedX = -offsetY;
+        } else if (tagRotation == 270) {
+            rotatedY = offsetX;
+            rotatedX = offsetY;
+        }
+
+        SmartDashboard.putNumber("offsetX", offsetX);
+        SmartDashboard.putNumber("offsetY", offsetY);
+
+                SmartDashboard.putNumber("rotatedX", rotatedX);
+        SmartDashboard.putNumber("rotatedY", rotatedY);
+
+        LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
     }
 
     public double calculateAngleToHub() {

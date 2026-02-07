@@ -361,6 +361,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+
+        //SmartDashboard.putNumber("steer motor amps", );
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply
@@ -391,11 +393,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putNumber("GetXSpeeds", getSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber("GetYSpeeds", getSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("GetRotationSpeeds", getSpeeds().omegaRadiansPerSecond);
-        LimelightHelpers.SetRobotOrientation("limelight-turret",
+        LimelightHelpers.SetRobotOrientation("limelight-tags",
                 poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-        PoseEstimate robotPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
+        PoseEstimate robotPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-tags");
 
-        Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-turret");
+        Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-tags");
         double distance = Math.sqrt(
                 Math.pow(targetPoseRobotSpace.getX(), 2) +
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
