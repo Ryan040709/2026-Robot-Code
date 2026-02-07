@@ -78,7 +78,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
-    double txTAGS = LimelightHelpers.getTX("limelight-tags"); // Horizontal offset from crosshair to target in degrees
+    double txTurret = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-tags"); // Vertical offset from crosshair to target in degrees
     double ta = LimelightHelpers.getTA("limelight-tags"); // Target area (0% to 100% of image)
     boolean hasTarget = LimelightHelpers.getTV("limelight-tags"); // Do you have a valid target?
@@ -146,15 +146,22 @@ public class TurretSubsystem extends SubsystemBase {
 
         // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 1);
 
+        //LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", 25,27,24,20);
+
+        //LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", int[25]);;
+
         robotPose = UpdateRobotPose2d();
         Rx = robotPose.getX();
         Ry = robotPose.getY();
         theta = robotPose.getRotation().getDegrees();
         tagID = LimelightHelpers.getFiducialID("limelight-turret");
+        txTurret = LimelightHelpers.getTX("limelight-turret");
 
         // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
         SmartDashboard.putNumber("tagID", tagID);
+
+        SmartDashboard.putNumber("txTurret", txTurret);
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-tags"));
@@ -210,7 +217,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setPosition() {
-        turret.setControl(m_request.withPosition(((calculateAngleToHub()) * (ticksPerAngle)))); // + txTAGS);
+        turret.setControl(m_request.withPosition(((calculateAngleToHub()+txTurret) * (ticksPerAngle)))); // + txTAGS);
     }
 
     public void setToZero() {
@@ -242,15 +249,18 @@ public class TurretSubsystem extends SubsystemBase {
         if (tagID == 18) {
             tagX = (Constants.AprilTagPositions.Tag18X / 39.37);
             tagY = (Constants.AprilTagPositions.Tag18Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag18Rotation;
         } else if (tagID == 19) {
             tagX = (Constants.AprilTagPositions.Tag19X / 39.37);
             tagY = (Constants.AprilTagPositions.Tag19Y / 39.37);
         } else if (tagID == 20) {
             tagX = (Constants.AprilTagPositions.Tag20X / 39.37);
             tagY = (Constants.AprilTagPositions.Tag20Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag20Rotation;
         } else if (tagID == 21) {
             tagX = (Constants.AprilTagPositions.Tag21X / 39.37);
             tagY = (Constants.AprilTagPositions.Tag21Y / 39.37);
+            tagRotation = Constants.AprilTagPositions.Tag21Rotation;
         } else if (tagID == 22) {
             tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
             tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
@@ -295,16 +305,20 @@ public class TurretSubsystem extends SubsystemBase {
         // offsets are tag-relative, not field relative and should change depending on
         // tag rotation
         if (tagRotation == 180) {
-            rotatedX = -offsetX;
-            rotatedY = -offsetY;
+            rotatedX = -offsetY;
+            rotatedY = -offsetX;
         } else if (tagRotation == 90) {
             rotatedY = -offsetX;
             rotatedX = -offsetY;
         } else if (tagRotation == 270) {
-            rotatedY = offsetX;
-            rotatedX = offsetY;
+            rotatedY = -offsetX;
+            rotatedX = -offsetY;
+        } else if (tagRotation == 0) {
+            rotatedX = -offsetX;
+            rotatedY = offsetY;
         }
 
+        SmartDashboard.putNumber("TagRotation", tagRotation);
         SmartDashboard.putNumber("offsetX", offsetX);
         SmartDashboard.putNumber("offsetY", offsetY);
 

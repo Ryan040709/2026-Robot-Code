@@ -278,6 +278,7 @@ public final class Constants {
     public static double Tag18X = 182.11;
     public static double Tag18Y = 135.09;
     public static double Tag18Z = 44.25;
+    public static double Tag18Rotation = 90;
     // tag 19
     public static double Tag19X = 205.87;
     public static double Tag19Y = 144.84;
@@ -286,10 +287,12 @@ public final class Constants {
     public static double Tag20X = 205.87;
     public static double Tag20Y = 158.84;
     public static double Tag20Z = 44.25;
+    public static double Tag20Rotation = 0;
     // tag 21
     public static double Tag21X = 182.11;
     public static double Tag21Y = 182.60;
     public static double Tag21Z = 44.25;
+    public static double Tag21Rotation = 90;
     // tag 22
     public static double Tag22X = 182.11;
     public static double Tag22Y = 182.60;
