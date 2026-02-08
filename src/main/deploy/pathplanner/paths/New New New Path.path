@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.68848717948718,
+        "y": 4.035
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.68848717948718,
+        "y": 4.035
+      },
+      "isLocked": false,
+      "linkedName": "Hub Starting Point"
+    },
+    {
+      "anchor": {
+        "x": 0.816320512820514,
+        "y": 5.767602564102564
+      },
+      "prevControl": {
+        "x": 1.2384423076923097,
+        "y": 5.276352564102564
+      },
+      "nextControl": {
+        "x": 0.39419871794871875,
+        "y": 6.258852564102564
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.7000641025641037,
+        "y": 3.4884743589743596
+      },
+      "prevControl": {
+        "x": 0.7000641025641037,
+        "y": 3.4884743589743596
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}

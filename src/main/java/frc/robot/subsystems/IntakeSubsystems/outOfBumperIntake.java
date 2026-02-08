@@ -67,7 +67,7 @@ public class outOfBumperIntake extends SubsystemBase {
         pivotMotor2.getConfigurator().apply(pivotConfig);
     }
 
-    public void PrivotIntake(double targetPosition) {
+    public void PivotIntake(double targetPosition) {
         pivotMotor1.setControl(new PositionVoltage(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
         pivotMotor2.setControl(new PositionVoltage(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
     }

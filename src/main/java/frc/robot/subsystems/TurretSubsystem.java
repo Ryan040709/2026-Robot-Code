@@ -81,7 +81,10 @@ public class TurretSubsystem extends SubsystemBase {
     double txTurret = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
     double ty = LimelightHelpers.getTY("limelight-tags"); // Vertical offset from crosshair to target in degrees
     double ta = LimelightHelpers.getTA("limelight-tags"); // Target area (0% to 100% of image)
-    boolean hasTarget = LimelightHelpers.getTV("limelight-tags"); // Do you have a valid target?
+    boolean hasTagTargets = LimelightHelpers.getTV("limelight-tags"); // Do you have a valid target?
+    boolean hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
+
+    boolean limelightTurret = false;
 
     double txnc = LimelightHelpers.getTXNC("limelight-tags"); // Horizontal offset from principal pixel/point to
                                                               // target in degrees
@@ -155,7 +158,6 @@ public class TurretSubsystem extends SubsystemBase {
         Ry = robotPose.getY();
         theta = robotPose.getRotation().getDegrees();
         tagID = LimelightHelpers.getFiducialID("limelight-turret");
-        txTurret = LimelightHelpers.getTX("limelight-turret");
 
         // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
@@ -173,6 +175,9 @@ public class TurretSubsystem extends SubsystemBase {
                 .getDoubleArray(defaultPose);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
+
+        SmartDashboard.getBoolean("limelightTurret", limelightTurret);
+
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
         // Push values to SmartDashboard
@@ -217,7 +222,16 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setPosition() {
-        turret.setControl(m_request.withPosition(((calculateAngleToHub()+txTurret) * (ticksPerAngle)))); // + txTAGS);
+        if (hasTurretTargets == true) {
+            turret.setControl(m_request.withPosition((txTurret) * (ticksPerAngle)));
+            limelightTurret = true;
+        } else {
+            //turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
+            limelightTurret = false;
+        }
+
+        txTurret = LimelightHelpers.getTX("limelight-turret");
+
     }
 
     public void setToZero() {

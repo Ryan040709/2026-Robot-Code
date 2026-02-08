@@ -27,7 +27,7 @@ public class Intake_LowerIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_outOfBumperIntake.PrivotIntake(Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_Down);
+    s_outOfBumperIntake.PivotIntake(Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_Down);
   }
 
   // Called once the command ends or is interrupted.

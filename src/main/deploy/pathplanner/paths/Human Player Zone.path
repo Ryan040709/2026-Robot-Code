@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.68848717948718,
+        "y": 4.035
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.6884871794871774,
+        "y": 4.035
+      },
+      "isLocked": false,
+      "linkedName": "Hub Starting Point"
+    },
+    {
+      "anchor": {
+        "x": 0.3977051282051294,
+        "y": 0.5465384615384619
+      },
+      "prevControl": {
+        "x": 0.46747435897436024,
+        "y": 1.2674871794871807
+      },
+      "nextControl": {
+        "x": 0.30813307149665836,
+        "y": -0.37903945778240644
+      },
+      "isLocked": false,
+      "linkedName": "human player zone"
+    },
+    {
+      "anchor": {
+        "x": 1.5023846153846168,
+        "y": 3.267538461538462
+      },
+      "prevControl": {
+        "x": 2.502384615384616,
+        "y": 3.267538461538462
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
