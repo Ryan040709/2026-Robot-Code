@@ -78,11 +78,11 @@ public class TurretSubsystem extends SubsystemBase {
 
     // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
-    double txTurret = LimelightHelpers.getTX("limelight-turret"); // Horizontal offset from crosshair to target in degrees
-    double ty = LimelightHelpers.getTY("limelight-tags"); // Vertical offset from crosshair to target in degrees
-    double ta = LimelightHelpers.getTA("limelight-tags"); // Target area (0% to 100% of image)
-    boolean hasTagTargets = LimelightHelpers.getTV("limelight-tags"); // Do you have a valid target?
-    boolean hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
+    double txTurret = LimelightHelpers.getTX("limelight-turret");
+    double ty = LimelightHelpers.getTY("limelight-tags");
+    double ta = LimelightHelpers.getTA("limelight-tags");
+    boolean hasTagTargets = LimelightHelpers.getTV("limelight-tags");
+    double hasTurretTargets = NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("tv").getDouble(0);//LimelightHelpers.getTV("limelight-turret");
 
     boolean limelightTurret = false;
 
@@ -93,6 +93,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
+
+        //SmartDashboard.puttTable("limelight-left").getEntry("tv").getDouble(0) == 1
 
         // pid
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
@@ -147,6 +149,10 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
+        //i really don't know :/
+
+        hasTurretTargets = NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("tv").getDouble(0);
+
         // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 1);
 
         //LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", 25,27,24,20);
@@ -176,7 +182,8 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Gyro Angle", theta);
 
-        SmartDashboard.getBoolean("limelightTurret", limelightTurret);
+        SmartDashboard.putBoolean("limelightTurret", limelightTurret);
+         SmartDashboard.putBoolean("turretResults?", hasTagTargets);
 
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
@@ -222,11 +229,11 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setPosition() {
-        if (hasTurretTargets == true) {
+        if (hasTurretTargets == 1) {
             turret.setControl(m_request.withPosition((txTurret) * (ticksPerAngle)));
             limelightTurret = true;
         } else {
-            //turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
+            turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
             limelightTurret = false;
         }
 

@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6884871794871774,
+        "x": 2.68848717948718,
         "y": 4.035
       },
       "isLocked": false,
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 0.3977051282051294,
-        "y": 0.5465384615384619
+        "x": 1.5605256410256425,
+        "y": 3.2907948717948714
       },
       "prevControl": {
-        "x": 1.3977051282051294,
-        "y": 0.5465384615384619
+        "x": 2.5605256410256425,
+        "y": 3.2907948717948714
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": "tower right"
     }
   ],
   "rotationTargets": [],

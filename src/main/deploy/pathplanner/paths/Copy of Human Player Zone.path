@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.68848717948718,
-        "y": 4.035
-      },
-      "prevControl": null,
-      "nextControl": {
-        "x": 2.6884871794871774,
-        "y": 4.035
-      },
-      "isLocked": false,
-      "linkedName": "Hub Starting Point"
-    },
-    {
-      "anchor": {
         "x": 0.3977051282051294,
         "y": 0.5465384615384619
       },
-      "prevControl": {
-        "x": 1.3977051282051294,
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.397705128205132,
         "y": 0.5465384615384619
+      },
+      "isLocked": false,
+      "linkedName": "human player zone"
+    },
+    {
+      "anchor": {
+        "x": 1.5605256410256425,
+        "y": 3.2907948717948714
+      },
+      "prevControl": {
+        "x": 1.5605256410256425,
+        "y": 2.290794871794872
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": "tower right"
     }
   ],
   "rotationTargets": [],
@@ -48,7 +48,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

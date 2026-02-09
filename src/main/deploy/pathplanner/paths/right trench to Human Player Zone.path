@@ -3,61 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.77,
-        "y": 2.077
+        "x": 3.665230769230771,
+        "y": 0.5
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.77,
-        "y": 0.07699999999999996
+        "x": 2.665230769230768,
+        "y": 0.5000000000000001
       },
       "isLocked": false,
-      "linkedName": "left close sweep end"
+      "linkedName": "right trench starting point"
     },
     {
       "anchor": {
-        "x": 5.653653846153848,
-        "y": 7.475
+        "x": 2.0314679487179492,
+        "y": 0.75
       },
       "prevControl": {
-        "x": 7.052400834105646,
-        "y": 7.453698795180722
+        "x": 2.3485628752639895,
+        "y": 0.75
       },
       "nextControl": {
-        "x": 4.4041202472853955,
-        "y": 7.494028867513087
+        "x": 1.714373022171909,
+        "y": 0.75
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.516,
-        "y": 7.475
+        "x": 0.3977051282051294,
+        "y": 0.5465384615384619
       },
       "prevControl": {
-        "x": 4.516,
-        "y": 7.475
+        "x": 1.3977051282051294,
+        "y": 0.5465384615384619
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "left trench start"
+      "linkedName": "human player zone"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 4.62554,
-        "y": 4.03606
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 1.5,
-      "maxWaypointRelativePos": 1.5,
-      "name": "Point Towards Zone"
-    }
-  ],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
@@ -68,14 +57,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -45.0
+    "velocity": 0,
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 3.0,
-    "rotation": -90.0
+    "velocity": 0,
+    "rotation": 90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

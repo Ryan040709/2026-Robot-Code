@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.68848717948718,
-        "y": 4.035
+        "x": 1.0488846153846167,
+        "y": 5.965282051282052
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6884871794871774,
-        "y": 4.035
+        "x": 2.0488846153846167,
+        "y": 5.965282051282052
       },
       "isLocked": false,
-      "linkedName": "Hub Starting Point"
+      "linkedName": "blue depot"
     },
     {
       "anchor": {
-        "x": 0.3977051282051294,
-        "y": 0.5465384615384619
+        "x": 1.5721538461538476,
+        "y": 4.174538461538462
       },
       "prevControl": {
-        "x": 1.3977051282051294,
-        "y": 0.5465384615384619
+        "x": 1.5721538461538476,
+        "y": 5.174538461538462
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -41,8 +41,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

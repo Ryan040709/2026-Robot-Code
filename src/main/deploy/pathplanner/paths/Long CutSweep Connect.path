@@ -9,55 +9,49 @@
       "prevControl": null,
       "nextControl": {
         "x": 7.77,
-        "y": 0.07699999999999996
+        "y": 1.077
       },
       "isLocked": false,
       "linkedName": "left close sweep end"
     },
     {
       "anchor": {
-        "x": 5.653653846153848,
-        "y": 7.475
+        "x": 7.002525641025643,
+        "y": 0.9070128205128207
       },
       "prevControl": {
-        "x": 7.052400834105646,
-        "y": 7.453698795180722
+        "x": 6.994907553044815,
+        "y": 1.3869523633049468
       },
       "nextControl": {
-        "x": 4.4041202472853955,
-        "y": 7.494028867513087
+        "x": 7.006493395182324,
+        "y": 0.657044308641921
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.516,
-        "y": 7.475
+        "x": 7.85,
+        "y": 1.2
       },
       "prevControl": {
-        "x": 4.516,
-        "y": 7.475
+        "x": 7.85,
+        "y": 0.44999999999999996
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "left trench start"
+      "linkedName": "right far sweep start"
     }
   ],
-  "rotationTargets": [],
-  "constraintZones": [],
-  "pointTowardsZones": [
+  "rotationTargets": [
     {
-      "fieldPosition": {
-        "x": 4.62554,
-        "y": 4.03606
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 1.5,
-      "maxWaypointRelativePos": 1.5,
-      "name": "Point Towards Zone"
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -90.0
     }
   ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
@@ -68,14 +62,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": -45.0
+    "velocity": 0,
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 3.0,
+    "velocity": 0,
     "rotation": -90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }
