@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -32,9 +33,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-
+import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -61,7 +63,14 @@ public class TurretSubsystem extends SubsystemBase {
     public double tagID;
     public Pose2d robotPose = new Pose2d();
 
+    public double elapsedTime;
+
+    public PIDController pidRotation = new PIDController(0.0125, 0, 0);
+    public double turretRotation;
+
     public double turretHubAngle = 0;
+
+    public double turretTARGET = 0;
 
     public double theta = 0;
     public boolean isBlue = true;
@@ -82,7 +91,7 @@ public class TurretSubsystem extends SubsystemBase {
     double ty = LimelightHelpers.getTY("limelight-tags");
     double ta = LimelightHelpers.getTA("limelight-tags");
     boolean hasTagTargets = LimelightHelpers.getTV("limelight-tags");
-    double hasTurretTargets = NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("tv").getDouble(0);//LimelightHelpers.getTV("limelight-turret");
+    boolean hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
 
     boolean limelightTurret = false;
 
@@ -94,7 +103,7 @@ public class TurretSubsystem extends SubsystemBase {
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
-        //SmartDashboard.puttTable("limelight-left").getEntry("tv").getDouble(0) == 1
+        // SmartDashboard.puttTable("limelight-left").getEntry("tv").getDouble(0) == 1
 
         // pid
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
@@ -149,15 +158,21 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
-        //i really don't know :/
+        hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
 
-        hasTurretTargets = NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("tv").getDouble(0);
+        elapsedTime = Timer.getTimestamp();
+
+        // i really don't know :/
+
+        // hasTurretTargets =
+        // NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("tv").getDouble(0);
 
         // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 1);
 
-        //LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", 25,27,24,20);
+        // LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret",
+        // 25,27,24,20);
 
-        //LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", int[25]);;
+        // LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", int[25]);;
 
         robotPose = UpdateRobotPose2d();
         Rx = robotPose.getX();
@@ -168,6 +183,8 @@ public class TurretSubsystem extends SubsystemBase {
         // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
 
         SmartDashboard.putNumber("tagID", tagID);
+
+        // SmartDashboard.putNumber("turretResults", hasTurretTargets);
 
         SmartDashboard.putNumber("txTurret", txTurret);
 
@@ -183,7 +200,7 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Gyro Angle", theta);
 
         SmartDashboard.putBoolean("limelightTurret", limelightTurret);
-         SmartDashboard.putBoolean("turretResults?", hasTagTargets);
+        SmartDashboard.putBoolean("turretResults?", hasTurretTargets);
 
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
@@ -195,6 +212,10 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
         SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
+
+        SmartDashboard.putNumber("Turret Target", turretTARGET);
+
+        SmartDashboard.putNumber("Time", elapsedTime);
 
         determine3dOffset();
 
@@ -229,12 +250,22 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setPosition() {
-        if (hasTurretTargets == 1) {
-            turret.setControl(m_request.withPosition((txTurret) * (ticksPerAngle)));
+        if (hasTurretTargets == true) {
             limelightTurret = true;
+
+            if (elapsedTime > elapsedTime + 1) {
+
+                turret.setControl(
+                        m_request.withPosition(turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle)));
+
+                turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
+            }
+
         } else {
             turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
             limelightTurret = false;
+
+            turretTARGET = (calculateAngleToHub() * (ticksPerAngle));
         }
 
         txTurret = LimelightHelpers.getTX("limelight-turret");
@@ -343,10 +374,15 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("offsetX", offsetX);
         SmartDashboard.putNumber("offsetY", offsetY);
 
-                SmartDashboard.putNumber("rotatedX", rotatedX);
+        SmartDashboard.putNumber("rotatedX", rotatedX);
         SmartDashboard.putNumber("rotatedY", rotatedY);
 
         LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
+    }
+
+    public void SetPid() {
+        pidRotation.setPID(0.02, 0.0, 0);
+        turretRotation = pidRotation.calculate(txTurret, 0);
     }
 
     public double calculateAngleToHub() {

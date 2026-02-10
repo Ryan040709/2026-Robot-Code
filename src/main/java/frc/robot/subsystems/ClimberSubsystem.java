@@ -14,6 +14,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -26,6 +27,8 @@ public class ClimberSubsystem extends SubsystemBase {
     public final TalonFX climberMotorA = new TalonFX(11);
     public final TalonFX climberMotorB = new TalonFX(12);
     public final CANcoder climberCANcoder = new CANcoder(13);
+
+    Servo climbServo = new Servo(1);
 
     private DigitalInput bottomStop = new DigitalInput(1);
     private MotionMagicVoltage m_request;
@@ -86,6 +89,10 @@ public class ClimberSubsystem extends SubsystemBase {
                                                                                  // think - Brian
         m_request = new MotionMagicVoltage(0);
 
+    }
+
+    public void climberServo(double targetPosition) {
+        climbServo.setPosition(targetPosition);
     }
 
     public boolean AtGoalPosition(double GoalPosition) {
