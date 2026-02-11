@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.68848717948718,
-        "y": 4.035
+        "x": 3.55,
+        "y": 4.25
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.68848717948718,
-        "y": 4.035
+        "x": 4.55,
+        "y": 4.25
       },
       "isLocked": false,
       "linkedName": "Hub Starting Point"
@@ -24,7 +24,7 @@
         "y": 5.276352564102564
       },
       "nextControl": {
-        "x": 0.39419871794871875,
+        "x": 0.3941987179487186,
         "y": 6.258852564102564
       },
       "isLocked": false,
