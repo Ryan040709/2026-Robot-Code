@@ -36,6 +36,7 @@ import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -71,6 +72,8 @@ public class TurretSubsystem extends SubsystemBase {
     public double turretHubAngle = 0;
 
     public double turretTARGET = 0;
+
+    public double waitTime = 0;
 
     public double theta = 0;
     public boolean isBlue = true;
@@ -184,9 +187,11 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("tagID", tagID);
 
+        SmartDashboard.putNumber("wait time", waitTime);
+
         // SmartDashboard.putNumber("turretResults", hasTurretTargets);
 
-        SmartDashboard.putNumber("txTurret", txTurret);
+        SmartDashboard.putNumber("turret tx", txTurret);
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-tags"));
@@ -253,19 +258,27 @@ public class TurretSubsystem extends SubsystemBase {
         if (hasTurretTargets == true) {
             limelightTurret = true;
 
-            if (elapsedTime > elapsedTime + 1) {
+            if (elapsedTime > waitTime + 1) {
+                if (hasTurretTargets == true) {
 
-                turret.setControl(
-                        m_request.withPosition(turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle)));
+                    turret.setControl(m_request
+                            .withPosition(turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle)));
 
-                turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
+                    turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
+                }
+            } else {
+                turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
             }
 
         } else {
-            turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
-            limelightTurret = false;
 
-            turretTARGET = (calculateAngleToHub() * (ticksPerAngle));
+            waitTime = elapsedTime;
+
+                turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
+                limelightTurret = false;
+
+                turretTARGET = (calculateAngleToHub() * (ticksPerAngle));
+
         }
 
         txTurret = LimelightHelpers.getTX("limelight-turret");
