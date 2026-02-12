@@ -24,16 +24,21 @@ public class Turret_TargetLocking extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intakeValue = true;
+    System.out.println("shooter Tracking");
+    TurretSubsystem.turretToggle();
+
+    SmartDashboard.putBoolean("turret", intakeValue);
+
+    // intakeValue = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("shooter Tracking");
-    TurretSubsystem.turretToggle();
+    // System.out.println("shooter Tracking");
+    // TurretSubsystem.turretToggle();
 
-    SmartDashboard.putBoolean("turret", intakeValue);
+    // SmartDashboard.putBoolean("turret", intakeValue);
   }
 
   // Called once the command ends or is interrupted.
