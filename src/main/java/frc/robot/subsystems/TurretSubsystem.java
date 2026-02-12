@@ -78,6 +78,8 @@ public class TurretSubsystem extends SubsystemBase {
     public double theta = 0;
     public boolean isBlue = true;
 
+    public boolean turretLocking = true;
+
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
     public static int kPigeonId = 14;
@@ -187,6 +189,8 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("tagID", tagID);
 
+        SmartDashboard.putBoolean("turret tracking", turretLocking);
+
         SmartDashboard.putNumber("wait time", waitTime);
 
         // SmartDashboard.putNumber("turretResults", hasTurretTargets);
@@ -224,6 +228,8 @@ public class TurretSubsystem extends SubsystemBase {
 
         determine3dOffset();
 
+        setPosition();
+
         // if (tagID == 19) {
         // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 0, 0, 0);
         // } else if (tagID == 25) {
@@ -254,34 +260,49 @@ public class TurretSubsystem extends SubsystemBase {
         turret.setPosition(0);
     }
 
+    public boolean turretToggle() {
+        if (turretLocking == true) {
+            turretLocking = false;
+        } else if (!turretLocking) {
+            turretLocking = true;
+        }
+        return turretLocking;
+    }
+
     public void setPosition() {
-        if (hasTurretTargets == true) {
-            limelightTurret = true;
+        if (turretLocking) {
 
-            if (elapsedTime > waitTime + 1) {
-                if (hasTurretTargets == true) {
+            if (hasTurretTargets == true) {
+                limelightTurret = true;
 
-                    turret.setControl(m_request
-                            .withPosition(turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle)));
+                if (elapsedTime > waitTime + 1) {
+                    if (hasTurretTargets == true) {
 
-                    turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
+                        turret.setControl(m_request
+                                .withPosition(turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle)));
+
+                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
+                    }
+                } else {
+                    turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
                 }
+
             } else {
-                turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
-            }
 
-        } else {
-
-            waitTime = elapsedTime;
+                waitTime = elapsedTime;
 
                 turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
                 limelightTurret = false;
 
                 turretTARGET = (calculateAngleToHub() * (ticksPerAngle));
 
-        }
+            }
 
-        txTurret = LimelightHelpers.getTX("limelight-turret");
+            txTurret = LimelightHelpers.getTX("limelight-turret");
+
+        } else {
+            //nothing???????????????????????????????????????????????????????? but whyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+        }
 
     }
 

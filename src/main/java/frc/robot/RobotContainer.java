@@ -173,13 +173,15 @@ public class RobotContainer {
                 // set to run to x position
                 driverController.pov(0).toggleOnFalse(turret_Locking);
 
+                manipulatorController.pov(0).toggleOnTrue(turret_Locking);
+
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
 
                 manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
-                manipulatorController.pov(0).whileTrue(hopperToShooter);
+                //manipulatorController.pov(0).whileTrue(hopperToShooter);
 
                 manipulatorController.pov(90).whileTrue(hopperToIntake);
 
