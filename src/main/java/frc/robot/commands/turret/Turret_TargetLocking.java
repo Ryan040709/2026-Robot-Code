@@ -10,6 +10,8 @@ public class Turret_TargetLocking extends Command {
 
   boolean intakeValue = false;
 
+  boolean turretLocking = true;
+
   TurretSubsystem TurretSubsystem;
 
   /** Creates a new Turret_TargetLocking. */
@@ -29,7 +31,7 @@ public class Turret_TargetLocking extends Command {
   @Override
   public void execute() {
     System.out.println("shooter Tracking");
-    TurretSubsystem.setPosition();
+    TurretSubsystem.turretToggle();
 
     SmartDashboard.putBoolean("turret", intakeValue);
   }
