@@ -9,6 +9,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -46,7 +47,13 @@ public class RobotContainer {
                                                                                           // second
                                                                                           // max angular velocity
 
+        // commented out to allow new selection style testing [LIES!!]
         private final SendableChooser<Command> autoChooser;
+
+        // let's the driver pick the actual auton they want.
+        private final SendableChooser<String> routineChooser = new SendableChooser<>();
+        // let's the driver pick an auton "variation"
+        private final SendableChooser<String> variationChooser = new SendableChooser<>();
 
         /* Setting up bindings for necessary control of the swerve drive platform */
         private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -108,6 +115,21 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 // climber commands
+
+                // Setup Routines
+                routineChooser.setDefaultOption("Left Trench Auto", "left_trench");
+                routineChooser.setDefaultOption("Right Trench Auto", "right_trench");
+                routineChooser.setDefaultOption("Hub Auto", "Hub");
+
+                // Setup Variations
+                variationChooser.setDefaultOption("Depot", "to_depot");
+                variationChooser.addOption("Sweep", "to_sweep");
+                variationChooser.addOption("Double Sweep", "to_double_sweep");
+                variationChooser.addOption("Human Player", "to_human_player_zone");
+
+                // Put both on the Dashboard
+                SmartDashboard.putData("Auto Routine", routineChooser);
+                SmartDashboard.putData("Auto Variation", variationChooser);
 
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
@@ -171,7 +193,7 @@ public class RobotContainer {
                 // manual zeroing
                 manipulatorController.x().whileTrue(Commands.run(() -> turretTest.zeroPosition(), turretTest));
                 // set to run to x position
-                driverController.pov(0).toggleOnFalse(turret_Locking);
+                driverController.pov(0).toggleOnTrue(turret_Locking);
 
                 manipulatorController.pov(0).toggleOnTrue(turret_Locking);
 
@@ -181,7 +203,7 @@ public class RobotContainer {
 
                 manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
-                //manipulatorController.pov(0).whileTrue(hopperToShooter);
+                // manipulatorController.pov(0).whileTrue(hopperToShooter);
 
                 manipulatorController.pov(90).whileTrue(hopperToIntake);
 
@@ -199,7 +221,22 @@ public class RobotContainer {
 
         public Command getAutonomousCommand() {
 
-                return autoChooser.getSelected();
+                //return autoChooser.getSelected();
+
+                String routine = routineChooser.getSelected();
+                String variation = variationChooser.getSelected();
+
+                // Option A: Construct the filename dynamically
+                // This assumes you named your files like "3_BALL_LEFT" in PathPlanner
+                String autoName = routine + "_" + variation;
+
+                try {
+                        return AutoBuilder.buildAuto(autoName);
+                } catch (Exception e) {
+                        // Fallback: If "3_BALL_STRAIGHT" doesn't exist, just do a basic one
+                        DriverStation.reportError("Auto " + autoName + " not found!", e.getStackTrace());
+                        return AutoBuilder.buildAuto("Taxi Only");
+                }
         }
 
 }
