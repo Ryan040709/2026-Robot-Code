@@ -56,11 +56,20 @@ public class TurretSubsystem extends SubsystemBase {
 
     private final double NinetyDegreeRotation = 33.73877;
 
-    public final double Hy = 4.03606;
-    public final double redHx = 11.98482;
-    public final double blueHx = 4.62554;
-    public double Rx;
-    public double Ry;
+    public final double Hy = 4.03606; // hubY
+    public final double redHx = 11.98482; // redHubX
+    public final double blueHx = 4.62554; // blueHubX
+    public double Rx; // robotX
+    public double Ry; // robotY
+
+    public double redFx = 11.98482 + (4.62554/2); // blueFeedingX
+    public double blueFx = 4.62554/2; // blueFeedingX
+    public double rightFy = 4.03606 + (4.03606/2); // right feedingY
+    public double leftFy = 4.03606/2; // left feedingY
+
+    public double Lx; // lockingX
+    public double Ly; // lockingY
+
     public double tagID;
     public Pose2d robotPose = new Pose2d();
 
@@ -275,7 +284,7 @@ public class TurretSubsystem extends SubsystemBase {
             if (hasTurretTargets == true) {
                 limelightTurret = true;
 
-                if (elapsedTime > waitTime + 1) {
+                if (elapsedTime > waitTime + 1000000) {
                     if (hasTurretTargets == true) {
 
                         turret.setControl(m_request
@@ -301,7 +310,8 @@ public class TurretSubsystem extends SubsystemBase {
             txTurret = LimelightHelpers.getTX("limelight-turret");
 
         } else {
-            //nothing???????????????????????????????????????????????????????? but whyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+            // nothing???????????????????????????????????????????????????????? but
+            // whyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
         }
 
     }
@@ -310,6 +320,28 @@ public class TurretSubsystem extends SubsystemBase {
 
         turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
 
+    }
+
+    public void determineLockingTarget() {
+
+        double tX = isBlue ? blueFx : redFx;
+        double Hx = isBlue ? blueHx : redHx;
+
+        if (Rx > blueHx && Rx < redHx) {
+            if (Ry > Hy) {
+                Ly = rightFy;
+                Lx = tX;
+            } else if (Ry < Hy) {
+                Ly = leftFy;
+                Lx = tX;
+            }
+        } else {
+            Lx = Hx;
+            Ly = Hy;
+        }
+
+        SmartDashboard.putNumber("targetX", Lx);
+        SmartDashboard.putNumber("targetY", Ly);
     }
 
     public void determine3dOffset() {
@@ -421,9 +453,11 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double calculateAngleToHub() {
 
+        determineLockingTarget();
+
         double tX = isBlue ? blueHx : redHx;
-        double diffY = (Hy - Ry);
-        double diffX = (tX - Rx);
+        double diffY = (Ly - Ry);
+        double diffX = (Lx - Rx);
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145); // (turretHubAngle-theta);
 
