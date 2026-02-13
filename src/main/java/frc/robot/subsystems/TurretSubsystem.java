@@ -70,6 +70,8 @@ public class TurretSubsystem extends SubsystemBase {
     public double Lx; // lockingX
     public double Ly; // lockingY
 
+    public boolean isFeeding = false;
+
     public double tagID;
     public Pose2d robotPose = new Pose2d();
 
@@ -284,7 +286,7 @@ public class TurretSubsystem extends SubsystemBase {
             if (hasTurretTargets == true) {
                 limelightTurret = true;
 
-                if (elapsedTime > waitTime + 1000000) {
+                if (elapsedTime > waitTime + 1 && !isFeeding) {
                     if (hasTurretTargets == true) {
 
                         turret.setControl(m_request
@@ -335,9 +337,11 @@ public class TurretSubsystem extends SubsystemBase {
                 Ly = leftFy;
                 Lx = tX;
             }
+            isFeeding = true;
         } else {
             Lx = Hx;
             Ly = Hy;
+            isFeeding = false;
         }
 
         SmartDashboard.putNumber("targetX", Lx);
