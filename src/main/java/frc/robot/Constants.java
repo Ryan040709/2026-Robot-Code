@@ -28,6 +28,16 @@ import edu.wpi.first.wpilibj.DigitalSource;
 // and I like variables. :/
 
 public final class Constants {
+  public static final class GameManager {
+    public static double shiftAuto = 20; 
+    public static double shiftTransistion = 140; 
+    public static double shiftOne = 130;
+    public static double shiftTwo = 105;
+    public static double shiftThree = 80;
+    public static double shiftFour = 55;
+    public static double shiftEndGame = 30;     
+  }
+
   public static final class TurretSubsystem {
 
     public static double Turret_PeakForwardDutyCycle = 1;

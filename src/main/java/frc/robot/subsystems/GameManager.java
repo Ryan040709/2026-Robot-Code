@@ -4,33 +4,40 @@
 
 package frc.robot.subsystems;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkFlex;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 public class GameManager extends SubsystemBase {
 
-  
-  public enum CurrentShift{
-    Autonomous, //active for both
+  public enum ShiftList {
+    Autonomous, // active for both
     Transistion, // active for both
-    One, //alternates
-    Two, //alternates
-    Three, //alternates
-    Four, //alternates
-    EndGame //active for both
+    One, // alternates
+    Two, // alternates
+    Three, // alternates
+    Four, // alternates
+    EndGame // active for both
   }
 
-  public PWMSparkFlex shiftLights = new PWMSparkFlex(1);
+  public List<ShiftList> LoseShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
+  public List<ShiftList> alwaysActiveShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
+
+  public ShiftList currentShift = ShiftList.Autonomous;
+
+  public PWMSparkFlex shiftLights = new PWMSparkFlex(0);
 
   public double matchTimer = DriverStation.getMatchTime();
 
-  //public String currentShift = "auto";
-
-
   public boolean isTeleop = DriverStation.isTeleop();
+
+  public boolean isActive = true;
 
   public boolean wonAuto = false;
 
@@ -40,6 +47,12 @@ public class GameManager extends SubsystemBase {
   public GameManager() {
     SmartDashboard.putData("Win Auto?", runOnce(() -> wonAuto()));
     SmartDashboard.putData("Lost Auto?", runOnce(() -> lostAuto()));
+
+    alwaysActiveShifts.add(ShiftList.Autonomous);
+    alwaysActiveShifts.add(ShiftList.Transistion);
+    LoseShifts.add(ShiftList.One);
+    LoseShifts.add(ShiftList.Three);
+    alwaysActiveShifts.add(ShiftList.EndGame);
   }
 
   @Override
@@ -47,8 +60,16 @@ public class GameManager extends SubsystemBase {
     isTeleop = DriverStation.isTeleop();
     matchTimer = DriverStation.getMatchTime();
 
+    determineShift();
+    determineActiveHub();
+
+    SmartDashboard.putString("current shift", currentShift.toString());
+
     SmartDashboard.putNumber("match timer", matchTimer);
     SmartDashboard.putBoolean("is teleop", isTeleop);
+    SmartDashboard.putBoolean("win auto?", wonAuto);
+
+    SmartDashboard.putBoolean("is active?", isActive);
   }
 
   public void wonAuto() {
@@ -68,6 +89,44 @@ public class GameManager extends SubsystemBase {
   }
 
   public void determineShift() {
-    
+    if (isTeleop) {
+      if (matchTimer < Constants.GameManager.shiftEndGame) {
+        currentShift = ShiftList.EndGame;
+      } else if (matchTimer < Constants.GameManager.shiftFour) {
+        currentShift = ShiftList.Four;
+      } else if (matchTimer < Constants.GameManager.shiftThree) {
+        currentShift = ShiftList.Three;
+      } else if (matchTimer < Constants.GameManager.shiftTwo) {
+        currentShift = ShiftList.Two;
+      } else if (matchTimer < Constants.GameManager.shiftOne) {
+        currentShift = ShiftList.One;
+      } else if (matchTimer < Constants.GameManager.shiftTransistion) {
+        currentShift = ShiftList.Transistion;
+      }
+    }
+  }
+
+  public void determineActiveHub() {
+    if (wonAuto) {
+      if (LoseShifts.contains(currentShift)) {
+        // not active
+        shiftLights.set(0.61);
+        isActive = false;
+      } else {
+        // active
+        shiftLights.set(0.77);
+        isActive = true;
+      }
+    } else {
+      if (LoseShifts.contains(currentShift) || alwaysActiveShifts.contains(currentShift)) {
+        // active
+        shiftLights.set(0.77);
+        isActive = true;
+      } else {
+        // not active
+        shiftLights.set(0.61);
+        isActive = false;
+      }
+    }
   }
 }
