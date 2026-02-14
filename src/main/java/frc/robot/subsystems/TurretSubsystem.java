@@ -4,6 +4,8 @@ import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Radians;
 
 import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -65,8 +67,8 @@ public class TurretSubsystem extends SubsystemBase {
     public double Rx; // robotX
     public double Ry; // robotY
 
-    public double redFx = 11.98482 + (4.62554/2); // blueFeedingX
-    public double blueFx = 4.62554/2; // blueFeedingX
+    public double redFx = 11.98482 + (4.62554 / 2); // blueFeedingX
+    public double blueFx = 4.62554 / 2; // blueFeedingX
     public double rightFy = 2; // right feedingY
     public double leftFy = 6; // left feedingY
 
@@ -88,6 +90,9 @@ public class TurretSubsystem extends SubsystemBase {
     public double turretTARGET = 0;
 
     public double waitTime = 0;
+
+    public List<Integer> blueTagFilter = new ArrayList<>();
+    public List<Integer> redTagFilter = new ArrayList<>();
 
     public double theta = 0;
     public boolean isBlue = true;
@@ -162,6 +167,25 @@ public class TurretSubsystem extends SubsystemBase {
 
         turret.getConfigurator().apply(motorConfig);
 
+        // apriltag filter list
+        blueTagFilter.add(18);
+        blueTagFilter.add(19);
+        blueTagFilter.add(20);
+        blueTagFilter.add(21);
+        blueTagFilter.add(24);
+        blueTagFilter.add(25);
+        blueTagFilter.add(26);
+        blueTagFilter.add(27);
+
+        redTagFilter.add(2);
+        redTagFilter.add(3);
+        redTagFilter.add(4);
+        redTagFilter.add(5);
+        redTagFilter.add(8);
+        redTagFilter.add(9);
+        redTagFilter.add(10);
+        redTagFilter.add(11);
+
     }
 
     public void MoveMotor(double targetSpeed) {
@@ -178,17 +202,16 @@ public class TurretSubsystem extends SubsystemBase {
     public void periodic() {
 
         Optional<Alliance> ally = DriverStation.getAlliance();
-if (ally.isPresent()) {
-    if (ally.get() == Alliance.Red) {
-        isBlue = false;
-    }
-    if (ally.get() == Alliance.Blue) {
-        isBlue = true;
-    }
-}
-else {
-    isBlue = false;
-}
+        if (ally.isPresent()) {
+            if (ally.get() == Alliance.Red) {
+                isBlue = false;
+            }
+            if (ally.get() == Alliance.Blue) {
+                isBlue = true;
+            }
+        } else {
+            isBlue = false;
+        }
 
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
 
@@ -299,13 +322,31 @@ else {
         return turretLocking;
     }
 
+    public boolean FilterApriltags() {
+
+        if (isBlue) {
+            if (blueTagFilter.contains((int) tagID)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if (redTagFilter.contains((int) tagID)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
     public void setPosition() {
+        FilterApriltags();
 
         double lastTagID = 0;
 
         if (turretLocking) {
 
-            if (hasTurretTargets == true) {
+            if (hasTurretTargets == true && FilterApriltags()) {
                 limelightTurret = true;
 
                 if (elapsedTime > waitTime + 0.25 && !isFeeding && lastTagID == tagID) {
@@ -332,6 +373,8 @@ else {
 
             }
 
+            SmartDashboard.putBoolean("filtered tag?", FilterApriltags());
+
             SmartDashboard.putNumber("lastTagID", lastTagID);
             txTurret = LimelightHelpers.getTX("limelight-turret");
 
@@ -353,39 +396,37 @@ else {
         double tX = isBlue ? blueFx : redFx;
         double Hx = isBlue ? blueHx : redHx;
 
-
-if (isBlue) {
-        if (Rx > blueHx) {
-            if (Ry > Hy) {
-                Ly = leftFy;
-                Lx = tX;
-            } else if (Ry < Hy) {
-                Ly = rightFy;
-                Lx = tX;
+        if (isBlue) {
+            if (Rx > blueHx) {
+                if (Ry > Hy) {
+                    Ly = leftFy;
+                    Lx = tX;
+                } else if (Ry < Hy) {
+                    Ly = rightFy;
+                    Lx = tX;
+                }
+                isFeeding = true;
+            } else {
+                Lx = Hx;
+                Ly = Hy;
+                isFeeding = false;
             }
-            isFeeding = true;
         } else {
-            Lx = Hx;
-            Ly = Hy;
-            isFeeding = false;
-        }
-    }
-else {
-        if (Rx < redHx) {
-            if (Ry > Hy) {
-                Ly = leftFy;
-                Lx = tX;
-            } else if (Ry < Hy) {
-                Ly = rightFy;
-                Lx = tX;
+            if (Rx < redHx) {
+                if (Ry > Hy) {
+                    Ly = leftFy;
+                    Lx = tX;
+                } else if (Ry < Hy) {
+                    Ly = rightFy;
+                    Lx = tX;
+                }
+                isFeeding = true;
+            } else {
+                Lx = Hx;
+                Ly = Hy;
+                isFeeding = false;
             }
-            isFeeding = true;
-        } else {
-            Lx = Hx;
-            Ly = Hy;
-            isFeeding = false;
         }
-}
 
         SmartDashboard.putNumber("targetX", Lx);
         SmartDashboard.putNumber("targetY", Ly);
