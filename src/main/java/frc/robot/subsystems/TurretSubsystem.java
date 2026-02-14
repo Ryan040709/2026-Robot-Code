@@ -300,12 +300,15 @@ else {
     }
 
     public void setPosition() {
+
+        double lastTagID = 0;
+
         if (turretLocking) {
 
             if (hasTurretTargets == true) {
                 limelightTurret = true;
 
-                if (elapsedTime > waitTime + 1 && !isFeeding) {
+                if (elapsedTime > waitTime + 0.25 && !isFeeding && lastTagID == tagID) {
                     if (hasTurretTargets == true) {
 
                         turret.setControl(m_request
@@ -314,6 +317,7 @@ else {
                         turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
                     }
                 } else {
+                    lastTagID = tagID;
                     turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
                 }
 
@@ -328,6 +332,7 @@ else {
 
             }
 
+            SmartDashboard.putNumber("lastTagID", lastTagID);
             txTurret = LimelightHelpers.getTX("limelight-turret");
 
         } else {
