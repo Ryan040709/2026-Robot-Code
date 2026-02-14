@@ -19,6 +19,8 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.GameManager;
+import frc.robot.subsystems.GameManager;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
@@ -36,6 +38,7 @@ import frc.robot.commands.intake.outTheBumper.Intake_RunIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_StopIntake;
 //turret commands
 import frc.robot.commands.turret.Turret_TargetLocking;
+//get the game manager
 
 public class RobotContainer {
 
@@ -78,6 +81,8 @@ public class RobotContainer {
         throughBumperIntake intake = new throughBumperIntake();
         // out of bumper intake subsystem
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
+        //game manager
+        GameManager gameManager = new GameManager();
 
         // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
@@ -211,6 +216,9 @@ public class RobotContainer {
                 manipulatorController.pov(270).whileTrue(IntakeToShooter);
 
                 manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
+
+                gameManager.setDefaultCommand(Commands.run(() -> {}, gameManager));
+                
 
                 // out of bumper intake commands
                 manipulatorController.leftBumper().whileTrue(intake_LowerIntake);
