@@ -156,7 +156,9 @@ public final class Constants {
     public static double ThroughBumperIntake_PeakReverseTorqueCurrent = -800;
 
     // intake velocities
-    public static double ThroughBumperIntake_IntakeVelocity = 2500;
+    public static double ThroughBumperIntake_FrontSpeed = 1;
+
+    public static double ThroughBumperIntake_BackSpeed = -1;
 
   }
 

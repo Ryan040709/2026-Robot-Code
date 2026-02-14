@@ -23,9 +23,9 @@ public class Intake_IntakeToShooter extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem
-                .IntakeToTurretCommand(Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_IntakeVelocity);
-        hopperSubsystem.MoveHopperMotor(.5);
+        intakeSubsystem.SetIntakeFront(Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_FrontSpeed);
+        intakeSubsystem.SetIntakeBack(-Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_BackSpeed);
+        hopperSubsystem.MoveHopperMotor(0.5); //hopper motor is perpendicular to 
     }
 
     // Called once the command ends or is interrupted.

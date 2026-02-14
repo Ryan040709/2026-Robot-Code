@@ -67,27 +67,27 @@ public class throughBumperIntake extends SubsystemBase {
         intakeMotor2.getConfigurator().apply(intakeConfig);
     }
 
-    public void MoveintakeMotor1(double targetSpeed) {
+    public void SetIntakeFront(double targetSpeed) {
         intakeMotor1.setControl(velocity.withVelocity(targetSpeed));
     }
 
-    public void MoveintakeMotor2(double targetSpeed) {
+    public void SetIntakeBack(double targetSpeed) {
         intakeMotor2.setControl(velocity.withVelocity(-targetSpeed));
     }
 
     public Command IntakeToHopperCommand(double targetRPM) { // why were these commands??? couldn't they be functions?
         return runOnce(() -> {
             // MoveintakeMotor2(-0.5);
-            MoveintakeMotor1(targetRPM);
-            MoveintakeMotor2(targetRPM);
+            SetIntakeFront(targetRPM);
+            SetIntakeBack(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
         });
     }
 
     public Command IntakeToTurretCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor1(-targetRPM);
-            MoveintakeMotor2(targetRPM);
+            SetIntakeFront(-targetRPM);
+            SetIntakeBack(targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });
@@ -95,8 +95,8 @@ public class throughBumperIntake extends SubsystemBase {
 
     public Command HopperToTurretCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor1(targetRPM);
-            MoveintakeMotor2(-targetRPM);
+            SetIntakeFront(targetRPM);
+            SetIntakeBack(-targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });
@@ -104,8 +104,8 @@ public class throughBumperIntake extends SubsystemBase {
 
     public Command HopperToIntakeCommand(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor1(-targetRPM);
-            MoveintakeMotor2(-targetRPM);
+            SetIntakeFront(-targetRPM);
+            SetIntakeBack(-targetRPM);
             hopperSubsystem.MoveHopperMotor(.5);
 
         });
@@ -113,8 +113,8 @@ public class throughBumperIntake extends SubsystemBase {
 
     public Command IntakeStop(double targetRPM) {
         return runOnce(() -> {
-            MoveintakeMotor1(targetRPM);
-            MoveintakeMotor2(targetRPM);
+            SetIntakeFront(targetRPM);
+            SetIntakeBack(targetRPM);
             hopperSubsystem.MoveHopperMotor(0);
 
         });
