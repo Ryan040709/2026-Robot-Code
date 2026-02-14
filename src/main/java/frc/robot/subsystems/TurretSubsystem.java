@@ -4,6 +4,7 @@ import static edu.wpi.first.units.Units.Degrees;
 import static edu.wpi.first.units.Units.Radians;
 
 import java.lang.annotation.Target;
+import java.util.Optional;
 import java.util.function.Supplier;
 
 import org.opencv.core.Mat;
@@ -33,6 +34,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.units.AngleUnit;
 import edu.wpi.first.units.Unit;
 import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
@@ -64,8 +67,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double redFx = 11.98482 + (4.62554/2); // blueFeedingX
     public double blueFx = 4.62554/2; // blueFeedingX
-    public double rightFy = 4.03606 + (4.03606/2); // right feedingY
-    public double leftFy = 4.03606/2; // left feedingY
+    public double rightFy = 2; // right feedingY
+    public double leftFy = 6; // left feedingY
 
     public double Lx; // lockingX
     public double Ly; // lockingY
@@ -174,6 +177,19 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
+        Optional<Alliance> ally = DriverStation.getAlliance();
+if (ally.isPresent()) {
+    if (ally.get() == Alliance.Red) {
+        isBlue = false;
+    }
+    if (ally.get() == Alliance.Blue) {
+        isBlue = true;
+    }
+}
+else {
+    isBlue = false;
+}
+
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
 
         elapsedTime = Timer.getTimestamp();
@@ -201,6 +217,7 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("tagID", tagID);
 
         SmartDashboard.putBoolean("turret tracking", turretLocking);
+        SmartDashboard.putBoolean("is feeding", isFeeding);
 
         SmartDashboard.putNumber("wait time", waitTime);
 
@@ -218,6 +235,8 @@ public class TurretSubsystem extends SubsystemBase {
                 .getDoubleArray(defaultPose);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
+
+        SmartDashboard.putBoolean("is blue?", isBlue);
 
         SmartDashboard.putBoolean("limelightTurret", limelightTurret);
         SmartDashboard.putBoolean("turretResults?", hasTurretTargets);
@@ -329,12 +348,14 @@ public class TurretSubsystem extends SubsystemBase {
         double tX = isBlue ? blueFx : redFx;
         double Hx = isBlue ? blueHx : redHx;
 
-        if (Rx > blueHx && Rx < redHx) {
+
+if (isBlue) {
+        if (Rx > blueHx) {
             if (Ry > Hy) {
-                Ly = rightFy;
+                Ly = leftFy;
                 Lx = tX;
             } else if (Ry < Hy) {
-                Ly = leftFy;
+                Ly = rightFy;
                 Lx = tX;
             }
             isFeeding = true;
@@ -343,6 +364,23 @@ public class TurretSubsystem extends SubsystemBase {
             Ly = Hy;
             isFeeding = false;
         }
+    }
+else {
+        if (Rx < redHx) {
+            if (Ry > Hy) {
+                Ly = leftFy;
+                Lx = tX;
+            } else if (Ry < Hy) {
+                Ly = rightFy;
+                Lx = tX;
+            }
+            isFeeding = true;
+        } else {
+            Lx = Hx;
+            Ly = Hy;
+            isFeeding = false;
+        }
+}
 
         SmartDashboard.putNumber("targetX", Lx);
         SmartDashboard.putNumber("targetY", Ly);
@@ -387,20 +425,20 @@ public class TurretSubsystem extends SubsystemBase {
             tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
             tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
         } else if (tagID == 24) {
-            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagX = (Constants.AprilTagPositions.Tag24X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag24Y / 39.37);
             tagRotation = Constants.AprilTagPositions.Tag24Rotation;
         } else if (tagID == 25) {
-            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagX = (Constants.AprilTagPositions.Tag25X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag25Y / 39.37);
             tagRotation = Constants.AprilTagPositions.Tag25Rotation;
         } else if (tagID == 26) {
-            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagX = (Constants.AprilTagPositions.Tag26X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag26Y / 39.37);
             tagRotation = Constants.AprilTagPositions.Tag26Rotation;
         } else if (tagID == 27) {
-            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
+            tagX = (Constants.AprilTagPositions.Tag27X / 39.37);
+            tagY = (Constants.AprilTagPositions.Tag27Y / 39.37);
             tagRotation = Constants.AprilTagPositions.Tag27Rotation;
         }
 
@@ -427,13 +465,13 @@ public class TurretSubsystem extends SubsystemBase {
         // offsets are tag-relative, not field relative and should change depending on
         // tag rotation
         if (tagRotation == 180) {
-            rotatedX = -offsetY;
-            rotatedY = -offsetX;
+            rotatedX = -offsetX;
+            rotatedY = offsetY;
         } else if (tagRotation == 90) {
             rotatedY = -offsetX;
             rotatedX = -offsetY;
         } else if (tagRotation == 270) {
-            rotatedY = -offsetX;
+            rotatedY = offsetX;
             rotatedX = -offsetY;
         } else if (tagRotation == 0) {
             rotatedX = -offsetX;

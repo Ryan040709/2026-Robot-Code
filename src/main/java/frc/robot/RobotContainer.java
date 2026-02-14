@@ -23,10 +23,9 @@ import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
 import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.intake.throughTheBumper.Intake_HopperToIntake;
+import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
-import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
 //out of bumper intake commands
@@ -92,10 +91,10 @@ public class RobotContainer {
         Intake_StopIntake intake_StopIntake = new Intake_StopIntake(OutOfBumperIntake);
         Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
         // in the bumper intake commands
-        Intake_HopperToIntake hopperToIntake = new Intake_HopperToIntake();
+        Intake_Outtake outtake = new Intake_Outtake();
         Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter();
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter();
+        Intake_Outtake IntakeToShooter = new Intake_Outtake();
 
         public RobotContainer() {
                 // turret commands
@@ -107,7 +106,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-stop", intake_StopIntake);
                 NamedCommands.registerCommand("intake-stop", intake_RunOuttake);
                 // in the bumper intake commands
-                NamedCommands.registerCommand("intake-hopperToIntake", hopperToIntake);
+                NamedCommands.registerCommand("intake-hopperToIntake", outtake);
                 NamedCommands.registerCommand("intake-hopperToShooter", hopperToShooter);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
@@ -205,7 +204,7 @@ public class RobotContainer {
 
                 // manipulatorController.pov(0).whileTrue(hopperToShooter);
 
-                manipulatorController.pov(90).whileTrue(hopperToIntake);
+                manipulatorController.pov(90).whileTrue(outtake);
 
                 manipulatorController.pov(180).whileTrue(IntakeToHopper);
 
@@ -221,7 +220,7 @@ public class RobotContainer {
 
         public Command getAutonomousCommand() {
 
-                //return autoChooser.getSelected();
+                // return autoChooser.getSelected();
 
                 String routine = routineChooser.getSelected();
                 String variation = variationChooser.getSelected();
