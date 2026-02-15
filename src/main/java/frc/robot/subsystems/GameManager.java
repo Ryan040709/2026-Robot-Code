@@ -121,11 +121,9 @@ public class GameManager extends SubsystemBase {
 
   public void switchActiveHubs() {
     if (!active) {
-      shiftLights.set(0.5);
       active = true;
       switchActive = elapsedTime + 25;
     } else if (active) {
-      shiftLights.set(0.5);
       active = false;
       switchActive = elapsedTime + 25;
     }
@@ -133,6 +131,20 @@ public class GameManager extends SubsystemBase {
     SmartDashboard.putBoolean("teleop active", active);
     SmartDashboard.putNumber("time till swicth", switchActive);
   }
+
+  // public void nonMatchFlash() {
+  // //system to alert user they ARENT in a real match
+  // double timeBeforeFlash = 0;
+  // shiftLights.set(0.61);
+
+  // if (elapsedTime > timeBeforeFlash) {
+  // shiftLights.set(0.61);
+
+  // } else if (active) {
+  // shiftLights.set(0.61);
+  // }
+
+  // }
 
   public void lostAuto() {
     if (!wonAuto) {
@@ -184,11 +196,11 @@ public class GameManager extends SubsystemBase {
         }
       }
     } else if (elapsedTime > switchActive) {
-      // switchActiveHubs();
+      switchActiveHubs();
       if (!active) {
-        shiftLights.set(0.77);
-      } else {
         shiftLights.set(0.61);
+      } else {
+        shiftLights.set(0.77);
       }
     }
   }
