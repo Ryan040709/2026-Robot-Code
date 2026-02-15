@@ -6,8 +6,11 @@ package frc.robot.subsystems;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkFlex;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -34,6 +37,13 @@ public class GameManager extends SubsystemBase {
   public PWMSparkFlex shiftLights = new PWMSparkFlex(0);
 
   public double matchTimer = DriverStation.getMatchTime();
+  public double elapsedTime = Timer.getFPGATimestamp();
+
+  boolean active = false;
+
+  double switchActive = 0;
+
+  public boolean isMatch = true;
 
   public boolean isTeleop = DriverStation.isTeleop();
 
@@ -42,6 +52,8 @@ public class GameManager extends SubsystemBase {
   public boolean wonAuto = false;
 
   public boolean lostAuto = true;
+
+  public static boolean isBlueAlliance = true;
 
   /** Creates a new GameManager. */
   public GameManager() {
@@ -53,15 +65,31 @@ public class GameManager extends SubsystemBase {
     LoseShifts.add(ShiftList.One);
     LoseShifts.add(ShiftList.Three);
     alwaysActiveShifts.add(ShiftList.EndGame);
+
   }
 
   @Override
   public void periodic() {
+    Optional<Alliance> alliance = DriverStation.getAlliance();
+    if (alliance.isPresent()) {
+      if (alliance.get() == Alliance.Red) {
+        isBlueAlliance = false;
+      }
+      if (alliance.get() == Alliance.Blue) {
+        isBlueAlliance = true;
+      }
+    } else {
+      isBlueAlliance = false;
+    }
+
     isTeleop = DriverStation.isTeleop();
     matchTimer = DriverStation.getMatchTime();
+    elapsedTime = Timer.getFPGATimestamp();
 
     determineShift();
     determineActiveHub();
+
+    SmartDashboard.putNumber("GameManager Timer", elapsedTime);
 
     SmartDashboard.putString("current shift", currentShift.toString());
 
@@ -70,6 +98,17 @@ public class GameManager extends SubsystemBase {
     SmartDashboard.putBoolean("win auto?", wonAuto);
 
     SmartDashboard.putBoolean("is active?", isActive);
+    SmartDashboard.putBoolean("is in a match?", isMatch);
+
+    getMatchTime();
+  }
+
+  public void getMatchTime() {
+    if (matchTimer < 0) {
+      isMatch = false;
+    } else {
+      isMatch = true;
+    }
   }
 
   public void wonAuto() {
@@ -78,6 +117,21 @@ public class GameManager extends SubsystemBase {
     } else {
       wonAuto = false;
     }
+  }
+
+  public void switchActiveHubs() {
+    if (!active) {
+      shiftLights.set(0.5);
+      active = true;
+      switchActive = elapsedTime + 25;
+    } else if (active) {
+      shiftLights.set(0.5);
+      active = false;
+      switchActive = elapsedTime + 25;
+    }
+
+    SmartDashboard.putBoolean("teleop active", active);
+    SmartDashboard.putNumber("time till swicth", switchActive);
   }
 
   public void lostAuto() {
@@ -107,25 +161,34 @@ public class GameManager extends SubsystemBase {
   }
 
   public void determineActiveHub() {
-    if (wonAuto) {
-      if (LoseShifts.contains(currentShift)) {
-        // not active
-        shiftLights.set(0.61);
-        isActive = false;
+    if (isMatch) {
+      if (wonAuto) {
+        if (LoseShifts.contains(currentShift)) {
+          // not active
+          // shiftLights.set(0.61);
+          isActive = false;
+        } else {
+          // active
+          // shiftLights.set(0.77);
+          isActive = true;
+        }
       } else {
-        // active
-        shiftLights.set(0.77);
-        isActive = true;
+        if (LoseShifts.contains(currentShift) || alwaysActiveShifts.contains(currentShift)) {
+          // active
+          // shiftLights.set(0.77);
+          isActive = true;
+        } else {
+          // not active
+          // shiftLights.set(0.61);
+          isActive = false;
+        }
       }
-    } else {
-      if (LoseShifts.contains(currentShift) || alwaysActiveShifts.contains(currentShift)) {
-        // active
+    } else if (elapsedTime > switchActive) {
+      // switchActiveHubs();
+      if (!active) {
         shiftLights.set(0.77);
-        isActive = true;
       } else {
-        // not active
         shiftLights.set(0.61);
-        isActive = false;
       }
     }
   }

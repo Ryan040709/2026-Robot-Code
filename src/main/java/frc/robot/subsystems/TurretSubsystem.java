@@ -45,6 +45,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
+import frc.robot.subsystems.GameManager;
+
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 //our constants
@@ -201,17 +203,7 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
-        Optional<Alliance> ally = DriverStation.getAlliance();
-        if (ally.isPresent()) {
-            if (ally.get() == Alliance.Red) {
-                isBlue = false;
-            }
-            if (ally.get() == Alliance.Blue) {
-                isBlue = true;
-            }
-        } else {
-            isBlue = false;
-        }
+        isBlue = GameManager.isBlueAlliance;
 
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
 
@@ -349,7 +341,7 @@ public class TurretSubsystem extends SubsystemBase {
             if (hasTurretTargets == true && FilterApriltags()) {
                 limelightTurret = true;
 
-                if (elapsedTime > waitTime + 0.25 && !isFeeding && lastTagID == tagID) {
+                if (elapsedTime > waitTime + 0.05 && !isFeeding && lastTagID == tagID) {
                     if (hasTurretTargets == true) {
 
                         turret.setControl(m_request
@@ -554,6 +546,10 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
         SmartDashboard.putNumber("Golden Angle", goldenAngle);
+
+        double error = goldenAngle - turret.getPosition().getValueAsDouble();
+        SmartDashboard.putNumber("Turret Error", error);
+
         return goldenAngle;
 
     }
