@@ -10,12 +10,14 @@ import org.opencv.core.Mat;
 
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -185,6 +187,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
         hood.getConfigurator().apply(hoodConfig);
 
+        shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
+
     }
 
     public void zeroHood() {
@@ -197,7 +201,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void RuntoRPMs() {
         shooterMotorL.setControl(velocity.withVelocity(DistancetoRpms(calculateDistanceToHub())));
-        shooterMotorR.setControl(velocity.withVelocity(-DistancetoRpms(calculateDistanceToHub())));
     }
 
     @Override
