@@ -75,7 +75,7 @@ public class throughBumperIntake extends SubsystemBase {
         intakeMotor2.setControl(velocity.withVelocity(-targetSpeed));
     }
 
-    public Command IntakeToHopperCommand(double targetRPM) { // why were these commands??? couldn't they be functions?
+    public Command IntakeToHopperCommand(double targetRPM) {
         return runOnce(() -> {
             // MoveintakeMotor2(-0.5);
             SetIntakeFront(targetRPM);

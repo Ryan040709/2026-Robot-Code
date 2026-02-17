@@ -80,6 +80,4 @@ public class outOfBumperIntake extends SubsystemBase {
         intake.setControl(velocity.withVelocity(targetSpeed));
     }
 
-    // my gosh it's so empty... it's UGLY!!!
-
 }
