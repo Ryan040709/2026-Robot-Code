@@ -109,6 +109,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     private SwerveDriveOdometry m_odometry;
 
+    public double turretError = turretTARGET - turret.getPosition().getValueAsDouble();
+
     // double txTURRET = LimelightHelpers.getTX("limelight-tags");
 
     // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
@@ -125,6 +127,8 @@ public class TurretSubsystem extends SubsystemBase {
                                                               // target in degrees
     double tync = LimelightHelpers.getTYNC("limelight-tags"); // Vertical offset from principal pixel/point to target
                                                               // in degrees
+
+    // public double lastTagID = 0;
 
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
@@ -171,13 +175,13 @@ public class TurretSubsystem extends SubsystemBase {
 
         // apriltag filter list
         blueTagFilter.add(18);
-        blueTagFilter.add(19);
+        //blueTagFilter.add(19);
         blueTagFilter.add(20);
         blueTagFilter.add(21);
-        blueTagFilter.add(24);
-        blueTagFilter.add(25);
+        //blueTagFilter.add(24);
+        //blueTagFilter.add(25);
         blueTagFilter.add(26);
-        blueTagFilter.add(27);
+        //blueTagFilter.add(27);
 
         redTagFilter.add(2);
         redTagFilter.add(3);
@@ -267,19 +271,15 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
         SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
 
-        SmartDashboard.putNumber("Turret Target", turretTARGET);
+        SmartDashboard.putNumber("Turret Target", turretTARGET+turretError);
 
         SmartDashboard.putNumber("Time", elapsedTime);
+
+        SmartDashboard.putNumber("Angular velocity", m_gyro.getAngularVelocityZWorld().getValueAsDouble());
 
         determine3dOffset();
 
         setPosition();
-
-        // if (tagID == 19) {
-        // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 0, 0, 0);
-        // } else if (tagID == 25) {
-        // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 0);
-        // }
 
     }
 
@@ -334,6 +334,11 @@ public class TurretSubsystem extends SubsystemBase {
     public void setPosition() {
         FilterApriltags();
 
+        double feedforward = -(m_gyro.getAngularVelocityZWorld().getValueAsDouble()) * (ticksPerAngle); // ;et's us get
+                                                                                                        // the velocity
+                                                                                                        // of the robot
+                                                                                                        // when spinning
+
         double lastTagID = 0;
 
         if (turretLocking) {
@@ -341,11 +346,11 @@ public class TurretSubsystem extends SubsystemBase {
             if (hasTurretTargets == true && FilterApriltags()) {
                 limelightTurret = true;
 
-                if (elapsedTime > waitTime + 0.05 && !isFeeding && lastTagID == tagID) {
+                if (elapsedTime > waitTime + 1 && !isFeeding) {
                     if (hasTurretTargets == true) {
 
                         turret.setControl(m_request
-                                .withPosition(turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle)));
+                                .withPosition((turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle))));
 
                         turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
                     }
@@ -547,8 +552,9 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
         SmartDashboard.putNumber("Golden Angle", goldenAngle);
 
-        double error = goldenAngle - turret.getPosition().getValueAsDouble();
-        SmartDashboard.putNumber("Turret Error", error);
+        turretError = turretTARGET - turret.getPosition().getValueAsDouble();
+        SmartDashboard.putNumber("Turret Error", turretError);
+        SmartDashboard.putNumber("Turret Position", turret.getPosition().getValueAsDouble());
 
         return goldenAngle;
 

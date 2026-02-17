@@ -132,19 +132,19 @@ public class GameManager extends SubsystemBase {
     SmartDashboard.putNumber("time till swicth", switchActive);
   }
 
-  // public void nonMatchFlash() {
-  // //system to alert user they ARENT in a real match
-  // double timeBeforeFlash = 0;
-  // shiftLights.set(0.61);
+  public void nonMatchFlash() {
+    // system to alert user they ARENT in a real match
+    double timeBeforeFlash = 0;
 
-  // if (elapsedTime > timeBeforeFlash) {
-  // shiftLights.set(0.61);
-
-  // } else if (active) {
-  // shiftLights.set(0.61);
-  // }
-
-  // }
+    if (elapsedTime > timeBeforeFlash) {
+      shiftLights.set(0.69);
+      timeBeforeFlash = elapsedTime+1;
+    } else if (active) {
+      shiftLights.set(0.61);
+    } else if (!active) {
+      shiftLights.set(0.77);
+    }
+  }
 
   public void lostAuto() {
     if (!wonAuto) {

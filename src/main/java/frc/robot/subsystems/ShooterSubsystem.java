@@ -196,7 +196,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setHoodPosition() {
-        hood.setPosition(calculateHoodPosition());
+        hood.setControl(m_request.withPosition(calculateHoodPosition()));
     }
 
     public void RuntoRPMs() {
