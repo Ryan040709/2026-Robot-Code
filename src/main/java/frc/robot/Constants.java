@@ -204,12 +204,9 @@ public final class Constants {
     // Motion Magic
     public static double Shooter_MotionMagicCruiseVelocity = 100;
     public static double Shooter_MotionMagicAcceleration = 150;
-    public static double Shooter_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
-                                                                           // values come
-    // from?
-    public static double Shooter_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
-                                                                           // values come
-    // from?
+    public static double Shooter_MotionMagicExpo_kA = 0.1;
+    
+    public static double Shooter_MotionMagicExpo_kV = 0.12;
     // Torque Current
     public static double Shooter_PeakForwardTorqueCurrent = 800;
     public static double Shooter_PeakReverseTorqueCurrent = -800;
