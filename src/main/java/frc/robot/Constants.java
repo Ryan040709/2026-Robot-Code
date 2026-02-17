@@ -6,13 +6,13 @@ import edu.wpi.first.wpilibj.DigitalSource;
 
 public final class Constants {
   public static final class GameManager {
-    public static double shiftAuto = 20; 
-    public static double shiftTransistion = 140; 
-    public static double shiftOne = 130;
-    public static double shiftTwo = 105;
-    public static double shiftThree = 80;
-    public static double shiftFour = 55;
-    public static double shiftEndGame = 30;     
+    public static double ShiftAuto = 20; 
+    public static double ShiftTransistion = 140; 
+    public static double ShiftOne = 130;
+    public static double ShiftTwo = 105;
+    public static double ShiftThree = 80;
+    public static double ShiftFour = 55;
+    public static double ShiftEndGame = 30;     
   }
 
   public static final class TurretSubsystem {
