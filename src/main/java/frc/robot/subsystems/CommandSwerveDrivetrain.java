@@ -280,6 +280,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return kinematics.toChassisSpeeds(getModuleStates());
     }
 
+    public double robotVelocityX = getRobotRelativeSpeeds().vxMetersPerSecond;
+    public double robotVelocityY = getRobotRelativeSpeeds().vyMetersPerSecond;
+
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
 
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
@@ -361,6 +364,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+
+        robotVelocityY = getRobotRelativeSpeeds().vyMetersPerSecond;
+        robotVelocityX = getRobotRelativeSpeeds().vxMetersPerSecond;
+
+        SmartDashboard.putNumber("velocity Y", robotVelocityY);
+        SmartDashboard.putNumber("velocity X", robotVelocityX);
 
         //SmartDashboard.putNumber("steer motor amps", );
         /*

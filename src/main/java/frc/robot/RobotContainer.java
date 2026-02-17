@@ -219,6 +219,9 @@ public class RobotContainer {
 
                 gameManager.setDefaultCommand(Commands.run(() -> {}, gameManager));
                 
+                turretTest.setDefaultCommand(Commands.run(() -> turretTest.determine3dOffset(drivetrain.robotVelocityX, drivetrain.robotVelocityY), turretTest));
+                turretTest.setDefaultCommand(Commands.run(() -> turretTest.setPosition(drivetrain.robotVelocityX, drivetrain.robotVelocityY), turretTest));
+                
 
                 // out of bumper intake commands
                 manipulatorController.leftBumper().whileTrue(intake_LowerIntake);
