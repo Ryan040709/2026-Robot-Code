@@ -140,10 +140,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
 
 
-    public double calculateDistanceToHub(Pose2d robotPose) {
+    public double calculateDistanceToHub(Pose2d robotPose) { // can't we just pull the botpose from the swerve drive?
         Translation2d hubPosition;
 
-       if( DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue){
+       if(GameManager.isBlueAlliance){ // used to be: DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue
         hubPosition = BlueHubPosition;
        }
        else{

@@ -100,7 +100,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public boolean turretLocking = true;
 
-    private final double ticksPerAngle = NinetyDegreeRotation / 90;
+    private final double rotationsPerDeg = NinetyDegreeRotation / 90;
 
     public static int kPigeonId = 14;
 
@@ -147,9 +147,9 @@ public class TurretSubsystem extends SubsystemBase {
         motorConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.TurretSubsystem.Turret_SupplyCurrentLowerLimit;
         motorConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.TurretSubsystem.Turret_SupplyCurrentLowerTime;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.TurretSubsystem.Turret_FowardSoftLimitEnable;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (ticksPerAngle);
+        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (rotationsPerDeg);
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.TurretSubsystem.Turret_ReverseSoftLimitEnable;
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (ticksPerAngle);
+        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (rotationsPerDeg);
         // Voltage
         motorConfig.Voltage.PeakForwardVoltage = Constants.TurretSubsystem.Turret_PeakForwardVoltage;
         motorConfig.Voltage.PeakReverseVoltage = Constants.TurretSubsystem.Turret_PeakReverseVoltage;
@@ -170,13 +170,13 @@ public class TurretSubsystem extends SubsystemBase {
 
         // apriltag filter list
         blueTagFilter.add(18);
-        // blueTagFilter.add(19);
+        blueTagFilter.add(19);
         blueTagFilter.add(20);
         blueTagFilter.add(21);
-        // blueTagFilter.add(24);
-        // blueTagFilter.add(25);
+        blueTagFilter.add(24);
+        blueTagFilter.add(25);
         blueTagFilter.add(26);
-        // blueTagFilter.add(27);
+        blueTagFilter.add(27);
 
         redTagFilter.add(2);
         redTagFilter.add(3);
@@ -220,23 +220,15 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("turret tx", txTurret);
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
-        SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-tags"));
-
-        SmartDashboard.putNumber("Gyro Angle", theta);
 
         SmartDashboard.putBoolean("is blue?", isBlue);
 
         SmartDashboard.putBoolean("limelightTurret", limelightTurret);
         SmartDashboard.putBoolean("turretResults?", hasTurretTargets);
 
-        SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
-
-        // Push values to SmartDashboard
-        SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
+        SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (rotationsPerDeg));
 
         SmartDashboard.putNumber("Turret Target", turretTARGET + turretError);
-
-        SmartDashboard.putNumber("Time", elapsedTime);
 
         SmartDashboard.putNumber("Angular velocity", m_gyro.getAngularVelocityZWorld().getValueAsDouble());
 
@@ -283,10 +275,7 @@ public class TurretSubsystem extends SubsystemBase {
     public void setPosition() {
         FilterApriltags();
 
-        double feedforward = -(m_gyro.getAngularVelocityZWorld().getValueAsDouble()) * (ticksPerAngle); // ;et's us get
-                                                                                                        // the velocity
-                                                                                                        // of the robot
-                                                                                                        // when spinning
+        double feedforward = -(m_gyro.getAngularVelocityZWorld().getValueAsDouble());
 
         double lastTagID = 0;
 
@@ -299,23 +288,23 @@ public class TurretSubsystem extends SubsystemBase {
                     if (hasTurretTargets == true) {
 
                         turret.setControl(m_request
-                                .withPosition((turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle))));
+                                .withPosition((turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg))).withFeedForward(feedforward));
 
-                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (ticksPerAngle);
+                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg);
                     }
                 } else {
                     lastTagID = tagID;
-                    turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
+                    turret.setControl(m_request.withPosition((calculateAngleToHub() * (rotationsPerDeg))).withFeedForward(feedforward));
                 }
 
             } else {
 
                 waitTime = elapsedTime;
 
-                turret.setControl(m_request.withPosition((calculateAngleToHub() * (ticksPerAngle))));
+                turret.setControl(m_request.withPosition((calculateAngleToHub() * (rotationsPerDeg))).withFeedForward(feedforward));
                 limelightTurret = false;
 
-                turretTARGET = (calculateAngleToHub() * (ticksPerAngle));
+                turretTARGET = (calculateAngleToHub() * (rotationsPerDeg));
 
             }
 
@@ -333,7 +322,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void setToZero() {
 
-        turret.setControl(m_request.withPosition(-(0) * (ticksPerAngle)));
+        turret.setControl(m_request.withPosition(-(0) * (rotationsPerDeg)));
 
     }
 
@@ -471,11 +460,6 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("rotatedY", rotatedY);
 
         LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
-    }
-
-    public void SetPid() {
-        pidRotation.setPID(0.02, 0.0, 0);
-        turretRotation = pidRotation.calculate(txTurret, 0);
     }
 
     public double calculateAngleToHub() {
