@@ -76,7 +76,7 @@ public class RobotContainer {
         // turret subsystem
         TurretSubsystem turretTest = new TurretSubsystem(drivetrain::getPose);
         // shooter subsystem
-        ShooterSubsystem shooter = new ShooterSubsystem(drivetrain::getPose);
+        ShooterSubsystem shooter = new ShooterSubsystem();
         // in the bumper intake subsystem
         throughBumperIntake intake = new throughBumperIntake();
         // out of bumper intake subsystem
@@ -85,8 +85,8 @@ public class RobotContainer {
         GameManager gameManager = new GameManager();
 
         // shooter commands
-        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter);
-        Hood_SetToPosition shooter_setToPosition = new Hood_SetToPosition(shooter);
+        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
+        Hood_SetToPosition shooter_setToPosition = new Hood_SetToPosition(shooter, drivetrain);
         // turret commands
         Turret_TargetLocking turret_Locking = new Turret_TargetLocking(turretTest);
         // out of bumper intake commands

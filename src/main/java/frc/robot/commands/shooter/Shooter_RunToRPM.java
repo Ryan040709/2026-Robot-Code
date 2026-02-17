@@ -3,15 +3,17 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class Shooter_RunToRPM extends Command {
-  ShooterSubsystem ShooterSubsystem;
+  ShooterSubsystem shooterSubsystem;
+  CommandSwerveDrivetrain drivetrain;
 
   /** Creates a new Shooter_RunToRPM. */
-  public Shooter_RunToRPM(ShooterSubsystem shooterSubsystem) {
-    this.ShooterSubsystem = shooterSubsystem;
+  public Shooter_RunToRPM(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain) {
+    this.shooterSubsystem = shooterSubsystem;
+    this.drivetrain = drivetrain;
     addRequirements(shooterSubsystem);
   }
 
@@ -24,7 +26,7 @@ public class Shooter_RunToRPM extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ShooterSubsystem.RuntoRPMs();
+    shooterSubsystem.RuntoRPMs(drivetrain.getPose());
   }
 
   // Called once the command ends or is interrupted.

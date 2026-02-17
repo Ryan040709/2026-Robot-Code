@@ -217,10 +217,6 @@ public final class Constants {
     public static double Shooter_SupplyCurrentLimit = 100;
     public static double Shooter_SupplyCurrentLowerLimit = 40;
     public static double Shooter_SupplyCurrentLowerTime = -40;
-    public static boolean Shooter_FowardSoftLimitEnable = true;
-    public static double Shooter_ForwardSoftLimitThreshold = 140;
-    public static boolean Shooter_ReverseSoftLimitEnable = true;
-    public static double Shooter_ReverseSoftLimitThreshold = -140;
 
     // Voltage
     public static double Shooter_PeakForwardVoltage = 16;
@@ -254,32 +250,16 @@ public final class Constants {
     public static double Hood_CurrentLimit = 100;
     public static boolean Hood_SupplyCurrentLimitEnable = true;
     public static double Hood_SupplyCurrentLimit = 100;
-    public static double Hood_SupplyCurrentLowerLimit = 40;
-    public static double Hood_SupplyCurrentLowerTime = -40;
-    public static boolean Hood_FowardSoftLimitEnable = true;
-    public static double Hood_ForwardSoftLimitThreshold = 140;
-    public static boolean Hood_ReverseSoftLimitEnable = true;
-    public static double Hood_ReverseSoftLimitThreshold = -140;
 
     // Voltage
     public static double Hood_PeakForwardVoltage = 16;
     public static double Hood_PeakReverseVoltage = -16;
     // Differential Constants
     public static double Hood_PeakDifferentialDutyCycle = 1;
-    public static double Hood_PeakDifferentialTorqueCurrent = 800;
-    public static double Hood_PeakDifferentialVoltage = 16;
+
     // Motion Magic
     public static double Hood_MotionMagicCruiseVelocity = 100;
     public static double Hood_MotionMagicAcceleration = 150;
-    public static double Hood_MotionMagicExpo_kA = 0.10000000149011612; // where did these super precise
-                                                                        // values come
-    // from?
-    public static double Hood_MotionMagicExpo_kV = 0.11999999731779099; // where did these super precise
-                                                                        // values come
-    // from?
-    // Torque Current
-    public static double Hood_PeakForwardTorqueCurrent = 800;
-    public static double Hood_PeakReverseTorqueCurrent = -800;
 
   }
 
