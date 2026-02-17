@@ -50,8 +50,8 @@ import frc.robot.subsystems.LimelightHelpers.PoseEstimate;
 
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.004; // 4 ms
-    private Notifier m_simNotifier = null;
-    private double m_lastSimTime;
+    private Notifier simNotifier = null;
+    private double lastSimTime;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
@@ -89,7 +89,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private SwerveDriveKinematics m_kinematics = new SwerveDriveKinematics(
             m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
             m_backRightLocation);
-    // setting up odomitree
+    // setting up odometery
     private SwerveDrivePoseEstimator poseEstimator;
     private Field2d m_Fields = new Field2d();
     public HolonomicDriveController controller;
@@ -461,18 +461,18 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     private void startSimThread() {
-        m_lastSimTime = Utils.getCurrentTimeSeconds();
+        lastSimTime = Utils.getCurrentTimeSeconds();
 
         /* Run simulation at a faster rate so PID gains behave more reasonably */
-        m_simNotifier = new Notifier(() -> {
+        simNotifier = new Notifier(() -> {
             final double currentTime = Utils.getCurrentTimeSeconds();
-            double deltaTime = currentTime - m_lastSimTime;
-            m_lastSimTime = currentTime;
+            double deltaTime = currentTime - lastSimTime;
+            lastSimTime = currentTime;
 
             /* use the measured time delta, get battery voltage from WPILip */
             updateSimState(deltaTime, RobotController.getBatteryVoltage());
         });
-        m_simNotifier.startPeriodic(kSimLoopPeriod);
+        simNotifier.startPeriodic(kSimLoopPeriod);
     }
 
     /**

@@ -63,19 +63,18 @@ public class TurretSubsystem extends SubsystemBase {
 
     private final double NinetyDegreeRotation = 33.73877;
 
-    public final double Hy = 4.03606; // hubY
-    public final double redHx = 11.98482; // redHubX
-    public final double blueHx = 4.62554; // blueHubX
-    public double Rx; // robotX
-    public double Ry; // robotY
+    Translation2d redHubPos = new Translation2d(11.98482, 4.03606); // red hub
+
+    Translation2d blueHubPos = new Translation2d(4.62554, 4.03606); // blue hub
+
+    Translation2d robotPos = new Translation2d(0, 0); // robot position
 
     public double redFx = 11.98482 + (4.62554 / 2); // blueFeedingX
     public double blueFx = 4.62554 / 2; // blueFeedingX
     public double rightFy = 2; // right feedingY
     public double leftFy = 6; // left feedingY
 
-    public double Lx; // lockingX
-    public double Ly; // lockingY
+    Translation2d lockingTarget = new Translation2d(0, 0); // robot position
 
     public boolean isFeeding = false;
 
@@ -111,10 +110,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double turretError = turretTARGET - turret.getPosition().getValueAsDouble();
 
-    // double txTURRET = LimelightHelpers.getTX("limelight-tags");
-
-    // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
-
     double txTurret = LimelightHelpers.getTX("limelight-turret");
     double ty = LimelightHelpers.getTY("limelight-tags");
     double ta = LimelightHelpers.getTA("limelight-tags");
@@ -128,12 +123,12 @@ public class TurretSubsystem extends SubsystemBase {
     double tync = LimelightHelpers.getTYNC("limelight-tags"); // Vertical offset from principal pixel/point to target
                                                               // in degrees
 
+    double Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
+
     // public double lastTagID = 0;
 
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
-
-        // SmartDashboard.puttTable("limelight-left").getEntry("tv").getDouble(0) == 1
 
         // pid
         TalonFXConfiguration motorConfig = new TalonFXConfiguration();
@@ -175,13 +170,13 @@ public class TurretSubsystem extends SubsystemBase {
 
         // apriltag filter list
         blueTagFilter.add(18);
-        //blueTagFilter.add(19);
+        // blueTagFilter.add(19);
         blueTagFilter.add(20);
         blueTagFilter.add(21);
-        //blueTagFilter.add(24);
-        //blueTagFilter.add(25);
+        // blueTagFilter.add(24);
+        // blueTagFilter.add(25);
         blueTagFilter.add(26);
-        //blueTagFilter.add(27);
+        // blueTagFilter.add(27);
 
         redTagFilter.add(2);
         redTagFilter.add(3);
@@ -206,6 +201,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
 
         isBlue = GameManager.isBlueAlliance;
 
@@ -213,45 +209,18 @@ public class TurretSubsystem extends SubsystemBase {
 
         elapsedTime = Timer.getTimestamp();
 
-        // i really don't know :/
-
-        // hasTurretTargets =
-        // NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("tv").getDouble(0);
-
-        // LimelightHelpers.SetFidcuial3DOffset("limelight-tags", 1, 1, 1);
-
-        // LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret",
-        // 25,27,24,20);
-
-        // LimelightHelpers.SetFiducialIDFiltersOverride("limelight-turret", int[25]);;
-
         robotPose = UpdateRobotPose2d();
-        Rx = robotPose.getX();
-        Ry = robotPose.getY();
+        robotPos = new Translation2d(robotPose.getX(), robotPose.getY());
         theta = robotPose.getRotation().getDegrees();
         tagID = LimelightHelpers.getFiducialID("limelight-turret");
 
-        // double tagID = LimelightHelpers.getFiducialID("limelight-tags");
-
-        SmartDashboard.putNumber("tagID", tagID);
-
         SmartDashboard.putBoolean("turret tracking", turretLocking);
         SmartDashboard.putBoolean("is feeding", isFeeding);
-
-        SmartDashboard.putNumber("wait time", waitTime);
-
-        // SmartDashboard.putNumber("turretResults", hasTurretTargets);
 
         SmartDashboard.putNumber("turret tx", txTurret);
 
         SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
         SmartDashboard.putNumber("ty", LimelightHelpers.getTY("limelight-tags"));
-
-        Pose3d x = LimelightHelpers.getBotPose3d("limelight-tags");
-
-        double[] defaultPose = new double[6];
-        double[] botpose = NetworkTableInstance.getDefault().getTable("limelight-tags").getEntry("botpose")
-                .getDoubleArray(defaultPose);
 
         SmartDashboard.putNumber("Gyro Angle", theta);
 
@@ -263,15 +232,9 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (ticksPerAngle));
 
         // Push values to SmartDashboard
-        SmartDashboard.putNumber("Limelight X (m)", botpose[0]);
-        SmartDashboard.putNumber("Limelight Y (m)", botpose[1]);
-        SmartDashboard.putNumber("Limelight Z (m)", botpose[2]);
-        SmartDashboard.putNumber("Limelight Roll (deg)", botpose[3]);
-        SmartDashboard.putNumber("Limelight Pitch (deg)", botpose[4]);
-        SmartDashboard.putNumber("Limelight Yaw (deg)", botpose[5]);
         SmartDashboard.putNumber("Golden Angle", calculateAngleToHub());
 
-        SmartDashboard.putNumber("Turret Target", turretTARGET+turretError);
+        SmartDashboard.putNumber("Turret Target", turretTARGET + turretError);
 
         SmartDashboard.putNumber("Time", elapsedTime);
 
@@ -285,20 +248,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public Pose2d UpdateRobotPose2d() {
         return poseSupplier.get();
-    }
-
-    public double distanceToHub() {
-
-        if (isBlue) {
-            double diffY = (Hy - Ry);
-            double diffX = (blueHx - Rx);
-            return Math.hypot(diffX, diffY);
-        } else {
-            double diffY = (Hy - Ry);
-            double diffX = (redHx - Rx);
-            return Math.hypot(diffX, diffY);
-        }
-
     }
 
     public void zeroPosition() {
@@ -391,63 +340,56 @@ public class TurretSubsystem extends SubsystemBase {
     public void determineLockingTarget() {
 
         double tX = isBlue ? blueFx : redFx;
-        double Hx = isBlue ? blueHx : redHx;
+        double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
 
         if (isBlue) {
-            if (Rx > blueHx) {
-                if (Ry > Hy) {
-                    Ly = leftFy;
-                    Lx = tX;
-                } else if (Ry < Hy) {
-                    Ly = rightFy;
-                    Lx = tX;
+            if (robotPos.getX() > blueHubPos.getX()) {
+                if (robotPos.getY() > Hy) {
+                    lockingTarget = new Translation2d(tX, leftFy);
+                } else if (robotPos.getY() < Hy) {
+                    lockingTarget = new Translation2d(tX, rightFy);
                 }
                 isFeeding = true;
             } else {
-                Lx = Hx;
-                Ly = Hy;
+                lockingTarget = new Translation2d(Hx, redHubPos.getY());
                 isFeeding = false;
             }
         } else {
-            if (Rx < redHx) {
-                if (Ry > Hy) {
-                    Ly = leftFy;
-                    Lx = tX;
-                } else if (Ry < Hy) {
-                    Ly = rightFy;
-                    Lx = tX;
+            if (robotPos.getX() < redHubPos.getX()) {
+                if (robotPos.getY() > Hy) {
+                    lockingTarget = new Translation2d(tX, leftFy);
+                } else if (robotPos.getY() < Hy) {
+                    lockingTarget = new Translation2d(tX, rightFy);
                 }
                 isFeeding = true;
             } else {
-                Lx = Hx;
-                Ly = Hy;
+                lockingTarget = new Translation2d(Hx, Hy);
                 isFeeding = false;
             }
         }
 
-        SmartDashboard.putNumber("targetX", Lx);
-        SmartDashboard.putNumber("targetY", Ly);
+        SmartDashboard.putNumber("targetX", lockingTarget.getX());
+        SmartDashboard.putNumber("targetY", lockingTarget.getY());
     }
 
+    double tagX = 0;
+    double tagY = 0;
+
+    double tagRotation = 0; // certain values must change to accomadate apriltag orientation
+
+    double fX = 0;
+    double fY = 0;
+    // not like f(x), "f" just stands for furthest
+    double sX = 0;
+    double sY = 0;
+
+    double offsetX = 0;
+    double offsetY = 0;
+
+    double rotatedX = 0;
+    double rotatedY = 0;
+
     public void determine3dOffset() {
-
-        double tagX = 0;
-        double tagY = 0;
-
-        double tagRotation = 0; // certain values must change to accomadate apriltag orientation
-
-        double fX = 0;
-        double fY = 0;
-        // not like f(x), "f" just stands for furthest
-        double sX = 0;
-        double sY = 0;
-
-        double offsetX = 0;
-        double offsetY = 0;
-
-        double rotatedX = 0;
-        double rotatedY = 0;
-        // rotated offsets so they can be tag-relative
 
         if (tagID == 18) {
             tagX = (Constants.AprilTagPositions.Tag18X / 39.37);
@@ -493,12 +435,12 @@ public class TurretSubsystem extends SubsystemBase {
             sY = Hy;
         }
 
-        if (blueHx > tagX) {
-            fX = blueHx;
+        if (blueHubPos.getX() > tagX) {
+            fX = blueHubPos.getX();
             sX = tagX;
-        } else if (tagX > blueHx) {
+        } else if (tagX > blueHubPos.getX()) {
             fX = tagX;
-            sX = blueHx;
+            sX = blueHubPos.getX();
         }
 
         offsetX = fX - sX;
@@ -540,9 +482,8 @@ public class TurretSubsystem extends SubsystemBase {
 
         determineLockingTarget();
 
-        double tX = isBlue ? blueHx : redHx;
-        double diffY = (Ly - Ry);
-        double diffX = (Lx - Rx);
+        double diffY = (lockingTarget.getY() - robotPos.getY());
+        double diffX = (lockingTarget.getX() - robotPos.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145); // (turretHubAngle-theta);
 

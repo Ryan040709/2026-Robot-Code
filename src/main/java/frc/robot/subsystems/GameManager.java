@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.units.measure.Time;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -156,17 +157,17 @@ public class GameManager extends SubsystemBase {
 
   public void determineShift() {
     if (isTeleop) {
-      if (matchTimer < Constants.GameManager.shiftEndGame) {
+      if (matchTimer < Constants.GameManager.ShiftEndGame) {
         currentShift = ShiftList.EndGame;
-      } else if (matchTimer < Constants.GameManager.shiftFour) {
+      } else if (matchTimer < Constants.GameManager.ShiftFour) {
         currentShift = ShiftList.Four;
-      } else if (matchTimer < Constants.GameManager.shiftThree) {
+      } else if (matchTimer < Constants.GameManager.ShiftThree) {
         currentShift = ShiftList.Three;
-      } else if (matchTimer < Constants.GameManager.shiftTwo) {
+      } else if (matchTimer < Constants.GameManager.ShiftTwo) {
         currentShift = ShiftList.Two;
-      } else if (matchTimer < Constants.GameManager.shiftOne) {
+      } else if (matchTimer < Constants.GameManager.ShiftOne) {
         currentShift = ShiftList.One;
-      } else if (matchTimer < Constants.GameManager.shiftTransistion) {
+      } else if (matchTimer < Constants.GameManager.ShiftTransistion) {
         currentShift = ShiftList.Transistion;
       }
     }

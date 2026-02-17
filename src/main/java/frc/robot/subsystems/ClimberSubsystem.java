@@ -18,11 +18,11 @@ import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-//constants
+
 import frc.robot.Constants;
 
 // TODO TEST MOTION MAGIC THEN DELETE TRAPEZOIDAL POSITIONING
-/** Add your docs here. */
+
 public class ClimberSubsystem extends SubsystemBase {
     public final TalonFX climberMotorA = new TalonFX(11);
     public final TalonFX climberMotorB = new TalonFX(12);
@@ -31,15 +31,11 @@ public class ClimberSubsystem extends SubsystemBase {
     Servo climbServo = new Servo(1);
 
     private DigitalInput bottomStop = new DigitalInput(1);
-    private MotionMagicVoltage m_request;
+    private MotionMagicVoltage request;
 
     public PIDController climberPID = new PIDController(1.1, 0, 0.13);
 
-    // variables
     private double climberPosition;
-
-    // like every value is stripped directly from the 2025 elevator... SHH don't
-    // tell anyone!!!
 
     public ClimberSubsystem() {
 
@@ -66,28 +62,17 @@ public class ClimberSubsystem extends SubsystemBase {
         // set Motion Magic settings
 
         var motionMagicConfigs = climberConfigs.MotionMagic;
-        motionMagicConfigs.MotionMagicCruiseVelocity = Constants.ClimberSubsystem.Climber_MotionMagicCruiseVelocity; // Target
-                                                                                                                     // cruise
-                                                                                                                     // velocity
-                                                                                                                     // of
-                                                                                                                     // 80
-                                                                                                                     // rps
-        motionMagicConfigs.MotionMagicAcceleration = Constants.ClimberSubsystem.Climber_MotionMagicCruiseAcceleration; // Target
-                                                                                                                       // acceleration
-                                                                                                                       // of
-                                                                                                                       // 160
-                                                                                                                       // rps/s
-                                                                                                                       // (0.5
-                                                                                                                       // seconds)
-        motionMagicConfigs.MotionMagicJerk = Constants.ClimberSubsystem.Climber_MotionMagicJerk; // Target jerk of 1600
-                                                                                                 // rps/s/s (0.1
-                                                                                                 // seconds)
+        motionMagicConfigs.MotionMagicCruiseVelocity = Constants.ClimberSubsystem.Climber_MotionMagicCruiseVelocity;
+        // Target cruise velocity of 80 rps Target acceleration of 160 rps/s (0.5 seconds)
+
+        // Target jerk of 1600 rps/s/s (0.1 seconds)
+        motionMagicConfigs.MotionMagicJerk = Constants.ClimberSubsystem.Climber_MotionMagicJerk;
 
         climberMotorA.getConfigurator().apply(climberConfigs);
         climberMotorB.getConfigurator().apply(climberConfigs);
         climberMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); // sets the motor to be reversed... I
-                                                                                 // think - Brian
-        m_request = new MotionMagicVoltage(0);
+
+        request = new MotionMagicVoltage(0);
 
     }
 
@@ -105,7 +90,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     public void MoveToPosition(double newPosition) {
 
-        climberMotorA.setControl(m_request.withPosition(newPosition).withSlot(1));
+        climberMotorA.setControl(request.withPosition(newPosition).withSlot(1));
 
     }
 
