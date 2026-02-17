@@ -48,8 +48,6 @@ public class RobotContainer {
         private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per
                                                                                           // second
                                                                                           // max angular velocity
-
-        // commented out to allow new selection style testing [LIES!!]
         private final SendableChooser<Command> autoChooser;
 
         // let's the driver pick the actual auton they want.
@@ -230,8 +228,6 @@ public class RobotContainer {
         }
 
         public Command getAutonomousCommand() {
-
-                // return autoChooser.getSelected();
 
                 String routine = routineChooser.getSelected();
                 String variation = variationChooser.getSelected();
