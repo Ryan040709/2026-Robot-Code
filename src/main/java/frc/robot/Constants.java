@@ -169,8 +169,11 @@ public final class Constants {
     public static double Climber_BackwardPercent = -0.30;
 
     // Climber Positions
-    public static double Climber_Up = 25;// 11 before
-    public static double Climber_Down = 0;
+    public static double Climber_First_Bar_Pos = 0;
+    public static double Climber_Upper_Bar_Pos = 0;
+    public static double Climber_Down_Pos = 0;
+    public static double Climber_Hooks_Closed_Pos = 0;
+    public static double Climber_Hooks_Opened_Pose= 0;
 
   }
 

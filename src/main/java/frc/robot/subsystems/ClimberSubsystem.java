@@ -80,18 +80,13 @@ public class ClimberSubsystem extends SubsystemBase {
         climbServo.setPosition(targetPosition);
     }
 
+
     public boolean AtGoalPosition(double GoalPosition) {
         return MathUtil.isNear(GoalPosition, climberPosition, .5);
     }
 
-    public boolean ClimberPast(double goalPosition) {
-        return climberPosition > goalPosition;
-    }
-
     public void MoveToPosition(double newPosition) {
-
         climberMotorA.setControl(request.withPosition(newPosition).withSlot(1));
-
     }
 
     public void ResetEncoder() {

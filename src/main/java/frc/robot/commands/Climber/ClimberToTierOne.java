@@ -2,14 +2,15 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ClimberSubsystem;
 
-public class ClimberTierOne extends Command {
+public class ClimberToTierOne extends Command {
   ClimberSubsystem ClimberSubsystem;
   int counter;
 
   /** Creates a new ElevatorLowPosision. */
-  public ClimberTierOne(ClimberSubsystem climberSubsystem) {
+  public ClimberToTierOne(ClimberSubsystem climberSubsystem) {
     this.ClimberSubsystem = climberSubsystem;
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -24,16 +25,8 @@ public class ClimberTierOne extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (counter == 0) {
 
-    }
-    if (ClimberSubsystem.ClimberPast(13)) {
-      counter = 1;
-      ClimberSubsystem.MoveToPosition(25);
-    }
-    if (ClimberSubsystem.ClimberPast(32)) {
-
-    }
+ClimberSubsystem.MoveToPosition(Constants.ClimberSubsystem.Climber_First_Bar_Pos);
 
   }
 
@@ -45,6 +38,6 @@ public class ClimberTierOne extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return ClimberSubsystem.AtGoalPosition(25);
+    return ClimberSubsystem.AtGoalPosition(Constants.ClimberSubsystem.Climber_First_Bar_Pos);
   }
 }
