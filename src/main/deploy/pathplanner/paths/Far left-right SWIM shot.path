@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.932679487179488,
-        "y": 7.375
+        "x": 3.516,
+        "y": 7.475
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9326794871794881,
-        "y": 7.375
+        "x": 1.516,
+        "y": 7.475
       },
       "isLocked": false,
-      "linkedName": "trench close sweep end"
+      "linkedName": "left trench start"
     },
     {
       "anchor": {
@@ -91,7 +91,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": -45.0
   },
   "useDefaultConstraints": true
 }

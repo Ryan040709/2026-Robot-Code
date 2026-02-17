@@ -383,7 +383,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                                 : kBlueAlliancePerspectiveRotation);
                 m_hasAppliedOperatorPerspective = true;
             });
-        }
+        }   //should we move this to the game manager subsystem? There's already a system for determining alliance color?
 
         var gyroAngle = gyro.getRotation2d();
 
