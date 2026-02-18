@@ -22,9 +22,9 @@ public class outOfBumperIntake extends SubsystemBase {
 
     VelocityVoltage velocity = new VelocityVoltage(0);
 
-    private TalonFX pivotMotor1 = new TalonFX(10);
+    private TalonFX pivotMotor1 = new TalonFX(27);
     private TalonFX pivotMotor2 = new TalonFX(26);
-    private TalonFX intake = new TalonFX(27);
+    private TalonFX intake = new TalonFX(25);
 
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
 

@@ -42,14 +42,12 @@ import frc.robot.commands.turret.Turret_TargetLocking;
 
 public class RobotContainer {
 
-        private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired
-                                                                                            // top
-        // speed
-        private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per
-                                                                                          // second
-                                                                                          // max angular velocity
+        // kSpeedAt12Volts desired top speed
+        private double MaxSpeed = 1 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
 
-        // commented out to allow new selection style testing [LIES!!]
+        // 3/4 of a rotation per second max angular velocity
+        private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond);
+
         private final SendableChooser<Command> autoChooser;
 
         // let's the driver pick the actual auton they want.
@@ -59,9 +57,11 @@ public class RobotContainer {
 
         /* Setting up bindings for necessary control of the swerve drive platform */
         private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-                        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-                        .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // Use open-loop control for drive
-                                                                                 // motors
+                        // Add a 10% deadband
+                        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1)
+                        // Use open-loop control for drive motors
+                        .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
+
         private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
         private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
@@ -148,20 +148,13 @@ public class RobotContainer {
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
                                 drivetrain.applyRequest(() -> drive
-                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed) // Drive
-                                                                                                        // forward
-                                                                                                        // with
-                                                                                                        // negative Y
-                                                                                                        // (forward)
-                                                .withVelocityY(-driverController.getLeftX() * MaxSpeed) // Drive left
-                                                                                                        // with negative
-                                                                                                        // X (left)
-                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate) // Drive
-                                                                                                                    // counterclockwise
-                                                                                                                    // with
-                                                                                                                    // negative
-                                                                                                                    // X
-                                                                                                                    // (left)
+                                                // Drive forward with negative Y (forward) Drive left with negative X (left)
+                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed) 
+
+                                                .withVelocityY(-driverController.getLeftX() * MaxSpeed)
+
+                                                // Drive counter clockwise with negative X (left)
+                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate) 
                                 ));
 
                 // Idle while the robot is disabled. This ensures the configured
@@ -207,8 +200,6 @@ public class RobotContainer {
 
                 manipulatorController.a().whileTrue(Commands.run(() -> turretTest.setToZero(), turretTest));
 
-                // manipulatorController.pov(0).whileTrue(hopperToShooter);
-
                 manipulatorController.pov(90).whileTrue(outtake);
 
                 manipulatorController.pov(180).whileTrue(IntakeToHopper);
@@ -231,8 +222,6 @@ public class RobotContainer {
 
         public Command getAutonomousCommand() {
 
-                // return autoChooser.getSelected();
-
                 String routine = routineChooser.getSelected();
                 String variation = variationChooser.getSelected();
 
@@ -248,5 +237,4 @@ public class RobotContainer {
                         return AutoBuilder.buildAuto("Taxi Only");
                 }
         }
-
 }

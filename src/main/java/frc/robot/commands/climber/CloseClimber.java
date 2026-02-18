@@ -1,6 +1,7 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class CloseClimber extends Command {
@@ -22,7 +23,7 @@ public class CloseClimber extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    ClimberSubsystem.climberServo(0);
+    ClimberSubsystem.climberServo(Constants.ClimberSubsystem.Climber_Hooks_Closed_Pos);
   }
 
   // Called once the command ends or is interrupted.

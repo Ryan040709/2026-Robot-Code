@@ -21,8 +21,8 @@ public class throughBumperIntake extends SubsystemBase {
 
     VelocityVoltage velocity = new VelocityVoltage(0);
 
-    private TalonFX intakeMotor1 = new TalonFX(10);
-    private TalonFX intakeMotor2 = new TalonFX(10);
+    private TalonFX intakeMotor1 = new TalonFX(23);
+    private TalonFX intakeMotor2 = new TalonFX(24);
 
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
 

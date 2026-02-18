@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -40,9 +36,8 @@ public class ClimberSubsystem extends SubsystemBase {
 
         TalonFXConfiguration climberConfigs = new TalonFXConfiguration();
 
-        // stuff for feedforward
-        climberConfigs.Slot0.kS = Constants.ClimberSubsystem.Climber_kS; // volts
-        climberConfigs.Slot0.kG = Constants.ClimberSubsystem.Climber_kG; // volts
+        climberConfigs.Slot0.kS = Constants.ClimberSubsystem.Climber_kS;
+        climberConfigs.Slot0.kG = Constants.ClimberSubsystem.Climber_kG;
         climberConfigs.Slot0.kV = Constants.ClimberSubsystem.Climber_kV; // volts * seconds / distance
         // A is potentially unneccesary
         climberConfigs.Slot0.kA = Constants.ClimberSubsystem.Climber_kA; // volts * seconds^2 / distance
@@ -66,10 +61,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
         // Target jerk of 1600 rps/s/s (0.1 seconds)
         motionMagicConfigs.MotionMagicJerk = Constants.ClimberSubsystem.Climber_MotionMagicJerk;
-
+        // sets the motor to be reversed
         climberMotorA.getConfigurator().apply(climberConfigs);
         climberMotorB.getConfigurator().apply(climberConfigs);
-        climberMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed)); // sets the motor to be reversed... I
+        climberMotorB.setControl(new Follower(11, MotorAlignmentValue.Opposed));
 
         request = new MotionMagicVoltage(0);
 
@@ -83,14 +78,8 @@ public class ClimberSubsystem extends SubsystemBase {
         return MathUtil.isNear(GoalPosition, climberPosition, .5);
     }
 
-    public boolean ClimberPast(double goalPosition) {
-        return climberPosition > goalPosition;
-    }
-
     public void MoveToPosition(double newPosition) {
-
         climberMotorA.setControl(request.withPosition(newPosition).withSlot(1));
-
     }
 
     public void ResetEncoder() {
