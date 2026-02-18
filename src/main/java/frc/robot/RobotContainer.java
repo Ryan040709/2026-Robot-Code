@@ -224,15 +224,11 @@ public class RobotContainer {
 
                 String routine = routineChooser.getSelected();
                 String variation = variationChooser.getSelected();
-
-                // Option A: Construct the filename dynamically
-                // This assumes you named your files like "3_BALL_LEFT" in PathPlanner
                 String autoName = routine + "_" + variation;
 
                 try {
                         return AutoBuilder.buildAuto(autoName);
                 } catch (Exception e) {
-                        // Fallback: If "3_BALL_STRAIGHT" doesn't exist, just do a basic one
                         DriverStation.reportError("Auto " + autoName + " not found!", e.getStackTrace());
                         return AutoBuilder.buildAuto("Taxi Only");
                 }

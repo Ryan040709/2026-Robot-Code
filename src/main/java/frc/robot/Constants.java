@@ -2,6 +2,9 @@ package frc.robot;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.wpilibj.DigitalSource;
 
 public final class Constants {
@@ -235,7 +238,9 @@ public final class Constants {
 
   public static final class AprilTagPositions {
     // setup for welded field map
+    public static AprilTagFieldLayout aprilTags = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
 
+    
     // tag 18
     public static double Tag18X = 182.11;
     public static double Tag18Y = 135.09;
