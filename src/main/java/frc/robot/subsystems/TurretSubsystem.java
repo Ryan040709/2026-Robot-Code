@@ -51,7 +51,6 @@ import frc.robot.subsystems.GameManager;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
-//our constants
 import frc.robot.Constants;
 
 public class TurretSubsystem extends SubsystemBase {
