@@ -43,10 +43,10 @@ import frc.robot.commands.turret.Turret_TargetLocking;
 public class RobotContainer {
 
         // kSpeedAt12Volts desired top speed
-        private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+        private double MaxSpeed = 1 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
 
         // 3/4 of a rotation per second max angular velocity
-        private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond);
+        private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond);
 
         private final SendableChooser<Command> autoChooser;
 

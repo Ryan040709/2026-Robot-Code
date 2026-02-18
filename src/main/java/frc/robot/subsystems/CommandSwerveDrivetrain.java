@@ -392,7 +392,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                                 : kBlueAlliancePerspectiveRotation);
                 m_hasAppliedOperatorPerspective = true;
             });
-        }   //should we move this to the game manager subsystem? There's already a system for determining alliance color?
+        }
 
         var gyroAngle = gyro.getRotation2d();
 
@@ -412,12 +412,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
                         Math.pow(targetPoseRobotSpace.getZ(), 2));
         if (robotPoseEstimate != null) {
-            if (robotPoseEstimate.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) { // used to
-                                                                                                              // use
-                                                                                                              // gyro.getRate
-                                                                                                              // if that
-                                                                                                              // changes
-                                                                                                              // anything
+            if (robotPoseEstimate.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) {
                 poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * .75, distance * .75, 9999999));
                 poseEstimator.addVisionMeasurement(robotPoseEstimate.pose, robotPoseEstimate.timestampSeconds);
 
