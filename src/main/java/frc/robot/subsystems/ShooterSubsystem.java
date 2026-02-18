@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -21,8 +20,6 @@ import frc.robot.Constants;
 
 public class ShooterSubsystem extends SubsystemBase {
 
-   
-
     private TalonFX shooterMotorL = new TalonFX(15);
     private TalonFX shooterMotorR = new TalonFX(16);
 
@@ -32,16 +29,16 @@ public class ShooterSubsystem extends SubsystemBase {
     private final double maxAngle = 33.73877 / 90;
 
     private final double NinetyDegreeRotation = 33.73877;
-    private Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606 );
-    private Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606 );
 
+    public static double tof; // time of flight
 
+    private Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
+    private Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
 
     private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
-
     // Basic targeting data
-                                                  // in degrees
+    // in degrees
     VelocityVoltage velocity = new VelocityVoltage(0);
 
     InvertedValue Invert = InvertedValue.Clockwise_Positive;
@@ -49,7 +46,6 @@ public class ShooterSubsystem extends SubsystemBase {
     NeutralModeValue Break = NeutralModeValue.Brake;
 
     public ShooterSubsystem() {
-        
 
         // pid
         TalonFXConfiguration shooterConfig = new TalonFXConfiguration();
@@ -74,7 +70,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterConfig.Slot0.kD = Constants.ShooterSubsystem.Shooter_Slot0_kD;
         shooterConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Shooter_MotionMagicCruiseVelocity;
         shooterConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Shooter_MotionMagicAcceleration;
-  
+
         shooterMotorL.getConfigurator().apply(shooterConfig);
         shooterMotorR.getConfigurator().apply(shooterConfig);
 
@@ -101,7 +97,6 @@ public class ShooterSubsystem extends SubsystemBase {
         hoodConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Hood_MotionMagicCruiseVelocity;
         hoodConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Hood_MotionMagicAcceleration;
 
-
         hood.getConfigurator().apply(hoodConfig);
 
         shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
@@ -124,7 +119,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void periodic() {
     }
 
-    public double CalculateRpms( Pose2d robotpose) {
+    public double CalculateRpms(Pose2d robotpose) {
         double y = 0;
         double b = 0;
         double targetRPM = y * (calculateDistanceToHub(robotpose)) + b; // the slope is a placeholder
@@ -136,19 +131,27 @@ public class ShooterSubsystem extends SubsystemBase {
         return targetRPM;
     }
 
-    
+    public double CalculateTof(Pose2d robotpose) {
+        double y = 0;
+        double b = 0;
+        tof = y * (calculateDistanceToHub(robotpose)) + b; // the slope is a placeholder
+        // y=mx+b where "y" is the time of flight and "x" is the distance between the robot
+        // and target
+        // to find the slope, determine positions and rpms that we know work on certain
+        // spots on the field, and create a line of best fit.
 
-
+        return tof;
+    }
 
     public double calculateDistanceToHub(Pose2d robotPose) { // can't we just pull the botpose from the swerve drive?
         Translation2d hubPosition;
 
-       if(GameManager.isBlueAlliance){ // used to be: DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue
-        hubPosition = BlueHubPosition;
-       }
-       else{
-        hubPosition = RedHubPosistion;
-       }
+        if (GameManager.isBlueAlliance) { // used to be: DriverStation.getAlliance().orElse(Alliance.Blue) ==
+                                          // Alliance.Blue
+            hubPosition = BlueHubPosition;
+        } else {
+            hubPosition = RedHubPosistion;
+        }
 
         double DistanceToTarget = robotPose.getTranslation().getDistance(hubPosition);
 
@@ -160,9 +163,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public double calculateHoodPosition(Pose2d robotPose) {
         double m = 0;
         double b = 0;
-      return (m*(calculateDistanceToHub(robotPose)))+b;
-
-        
+        return (m * (calculateDistanceToHub(robotPose))) + b;
 
     }
 }

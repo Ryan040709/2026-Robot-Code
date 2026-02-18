@@ -27,6 +27,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -244,6 +245,9 @@ public class TurretSubsystem extends SubsystemBase {
 
         // setPosition(robotVelocityX, robotVelocityY);
 
+        SmartDashboard.putNumber("offsetX", offsetX);
+        SmartDashboard.putNumber("offsetY", offsetY);
+
     }
 
     public Pose2d UpdateRobotPose2d() {
@@ -378,9 +382,10 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     double tagX = 0;
+
     double tagY = 0;
 
-    double tagRotation = 0; // certain values must change to accomadate apriltag orientation
+    double tagRotation; // certain values must change to accomadate apriltag orientation
 
     double fX = 0;
     double fY = 0;
@@ -395,6 +400,8 @@ public class TurretSubsystem extends SubsystemBase {
     double rotatedY = 0;
 
     public void determine3dOffset(double velocityX, double velocityY) {
+
+            //tagRotation = (Constants.AprilTagPositions.aprilTags.getTagRotation((int) tagID));
 
         if (tagID == 18) {
             tagX = (Constants.AprilTagPositions.Tag18X / 39.37);
@@ -468,9 +475,7 @@ public class TurretSubsystem extends SubsystemBase {
             rotatedY = offsetY;
         }
 
-        SmartDashboard.putNumber("TagRotation", tagRotation);
-        SmartDashboard.putNumber("offsetX", offsetX);
-        SmartDashboard.putNumber("offsetY", offsetY);
+
 
         SmartDashboard.putNumber("rotatedX", rotatedX);
         SmartDashboard.putNumber("rotatedY", rotatedY);
