@@ -92,10 +92,10 @@ public final class Constants {
 
     // intake velocities
     public static double OutBumperIntake_IntakeVelocity = 2500;
-
-    public static double OutBumperPivot_Up = 0; // when the motor is up, it's at its zero position
-
-    public static double OutBumperPivot_Down = 10; // when the motor moves down, its position goes up
+    // when the motor is up, it's at its zero position
+    public static double OutBumperPivot_Up = 0;
+    // when the motor moves down, its position goes up
+    public static double OutBumperPivot_Down = 10;
 
   }
 
@@ -130,8 +130,7 @@ public final class Constants {
     public static double ThroughBumperIntake_MotionMagicCruiseVelocity = 100;
     public static double ThroughBumperIntake_MotionMagicAcceleration = 150;
     public static double ThroughBumperIntake_MotionMagicExpo_kA = 0.1;
-    // values come
-    // from?
+
     public static double ThroughBumperIntake_MotionMagicExpo_kV = 0.12;
     
     // Torque Current
@@ -210,7 +209,6 @@ public final class Constants {
     public static double Shooter_PeakForwardTorqueCurrent = 800;
     public static double Shooter_PeakReverseTorqueCurrent = -800;
 
-    // hood stuff
     public static double Hood_PeakForwardDutyCycle = 1;
     public static double Hood_PeakReverseDutyCycle = -1;
 
