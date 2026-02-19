@@ -1,11 +1,7 @@
 package frc.robot;
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
-import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.wpilibj.DigitalSource;
 
 public final class Constants {
   public static final class GameManager {
