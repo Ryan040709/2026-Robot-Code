@@ -44,8 +44,8 @@ import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import frc.robot.generated.TunerConstants;
-import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
+import frc.robot.SwerveConstants;
+import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
 import frc.robot.subsystems.LimelightHelpers.PoseEstimate;
 
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
@@ -77,7 +77,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveRotation rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
     // gyro
-    Pigeon2 gyro = new Pigeon2(TunerConstants.kPigeonId, TunerConstants.kCANBus.getName());
+    Pigeon2 gyro = new Pigeon2(SwerveConstants.kPigeonId, SwerveConstants.kCANBus.getName());
 
     // setting the postions of our swerve modules for kinematics
     private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);

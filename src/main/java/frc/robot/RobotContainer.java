@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.GameManager;
 import frc.robot.subsystems.GameManager;
@@ -43,7 +42,7 @@ import frc.robot.commands.turret.Turret_TargetLocking;
 public class RobotContainer {
 
         // kSpeedAt12Volts desired top speed
-        private double MaxSpeed = 0.5 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+        private double MaxSpeed = 0.5 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond);
 
         // 3/4 of a rotation per second max angular velocity
         private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond);
@@ -72,7 +71,7 @@ public class RobotContainer {
         // manipulator controller
         private final CommandXboxController manipulatorController = new CommandXboxController(1);
 
-        public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+        public final CommandSwerveDrivetrain drivetrain = SwerveConstants.createDrivetrain();
         // turret subsystem
         TurretSubsystem turretTest = new TurretSubsystem(drivetrain::getPose);
         // shooter subsystem
