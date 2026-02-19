@@ -241,7 +241,7 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Angular velocity", m_gyro.getAngularVelocityZWorld().getValueAsDouble());
 
-        //determine3dOffset(velocityX, velocityY);
+        //determine3dOffset(0, 0);
 
         // setPosition(robotVelocityX, robotVelocityY);
 
@@ -285,6 +285,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setPosition(double velocityX, double velocityY) {
+        determine3dOffset(velocityX, velocityY);
         FilterApriltags();
 
         double feedforward = -(m_gyro.getAngularVelocityZWorld().getValueAsDouble());
@@ -369,7 +370,7 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx - velocityX, Hy - velocityY);
+                lockingTarget = new Translation2d(Hx + velocityX, Hy + velocityY);
                 isFeeding = false;
             }
         }
@@ -387,6 +388,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     double tagRotation; // certain values must change to accomadate apriltag orientation
 
+    Optional<Pose3d> tagPose;
+
     double fX = 0;
     double fY = 0;
     // not like f(x), "f" just stands for furthest
@@ -401,57 +404,23 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void determine3dOffset(double velocityX, double velocityY) {
 
-            //tagRotation = (Constants.AprilTagPositions.aprilTags.getTagRotation((int) tagID));
+        if (tagID >= 1) {
 
-        if (tagID == 18) {
-            tagX = (Constants.AprilTagPositions.Tag18X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag18Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag18Rotation;
-        } else if (tagID == 19) {
-            tagX = (Constants.AprilTagPositions.Tag19X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag19Y / 39.37);
-        } else if (tagID == 20) {
-            tagX = (Constants.AprilTagPositions.Tag20X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag20Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag20Rotation;
-        } else if (tagID == 21) {
-            tagX = (Constants.AprilTagPositions.Tag21X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag21Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag21Rotation;
-        } else if (tagID == 22) {
-            tagX = (Constants.AprilTagPositions.Tag22X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag22Y / 39.37);
-        } else if (tagID == 24) {
-            tagX = (Constants.AprilTagPositions.Tag24X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag24Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag24Rotation;
-        } else if (tagID == 25) {
-            tagX = (Constants.AprilTagPositions.Tag25X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag25Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag25Rotation;
-        } else if (tagID == 26) {
-            tagX = (Constants.AprilTagPositions.Tag26X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag26Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag26Rotation;
-        } else if (tagID == 27) {
-            tagX = (Constants.AprilTagPositions.Tag27X / 39.37);
-            tagY = (Constants.AprilTagPositions.Tag27Y / 39.37);
-            tagRotation = Constants.AprilTagPositions.Tag27Rotation;
-        }
+        tagPose = (Constants.AprilTagPositions.aprilTags.getTagPose((int) tagID));
 
-        if (Hy > tagY) {
+        if (Hy > tagPose.get().getY()) {
             fY = Hy;
-            sY = tagY;
-        } else if (tagY > Hy) {
-            fY = tagY;
+            sY = tagPose.get().getY();
+        } else if (tagPose.get().getY() > Hy) {
+            fY = tagPose.get().getY();
             sY = Hy;
         }
 
-        if (blueHubPos.getX() > tagX) {
+        if (blueHubPos.getX() > tagPose.get().getX()) {
             fX = blueHubPos.getX();
-            sX = tagX;
+            sX = tagPose.get().getX();
         } else if (tagX > blueHubPos.getX()) {
-            fX = tagX;
+            fX = tagPose.get().getX();
             sX = blueHubPos.getX();
         }
 
@@ -461,26 +430,28 @@ public class TurretSubsystem extends SubsystemBase {
 
         // offsets are tag-relative, not field relative and should change depending on
         // tag rotation
-        if (tagRotation == 180) {
+        if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 180) {
             rotatedX = -offsetX;
             rotatedY = offsetY;
-        } else if (tagRotation == 90) {
-            rotatedY = -offsetX;
-            rotatedX = -offsetY;
-        } else if (tagRotation == 270) {
+        } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 90) {
             rotatedY = offsetX;
             rotatedX = -offsetY;
-        } else if (tagRotation == 0) {
+        } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 270) {
+            rotatedY = offsetX;
+            rotatedX = -offsetY;
+        } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 0) {
             rotatedX = -offsetX;
             rotatedY = offsetY;
         }
 
+        SmartDashboard.putNumber("tag rotation", Math.toDegrees(tagPose.get().getRotation().getZ()));
 
 
         SmartDashboard.putNumber("rotatedX", rotatedX);
         SmartDashboard.putNumber("rotatedY", rotatedY);
 
         LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
+    }
     }
 
     public double calculateAngleToHub(double velocityX, double velocityY) {
