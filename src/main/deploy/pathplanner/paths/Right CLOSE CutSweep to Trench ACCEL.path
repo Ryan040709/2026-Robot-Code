@@ -4,28 +4,28 @@
     {
       "anchor": {
         "x": 7.77,
-        "y": 6.023
+        "y": 2.077
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.77,
-        "y": 8.023
+        "x": 7.00463313526982,
+        "y": 0.22924093497742648
       },
       "isLocked": false,
-      "linkedName": "right close sweep end"
+      "linkedName": "left close sweep end"
     },
     {
       "anchor": {
-        "x": 5.656390870185448,
-        "y": 0.35
+        "x": 5.653653846153848,
+        "y": 7.475
       },
       "prevControl": {
-        "x": 7.055137858137247,
-        "y": 0.32869879518072265
+        "x": 7.052400834105646,
+        "y": 7.453698795180722
       },
       "nextControl": {
-        "x": 4.406857271316996,
-        "y": 0.3690288675130874
+        "x": 4.4041202472853955,
+        "y": 7.494028867513087
       },
       "isLocked": false,
       "linkedName": null
@@ -33,15 +33,15 @@
     {
       "anchor": {
         "x": 3.516,
-        "y": 0.35
+        "y": 7.475
       },
       "prevControl": {
         "x": 4.516,
-        "y": 0.35
+        "y": 7.475
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "right trench START"
+      "linkedName": "left trench start"
     }
   ],
   "rotationTargets": [],
@@ -68,14 +68,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 45.0
+    "velocity": 3.0,
+    "rotation": -45.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": 90.0
+    "rotation": -90.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

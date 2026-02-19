@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.665230769230771,
-        "y": 7.68625641025641
+        "x": 3.55,
+        "y": 4.25
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.665230769230771,
-        "y": 7.68625641025641
+        "x": 2.549999999999997,
+        "y": 4.25
       },
       "isLocked": false,
-      "linkedName": "left trench starting point"
+      "linkedName": "Hub Starting Point"
     },
     {
       "anchor": {
-        "x": 7.77,
-        "y": 6.9
+        "x": 0.3977051282051294,
+        "y": 0.5465384615384619
       },
       "prevControl": {
-        "x": 6.77,
-        "y": 6.9
+        "x": 1.3977051282051294,
+        "y": 0.5465384615384619
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "left close sweep start"
+      "linkedName": "human player zone"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.45,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 0.0,
-    "rotation": -90.0
+    "velocity": 0,
+    "rotation": 180.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

@@ -15,13 +15,13 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Human Player Zone"
+                        "pathName": "hub to Human Player Zone"
                       }
                     },
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Copy of Human Player Zone"
+                        "pathName": "Human Player Zone"
                       }
                     }
                   ]
