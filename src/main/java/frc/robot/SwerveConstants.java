@@ -79,7 +79,7 @@ public class SwerveConstants {
     public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(5.21); // hehe used to 4.58. NOW ITS EVEN
                                                                                    // FASTER!
                                                                                    // it might be able to go even
-                                                                                   // faster, with a theoretical max of
+                                                                                   // faster; though, with a theoretical max of
                                                                                    // 5.45m/s.
 
     // Every 1 rotation of the azimuth results in kCoupleRatio drive motor turns;

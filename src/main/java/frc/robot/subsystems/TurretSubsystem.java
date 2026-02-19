@@ -171,8 +171,10 @@ public class TurretSubsystem extends SubsystemBase {
         motorConfig.MotionMagic.MotionMagicExpo_kA = Constants.TurretSubsystem.Turret_MotionMagicExpo_kA;
         motorConfig.MotionMagic.MotionMagicExpo_kV = Constants.TurretSubsystem.Turret_MotionMagicExpo_kV;
         // Torque Current
-        //motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.TurretSubsystem.Turret_PeakForwardTorqueCurrent;
-        //motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.TurretSubsystem.Turret_PeakReverseTorqueCurrent;
+        // motorConfig.TorqueCurrent.PeakForwardTorqueCurrent =
+        // Constants.TurretSubsystem.Turret_PeakForwardTorqueCurrent;
+        // motorConfig.TorqueCurrent.PeakReverseTorqueCurrent =
+        // Constants.TurretSubsystem.Turret_PeakReverseTorqueCurrent;
 
         turret.getConfigurator().apply(motorConfig);
 
@@ -198,11 +200,13 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void MoveMotor(double targetSpeed) {
-        if (turret.getPosition().getValueAsDouble() > -maxAngle
-                || turret.getPosition().getValueAsDouble() < maxAngle) {
-            turret.set(targetSpeed);
-        } else {
-            turret.set(0);
+        if (!turretLocking) {
+            if (turret.getPosition().getValueAsDouble() > -maxAngle
+                    || turret.getPosition().getValueAsDouble() < maxAngle) {
+                turret.set(targetSpeed);
+            } else {
+                turret.set(0);
+            }
         }
 
     }
@@ -243,7 +247,7 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("Angular velocity", m_gyro.getAngularVelocityZWorld().getValueAsDouble());
 
-        //determine3dOffset(0, 0);
+        // determine3dOffset(0, 0);
 
         // setPosition(robotVelocityX, robotVelocityY);
 
@@ -408,52 +412,51 @@ public class TurretSubsystem extends SubsystemBase {
 
         if (tagID >= 1) {
 
-        tagPose = (Constants.AprilTagPositions.aprilTags.getTagPose((int) tagID));
+            tagPose = (Constants.AprilTagPositions.aprilTags.getTagPose((int) tagID));
 
-        if (Hy > tagPose.get().getY()) {
-            fY = Hy;
-            sY = tagPose.get().getY();
-        } else if (tagPose.get().getY() > Hy) {
-            fY = tagPose.get().getY();
-            sY = Hy;
+            if (Hy > tagPose.get().getY()) {
+                fY = Hy;
+                sY = tagPose.get().getY();
+            } else if (tagPose.get().getY() > Hy) {
+                fY = tagPose.get().getY();
+                sY = Hy;
+            }
+
+            if (blueHubPos.getX() > tagPose.get().getX()) {
+                fX = blueHubPos.getX();
+                sX = tagPose.get().getX();
+            } else if (tagX > blueHubPos.getX()) {
+                fX = tagPose.get().getX();
+                sX = blueHubPos.getX();
+            }
+
+            offsetX = (fX) - (sX);
+
+            offsetY = (fY) - (sY);
+
+            // offsets are tag-relative, not field relative and should change depending on
+            // tag rotation
+            if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 180) {
+                rotatedX = -offsetX;
+                rotatedY = offsetY;
+            } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 90) {
+                rotatedY = offsetX;
+                rotatedX = -offsetY;
+            } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 270) {
+                rotatedY = offsetX;
+                rotatedX = -offsetY;
+            } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 0) {
+                rotatedX = -offsetX;
+                rotatedY = offsetY;
+            }
+
+            SmartDashboard.putNumber("tag rotation", Math.toDegrees(tagPose.get().getRotation().getZ()));
+
+            SmartDashboard.putNumber("rotatedX", rotatedX);
+            SmartDashboard.putNumber("rotatedY", rotatedY);
+
+            LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
         }
-
-        if (blueHubPos.getX() > tagPose.get().getX()) {
-            fX = blueHubPos.getX();
-            sX = tagPose.get().getX();
-        } else if (tagX > blueHubPos.getX()) {
-            fX = tagPose.get().getX();
-            sX = blueHubPos.getX();
-        }
-
-        offsetX = (fX) - (sX);
-
-        offsetY = (fY) - (sY);
-
-        // offsets are tag-relative, not field relative and should change depending on
-        // tag rotation
-        if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 180) {
-            rotatedX = -offsetX;
-            rotatedY = offsetY;
-        } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 90) {
-            rotatedY = offsetX;
-            rotatedX = -offsetY;
-        } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 270) {
-            rotatedY = offsetX;
-            rotatedX = -offsetY;
-        } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 0) {
-            rotatedX = -offsetX;
-            rotatedY = offsetY;
-        }
-
-        SmartDashboard.putNumber("tag rotation", Math.toDegrees(tagPose.get().getRotation().getZ()));
-
-
-        SmartDashboard.putNumber("rotatedX", rotatedX);
-        SmartDashboard.putNumber("rotatedY", rotatedY);
-
-        LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
-    }
     }
 
     public double calculateAngleToHub(double velocityX, double velocityY) {
