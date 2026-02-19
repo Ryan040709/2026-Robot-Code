@@ -13,9 +13,11 @@ import org.opencv.core.Mat;
 
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -59,7 +61,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     private Supplier<Pose2d> poseSupplier;
 
-    private TalonFX turret = new TalonFX(10);
+    private TalonFXS turret = new TalonFXS(10);
     private PositionVoltage m_request = new PositionVoltage(0);
 
     private final double maxAngle = 33.73877 / 90;
@@ -137,7 +139,7 @@ public class TurretSubsystem extends SubsystemBase {
         this.poseSupplier = poseSupplier;
 
         // pid
-        TalonFXConfiguration motorConfig = new TalonFXConfiguration();
+        TalonFXSConfiguration motorConfig = new TalonFXSConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = Constants.TurretSubsystem.Turret_PeakForwardDutyCycle;
         motorConfig.MotorOutput.PeakReverseDutyCycle = Constants.TurretSubsystem.Turret_PeakReverseDutyCycle;
         // motor "friction" type?
@@ -169,8 +171,8 @@ public class TurretSubsystem extends SubsystemBase {
         motorConfig.MotionMagic.MotionMagicExpo_kA = Constants.TurretSubsystem.Turret_MotionMagicExpo_kA;
         motorConfig.MotionMagic.MotionMagicExpo_kV = Constants.TurretSubsystem.Turret_MotionMagicExpo_kV;
         // Torque Current
-        motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.TurretSubsystem.Turret_PeakForwardTorqueCurrent;
-        motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.TurretSubsystem.Turret_PeakReverseTorqueCurrent;
+        //motorConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.TurretSubsystem.Turret_PeakForwardTorqueCurrent;
+        //motorConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.TurretSubsystem.Turret_PeakReverseTorqueCurrent;
 
         turret.getConfigurator().apply(motorConfig);
 

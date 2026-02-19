@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -23,7 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFX shooterMotorL = new TalonFX(15);
     private TalonFX shooterMotorR = new TalonFX(16);
 
-    private TalonFX hood = new TalonFX(17);
+    private TalonFXS hood = new TalonFXS(17);
     private PositionVoltage m_request = new PositionVoltage(0);
 
     private final double maxAngle = 33.73877 / 90;
@@ -75,7 +77,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotorR.getConfigurator().apply(shooterConfig);
 
         // hood motor PID
-        TalonFXConfiguration hoodConfig = new TalonFXConfiguration();
+        TalonFXSConfiguration hoodConfig = new TalonFXSConfiguration();
         hoodConfig.MotorOutput.PeakForwardDutyCycle = Constants.ShooterSubsystem.Hood_PeakForwardDutyCycle;
         hoodConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Hood_PeakReverseDutyCycle;
         // motor "friction" type?

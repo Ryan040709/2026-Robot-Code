@@ -238,7 +238,7 @@ public final class Constants {
 
   public static final class AprilTagPositions {
     // setup for welded field map
-    public static AprilTagFieldLayout aprilTags = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
+    public static AprilTagFieldLayout aprilTags = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
 
     
     // tag 18
