@@ -10,9 +10,6 @@ import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -28,16 +25,11 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFXS hood = new TalonFXS(17);
     private PositionVoltage m_request = new PositionVoltage(0);
 
-    private final double maxAngle = 33.73877 / 90;
 
-    private final double NinetyDegreeRotation = 33.73877;
-
-    public static double tof; // time of flight
+    public static double tof = 0.25; // time of flight also very unrealistic right now...
 
     private Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
     private Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
-
-    private final double ticksPerAngle = NinetyDegreeRotation / 90;
 
     // Basic targeting data
     // in degrees

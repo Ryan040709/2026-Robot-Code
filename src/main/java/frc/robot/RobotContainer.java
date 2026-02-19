@@ -36,13 +36,13 @@ import frc.robot.commands.intake.outTheBumper.Intake_RunOuttake;
 import frc.robot.commands.intake.outTheBumper.Intake_RunIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_StopIntake;
 //turret commands
-import frc.robot.commands.turret.Turret_TargetLocking;
+import frc.robot.commands.turret.Turret_Toggle;
 //get the game manager
 
 public class RobotContainer {
 
         // kSpeedAt12Volts desired top speed
-        private double MaxSpeed = 0.5 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said so...
+        private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said so...
 
         // 3/4 of a rotation per second max angular velocity
         private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond); // TODO change to 1
@@ -89,7 +89,7 @@ public class RobotContainer {
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
         Hood_SetToPosition shooter_setToPosition = new Hood_SetToPosition(shooter, drivetrain);
         // turret commands
-        Turret_TargetLocking turret_Locking = new Turret_TargetLocking(turret);
+        Turret_Toggle turret_Locking = new Turret_Toggle(turret);
         // out of bumper intake commands
         Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
@@ -186,8 +186,8 @@ public class RobotContainer {
                 drivetrain.registerTelemetry(logger::telemeterize);
 
                 // manipulatorController.leftTrigger(0.05)
-                //                 .whileTrue(Commands.run(() -> turretTest.MoveMotor(manipulatorController.getLeftX()),
-                //                                 turretTest));
+                //                 .whileTrue(Commands.run(() -> turret.MoveMotor(manipulatorController.getLeftX()),
+                //                                 turret));
                 // manual zeroing
                 manipulatorController.x().whileTrue(Commands.run(() -> turret.zeroPosition(), turret));
                 // set to run to x position
@@ -211,8 +211,8 @@ public class RobotContainer {
 
                 gameManager.setDefaultCommand(Commands.run(() -> {}, gameManager));
                 
-                turret.setDefaultCommand(Commands.run(() -> turret.MoveMotor(manipulatorController.getLeftX()), turret));
-                turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX, drivetrain.robotVelocityY), turret));
+                //turret.setDefaultCommand(Commands.run(() -> turret.MoveMotor(manipulatorController.getLeftX()), turret));
+                turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX, drivetrain.robotVelocityY,manipulatorController.getLeftX()), turret));
                 
 
                 // out of bumper intake commands

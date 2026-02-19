@@ -1,58 +1,22 @@
 package frc.robot.subsystems;
-
-import static edu.wpi.first.units.Units.Degrees;
-import static edu.wpi.first.units.Units.Radians;
-
-import java.lang.annotation.Target;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-
-import org.opencv.core.Mat;
-
-import com.ctre.phoenix6.StatusSignal;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.Pigeon2;
-import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.units.AngleUnit;
-import edu.wpi.first.units.Unit;
-import edu.wpi.first.units.measure.Angle;
-import edu.wpi.first.units.measure.Velocity;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
-import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import frc.robot.subsystems.GameManager;
-
-import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 //our constants
 import frc.robot.Constants;
@@ -114,7 +78,6 @@ public class TurretSubsystem extends SubsystemBase {
     public double robotVelocityX;
     public double robotVelocityY;
 
-    private SwerveDriveOdometry m_odometry;
 
     public double turretError = turretTARGET - turret.getPosition().getValueAsDouble();
 
@@ -202,8 +165,8 @@ public class TurretSubsystem extends SubsystemBase {
     public void MoveMotor(double targetSpeed) {
         if (!turretLocking) {
             if (turret.getPosition().getValueAsDouble() > -maxAngle
-                    || turret.getPosition().getValueAsDouble() < maxAngle) {
-                turret.set(targetSpeed);
+                    || turret.getPosition().getValueAsDouble() < maxAngle && Math.abs(targetSpeed) > 0.1) {
+                turret.set(-targetSpeed);
             } else {
                 turret.set(0);
             }
@@ -290,7 +253,8 @@ public class TurretSubsystem extends SubsystemBase {
         }
     }
 
-    public void setPosition(double velocityX, double velocityY) {
+    public void setPosition(double velocityX, double velocityY, double targetSpeed) {
+        MoveMotor(targetSpeed);
         determine3dOffset(velocityX, velocityY);
         FilterApriltags();
 
@@ -364,7 +328,7 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx, redHubPos.getY());
+                lockingTarget = new Translation2d(Hx + (velocityX*ShooterSubsystem.tof), redHubPos.getY() + (velocityY*ShooterSubsystem.tof)); // TODO test this before getting the real robot!
                 isFeeding = false;
             }
         } else {
@@ -376,7 +340,7 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx + velocityX, Hy + velocityY);
+                lockingTarget = new Translation2d(Hx + (velocityX*ShooterSubsystem.tof), redHubPos.getY() + (velocityY*ShooterSubsystem.tof)); // so does this system actually work?
                 isFeeding = false;
             }
         }
@@ -407,6 +371,10 @@ public class TurretSubsystem extends SubsystemBase {
 
     double rotatedX = 0;
     double rotatedY = 0;
+
+    public void determineSwimOffset() {
+
+    }
 
     public void determine3dOffset(double velocityX, double velocityY) {
 

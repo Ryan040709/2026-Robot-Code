@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 
 import frc.robot.subsystems.TurretSubsystem;
 
-public class Turret_TargetLocking extends Command {
+public class Turret_Toggle extends Command {
 
   boolean intakeValue = false;
 
@@ -15,7 +15,7 @@ public class Turret_TargetLocking extends Command {
   TurretSubsystem TurretSubsystem;
 
   /** Creates a new Turret_TargetLocking. */
-  public Turret_TargetLocking(TurretSubsystem turretSubsystem) {
+  public Turret_Toggle(TurretSubsystem turretSubsystem) {
     this.TurretSubsystem = turretSubsystem;
     addRequirements(turretSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
