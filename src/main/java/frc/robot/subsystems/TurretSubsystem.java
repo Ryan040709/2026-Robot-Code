@@ -15,6 +15,7 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -22,6 +23,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class TurretSubsystem extends SubsystemBase {
+
+    DigitalInput zeroingSensor = new DigitalInput(2); // the magnetic sensor
 
     private Supplier<Pose2d> poseSupplier;
 
@@ -162,6 +165,12 @@ public class TurretSubsystem extends SubsystemBase {
 
     }
 
+    public void turretSensor() {
+        if (zeroingSensor.get()) {
+            zeroPosition();
+        }
+    }
+
     public void MoveMotor(double targetSpeed) {
         if (!turretLocking) {
             if (turret.getPosition().getValueAsDouble() > -maxAngle
@@ -191,6 +200,8 @@ public class TurretSubsystem extends SubsystemBase {
         robotPos = new Translation2d(botPose.getX(), botPose.getY());
         theta = botPose.getRotation().getDegrees();
         tagID = LimelightHelpers.getFiducialID("limelight-turret");
+
+        turretSensor();
 
         SmartDashboard.putBoolean("turret tracking", turretLocking);
         SmartDashboard.putBoolean("is feeding", isFeeding);
