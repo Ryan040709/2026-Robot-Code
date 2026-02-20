@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.886217948717949,
-        "y": 4.023371794871795
+        "x": 7.85,
+        "y": 2.077
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.886217948717948,
-        "y": 4.023371794871795
+        "x": 7.85,
+        "y": 0.07699999999999996
       },
       "isLocked": false,
-      "linkedName": "to hub"
+      "linkedName": "left far sweep end"
     },
     {
       "anchor": {
-        "x": 6.758333333333335,
-        "y": 1.4535384615384623
+        "x": 3.516,
+        "y": 0.35
       },
       "prevControl": {
-        "x": 5.758333333333335,
-        "y": 1.4535384615384626
+        "x": 5.516,
+        "y": 0.3500000000000002
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "right trench START"
     }
   ],
   "rotationTargets": [],
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
+    "maxVelocity": 2.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 45.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 3.0,
+    "rotation": -90.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

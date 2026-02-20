@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.0,
-        "y": 4.0
+        "x": 0.3977051282051294,
+        "y": 0.5465384615384619
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.0,
-        "y": 4.25
+        "x": 1.397705128205132,
+        "y": 0.5465384615384619
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "human player zone"
     },
     {
       "anchor": {
-        "x": 8.0,
-        "y": 3.0
+        "x": 1.5605256410256425,
+        "y": 3.2907948717948714
       },
       "prevControl": {
-        "x": 8.0,
-        "y": 3.25
+        "x": 1.5605256410256425,
+        "y": 2.290794871794872
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "tower right"
     }
   ],
   "rotationTargets": [],
@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

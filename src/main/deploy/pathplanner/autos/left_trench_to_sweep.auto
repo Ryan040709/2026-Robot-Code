@@ -15,7 +15,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Start_Trench to close sweeo"
+                        "pathName": "Left Trench Starting Spot"
                       }
                     },
                     {
@@ -27,7 +27,7 @@
                     {
                       "type": "path",
                       "data": {
-                        "pathName": "Right CLOSE CutSweep to Trench ACCEL"
+                        "pathName": "Right CLOSE CutSweep to Trench"
                       }
                     },
                     {

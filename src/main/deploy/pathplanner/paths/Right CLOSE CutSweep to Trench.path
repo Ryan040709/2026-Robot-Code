@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.85,
-        "y": 6.023423076923077
+        "x": 7.77,
+        "y": 2.077
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.85,
-        "y": 7.523423076923077
+        "x": 7.77,
+        "y": 0.07699999999999996
       },
       "isLocked": false,
-      "linkedName": "right far sweep end"
+      "linkedName": "left close sweep end"
+    },
+    {
+      "anchor": {
+        "x": 5.653653846153848,
+        "y": 7.475
+      },
+      "prevControl": {
+        "x": 7.052400834105646,
+        "y": 7.453698795180722
+      },
+      "nextControl": {
+        "x": 4.4041202472853955,
+        "y": 7.494028867513087
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -30,10 +46,21 @@
   ],
   "rotationTargets": [],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.62554,
+        "y": 4.03606
+      },
+      "rotationOffset": 0.0,
+      "minWaypointRelativePos": 1.5,
+      "maxWaypointRelativePos": 1.5,
+      "name": "Point Towards Zone"
+    }
+  ],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 5.45,
+    "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -41,14 +68,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 5.45,
+    "velocity": 0.0,
     "rotation": -45.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 5.45,
-    "rotation": 90.0
+    "velocity": 3.0,
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }
