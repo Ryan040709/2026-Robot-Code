@@ -163,7 +163,7 @@ public class ShooterSubsystem extends SubsystemBase {
         } else {
             hubPosition = RedHubPosistion;
         }
-
+        
         double DistanceToTarget = robotPose.getTranslation().getDistance(hubPosition);
 
         SmartDashboard.putNumber("Distance To Target", DistanceToTarget);

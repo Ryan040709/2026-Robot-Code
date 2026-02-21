@@ -25,7 +25,7 @@ public class Hood_SetToPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    System.out.println("hood Run");
+   // System.out.println("hood Run");
     shooterSubsystem.setHoodPosition(drivetrain.getPose());
     SmartDashboard.putNumber("Hub Distance from robot", shooterSubsystem.calculateDistanceToHub(drivetrain.getPose()));
   }

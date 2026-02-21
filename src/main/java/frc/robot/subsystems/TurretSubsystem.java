@@ -167,7 +167,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void turretSensor() {
         if (zeroingSensor.get()) {
-            zeroPosition();
+            //zeroPosition();
         }
     }
 
