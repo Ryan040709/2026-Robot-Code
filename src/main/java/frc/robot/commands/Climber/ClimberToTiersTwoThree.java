@@ -11,7 +11,7 @@ public class ClimberToTiersTwoThree extends Command {
   /** Creates a new ElevatorLowPosision. */
   public ClimberToTiersTwoThree(ClimberSubsystem climberSubsystem) {
     this.ClimberSubsystem = climberSubsystem;
-
+addRequirements(ClimberSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

@@ -1,10 +1,8 @@
 package frc.robot.commands.intake.outTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
-import frc.robot.subsystems.intakesubsystems.outOfBumperIntake;
-
 import frc.robot.Constants;
+import frc.robot.subsystems.outOfBumperIntake;
 
 public class Intake_LowerIntake extends Command {
   outOfBumperIntake s_outOfBumperIntake;

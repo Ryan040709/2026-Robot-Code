@@ -11,7 +11,7 @@ public class OpenClimber extends Command {
   /** Creates a new ElevatorLowPosision. */
   public OpenClimber(ClimberSubsystem climberSubsystem) {
     this.ClimberSubsystem = climberSubsystem;
-
+addRequirements(ClimberSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
 

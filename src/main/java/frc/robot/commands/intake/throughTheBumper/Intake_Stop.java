@@ -1,13 +1,23 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.intakesubsystems.throughBumperIntake;
 import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.throughBumperIntake;
 
 public class Intake_Stop extends Command {
 
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
     throughBumperIntake intakeSubsystem = new throughBumperIntake();
+
+    public Intake_Stop(HopperSubsystem hopperSubsystem,
+     throughBumperIntake intakeSubsystem){
+ 
+        this.hopperSubsystem = hopperSubsystem;
+        this.intakeSubsystem = intakeSubsystem;
+        addRequirements(hopperSubsystem, intakeSubsystem);
+
+    }
+
 
     // Called when the command is initially scheduled.
     @Override

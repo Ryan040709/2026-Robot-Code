@@ -19,9 +19,10 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.GameManager;
+import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
-import frc.robot.subsystems.intakesubsystems.outOfBumperIntake;
-import frc.robot.subsystems.intakesubsystems.throughBumperIntake;
+import frc.robot.subsystems.outOfBumperIntake;
+import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
@@ -78,9 +79,11 @@ public class RobotContainer {
         // shooter subsystem
         ShooterSubsystem shooter = new ShooterSubsystem();
         // in the bumper intake subsystem
-        throughBumperIntake intake = new throughBumperIntake();
+        throughBumperIntake throughBumperIntake = new throughBumperIntake();
         // out of bumper intake subsystem
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
+
+        HopperSubsystem hopperSubsystem = new HopperSubsystem();
         //game manager
         GameManager gameManager = new GameManager();
 
@@ -95,11 +98,12 @@ public class RobotContainer {
         Intake_RunIntake intake_RunIntake = new Intake_RunIntake(OutOfBumperIntake);
         Intake_StopIntake intake_StopIntake = new Intake_StopIntake(OutOfBumperIntake);
         Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
+
         // in the bumper intake commands
-        Intake_Outtake outtake = new Intake_Outtake();
-        Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter();
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper();
-        Intake_Outtake IntakeToShooter = new Intake_Outtake();
+        Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
+        Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter(hopperSubsystem, throughBumperIntake);
+        Intake_IntakeToHopper IntakeToHopper = new  Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
+        Intake_Outtake IntakeToShooter = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
 
         public RobotContainer() {
                 // turret commands
@@ -115,7 +119,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-hopperToShooter", hopperToShooter);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
-                // shooter commands
+                // // shooter commands
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 // climber commands

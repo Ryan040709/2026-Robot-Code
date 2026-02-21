@@ -11,7 +11,7 @@ public class ClimberLiftUp extends Command {
   /** Creates a new ElevatorLowPosision. */
   public ClimberLiftUp(ClimberSubsystem climberSubsystem) {
     this.ClimberSubsystem = climberSubsystem;
-
+addRequirements(ClimberSubsystem);
   }
 
   // Called when the command is initially scheduled.
