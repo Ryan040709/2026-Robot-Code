@@ -302,9 +302,10 @@ public class TurretSubsystem extends SubsystemBase {
 
                         turret.setControl(m_request
                                 .withPosition(
-                                        (turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg))));
+                                        (MathUtil.clamp(MathUtil.inputModulus((turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg)), -180, 180), -145, 145))));
+                                        
 
-                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg);
+                        turretTARGET = MathUtil.clamp(MathUtil.inputModulus((turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg)), -180, 180), -145, 145);
                     }
                 } else {
                     lastTagID = tagID;
