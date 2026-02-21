@@ -28,8 +28,8 @@ public class Intake_Stop extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.IntakeStop(0);
-        hopperSubsystem.MoveHopperMotor(.5);
+        intakeSubsystem.SetIntakeFront(0);
+        intakeSubsystem.SetIntakeBack(0);
     }
 
     // Called once the command ends or is interrupted.

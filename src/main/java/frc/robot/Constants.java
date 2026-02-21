@@ -109,7 +109,7 @@ public final class Constants {
 
     public static boolean ThroughBumperIntake_StatorCurrentLimitEnable = false;
     public static double ThroughBumperIntake_CurrentLimit = 0;
-    public static boolean ThroughBumperIntake_SupplyCurrentLimitEnable = true;
+    public static boolean ThroughBumperIntake_SupplyCurrentLimitEnable = false;
     public static double ThroughBumperIntake_SupplyCurrentLimit = 10;
     public static double ThroughBumperIntake_SupplyCurrentLowerLimit = 0;
     public static double ThroughBumperIntake_SupplyCurrentLowerTime = 0;
@@ -177,36 +177,36 @@ public final class Constants {
 
   public static final class ShooterSubsystem {
 
-    public static double Shooter_PeakForwardDutyCycle = 0;
-    public static double Shooter_PeakReverseDutyCycle = 0;
+    public static double Shooter_PeakForwardDutyCycle = .5;
+    public static double Shooter_PeakReverseDutyCycle = -.5;
 
-    public static double Shooter_Slot0_kP = 0;
-    public static double Shooter_Slot0_kI = 0;
+    public static double Shooter_Slot0_kP = 0.075;
+    public static double Shooter_Slot0_kI = 0.1;
     public static double Shooter_Slot0_kD = 0;
 
-    public static boolean Shooter_StatorCurrentLimitEnable = true;
-    public static double Shooter_CurrentLimit = 0;
-    public static boolean Shooter_SupplyCurrentLimitEnable = true;
-    public static double Shooter_SupplyCurrentLimit = 0;
+    public static boolean Shooter_StatorCurrentLimitEnable = false;
+    public static double Shooter_CurrentLimit = 10;
+    public static boolean Shooter_SupplyCurrentLimitEnable = false;
+    public static double Shooter_SupplyCurrentLimit = 10;
     public static double Shooter_SupplyCurrentLowerLimit = 0;
     public static double Shooter_SupplyCurrentLowerTime = 0;
 
     // Voltage
-    public static double Shooter_PeakForwardVoltage = 0;
-    public static double Shooter_PeakReverseVoltage = 0;
+    public static double Shooter_PeakForwardVoltage = 7;
+    public static double Shooter_PeakReverseVoltage = -7;
     // Differential Constants
     public static double Shooter_PeakDifferentialDutyCycle = 0;
     public static double Shooter_PeakDifferentialTorqueCurrent = 0;
     public static double Shooter_PeakDifferentialVoltage = 0;
     // Motion Magic
     public static double Shooter_MotionMagicCruiseVelocity = 0;
-    public static double Shooter_MotionMagicAcceleration = 0;
+    public static double Shooter_MotionMagicAcceleration = 5;
     public static double Shooter_MotionMagicExpo_kA = 0;
     
     public static double Shooter_MotionMagicExpo_kV = 0;
     // Torque Current
-    public static double Shooter_PeakForwardTorqueCurrent = 0;
-    public static double Shooter_PeakReverseTorqueCurrent = 0;
+    public static double Shooter_PeakForwardTorqueCurrent = 800;
+    public static double Shooter_PeakReverseTorqueCurrent = -800;
 
     public static double Hood_PeakForwardDutyCycle = 0;
     public static double Hood_PeakReverseDutyCycle = 0;

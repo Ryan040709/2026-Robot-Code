@@ -25,10 +25,13 @@ import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
+import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
 import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
+import frc.robot.commands.shooter.ShooterStop;
+import frc.robot.commands.shooter.ShooterToRPMS;
 //out of bumper intake commands
 import frc.robot.commands.intake.outTheBumper.Intake_LowerIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
@@ -90,6 +93,8 @@ public class RobotContainer {
         // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
         Hood_SetToPosition shooter_setToPosition = new Hood_SetToPosition(shooter, drivetrain);
+        ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain);
+        ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
         // turret commands
         Turret_Toggle turret_Locking = new Turret_Toggle(turret);
         // out of bumper intake commands
@@ -100,6 +105,7 @@ public class RobotContainer {
         Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
 
         // in the bumper intake commands
+        Intake_Stop intake_Stop = new Intake_Stop(hopperSubsystem, throughBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
         Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter(hopperSubsystem, throughBumperIntake);
         Intake_IntakeToHopper IntakeToHopper = new  Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
@@ -207,6 +213,10 @@ public class RobotContainer {
                 manipulatorController.pov(90).whileTrue(outtake);
 
                 manipulatorController.pov(180).whileTrue(IntakeToHopper);
+
+                     driverController.x().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
+                     driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
+
 
                 manipulatorController.pov(270).whileTrue(IntakeToShooter);
 

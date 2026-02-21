@@ -27,7 +27,7 @@ public class throughBumperIntake extends SubsystemBase {
         intakeConfig.MotorOutput.PeakReverseDutyCycle = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakReverseDutyCycle;
         // motor "friction" type?
         intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        intakeConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        intakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
         intakeConfig.Slot0.kP = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_Slot0_kP;
         intakeConfig.Slot0.kI = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_Slot0_kI;
@@ -63,11 +63,11 @@ public class throughBumperIntake extends SubsystemBase {
     }
 
     public void SetIntakeFront(double targetSpeed) {
-        intakeMotor1.setControl(velocity.withVelocity(targetSpeed));
+        intakeMotor1.set(targetSpeed);
     }
 
     public void SetIntakeBack(double targetSpeed) {
-        intakeMotor2.setControl(velocity.withVelocity(-targetSpeed));
+        intakeMotor2.set(targetSpeed);
     }
 
     public Command IntakeToHopperCommand(double targetRPM) {

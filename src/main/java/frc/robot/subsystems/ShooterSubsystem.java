@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -24,6 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private TalonFXS hood = new TalonFXS(17);
     private PositionVoltage m_request = new PositionVoltage(0);
+    private VelocityVoltage m_velocity = new VelocityVoltage(0);
 
 
     public static double tof = 0.25; // time of flight also very unrealistic right now...
@@ -47,6 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Shooter_PeakReverseDutyCycle;
         // motor "friction" type?
         shooterConfig.MotorOutput.NeutralMode = Coast;
+        shooterConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         // regulars
         shooterConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.ShooterSubsystem.Shooter_StatorCurrentLimitEnable;
         shooterConfig.CurrentLimits.StatorCurrentLimit = Constants.ShooterSubsystem.Shooter_CurrentLimit;
@@ -106,8 +109,11 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void RuntoRPMs(Pose2d robotPose) {
-        shooterMotorL.setControl(velocity.withVelocity(CalculateRpms(robotPose)));
-    }
+        shooterMotorL.setControl(m_request.withVelocity(0));
+        }
+    public void SetShooterRPMS(double setRPMS) {
+        shooterMotorL.setControl(m_velocity.withVelocity(setRPMS));
+        }
 
     @Override
     public void periodic() {
