@@ -31,9 +31,9 @@ public class TurretSubsystem extends SubsystemBase {
     private TalonFXS turret = new TalonFXS(10);
     private PositionVoltage m_request = new PositionVoltage(0);
 
-    private final double maxAngle = 33.73877 / 90;
+    private final double maxAngle = 28 / 90;
 
-    private final double NinetyDegreeRotation = 33.73877;
+    private final double NinetyDegreeRotation = 28;
 
     Translation2d redHubPos = new Translation2d(11.98482, 4.03606); // red hub
 
