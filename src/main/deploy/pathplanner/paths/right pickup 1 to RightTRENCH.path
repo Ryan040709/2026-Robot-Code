@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.77,
+        "y": 2.0898674698795183
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.468520858431277,
+        "y": 1.0867901948600889
+      },
+      "isLocked": false,
+      "linkedName": "pickup 1"
+    },
+    {
+      "anchor": {
+        "x": 5.527144578313254,
+        "y": 0.35
+      },
+      "prevControl": {
+        "x": 5.771348955262218,
+        "y": 0.40351842933950904
+      },
+      "nextControl": {
+        "x": 5.212123387965638,
+        "y": 0.28096176437660564
+      },
+      "isLocked": false,
+      "linkedName": "right trench middle entry"
+    },
+    {
+      "anchor": {
+        "x": 3.516,
+        "y": 0.35
+      },
+      "prevControl": {
+        "x": 5.216202462872295,
+        "y": 0.2967586411378964
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "right trench START"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 45.0
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 90.0
+  },
+  "useDefaultConstraints": false
+}
