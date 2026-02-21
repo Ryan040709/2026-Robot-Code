@@ -12,7 +12,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -163,9 +163,9 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double calculateHoodPosition(Pose2d robotPose) {
-        double m = 0;
-        double b = 0;
-        return (m * (calculateDistanceToHub(robotPose))) + b;
+        double m = -5.555;
+        double b = 71.55;
+        return MathUtil.clamp((m * (calculateDistanceToHub(robotPose))) + b, 41, 66);
 
     }
 }

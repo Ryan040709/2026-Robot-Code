@@ -210,21 +210,21 @@ public final class Constants {
     public static double Shooter_PeakForwardTorqueCurrent = 800;
     public static double Shooter_PeakReverseTorqueCurrent = -800;
 
-    public static double Hood_PeakForwardDutyCycle = 0;
-    public static double Hood_PeakReverseDutyCycle = 0;
+    public static double Hood_PeakForwardDutyCycle = 0.5;
+    public static double Hood_PeakReverseDutyCycle = -0.5;
 
-    public static double Hood_Slot0_kP = 0;
+    public static double Hood_Slot0_kP = 2;
     public static double Hood_Slot0_kI = 0;
     public static double Hood_Slot0_kD = 0;
 
-    public static boolean Hood_StatorCurrentLimitEnable = true;
-    public static double Hood_CurrentLimit = 0;
+    public static boolean Hood_StatorCurrentLimitEnable = false;
+    public static double Hood_CurrentLimit = 10;
     public static boolean Hood_SupplyCurrentLimitEnable = true;
-    public static double Hood_SupplyCurrentLimit = 0;
+    public static double Hood_SupplyCurrentLimit = 10;
 
     // Voltage
-    public static double Hood_PeakForwardVoltage = 0;
-    public static double Hood_PeakReverseVoltage = 0;
+    public static double Hood_PeakForwardVoltage = 4;
+    public static double Hood_PeakReverseVoltage = -4;
     // Differential Constants
     public static double Hood_PeakDifferentialDutyCycle = 0;
 
