@@ -213,7 +213,7 @@ public final class Constants {
     public static double Hood_PeakForwardDutyCycle = 0.5;
     public static double Hood_PeakReverseDutyCycle = -0.5;
 
-    public static double Hood_Slot0_kP = 2;
+    public static double Hood_Slot0_kP = 6;
     public static double Hood_Slot0_kI = 0;
     public static double Hood_Slot0_kD = 0;
 

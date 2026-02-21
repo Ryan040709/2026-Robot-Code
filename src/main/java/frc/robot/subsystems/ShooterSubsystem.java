@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
+import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
@@ -75,6 +76,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
         // hood motor PID
         TalonFXSConfiguration hoodConfig = new TalonFXSConfiguration();
+        hoodConfig.Commutation.MotorArrangement = MotorArrangementValue.Minion_JST;
+
+        hoodConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+
         hoodConfig.MotorOutput.PeakForwardDutyCycle = Constants.ShooterSubsystem.Hood_PeakForwardDutyCycle;
         hoodConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Hood_PeakReverseDutyCycle;
         // motor "friction" type?
@@ -100,6 +105,8 @@ public class ShooterSubsystem extends SubsystemBase {
 
         shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
 
+
+
     }
 
     public void zeroHood() {
@@ -107,7 +114,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setHoodPosition(Pose2d robotPose) {
-        hood.setControl(m_request.withPosition(-0.0383332*calculateHoodPosition(robotPose)+2.52999));
+        hood.setControl(m_request.withPosition(calculateHoodPosition(robotPose)));//(-0.0383332*calculateHoodPosition(robotPose)+2.52999));
+        SmartDashboard.putNumber("hood target", -0.0383332*calculateHoodPosition(robotPose)+2.52999);
     }
 
     public void RuntoRPMs(Pose2d robotPose) {
@@ -119,6 +127,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+                SmartDashboard.putNumber("hood position", hood.getPosition().getValueAsDouble());
     }
 
     public double CalculateRpms(Pose2d robotpose) {
@@ -163,9 +172,12 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double calculateHoodPosition(Pose2d robotPose) {
-        double m = -5.555;
-        double b = 71.55;
-        return MathUtil.clamp((m * (calculateDistanceToHub(robotPose))) + b, 41, 66);
+        double m = .222;//-5.555;
+        double b = -.1111;
+        double slope = (1.0-0)/(5-.5);
+        double intercept = 0- (slope*.5);
+
+        return MathUtil.clamp((slope * (calculateDistanceToHub(robotPose))) + intercept, 0, 1.5);
 
     }
 }

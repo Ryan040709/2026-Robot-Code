@@ -80,10 +80,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     Pigeon2 gyro = new Pigeon2(SwerveConstants.kPigeonId, SwerveConstants.kCANBus.getName());
 
     // setting the postions of our swerve modules for kinematics
-    private Translation2d m_frontLeftLocation = new Translation2d(.3429, .3429);
-    private Translation2d m_frontRightLocation = new Translation2d(.3429, -.3429);
-    private Translation2d m_backLeftLocation = new Translation2d(-.3429, .3429);
-    private Translation2d m_backRightLocation = new Translation2d(-.3429, -.3429);
+    private Translation2d m_frontLeftLocation = new Translation2d(0.282575, 0.282575);
+    private Translation2d m_frontRightLocation = new Translation2d(0.282575, -0.282575);
+    private Translation2d m_backLeftLocation = new Translation2d(-0.282575, 0.282575);
+    private Translation2d m_backRightLocation = new Translation2d(-0.282575, -0.282575);
 
     // Creating my kinematics object using the module locations
     private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(

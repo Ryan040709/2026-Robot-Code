@@ -204,11 +204,11 @@ public class RobotContainer {
 
                 // driverController.pov(0).toggleOnTrue(turret_Locking);
 
-                // driverController.pov(90)
-                //                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
-                //                                 drivetrain));
+                driverController.pov(90)
+                                .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
+                                                drivetrain));
 
-                driverController.a().whileTrue(hoodSetToPosition);
+                //driverController.a().whileTrue(hoodSetToPosition);
                 driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
 
@@ -234,6 +234,9 @@ public class RobotContainer {
                 // turret.MoveMotor(manipulatorController.getLeftX()), turret));
                 turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX,
                                 drivetrain.robotVelocityY, manipulatorController.getLeftX()), turret));
+
+                driverController.rightBumper().whileTrue(hoodSetToPosition);
+                driverController.b().whileTrue(Commands.run(() -> shooter.zeroHood(), shooter));
 
                 // out of bumper intake commands
                 manipulatorController.leftBumper().whileTrue(intake_LowerIntake);

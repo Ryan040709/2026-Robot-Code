@@ -1,5 +1,6 @@
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -24,7 +25,9 @@ public class Hood_SetToPosition extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("hood Run");
     shooterSubsystem.setHoodPosition(drivetrain.getPose());
+    SmartDashboard.putNumber("Hub Distance from robot", shooterSubsystem.calculateDistanceToHub(drivetrain.getPose()));
   }
 
   // Called once the command ends or is interrupted.
