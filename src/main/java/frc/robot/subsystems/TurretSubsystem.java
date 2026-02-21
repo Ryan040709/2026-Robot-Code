@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import org.opencv.core.Mat;
-
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -302,10 +300,12 @@ public class TurretSubsystem extends SubsystemBase {
 
                         turret.setControl(m_request
                                 .withPosition(
-                                        (MathUtil.clamp(MathUtil.inputModulus((turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg)), -180, 180), -145, 145))));
-                                        
+                                        (MathUtil.clamp(MathUtil.inputModulus((turret.getPosition().getValueAsDouble()
+                                                + -txTurret * (rotationsPerDeg)), -180, 180), -145, 145))));
 
-                        turretTARGET = MathUtil.clamp(MathUtil.inputModulus((turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg)), -180, 180), -145, 145);
+                        turretTARGET = MathUtil.clamp(MathUtil.inputModulus(
+                                (turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg)), -180, 180),
+                                -145, 145);
                     }
                 } else {
                     lastTagID = tagID;
@@ -360,8 +360,7 @@ public class TurretSubsystem extends SubsystemBase {
                 isFeeding = true;
             } else {
                 lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
-                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof)); // TODO test this before getting the
-                                                                                // real robot!
+                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
                 isFeeding = false;
             }
         } else {
@@ -375,6 +374,10 @@ public class TurretSubsystem extends SubsystemBase {
             } else {
                 lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                         redHubPos.getY() + (velocityY * ShooterSubsystem.tof)); // so does this system actually work?
+                                                                                // For reference, everyone was saying it
+                                                                                // worked when we actually didn't change
+                                                                                // anything. We edited on the wrong
+                                                                                // alliance. :/
                 isFeeding = false;
             }
         }
