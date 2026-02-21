@@ -200,7 +200,7 @@ public final class Constants {
     public static double Shooter_PeakDifferentialVoltage = 0;
     // Motion Magic
     public static double Shooter_MotionMagicCruiseVelocity = 0;
-    public static double Shooter_MotionMagicAcceleration = 5;
+    public static double Shooter_MotionMagicAcceleration = 10;
     public static double Shooter_MotionMagicExpo_kA = 0;
     
     public static double Shooter_MotionMagicExpo_kV = 0;

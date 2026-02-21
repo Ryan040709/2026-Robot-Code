@@ -24,7 +24,7 @@ public class ShooterToRPMS extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.SetShooterRPMS(-50);;
+    shooterSubsystem.SetShooterRPMS(-75);;
   }
 
   // Called once the command ends or is interrupted.
