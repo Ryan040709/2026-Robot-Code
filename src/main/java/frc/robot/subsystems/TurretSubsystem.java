@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
+
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.Pigeon2;
@@ -40,6 +42,11 @@ public class TurretSubsystem extends SubsystemBase {
     Translation2d blueHubPos = new Translation2d(4.62554, 4.03606); // blue hub
 
     Translation2d robotPos = new Translation2d(0, 0); // robot position
+
+    // offset is converted from inches to meters
+
+    // gear ratio
+    // 18:168
 
     public double redFx = 11.98482 + (4.62554 / 2); // blueFeedingX
     public double blueFx = 4.62554 / 2; // blueFeedingX
@@ -80,7 +87,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double robotVelocityX;
     public double robotVelocityY;
-
 
     public double turretError = turretTARGET - turret.getPosition().getValueAsDouble();
 
@@ -234,6 +240,17 @@ public class TurretSubsystem extends SubsystemBase {
         return poseSupplier.get();
     }
 
+    public Translation2d turretPosition() { // until we have the actual robot, this function is to be UNUSED!
+        // radius of the turret-robotCenter
+        double r = Math.sqrt(Math.pow(Constants.TurretSubsystem.Turret_TurretX, 2)
+                + Math.pow(Constants.TurretSubsystem.Turret_TurretY, 2));
+        // translated values
+        double x2 = r * Math.cos(-theta + 90); // formula to translate the turret, where x2 acts as the translated "x"
+        double y2 = r * Math.sin(-theta + 90); // formula to translate the turret, where y2 acts as the translated "y"
+
+        return new Translation2d(x2, y2);
+    }
+
     public void zeroPosition() {
         turret.setPosition(0);
     }
@@ -283,9 +300,12 @@ public class TurretSubsystem extends SubsystemBase {
 
                         turret.setControl(m_request
                                 .withPosition(
-                                        (turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg))));
+                                        (MathUtil.clamp(MathUtil.inputModulus((turret.getPosition().getValueAsDouble()
+                                                + -txTurret * (rotationsPerDeg)), -180, 180), -145, 145))));
 
-                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg);
+                        turretTARGET = MathUtil.clamp(MathUtil.inputModulus(
+                                (turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg)), -180, 180),
+                                -145, 145);
                     }
                 } else {
                     lastTagID = tagID;
@@ -339,7 +359,8 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx + (velocityX*ShooterSubsystem.tof), redHubPos.getY() + (velocityY*ShooterSubsystem.tof)); // TODO test this before getting the real robot!
+                lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
+                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
                 isFeeding = false;
             }
         } else {
@@ -351,7 +372,12 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx + (velocityX*ShooterSubsystem.tof), redHubPos.getY() + (velocityY*ShooterSubsystem.tof)); // so does this system actually work?
+                lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
+                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof)); // so does this system actually work?
+                                                                                // For reference, everyone was saying it
+                                                                                // worked when we actually didn't change
+                                                                                // anything. We edited on the wrong
+                                                                                // alliance. :/
                 isFeeding = false;
             }
         }

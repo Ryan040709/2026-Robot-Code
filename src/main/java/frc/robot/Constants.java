@@ -16,6 +16,9 @@ public final class Constants {
 
   public static final class TurretSubsystem {
 
+    public static double Turret_TurretX = 2.9375 / 39.37; // inches to meters
+    public static double Turret_TurretY = 5.6475 / 39.37; // inches to meters
+
     public static double Turret_PeakForwardDutyCycle = 1;
     public static double Turret_PeakReverseDutyCycle = -1;
 
