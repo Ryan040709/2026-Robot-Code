@@ -49,7 +49,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Shooter_PeakReverseDutyCycle;
         // motor "friction" type?
         shooterConfig.MotorOutput.NeutralMode = Coast;
-        shooterConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        shooterConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
         shooterConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.ShooterSubsystem.Shooter_StatorCurrentLimitEnable;
         shooterConfig.CurrentLimits.StatorCurrentLimit = Constants.ShooterSubsystem.Shooter_CurrentLimit;
@@ -65,6 +65,8 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterConfig.Slot0.kP = Constants.ShooterSubsystem.Shooter_Slot0_kP;
         shooterConfig.Slot0.kI = Constants.ShooterSubsystem.Shooter_Slot0_kI;
         shooterConfig.Slot0.kD = Constants.ShooterSubsystem.Shooter_Slot0_kD;
+        shooterConfig.Slot0.kS = Constants.ShooterSubsystem.Shooter_Slot0_kS;
+        shooterConfig.Slot0.kV = Constants.ShooterSubsystem.Shooter_Slot0_kV;
         shooterConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Shooter_MotionMagicCruiseVelocity;
         shooterConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Shooter_MotionMagicAcceleration;
 
@@ -96,7 +98,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         hood.getConfigurator().apply(hoodConfig);
 
-        shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
+        shooterMotorL.setControl(new Follower(16, MotorAlignmentValue.Opposed));
 
     }
 
