@@ -105,7 +105,7 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public void setHoodPosition(Pose2d robotPose) {
-        hood.setControl(m_request.withPosition(calculateHoodPosition(robotPose)));
+        hood.setControl(m_request.withPosition(-0.0383332*calculateHoodPosition(robotPose)+2.52999));
     }
 
     public void RuntoRPMs(Pose2d robotPose) {
