@@ -26,7 +26,6 @@ import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
-import frc.robot.commands.intake.throughTheBumper.Intake_HopperToShooter;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
@@ -108,7 +107,6 @@ public class RobotContainer {
         //test
         Intake_Stop intake_Stop = new Intake_Stop(hopperSubsystem, throughBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
-        Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter(hopperSubsystem, throughBumperIntake);
         Intake_IntakeToHopper IntakeToHopper = new  Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
         Intake_Outtake IntakeToShooter = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
 
@@ -123,7 +121,6 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-stop", intake_RunOuttake);
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-hopperToIntake", outtake);
-                NamedCommands.registerCommand("intake-hopperToShooter", hopperToShooter);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 // // shooter commands
