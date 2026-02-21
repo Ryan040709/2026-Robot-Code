@@ -213,11 +213,14 @@ public class RobotContainer {
 
                 manipulatorController.pov(0).toggleOnTrue(turret_Locking);
 
+
+                //thru bumper intake commands
                 manipulatorController.pov(90).whileTrue(outtake).whileFalse(intake_Stop);
 
                 manipulatorController.pov(180).whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
                 manipulatorController.pov(270).whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+
 
                 manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
 
