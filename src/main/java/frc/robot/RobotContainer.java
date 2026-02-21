@@ -27,6 +27,7 @@ import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
+import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
 import frc.robot.commands.shooter.ShooterStop;
@@ -44,12 +45,13 @@ import frc.robot.commands.turret.Turret_Toggle;
 public class RobotContainer {
 
         // kSpeedAt12Volts desired top speed
-        private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said so...
+        private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
+                                                                                           // so...
 
         // 3/4 of a rotation per second max angular velocity
         private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond); // TODO change to 1
         // we want to do one rotation per sec, I think.
-        //faster than last year's if beyond 0.75
+        // faster than last year's if beyond 0.75
 
         private final SendableChooser<Command> autoChooser;
 
@@ -86,7 +88,7 @@ public class RobotContainer {
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
 
         HopperSubsystem hopperSubsystem = new HopperSubsystem();
-        //game manager
+        // game manager
         GameManager gameManager = new GameManager();
 
         // shooter commands
@@ -104,11 +106,11 @@ public class RobotContainer {
         Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
 
         // in the bumper intake commands
-        //test
+        // test
         Intake_Stop intake_Stop = new Intake_Stop(hopperSubsystem, throughBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
-        Intake_IntakeToHopper IntakeToHopper = new  Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
-        Intake_Outtake IntakeToShooter = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(hopperSubsystem, throughBumperIntake);
 
         public RobotContainer() {
                 // turret commands
@@ -156,14 +158,14 @@ public class RobotContainer {
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
                                 drivetrain.applyRequest(() -> drive
-                                                // Drive forward with negative Y (forward) Drive left with negative X (left)
-                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed) 
+                                                // Drive forward with negative Y (forward) Drive left with negative X
+                                                // (left)
+                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed)
 
                                                 .withVelocityY(-driverController.getLeftX() * MaxSpeed)
 
                                                 // Drive counter clockwise with negative X (left)
-                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate) 
-                                ));
+                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate)));
 
                 // Idle while the robot is disabled. This ensures the configured
                 // neutral mode is applied to the drive motors while disabled.
@@ -193,38 +195,39 @@ public class RobotContainer {
                 drivetrain.registerTelemetry(logger::telemeterize);
 
                 // manipulatorController.leftTrigger(0.05)
-                //                 .whileTrue(Commands.run(() -> turret.MoveMotor(manipulatorController.getLeftX()),
-                //                                 turret));
+                // .whileTrue(Commands.run(() ->
+                // turret.MoveMotor(manipulatorController.getLeftX()),
+                // turret));
                 // manual zeroing
                 manipulatorController.x().whileTrue(Commands.run(() -> turret.zeroPosition(), turret));
                 // set to run to x position
                 driverController.pov(0).toggleOnTrue(turret_Locking);
 
-                manipulatorController.pov(0).toggleOnTrue(turret_Locking);
-
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
+                driverController.x().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
+                driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
 
                 manipulatorController.a().whileTrue(Commands.run(() -> turret.setToZero(), turret));
 
-                manipulatorController.pov(90).whileTrue(outtake);
+                manipulatorController.pov(0).toggleOnTrue(turret_Locking);
 
-                manipulatorController.pov(180).whileTrue(IntakeToHopper);
+                manipulatorController.pov(90).whileTrue(outtake).whileFalse(intake_Stop);
 
-                     driverController.x().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
-                     driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
+                manipulatorController.pov(180).whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
-
-                manipulatorController.pov(270).whileTrue(IntakeToShooter);
+                manipulatorController.pov(270).whileTrue(IntakeToShooter).whileFalse(intake_Stop);
 
                 manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
 
-                gameManager.setDefaultCommand(Commands.run(() -> {}, gameManager));
-                
-                //turret.setDefaultCommand(Commands.run(() -> turret.MoveMotor(manipulatorController.getLeftX()), turret));
-                turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX, drivetrain.robotVelocityY,manipulatorController.getLeftX()), turret));
-                
+                gameManager.setDefaultCommand(Commands.run(() -> {
+                }, gameManager));
+
+                // turret.setDefaultCommand(Commands.run(() ->
+                // turret.MoveMotor(manipulatorController.getLeftX()), turret));
+                turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX,
+                                drivetrain.robotVelocityY, manipulatorController.getLeftX()), turret));
 
                 // out of bumper intake commands
                 manipulatorController.leftBumper().whileTrue(intake_LowerIntake);
@@ -242,7 +245,7 @@ public class RobotContainer {
                         return AutoBuilder.buildAuto(autoName);
                 } catch (Exception e) { // if for whatever reason the driver requests an inalid auto
                         DriverStation.reportError("Auto " + autoName + " not found!", e.getStackTrace());
-                        return AutoBuilder.buildAuto("nothing_auto"); //the auton that does... nothing
+                        return AutoBuilder.buildAuto("nothing_auto"); // the auton that does... nothing
                 }
         }
 }
