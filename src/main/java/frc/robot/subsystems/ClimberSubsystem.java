@@ -78,7 +78,7 @@ public class ClimberSubsystem extends SubsystemBase {
     }
 
     public void MoveToPosition(double newPosition) {
-        climberMotorA.setControl(request.withPosition(newPosition).withSlot(1));
+        climberMotorA.setControl(request.withPosition(5.68182*newPosition).withSlot(1));
     }
 
     public void ResetEncoder() {
@@ -87,7 +87,7 @@ public class ClimberSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        climberPosition = climberMotorA.getPosition().getValueAsDouble();
+        climberPosition = climberMotorA.getPosition().getValueAsDouble()/5.68182;
         SmartDashboard.putNumber("climber pos", climberPosition);
 
     }
