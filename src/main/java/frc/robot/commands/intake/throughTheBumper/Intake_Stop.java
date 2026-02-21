@@ -1,7 +1,7 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.IntakeSubsystems.throughBumperIntake;
+import frc.robot.subsystems.intakesubsystems.throughBumperIntake;
 import frc.robot.subsystems.HopperSubsystem;
 
 public class Intake_Stop extends Command {

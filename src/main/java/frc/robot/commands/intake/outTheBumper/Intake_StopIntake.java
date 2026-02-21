@@ -2,7 +2,7 @@ package frc.robot.commands.intake.outTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
 
-import frc.robot.subsystems.IntakeSubsystems.outOfBumperIntake;
+import frc.robot.subsystems.intakesubsystems.outOfBumperIntake;
 
 
 public class Intake_StopIntake extends Command {
