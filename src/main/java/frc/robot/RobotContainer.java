@@ -206,7 +206,7 @@ public class RobotContainer {
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
-                driverController.x().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
+                driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
 
                 manipulatorController.a().whileTrue(Commands.run(() -> turret.setToZero(), turret));

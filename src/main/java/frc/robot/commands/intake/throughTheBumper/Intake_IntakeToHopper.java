@@ -30,7 +30,7 @@ public class Intake_IntakeToHopper extends Command {
     @Override
     public void execute() {
         intakeSubsystem.SetIntakeFront(-0.5);
-        intakeSubsystem.SetIntakeBack(.5);
+        intakeSubsystem.SetIntakeBack(-.5);
         hopperSubsystem.MoveHopperMotor(-0.5); //hopper motor is perpendicular to 
     }
 

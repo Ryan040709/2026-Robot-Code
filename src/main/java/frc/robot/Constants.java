@@ -194,8 +194,8 @@ public final class Constants {
     public static double Shooter_SupplyCurrentLowerTime = 0;
 
     // Voltage
-    public static double Shooter_PeakForwardVoltage = 14;
-    public static double Shooter_PeakReverseVoltage = -14;
+    public static double Shooter_PeakForwardVoltage = 16;
+    public static double Shooter_PeakReverseVoltage = -16;
     // Differential Constants
     public static double Shooter_PeakDifferentialDutyCycle = 0;
     public static double Shooter_PeakDifferentialTorqueCurrent = 0;

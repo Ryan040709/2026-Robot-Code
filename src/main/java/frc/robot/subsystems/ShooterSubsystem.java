@@ -98,7 +98,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
         hood.getConfigurator().apply(hoodConfig);
 
-        shooterMotorL.setControl(new Follower(16, MotorAlignmentValue.Opposed));
+        shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
 
     }
 
