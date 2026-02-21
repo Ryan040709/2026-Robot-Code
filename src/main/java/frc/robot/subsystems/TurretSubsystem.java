@@ -445,7 +445,7 @@ public class TurretSubsystem extends SubsystemBase {
         double diffY = (lockingTarget.getY() - robotPos.getY());
         double diffX = (lockingTarget.getX() - robotPos.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -180, 180), -145, 145); // (turretHubAngle-theta);
+        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -330, 30), -320, 20); // (turretHubAngle-theta);
 
         SmartDashboard.putNumber("diffX", diffX);
         SmartDashboard.putNumber("diffY", diffY);
