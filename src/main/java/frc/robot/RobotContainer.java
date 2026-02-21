@@ -105,6 +105,7 @@ public class RobotContainer {
         Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
 
         // in the bumper intake commands
+        //test
         Intake_Stop intake_Stop = new Intake_Stop(hopperSubsystem, throughBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
         Intake_HopperToShooter hopperToShooter = new Intake_HopperToShooter(hopperSubsystem, throughBumperIntake);
