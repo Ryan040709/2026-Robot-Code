@@ -23,7 +23,7 @@ public class ClimberSubsystem extends SubsystemBase {
     public final TalonFX climberMotorB = new TalonFX(12);
     public final CANcoder climberCANcoder = new CANcoder(13);
 
-    Servo climbServo = new Servo(1); // I think this one is currently being used by the LED strip.
+    Servo climbServo = new Servo(1);
 
     private MotionMagicVoltage request;
 
