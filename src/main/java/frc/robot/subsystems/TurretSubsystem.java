@@ -115,13 +115,13 @@ public class TurretSubsystem extends SubsystemBase {
 
         // apriltag filter list
         blueTagFilter.add(18);
-        blueTagFilter.add(19);
+        //blueTagFilter.add(19);
         blueTagFilter.add(20);
         blueTagFilter.add(21);
-        blueTagFilter.add(24);
-        blueTagFilter.add(25);
+        //blueTagFilter.add(24);
+        //blueTagFilter.add(25);
         blueTagFilter.add(26);
-        blueTagFilter.add(27);
+        //blueTagFilter.add(27);
 
         redTagFilter.add(2);
         redTagFilter.add(3);
@@ -213,7 +213,7 @@ public class TurretSubsystem extends SubsystemBase {
 
         if (turretLocking) {
 
-            if (hasTurretTargets == true && FilterApriltags() && false) {
+            if (hasTurretTargets == true && FilterApriltags()) { // add "&& false" to make sure it never runs!
                 limelightTurret = true;
 
                 if (elapsedTime > waitTime + 1 && !isFeeding) {
