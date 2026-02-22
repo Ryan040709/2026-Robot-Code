@@ -5,14 +5,12 @@ import java.util.Optional;
 import java.util.function.Supplier;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
-import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -31,10 +29,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     private TalonFXS turret = new TalonFXS(10);
     private PositionVoltage m_request = new PositionVoltage(0);
-
-    private final double maxAngle = 28 / 90;
-
-    private final double NinetyDegreeRotation = 28;
 
     Translation2d redHubPos = new Translation2d(11.98482, 4.03606); // red hub
 
@@ -56,7 +50,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double elapsedTime;
 
-    public PIDController pidRotation = new PIDController(0.0125, 0, 0);
     public double turretRotation;
 
     public double turretHubAngle = 0;
@@ -73,17 +66,9 @@ public class TurretSubsystem extends SubsystemBase {
 
     public boolean turretLocking = true;
 
-
-    public double robotVelocityX;
-    public double robotVelocityY;
-
-
     public double turretError = turretTARGET - turret.getPosition().getValueAsDouble();
 
     double txTurret = LimelightHelpers.getTX("limelight-turret");
-    double ty = LimelightHelpers.getTY("limelight-tags");
-    double ta = LimelightHelpers.getTA("limelight-tags");
-    boolean hasTagTargets = LimelightHelpers.getTV("limelight-tags");
     boolean hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
 
     boolean limelightTurret = false;
@@ -94,8 +79,6 @@ public class TurretSubsystem extends SubsystemBase {
                                                               // in degrees
 
     double Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
-
-    // public double lastTagID = 0;
 
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
@@ -152,7 +135,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void turretSensor() {
-        if (zeroingSensor.get()) {
+        if (!zeroingSensor.get()) {
             //zeroPosition();
         }
     }
@@ -171,16 +154,9 @@ public class TurretSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
-
-        robotVelocityX = 0; // CommandSwerveDrivetrain.robotVelocityX;
-        robotVelocityY = 0; // CommandSwerveDrivetrain.robotVelocityX;
-
         isBlue = GameManager.isBlueAlliance;
-
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
-
         elapsedTime = Timer.getTimestamp();
-
         botPose = UpdateRobotPose2d();
         robotPos = new Translation2d(botPose.getX(), botPose.getY());
         theta = botPose.getRotation().getDegrees();
@@ -188,30 +164,8 @@ public class TurretSubsystem extends SubsystemBase {
 
         turretSensor();
 
-        SmartDashboard.putBoolean("turret tracking", turretLocking);
         SmartDashboard.putBoolean("is feeding", isFeeding);
-
-        SmartDashboard.putNumber("turret tx", txTurret);
-
-        SmartDashboard.putNumber("tx", LimelightHelpers.getTX("limelight-turret"));
-
-        SmartDashboard.putBoolean("is blue?", isBlue);
-
-        SmartDashboard.putBoolean("limelightTurret", limelightTurret);
-        SmartDashboard.putBoolean("turretResults?", hasTurretTargets);
-
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble());
-
-        SmartDashboard.putNumber("Turret Target", turretTARGET + turretError);
-
-       
-
-        // determine3dOffset(0, 0);
-
-        // setPosition(robotVelocityX, robotVelocityY);
-
-        SmartDashboard.putNumber("offsetX", offsetX);
-        SmartDashboard.putNumber("offsetY", offsetY);
 
     }
 
@@ -233,7 +187,6 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public boolean FilterApriltags() {
-
         if (isBlue) {
             if (blueTagFilter.contains((int) tagID)) {
                 return true;
@@ -290,14 +243,8 @@ public class TurretSubsystem extends SubsystemBase {
 
             }
 
-            SmartDashboard.putBoolean("filtered tag?", FilterApriltags());
-
-            SmartDashboard.putNumber("lastTagID", lastTagID);
             txTurret = LimelightHelpers.getTX("limelight-turret");
 
-        } else {
-            
-            
         }
 
     }
@@ -338,12 +285,6 @@ public class TurretSubsystem extends SubsystemBase {
                 isFeeding = false;
             }
         }
-
-        SmartDashboard.putNumber("offset X", velocityX);
-        SmartDashboard.putNumber("offset Y", velocityY);
-
-        SmartDashboard.putNumber("targetX", lockingTarget.getX());
-        SmartDashboard.putNumber("targetY", lockingTarget.getY());
     }
 
     double tagX = 0;
@@ -411,12 +352,6 @@ public class TurretSubsystem extends SubsystemBase {
                 rotatedX = -offsetX;
                 rotatedY = offsetY;
             }
-
-            SmartDashboard.putNumber("tag rotation", Math.toDegrees(tagPose.get().getRotation().getZ()));
-
-            SmartDashboard.putNumber("rotatedX", rotatedX);
-            SmartDashboard.putNumber("rotatedY", rotatedY);
-
             LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
         }
     }
@@ -428,16 +363,8 @@ public class TurretSubsystem extends SubsystemBase {
         double diffY = (lockingTarget.getY() - robotPos.getY());
         double diffX = (lockingTarget.getX() - robotPos.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -30, 330), -10, 310);
+        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -30, 330), -20, 315);
 
-        SmartDashboard.putNumber("diffX", diffX);
-        SmartDashboard.putNumber("diffY", diffY);
-
-        SmartDashboard.putNumber("turretHubAngle", turretHubAngle);
-        SmartDashboard.putNumber("Golden Angle", goldenAngle);
-
-        turretError = turretTARGET - turret.getPosition().getValueAsDouble();
-        SmartDashboard.putNumber("Turret Error", turretError);
         SmartDashboard.putNumber("Turret Position", turret.getPosition().getValueAsDouble());
 
         return goldenAngle;
