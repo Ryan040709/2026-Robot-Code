@@ -7,6 +7,7 @@ import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFXS;
+import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -72,11 +73,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public boolean turretLocking = true;
 
-    private final double rotationsPerDeg = NinetyDegreeRotation / 90;
-
-    public static int kPigeonId = 14;
-
-    private final Pigeon2 m_gyro = new Pigeon2(6, "rio");
 
     public double robotVelocityX;
     public double robotVelocityY;
@@ -109,7 +105,7 @@ public class TurretSubsystem extends SubsystemBase {
         motorConfig.MotorOutput.PeakForwardDutyCycle = Constants.TurretSubsystem.Turret_PeakForwardDutyCycle;
         motorConfig.MotorOutput.PeakReverseDutyCycle = Constants.TurretSubsystem.Turret_PeakReverseDutyCycle;
         // motor "friction" type?
-        motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        motorConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         // regulars
         motorConfig.Slot0.kP = Constants.TurretSubsystem.Turret_Slot0_kP;
         motorConfig.Slot0.kI = Constants.TurretSubsystem.Turret_Slot0_kI;
@@ -121,26 +117,16 @@ public class TurretSubsystem extends SubsystemBase {
         motorConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.TurretSubsystem.Turret_SupplyCurrentLowerLimit;
         motorConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.TurretSubsystem.Turret_SupplyCurrentLowerTime;
         motorConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.TurretSubsystem.Turret_FowardSoftLimitEnable;
-        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140 * (rotationsPerDeg);
+        motorConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = Constants.TurretSubsystem.Turret_FowardSoftLimit;
         motorConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.TurretSubsystem.Turret_ReverseSoftLimitEnable;
-        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140 * (rotationsPerDeg);
+        motorConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = Constants.TurretSubsystem.Turret_ReverseSoftLimit;
         // Voltage
         motorConfig.Voltage.PeakForwardVoltage = Constants.TurretSubsystem.Turret_PeakForwardVoltage;
         motorConfig.Voltage.PeakReverseVoltage = Constants.TurretSubsystem.Turret_PeakReverseVoltage;
-        // Differential Constants
-        motorConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.TurretSubsystem.Turret_PeakDifferentialDutyCycle;
-        motorConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.TurretSubsystem.Turret_PeakDifferentialDutyCycle;
-        motorConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.TurretSubsystem.Turret_PeakDifferentialVoltage;
-        // Motion Magic
-        motorConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.TurretSubsystem.Turret_MotionMagicCruiseVelocity;
-        motorConfig.MotionMagic.MotionMagicAcceleration = Constants.TurretSubsystem.Turret_MotionMagicAcceleration;
-        motorConfig.MotionMagic.MotionMagicExpo_kA = Constants.TurretSubsystem.Turret_MotionMagicExpo_kA;
-        motorConfig.MotionMagic.MotionMagicExpo_kV = Constants.TurretSubsystem.Turret_MotionMagicExpo_kV;
-        // Torque Current
-        // motorConfig.TorqueCurrent.PeakForwardTorqueCurrent =
-        // Constants.TurretSubsystem.Turret_PeakForwardTorqueCurrent;
-        // motorConfig.TorqueCurrent.PeakReverseTorqueCurrent =
-        // Constants.TurretSubsystem.Turret_PeakReverseTorqueCurrent;
+        // gear ratio
+        motorConfig.ExternalFeedback.SensorToMechanismRatio = Constants.TurretSubsystem.Turret_SensorToMechanismRatio;
+
+        motorConfig.Commutation.MotorArrangement = MotorArrangementValue.Minion_JST;
 
         turret.getConfigurator().apply(motorConfig);
 
@@ -173,8 +159,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void MoveMotor(double targetSpeed) {
         if (!turretLocking) {
-            if (turret.getPosition().getValueAsDouble() > -maxAngle
-                    || turret.getPosition().getValueAsDouble() < maxAngle && Math.abs(targetSpeed) > 0.1) {
+            if (Math.abs(targetSpeed) > 0.1) {
                 turret.set(-targetSpeed);
             } else {
                 turret.set(0);
@@ -215,11 +200,11 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("limelightTurret", limelightTurret);
         SmartDashboard.putBoolean("turretResults?", hasTurretTargets);
 
-        SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble() / (rotationsPerDeg));
+        SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble());
 
         SmartDashboard.putNumber("Turret Target", turretTARGET + turretError);
 
-        SmartDashboard.putNumber("Angular velocity", m_gyro.getAngularVelocityZWorld().getValueAsDouble());
+       
 
         // determine3dOffset(0, 0);
 
@@ -269,13 +254,13 @@ public class TurretSubsystem extends SubsystemBase {
         determine3dOffset(velocityX, velocityY);
         FilterApriltags();
 
-        double feedforward = -(m_gyro.getAngularVelocityZWorld().getValueAsDouble());
+       
 
         double lastTagID = 0;
 
         if (turretLocking) {
 
-            if (hasTurretTargets == true && FilterApriltags()) {
+            if (hasTurretTargets == true && FilterApriltags() && false) {
                 limelightTurret = true;
 
                 if (elapsedTime > waitTime + 1 && !isFeeding) {
@@ -283,14 +268,14 @@ public class TurretSubsystem extends SubsystemBase {
 
                         turret.setControl(m_request
                                 .withPosition(
-                                        (turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg))));
+                                        (turret.getPosition().getValueAsDouble() + -txTurret)));
 
-                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret * (rotationsPerDeg);
+                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret;
                     }
                 } else {
                     lastTagID = tagID;
                     turret.setControl(
-                            m_request.withPosition((calculateAngleToHub(velocityX, velocityY) * (rotationsPerDeg))));
+                            m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
                 }
 
             } else {
@@ -298,16 +283,14 @@ public class TurretSubsystem extends SubsystemBase {
                 waitTime = elapsedTime;
 
                 turret.setControl(
-                        m_request.withPosition((calculateAngleToHub(velocityX, velocityY) * (rotationsPerDeg))));
+                        m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
                 limelightTurret = false;
 
-                turretTARGET = (calculateAngleToHub(velocityX, velocityY) * (rotationsPerDeg));
+                turretTARGET = (calculateAngleToHub(velocityX, velocityY));
 
             }
 
             SmartDashboard.putBoolean("filtered tag?", FilterApriltags());
-
-            SmartDashboard.putNumber("feed forward", feedforward);
 
             SmartDashboard.putNumber("lastTagID", lastTagID);
             txTurret = LimelightHelpers.getTX("limelight-turret");
@@ -321,7 +304,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void setToZero() {
 
-        turret.setControl(m_request.withPosition(-(0) * (rotationsPerDeg)));
+        turret.setControl(m_request.withPosition(-(0)));
 
     }
 
@@ -445,7 +428,7 @@ public class TurretSubsystem extends SubsystemBase {
         double diffY = (lockingTarget.getY() - robotPos.getY());
         double diffX = (lockingTarget.getX() - robotPos.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -330, 30), -320, 20); // (turretHubAngle-theta);
+        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -30, 330), -10, 310);
 
         SmartDashboard.putNumber("diffX", diffX);
         SmartDashboard.putNumber("diffY", diffY);

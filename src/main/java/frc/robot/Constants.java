@@ -16,38 +16,38 @@ public final class Constants {
 
   public static final class TurretSubsystem {
 
-    public static double Turret_PeakForwardDutyCycle = 0;
-    public static double Turret_PeakReverseDutyCycle = 0;
+    //duty cycles
+    public static double Turret_PeakForwardDutyCycle = 0.5;
+    public static double Turret_PeakReverseDutyCycle = -0.5;
 
-    public static double Turret_Slot0_kP = 0;
+    public static double Turret_Slot0_kP = 0.3;
     public static double Turret_Slot0_kI = 0;
     public static double Turret_Slot0_kD = 0;
 
-    public static boolean Turret_StatorCurrentLimitEnable = true;
+    public static boolean Turret_StatorCurrentLimitEnable = false;
     public static double Turret_StatorCurrentLimit = 0;
     public static boolean Turret_SupplyCurrentLimitEnable = true;
-    public static double Turret_SupplyCurrentLimit = 0;
-    public static double Turret_SupplyCurrentLowerLimit = 0;
-    public static double Turret_SupplyCurrentLowerTime = 0;
+    public static double Turret_SupplyCurrentLimit = 70;
+    public static double Turret_SupplyCurrentLowerLimit = 40;
+    public static double Turret_SupplyCurrentLowerTime = 1;
     public static boolean Turret_FowardSoftLimitEnable = true;
     public static boolean Turret_ReverseSoftLimitEnable = true;
 
+
+    //gear ratio
+    public static double Turret_SensorToMechanismRatio = 0.07777778059244156;
+
     // Voltage
-    public static double Turret_PeakForwardVoltage = 0;
-    public static double Turret_PeakReverseVoltage = 0;
-    // Differential Constants
-    public static double Turret_PeakDifferentialDutyCycle = 0;
-    public static double Turret_PeakDifferentialTorqueCurrent = 0;
-    public static double Turret_PeakDifferentialVoltage = 0;
-    // Motion Magic
-    public static double Turret_MotionMagicCruiseVelocity = 0;
-    public static double Turret_MotionMagicAcceleration = 0;
-    public static double Turret_MotionMagicExpo_kA = 0;
+    public static double Turret_PeakForwardVoltage = 2;
+    public static double Turret_PeakReverseVoltage = -2;
 
     public static double Turret_MotionMagicExpo_kV = 0;
     // Torque Current
     public static double Turret_PeakForwardTorqueCurrent = 0;
     public static double Turret_PeakReverseTorqueCurrent = 0;
+    //soft limits
+    public static double Turret_FowardSoftLimit = 315;
+    public static double Turret_ReverseSoftLimit = -20;
 
   }
 

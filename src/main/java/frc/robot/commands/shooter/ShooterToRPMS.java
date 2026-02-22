@@ -1,5 +1,6 @@
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -24,7 +25,10 @@ public class ShooterToRPMS extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.SetShooterRPMS(100);
+    double RPM = SmartDashboard.getNumber("Shooter RPM", 65);
+    shooterSubsystem.SetShooterRPMS(RPM);
+    double distanceFromHub = shooterSubsystem.calculateDistanceToHub(drivetrain.getPose());
+    SmartDashboard.putNumber("distance to hub", distanceFromHub);
   }
 
   // Called once the command ends or is interrupted.

@@ -15,6 +15,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -115,11 +117,11 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void setHoodPosition(Pose2d robotPose) {
         hood.setControl(m_request.withPosition(calculateHoodPosition(robotPose)));//(-0.0383332*calculateHoodPosition(robotPose)+2.52999));
-        SmartDashboard.putNumber("hood target", -0.0383332*calculateHoodPosition(robotPose)+2.52999);
+        SmartDashboard.putNumber("hood target", calculateHoodPosition(robotPose));
     }
 
     public void RuntoRPMs(Pose2d robotPose) {
-        shooterMotorL.setControl(m_request.withVelocity(0));
+        shooterMotorL.setControl(m_velocity.withVelocity(CalculateRpms(robotPose)));
         }
     public void SetShooterRPMS(double setRPMS) {
         shooterMotorL.setControl(m_velocity.withVelocity(setRPMS));
@@ -128,12 +130,15 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
                 SmartDashboard.putNumber("hood position", hood.getPosition().getValueAsDouble());
+                SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
     }
 
     public double CalculateRpms(Pose2d robotpose) {
-        double y = 0;
-        double b = 0;
-        double targetRPM = y * (calculateDistanceToHub(robotpose)) + b; // the slope is a placeholder
+        double m = 6.99334;
+        double b = 28.69392;
+        double targetRPM = m * (calculateDistanceToHub(robotpose)) + b; // the slope is a placeholder
+        SmartDashboard.putNumber("ShooterGoalRPMS", targetRPM);
+
         // y=mx+b where "y" is the target RPM and "x" is the distance between the robot
         // and target
         // to find the slope, determine positions and rpms that we know work on certain
@@ -156,6 +161,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double calculateDistanceToHub(Pose2d robotPose) { // can't we just pull the botpose from the swerve drive?
         Translation2d hubPosition;
+     Transform2d turretOffsetFromRobot = new Transform2d ( 0.2101215 , .1412875, Rotation2d.fromDegrees(0 ));
 
         if (GameManager.isBlueAlliance) { // used to be: DriverStation.getAlliance().orElse(Alliance.Blue) ==
                                           // Alliance.Blue
@@ -163,8 +169,8 @@ public class ShooterSubsystem extends SubsystemBase {
         } else {
             hubPosition = RedHubPosistion;
         }
-        
-        double DistanceToTarget = robotPose.getTranslation().getDistance(hubPosition);
+      
+      double DistanceToTarget = robotPose.transformBy(turretOffsetFromRobot).getTranslation().getDistance(hubPosition);
 
         SmartDashboard.putNumber("Distance To Target", DistanceToTarget);
         return DistanceToTarget;
@@ -177,7 +183,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double slope = (1.0-0)/(5-.5);
         double intercept = 0- (slope*.5);
 
-        return MathUtil.clamp((slope * (calculateDistanceToHub(robotPose))) + intercept, 0, 1.5);
+        return MathUtil.clamp((m * (calculateDistanceToHub(robotPose))) + b, 0, 1);
 
     }
 }
