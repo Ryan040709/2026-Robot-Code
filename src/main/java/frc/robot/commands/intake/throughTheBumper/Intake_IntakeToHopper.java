@@ -29,8 +29,8 @@ public class Intake_IntakeToHopper extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.SetIntakeFront(-0.5);
-        intakeSubsystem.SetIntakeBack(-.5);
+        intakeSubsystem.SetIntakeFront(-1);
+        intakeSubsystem.SetIntakeBack(-1);
         hopperSubsystem.MoveHopperMotor(-0.5); //hopper motor is perpendicular to 
     }
 
