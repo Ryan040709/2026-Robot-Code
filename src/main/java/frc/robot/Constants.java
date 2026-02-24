@@ -38,8 +38,8 @@ public final class Constants {
     public static double Turret_SensorToMechanismRatio = 0.07777778059244156;
 
     // Voltage
-    public static double Turret_PeakForwardVoltage = 2;
-    public static double Turret_PeakReverseVoltage = -2;
+    public static double Turret_PeakForwardVoltage = 3;
+    public static double Turret_PeakReverseVoltage = -3;
 
     public static double Turret_MotionMagicExpo_kV = 0;
     // Torque Current
@@ -162,7 +162,7 @@ public final class Constants {
     public static double Climber_MotionMagicJerk = 0;
 
     // fix all values
-    public static double Climber_SupplyCurrentLimit = 0;// 60 before speed up
+    public static double Climber_SupplyCurrentLimit = 70;// 60 before speed up
     public static double Climber_ForwardPercent = 0;
     public static double Climber_BackwardPercent = 0;
 

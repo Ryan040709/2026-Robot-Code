@@ -41,11 +41,13 @@ public class TurretSubsystem extends SubsystemBase {
     public double redFx = 11.98482 + (4.62554 / 2); // blueFeedingX
     public double blueFx = 4.62554 / 2; // blueFeedingX
     public double rightFy = 2; // right feedingY
+    public double rightFyFar = 0.5; // right feedingY
     public double leftFy = 6; // left feedingY
+    public double leftFyFar = 7.5; // left feedingY
 
     Translation2d lockingTarget = new Translation2d(0, 0); // robot position
 
-    public boolean isFeeding = false;
+    public boolean isFeeding = true;
 
     public double tagID;
     public Pose2d botPose = new Pose2d();
@@ -229,43 +231,33 @@ public class TurretSubsystem extends SubsystemBase {
     public void determineLockingMethod(double velocityX, double velocityY) {
         if (hasTurretTargets == true && FilterApriltags()) {
             if (elapsedTime > waitTime + 1 && !isFeeding) {
-                //turret.setControl(m_request.withPosition((calculateTurretLimelightAngle())));
+                // turret.setControl(m_request.withPosition((calculateTurretLimelightAngle())));
 
                 turret.set(calculateTurretPID());
 
-                System.out.println("using limelight-turret!");
+                // System.out.println("using limelight-turret!");
 
             } else {
                 turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
 
-                System.out.println("attempting to switch limelights!");
+                // System.out.println("attempting to switch limelights!");
             }
         } else {
-                waitTime = elapsedTime;
+            waitTime = elapsedTime;
 
-                turret.setControl(
-                        m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
-                limelightTurret = false;
+            turret.setControl(
+                    m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
+            limelightTurret = false;
 
-                turretTARGET = (calculateAngleToHub(velocityX, velocityY));
+            turretTARGET = (calculateAngleToHub(velocityX, velocityY));
 
-                System.out.println("using limelight-tags!");
+            // System.out.println("using limelight-tags!");
         }
     }
 
-    // public boolean calculateWaitTime() {
-    //     if (hasTurretTargets == true && FilterApriltags()) {
-    //         if (elapsedTime >= waitTime +1) {
-    //             return true;
-    //         }
-    //     } else {
-    //         waitTime = elapsedTime;
-    //         return false;
-    //     }
-    // }
-
     public double calculateTurretLimelightAngle() {
-        return MathUtil.clamp(turret.getPosition().getValueAsDouble() + -txTurret, turret.getPosition().getValueAsDouble()-10, turret.getPosition().getValueAsDouble()+10);
+        return MathUtil.clamp(turret.getPosition().getValueAsDouble() + -txTurret,
+                turret.getPosition().getValueAsDouble() - 10, turret.getPosition().getValueAsDouble() + 10);
     }
 
     public double calculateTurretPID() {
@@ -295,30 +287,71 @@ public class TurretSubsystem extends SubsystemBase {
 
         if (isBlue) {
             if (robotPos.getX() > blueHubPos.getX()) {
-                if (robotPos.getY() > Hy) {
-                    lockingTarget = new Translation2d(tX, leftFy);
-                } else if (robotPos.getY() < Hy) {
-                    lockingTarget = new Translation2d(tX, rightFy);
+                if (turretDeadZone()) {
+                    if (robotPos.getX() > 5.5 && robotPos.getX() < 6.5) {
+                        // do the deadzone swap!
+                        lockingTarget = new Translation2d(tX, rightFyFar);
+                        System.out.println("in the deadzone");
+                        isFeeding = true;
+                    } else {
+                        if (robotPos.getY() > Hy) {
+                            lockingTarget = new Translation2d(tX, leftFyFar);
+                            System.out.println("in the deadzone");
+                            isFeeding = true;
+                        }
+                    }
+                } else {
+                    if (robotPos.getX() > 5.5 && robotPos.getX() < 6.5) {
+                        // do the deadzone swap!
+                        lockingTarget = new Translation2d(tX, rightFy);
+                        System.out.println("in the deadzone");
+                        isFeeding = true;
+                    } else {
+                        if (robotPos.getY() > Hy) {
+                            lockingTarget = new Translation2d(tX, leftFy);
+                            System.out.println("in the deadzone");
+                            isFeeding = true;
+                        }
+                    }
                 }
-                isFeeding = true;
             } else {
                 lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                         redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
+                // System.out.println("is not feeding!");
                 isFeeding = false;
             }
         } else {
             if (robotPos.getX() < redHubPos.getX()) {
                 if (robotPos.getY() > Hy) {
                     lockingTarget = new Translation2d(tX, leftFy);
+                    // System.out.println("is feeding!");
+                    isFeeding = true;
                 } else if (robotPos.getY() < Hy) {
                     lockingTarget = new Translation2d(tX, rightFy);
+                    // System.out.println("is feeding!");
+                    isFeeding = true;
                 }
-                isFeeding = true;
             } else {
                 lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                         redHubPos.getY() + (velocityY * ShooterSubsystem.tof)); // so does this system actually work?
+                // System.out.println("is not feeding!");
                 isFeeding = false;
             }
+        }
+
+        SmartDashboard.putBoolean("turret dead zone?", turretDeadZone());
+    }
+
+    public boolean turretDeadZone() {
+        if (robotPos.getY() > 2.8 && robotPos.getY() < 5.3) {
+            if (robotPos.getX() > 5.5 && robotPos.getX() < 5.5) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
         }
     }
 

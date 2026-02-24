@@ -50,8 +50,13 @@ public class ClimberSubsystem extends SubsystemBase {
 
         climberConfigs.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
-        climberConfigs.MotorOutput.PeakForwardDutyCycle = 0.3;
-        climberConfigs.MotorOutput.PeakReverseDutyCycle = -0.3;
+        climberConfigs.Voltage.PeakForwardVoltage = 3;
+        climberConfigs.Voltage.PeakReverseVoltage = -3;
+
+        climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        climberConfigs.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 67;
+        climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        climberConfigs.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 1;
         // set Motion Magic settings
 
         var motionMagicConfigs = climberConfigs.MotionMagic;
