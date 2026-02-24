@@ -1,4 +1,5 @@
 package frc.robot.subsystems;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -11,6 +12,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -80,6 +82,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     double Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
 
+    PIDController turretPID = new PIDController(1, 1, 1);
+
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
@@ -115,13 +119,13 @@ public class TurretSubsystem extends SubsystemBase {
 
         // apriltag filter list
         blueTagFilter.add(18);
-        //blueTagFilter.add(19);
+        // blueTagFilter.add(19);
         blueTagFilter.add(20);
         blueTagFilter.add(21);
-        //blueTagFilter.add(24);
-        //blueTagFilter.add(25);
+        // blueTagFilter.add(24);
+        // blueTagFilter.add(25);
         blueTagFilter.add(26);
-        //blueTagFilter.add(27);
+        // blueTagFilter.add(27);
 
         redTagFilter.add(2);
         redTagFilter.add(3);
@@ -136,7 +140,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void turretSensor() {
         if (!zeroingSensor.get()) {
-            //zeroPosition();
+            // zeroPosition();
         }
     }
 
@@ -166,6 +170,9 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putBoolean("is feeding", isFeeding);
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble());
+
+        SmartDashboard.putBoolean("has turret targets?", hasTurretTargets);
+        SmartDashboard.putBoolean("tag is in filter list?", FilterApriltags());
 
     }
 
@@ -207,32 +214,33 @@ public class TurretSubsystem extends SubsystemBase {
         determine3dOffset(velocityX, velocityY);
         FilterApriltags();
 
-       
-
-        double lastTagID = 0;
-
         if (turretLocking) {
 
-            if (hasTurretTargets == true && FilterApriltags()) { // add "&& false" to make sure it never runs!
-                limelightTurret = true;
+            determineLockingMethod(velocityX, velocityY);
 
-                if (elapsedTime > waitTime + 1 && !isFeeding) {
-                    if (hasTurretTargets == true) {
+            txTurret = LimelightHelpers.getTX("limelight-turret");
 
-                        turret.setControl(m_request
-                                .withPosition(
-                                        (turret.getPosition().getValueAsDouble() + -txTurret)));
+            SmartDashboard.putNumber("Turret Position", turret.getPosition().getValueAsDouble());
 
-                        turretTARGET = turret.getPosition().getValueAsDouble() + -txTurret;
-                    }
-                } else {
-                    lastTagID = tagID;
-                    turret.setControl(
-                            m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
-                }
+        }
+
+    }
+
+    public void determineLockingMethod(double velocityX, double velocityY) {
+        if (hasTurretTargets == true && FilterApriltags()) {
+            if (elapsedTime > waitTime + 1 && !isFeeding) {
+                //turret.setControl(m_request.withPosition((calculateTurretLimelightAngle())));
+
+                turret.set(calculateTurretPID());
+
+                System.out.println("using limelight-turret!");
 
             } else {
+                turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
 
+                System.out.println("attempting to switch limelights!");
+            }
+        } else {
                 waitTime = elapsedTime;
 
                 turret.setControl(
@@ -241,12 +249,37 @@ public class TurretSubsystem extends SubsystemBase {
 
                 turretTARGET = (calculateAngleToHub(velocityX, velocityY));
 
-            }
-
-            txTurret = LimelightHelpers.getTX("limelight-turret");
-
+                System.out.println("using limelight-tags!");
         }
+    }
 
+    // public boolean calculateWaitTime() {
+    //     if (hasTurretTargets == true && FilterApriltags()) {
+    //         if (elapsedTime >= waitTime +1) {
+    //             return true;
+    //         }
+    //     } else {
+    //         waitTime = elapsedTime;
+    //         return false;
+    //     }
+    // }
+
+    public double calculateTurretLimelightAngle() {
+        return MathUtil.clamp(turret.getPosition().getValueAsDouble() + -txTurret, turret.getPosition().getValueAsDouble()-10, turret.getPosition().getValueAsDouble()+10);
+    }
+
+    public double calculateTurretPID() {
+        double pidPower;
+
+        double kP = SmartDashboard.getNumber("turret kP", 0.0045);
+
+        turretPID = new PIDController(kP, 0, 0);
+
+        pidPower = MathUtil.clamp(turretPID.calculate(txTurret, 0), -0.2, 0.2);
+        SmartDashboard.putNumber("pidPower", pidPower);
+        SmartDashboard.putNumber("turret kP", kP);
+
+        return pidPower;
     }
 
     public void setToZero() {
@@ -269,7 +302,8 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx + (velocityX*ShooterSubsystem.tof), redHubPos.getY() + (velocityY*ShooterSubsystem.tof)); // TODO test this before getting the real robot!
+                lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
+                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
                 isFeeding = false;
             }
         } else {
@@ -281,7 +315,8 @@ public class TurretSubsystem extends SubsystemBase {
                 }
                 isFeeding = true;
             } else {
-                lockingTarget = new Translation2d(Hx + (velocityX*ShooterSubsystem.tof), redHubPos.getY() + (velocityY*ShooterSubsystem.tof)); // so does this system actually work?
+                lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
+                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof)); // so does this system actually work?
                 isFeeding = false;
             }
         }
@@ -364,8 +399,6 @@ public class TurretSubsystem extends SubsystemBase {
         double diffX = (lockingTarget.getX() - robotPos.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -30, 330), -20, 315);
-
-        SmartDashboard.putNumber("Turret Position", turret.getPosition().getValueAsDouble());
 
         return goldenAngle;
 
