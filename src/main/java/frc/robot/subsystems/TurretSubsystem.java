@@ -282,64 +282,35 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void determineLockingTarget(double velocityX, double velocityY) {
 
-        double tX = isBlue ? blueFx : redFx;
         double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
 
-        if (isBlue) {
-            if (robotPos.getX() > blueHubPos.getX()) {
-                if (turretDeadZone()) {
-                    if (robotPos.getX() > 5.5 && robotPos.getX() < 6.5) {
-                        // do the deadzone swap!
-                        lockingTarget = new Translation2d(tX, rightFyFar);
-                        System.out.println("in the deadzone");
-                        isFeeding = true;
-                    } else {
-                        if (robotPos.getY() > Hy) {
-                            lockingTarget = new Translation2d(tX, leftFyFar);
-                            System.out.println("in the deadzone");
-                            isFeeding = true;
-                        }
-                    }
-                } else {
-                    if (robotPos.getX() > 5.5 && robotPos.getX() < 6.5) {
-                        // do the deadzone swap!
-                        lockingTarget = new Translation2d(tX, rightFy);
-                        System.out.println("in the deadzone");
-                        isFeeding = true;
-                    } else {
-                        if (robotPos.getY() > Hy) {
-                            lockingTarget = new Translation2d(tX, leftFy);
-                            System.out.println("in the deadzone");
-                            isFeeding = true;
-                        }
-                    }
-                }
-            } else {
-                lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
-                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
-                // System.out.println("is not feeding!");
-                isFeeding = false;
-            }
+        if (robotPos.getX() > blueHubPos.getX()) {
+                feedingTargets();
         } else {
-            if (robotPos.getX() < redHubPos.getX()) {
-                if (robotPos.getY() > Hy) {
-                    lockingTarget = new Translation2d(tX, leftFy);
-                    // System.out.println("is feeding!");
-                    isFeeding = true;
-                } else if (robotPos.getY() < Hy) {
-                    lockingTarget = new Translation2d(tX, rightFy);
-                    // System.out.println("is feeding!");
-                    isFeeding = true;
-                }
-            } else {
-                lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
-                        redHubPos.getY() + (velocityY * ShooterSubsystem.tof)); // so does this system actually work?
-                // System.out.println("is not feeding!");
-                isFeeding = false;
-            }
+            lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
+                    redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
+            // System.out.println("is not feeding!");
+            isFeeding = false;
         }
 
         SmartDashboard.putBoolean("turret dead zone?", turretDeadZone());
+    }
+
+    public void feedingTargets() {
+        double tX = isBlue ? blueFx : redFx;
+        double tYFar = robotPos.getX() > Hy && robotPos.getX() < 6.5 ? rightFyFar : leftFyFar;
+        double tY = robotPos.getY() > Hy ? leftFy : rightFy;
+
+        if (turretDeadZone()) {
+                // do the deadzone swap!
+                lockingTarget = new Translation2d(tX, tYFar);
+                System.out.println("in the deadzone");
+                isFeeding = true;
+        } else {
+                lockingTarget = new Translation2d(tX, tY);
+                System.out.println("in the deadzone");
+                isFeeding = true;
+        }
     }
 
     public boolean turretDeadZone() {
