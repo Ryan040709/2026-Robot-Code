@@ -13,6 +13,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -64,8 +65,8 @@ public class hoodSubsystem extends SubsystemBase {
         hood.set(speed);
     }
 
-    public void setHoodPosition( double distanceToHub, Pose2d robotPose) {
-        if(!robotIsNeartrench(robotPose)){
+    public void setHoodPosition( double distanceToHub, Pose2d robotPose, ChassisSpeeds chassisSpeeds) {
+        if(!robotIsNeartrench(robotPose, chassisSpeeds)){
         hood.setControl(m_request.withPosition(calculateHoodPosition(distanceToHub)));
         }
         else{
@@ -75,10 +76,19 @@ public class hoodSubsystem extends SubsystemBase {
     }
 
 
-    public boolean robotIsNeartrench(Pose2d robotPose){
+    public boolean robotIsNeartrench(Pose2d robotPose, ChassisSpeeds robotSpeed){
         double blueTrenchOffset = 4.66 ;
         double redTrenchOffset = 11.936;
+        double lowY = 1.3;
+        double highY = 6.7;
+
         double trenchOffset;
+        double tolerance ;
+        boolean nearSideOfTrench;
+
+        tolerance = Math.abs( robotSpeed.vxMetersPerSecond) *.05;
+
+        nearSideOfTrench = (robotPose.getY() <lowY ||robotPose.getY() > highY);
 
              if (GameManager.isBlueAlliance) {
             trenchOffset = blueTrenchOffset;
@@ -86,7 +96,8 @@ public class hoodSubsystem extends SubsystemBase {
             trenchOffset = redTrenchOffset;
         }
 
-        return (MathUtil.isNear(trenchOffset, robotPose.getX(), .5));
+
+        return (MathUtil.isNear(trenchOffset, robotPose.getX(), .75+tolerance)|| nearSideOfTrench);
 
 
     }
