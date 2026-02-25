@@ -284,11 +284,12 @@ public class TurretSubsystem extends SubsystemBase {
             System.out.println("is not feeding!");
             isFeeding = false;
         }
+        SmartDashboard.putBoolean("in deadzone?", turretDeadZone());
     }
 
     public void feedingTargets() {
         double tX = isBlue ? blueFx : redFx;
-        double tYFar = robotPos.getX() > Hy && robotPos.getX() < 6.5 ? rightFyFar : leftFyFar;
+        double tYFar = robotPos.getY() > Hy && robotPos.getY() < 6.5 ? leftFyFar : rightFyFar;
         double tY = robotPos.getY() > Hy ? leftFy : rightFy;
 
         if (turretDeadZone()) {
@@ -303,7 +304,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public boolean turretDeadZone() {
         if (robotPos.getY() > 2.8 && robotPos.getY() < 5.3) {
-            if (robotPos.getX() > 5.5 && robotPos.getX() < 5.5) {
+            if (robotPos.getX() > 5.5 && robotPos.getX() < 7.0) {
                 return true;
             } else {
                 return false;
