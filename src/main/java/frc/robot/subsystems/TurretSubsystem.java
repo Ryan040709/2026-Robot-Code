@@ -231,27 +231,19 @@ public class TurretSubsystem extends SubsystemBase {
     public void determineLockingMethod(double velocityX, double velocityY) {
         if (hasTurretTargets == true && FilterApriltags()) {
             if (elapsedTime > waitTime + 1 && !isFeeding) {
-                // turret.setControl(m_request.withPosition((calculateTurretLimelightAngle())));
-
                 turret.set(calculateTurretPID());
-
-                // System.out.println("using limelight-turret!");
-
             } else {
                 turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
-
-                // System.out.println("attempting to switch limelights!");
             }
         } else {
             waitTime = elapsedTime;
 
-            turret.setControl(
-                    m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
+            turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
             limelightTurret = false;
 
             turretTARGET = (calculateAngleToHub(velocityX, velocityY));
 
-            // System.out.println("using limelight-tags!");
+            System.out.println("using limelight-tags!");
         }
     }
 
@@ -289,11 +281,9 @@ public class TurretSubsystem extends SubsystemBase {
         } else {
             lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                     redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
-            // System.out.println("is not feeding!");
+            System.out.println("is not feeding!");
             isFeeding = false;
         }
-
-        SmartDashboard.putBoolean("turret dead zone?", turretDeadZone());
     }
 
     public void feedingTargets() {
@@ -304,11 +294,9 @@ public class TurretSubsystem extends SubsystemBase {
         if (turretDeadZone()) {
                 // do the deadzone swap!
                 lockingTarget = new Translation2d(tX, tYFar);
-                System.out.println("in the deadzone");
                 isFeeding = true;
         } else {
                 lockingTarget = new Translation2d(tX, tY);
-                System.out.println("in the deadzone");
                 isFeeding = true;
         }
     }

@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.GameManager;
-import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
@@ -85,7 +84,6 @@ public class RobotContainer {
         // out of bumper intake subsystem
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
 
-        HopperSubsystem hopperSubsystem = new HopperSubsystem();
         // game manager
         GameManager gameManager = new GameManager();
 
@@ -105,10 +103,10 @@ public class RobotContainer {
 
         // in the bumper intake commands
         // test
-        Intake_Stop intake_Stop = new Intake_Stop(hopperSubsystem, throughBumperIntake);
-        Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(hopperSubsystem, throughBumperIntake);
+        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake);
+        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake);
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake);
 
         public RobotContainer() {
                 // turret commands

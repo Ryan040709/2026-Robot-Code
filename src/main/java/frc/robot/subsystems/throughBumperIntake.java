@@ -18,8 +18,6 @@ public class throughBumperIntake extends SubsystemBase {
     private TalonFX intakeMotor1 = new TalonFX(23);
     private TalonFX intakeMotor2 = new TalonFX(24);
 
-    HopperSubsystem hopperSubsystem = new HopperSubsystem();
-
     public throughBumperIntake() {
 
         TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
