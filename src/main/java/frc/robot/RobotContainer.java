@@ -237,6 +237,10 @@ public class RobotContainer {
 
                 manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
 
+                manipulatorController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), hoodSubsystem));
+                // disabled because I dunno if we should use it
+                //manipulatorController.leftBumper().whileTrue(Commands.run(() -> hoodSubsystem.moveHood(manipulatorController.getLeftY()), hoodSubsystem));
+
                 gameManager.setDefaultCommand(Commands.run(() -> {
                 }, gameManager));
                 hoodSubsystem.setDefaultCommand(hoodSetToPosition);

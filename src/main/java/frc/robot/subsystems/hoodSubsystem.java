@@ -61,6 +61,10 @@ public class hoodSubsystem extends SubsystemBase {
         hood.setPosition(0);
     }
 
+    public void moveHood(double speed) {
+        hood.set(speed);
+    }
+
     public void setHoodPosition( double distanceToHub, Pose2d robotPose, ChassisSpeeds chassisSpeeds) {
         if(!robotIsNeartrench(robotPose, chassisSpeeds)){
         hood.setControl(m_request.withPosition(calculateHoodPosition(distanceToHub)));
