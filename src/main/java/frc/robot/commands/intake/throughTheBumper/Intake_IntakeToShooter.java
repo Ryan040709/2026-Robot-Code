@@ -1,21 +1,17 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.Constants;
 
 public class Intake_IntakeToShooter extends Command {
 
-    HopperSubsystem hopperSubsystem = new HopperSubsystem();
     throughBumperIntake intakeSubsystem = new throughBumperIntake();
 
-    public Intake_IntakeToShooter(HopperSubsystem hopperSubsystem,
-     throughBumperIntake intakeSubsystem){
+    public Intake_IntakeToShooter(throughBumperIntake intakeSubsystem){
  
-        this.hopperSubsystem = hopperSubsystem;
         this.intakeSubsystem = intakeSubsystem;
-        addRequirements(hopperSubsystem, intakeSubsystem);
+        addRequirements(intakeSubsystem);
 
     }
 
@@ -31,7 +27,6 @@ public class Intake_IntakeToShooter extends Command {
     public void execute() {
         intakeSubsystem.SetIntakeFront(-1);
         intakeSubsystem.SetIntakeBack(-1);
-        hopperSubsystem.MoveHopperMotor(0.5); //hopper motor is perpendicular to 
     }
 
     // Called once the command ends or is interrupted.

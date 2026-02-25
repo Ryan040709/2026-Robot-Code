@@ -20,8 +20,6 @@ public class outOfBumperIntake extends SubsystemBase {
     private TalonFX pivotMotor2 = new TalonFX(26);
     private TalonFX intake = new TalonFX(25);
 
-    HopperSubsystem hopperSubsystem = new HopperSubsystem();
-
     public outOfBumperIntake() {
 
         TalonFXConfiguration pivotConfig = new TalonFXConfiguration();

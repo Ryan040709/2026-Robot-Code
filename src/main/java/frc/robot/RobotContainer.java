@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.GameManager;
-import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 import frc.robot.subsystems.outOfBumperIntake;
@@ -49,10 +48,8 @@ public class RobotContainer {
         private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
                                                                                            // so...
 
-        // 3/4 of a rotation per second max angular velocity
-        private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond); // TODO change to 1
-        // we want to do one rotation per sec, I think.
-        // faster than last year's if beyond 0.75
+        // was .75 if too fast
+        private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond);
 
         private final SendableChooser<Command> autoChooser;
 
@@ -111,10 +108,10 @@ public class RobotContainer {
 
         // in the bumper intake commands
         // test
-        Intake_Stop intake_Stop = new Intake_Stop(hopperSubsystem, throughBumperIntake);
-        Intake_Outtake outtake = new Intake_Outtake(hopperSubsystem, throughBumperIntake);
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(hopperSubsystem, throughBumperIntake);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(hopperSubsystem, throughBumperIntake);
+        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake);
+        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake);
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake);
 
         public RobotContainer() {
                 // turret commands
