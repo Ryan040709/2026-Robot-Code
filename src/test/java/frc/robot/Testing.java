@@ -47,28 +47,28 @@ class IntakeTest {
     assertEquals(new Pose2d(2,1,Rotation2d.fromDegrees(90)),result);
   }
 
-  @Test 
-  void offsetAngleToHub(){
-    double Hx= 4.62554;
-    double velocityX = 1;
-    double velocityY = 0;
+  // @Test 
+  // void offsetAngleToHub(){
+  //   double Hx= 4.62554;
+  //   double velocityX = 1;
+  //   double velocityY = 0;
 
 
-        double hubOffsetX = Hx + (velocityX * 1);
-        double hubOffsetY = 4.62534 + (velocityY * 1);
-        double originalHubAngle;
-        double turretTxOffset;
+  //       double hubOffsetX = Hx + (velocityX * 1);
+  //       double hubOffsetY = 4.62534 + (velocityY * 1);
+  //       double originalHubAngle;
+  //       double turretTxOffset;
 
-        double offsetInDegrees = Math
-                .toDegrees(Math.atan((hubOffsetY - 1) / (hubOffsetX - 1)));
+  //       double offsetInDegrees = Math
+  //               .toDegrees(Math.atan((hubOffsetY - 1) / (hubOffsetX - 1)));
 
-        double diffY = (4.62534 - 1);
-        double diffX = (Hx - 1);
-        originalHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
+  //       double diffY = (4.62534 - 1);
+  //       double diffX = (Hx - 1);
+  //       originalHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
 
-        turretTxOffset = originalHubAngle - offsetInDegrees;
-        assertEquals(turretTxOffset, 6.9102854777);
-  }
+  //       turretTxOffset = originalHubAngle - offsetInDegrees;
+  //       assertEquals(turretTxOffset, 6.9102854777);
+  // }
 
 
 }

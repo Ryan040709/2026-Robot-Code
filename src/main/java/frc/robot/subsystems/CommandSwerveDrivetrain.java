@@ -543,14 +543,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
-    public double GetDistanceToHub() {
-        Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
-        Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
+    public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
+        Translation2d BlueHubPosition = new Translation2d(4.62554 + (robotVelocityX * ShooterSubsystem.tof),
+                4.03606 + (robotVelocityY * ShooterSubsystem.tof));
+        Translation2d RedHubPosistion = new Translation2d(11.98482 + (robotVelocityX * ShooterSubsystem.tof),
+                4.03606 + (robotVelocityY * ShooterSubsystem.tof));
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 
         Transform2d turretOffsetFromRobot = new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
-        
+
         double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
                 .getDistance(hubPosition);
         return DistanceToTarget;
