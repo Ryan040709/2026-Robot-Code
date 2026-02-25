@@ -365,13 +365,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
-        
-    //     Translation2d turretOffsetFromRobot = new Translation2d(getPose().getX() - 0.2101215 , getPose().getY() - .1412875 );
-    //  double distanceFromHub  =
-    //   getPose()
-    //   .getTranslation()
-    //   .rotateAround(turretOffsetFromRobot, getPose().getRotation()).getDistance(new Translation2d(4.62554, 4.03606));
-    //  SmartDashboard.putNumber("DistanceFromBlueHub", distanceFromHub);
+
+        // Translation2d turretOffsetFromRobot = new Translation2d(getPose().getX() -
+        // 0.2101215 , getPose().getY() - .1412875 );
+        // double distanceFromHub =
+        // getPose()
+        // .getTranslation()
+        // .rotateAround(turretOffsetFromRobot, getPose().getRotation()).getDistance(new
+        // Translation2d(4.62554, 4.03606));
+        // SmartDashboard.putNumber("DistanceFromBlueHub", distanceFromHub);
 
         robotVelocityY = getRobotRelativeSpeeds().vyMetersPerSecond;
         robotVelocityX = getRobotRelativeSpeeds().vxMetersPerSecond;
@@ -379,7 +381,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putNumber("velocity Y", robotVelocityY);
         SmartDashboard.putNumber("velocity X", robotVelocityX);
 
-        //SmartDashboard.putNumber("steer motor amps", );
+        // SmartDashboard.putNumber("steer motor amps", );
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply
@@ -541,20 +543,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
-        public double GetDistanceToHub() {
-                Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
-     Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
-            
-        Translation2d hubPosition;
-        Transform2d turretOffsetFromRobot = new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
+    public double GetDistanceToHub() {
+        Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
+        Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
 
-        if (GameManager.isBlueAlliance) {
-            hubPosition = BlueHubPosition;
-        } else {
-            hubPosition = RedHubPosistion;
-        }
-            double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
+        Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
+
+        Transform2d turretOffsetFromRobot = new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
+        
+        double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
                 .getDistance(hubPosition);
-                return DistanceToTarget;
+        return DistanceToTarget;
     }
 }

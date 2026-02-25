@@ -47,6 +47,7 @@ public class RobotContainer {
         // kSpeedAt12Volts desired top speed
         private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
                                                                                            // so...
+        private double OverrideSpeed = .5;
 
         // was .75 if too fast
         private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond);
@@ -163,12 +164,12 @@ public class RobotContainer {
                                 drivetrain.applyRequest(() -> drive
                                                 // Drive forward with negative Y (forward) Drive left with negative X
                                                 // (left)
-                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed)
+                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed*OverrideSpeed)
 
-                                                .withVelocityY(-driverController.getLeftX() * MaxSpeed)
+                                                .withVelocityY(-driverController.getLeftX() * MaxSpeed*OverrideSpeed)
 
                                                 // Drive counter clockwise with negative X (left)
-                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate)));
+                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate*OverrideSpeed)));
 
                 // Idle while the robot is disabled. This ensures the configured
                 // neutral mode is applied to the drive motors while disabled.
@@ -243,7 +244,7 @@ public class RobotContainer {
                 // turret.setDefaultCommand(Commands.run(() ->
                 // turret.MoveMotor(manipulatorController.getLeftX()), turret));
                 turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX,
-                                drivetrain.robotVelocityY, (manipulatorController.getLeftX()/0.25)), turret));
+                                drivetrain.robotVelocityY, (0), drivetrain.getPose()), turret)); // manipulatorController.getLeftX()*0.0125
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
                 driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));

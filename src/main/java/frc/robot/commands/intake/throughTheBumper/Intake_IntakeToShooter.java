@@ -25,8 +25,8 @@ public class Intake_IntakeToShooter extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.SetIntakeFront(-1);
-        intakeSubsystem.SetIntakeBack(-1);
+        intakeSubsystem.SetIntakeFront(-.5);
+        intakeSubsystem.SetIntakeBack(-.5);
     }
 
     // Called once the command ends or is interrupted.

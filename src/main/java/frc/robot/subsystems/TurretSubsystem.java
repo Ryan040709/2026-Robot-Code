@@ -211,14 +211,14 @@ public class TurretSubsystem extends SubsystemBase {
         }
     }
 
-    public void setPosition(double velocityX, double velocityY, double targetSpeed) {
+    public void setPosition(double velocityX, double velocityY, double targetSpeed, Pose2d robotpose) {
         MoveMotor(targetSpeed);
         determine3dOffset(velocityX, velocityY);
         FilterApriltags();
 
         if (turretLocking) {
 
-            determineLockingMethod(velocityX, velocityY);
+            determineLockingMethod(velocityX, velocityY, robotpose);
 
             txTurret = LimelightHelpers.getTX("limelight-turret");
 
@@ -228,10 +228,10 @@ public class TurretSubsystem extends SubsystemBase {
 
     }
 
-    public void determineLockingMethod(double velocityX, double velocityY) {
+    public void determineLockingMethod(double velocityX, double velocityY, Pose2d robotpose) {
         if (hasTurretTargets == true && FilterApriltags()) {
             if (elapsedTime > waitTime + 1 && !isFeeding) {
-                turret.set(calculateTurretPID());
+                turret.set(calculateTurretPID(velocityX, velocityY, robotpose));
             } else {
                 turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
             }
@@ -252,7 +252,28 @@ public class TurretSubsystem extends SubsystemBase {
                 turret.getPosition().getValueAsDouble() - 10, turret.getPosition().getValueAsDouble() + 10);
     }
 
-    public double calculateTurretPID() {
+    public double calculateTurretPID(double velocityX, double velocityY, Pose2d robotpose) {
+
+        double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
+
+        double hubOffsetX = Hx + (velocityX * ShooterSubsystem.tof);
+        double hubOffsetY = redHubPos.getY() + (velocityY * ShooterSubsystem.tof);
+        double originalHubAngle;
+        double turretTxOffset;
+
+        double offsetInDegrees = Math
+                .toDegrees(Math.atan((hubOffsetY - robotpose.getY()) / (hubOffsetX - robotpose.getX())));
+
+        double diffY = (redHubPos.getY() - robotPos.getY());
+        double diffX = (Hx - robotPos.getX());
+        originalHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
+
+        turretTxOffset = originalHubAngle - offsetInDegrees;
+
+
+
+        SmartDashboard.putNumber("limelight Turret Calculated ofset", offsetInDegrees);
+        SmartDashboard.putNumber("turret tx offset", turretTxOffset);
         double pidPower;
 
         double kP = SmartDashboard.getNumber("turret kP", 0.0045);
@@ -267,9 +288,7 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setToZero() {
-
         turret.setControl(m_request.withPosition(-(0)));
-
     }
 
     public void determineLockingTarget(double velocityX, double velocityY) {
@@ -277,7 +296,7 @@ public class TurretSubsystem extends SubsystemBase {
         double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
 
         if (robotPos.getX() > blueHubPos.getX()) {
-                feedingTargets();
+            feedingTargets();
         } else {
             lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                     redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
@@ -293,12 +312,12 @@ public class TurretSubsystem extends SubsystemBase {
         double tY = robotPos.getY() > Hy ? leftFy : rightFy;
 
         if (turretDeadZone()) {
-                // do the deadzone swap!
-                lockingTarget = new Translation2d(tX, tYFar);
-                isFeeding = true;
+            // do the deadzone swap!
+            lockingTarget = new Translation2d(tX, tYFar);
+            isFeeding = true;
         } else {
-                lockingTarget = new Translation2d(tX, tY);
-                isFeeding = true;
+            lockingTarget = new Translation2d(tX, tY);
+            isFeeding = true;
         }
     }
 
@@ -335,9 +354,6 @@ public class TurretSubsystem extends SubsystemBase {
     double rotatedX = 0;
     double rotatedY = 0;
 
-    public void determineSwimOffset() {
-
-    }
 
     public void determine3dOffset(double velocityX, double velocityY) {
 
