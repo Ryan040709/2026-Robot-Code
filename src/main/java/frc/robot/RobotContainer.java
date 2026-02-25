@@ -238,6 +238,7 @@ public class RobotContainer {
 
                 gameManager.setDefaultCommand(Commands.run(() -> {
                 }, gameManager));
+                hoodSubsystem.setDefaultCommand(hoodSetToPosition);
 
                 // turret.setDefaultCommand(Commands.run(() ->
                 // turret.MoveMotor(manipulatorController.getLeftX()), turret));
