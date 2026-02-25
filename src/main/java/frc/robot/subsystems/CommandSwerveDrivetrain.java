@@ -24,6 +24,7 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -538,5 +539,22 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
+    }
+
+        public double GetDistanceToHub() {
+                Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
+     Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
+            
+        Translation2d hubPosition;
+        Transform2d turretOffsetFromRobot = new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
+
+        if (GameManager.isBlueAlliance) {
+            hubPosition = BlueHubPosition;
+        } else {
+            hubPosition = RedHubPosistion;
+        }
+            double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
+                .getDistance(hubPosition);
+                return DistanceToTarget;
     }
 }

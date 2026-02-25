@@ -21,6 +21,7 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.GameManager;
 import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.hoodSubsystem;
 import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -88,12 +89,15 @@ public class RobotContainer {
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
 
         HopperSubsystem hopperSubsystem = new HopperSubsystem();
+
+        hoodSubsystem hoodSubsystem = new hoodSubsystem();
+
         // game manager
         GameManager gameManager = new GameManager();
 
         // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
-        Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(shooter, drivetrain);
+        Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain);
         ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
         // turret commands
@@ -246,7 +250,7 @@ public class RobotContainer {
                                 drivetrain.robotVelocityY, (manipulatorController.getLeftX()/0.25)), turret));
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
-                driverController.b().whileTrue(Commands.run(() -> shooter.zeroHood(), shooter));
+                driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
 
                 // out of bumper intake commands
                 manipulatorController.leftBumper().whileTrue(intake_LowerIntake);

@@ -26,8 +26,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFX shooterMotorL = new TalonFX(15);
     private TalonFX shooterMotorR = new TalonFX(16);
 
-    private TalonFXS hood = new TalonFXS(17);
-    private PositionVoltage m_request = new PositionVoltage(0);
     private VelocityVoltage m_velocity = new VelocityVoltage(0);
 
     public static double tof = 0.25; // time of flight also very unrealistic right now...
@@ -75,50 +73,16 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotorL.getConfigurator().apply(shooterConfig);
         shooterMotorR.getConfigurator().apply(shooterConfig);
 
-        // hood motor PID
-        TalonFXSConfiguration hoodConfig = new TalonFXSConfiguration();
-        hoodConfig.Commutation.MotorArrangement = MotorArrangementValue.Minion_JST;
-
-        hoodConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-
-        hoodConfig.MotorOutput.PeakForwardDutyCycle = Constants.ShooterSubsystem.Hood_PeakForwardDutyCycle;
-        hoodConfig.MotorOutput.PeakReverseDutyCycle = Constants.ShooterSubsystem.Hood_PeakReverseDutyCycle;
-        // motor "friction" type?
-        hoodConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
-        // regulars
-        hoodConfig.Slot0.kP = Constants.ShooterSubsystem.Hood_Slot0_kP;
-        hoodConfig.Slot0.kI = Constants.ShooterSubsystem.Hood_Slot0_kI;
-        hoodConfig.Slot0.kD = Constants.ShooterSubsystem.Hood_Slot0_kD;
-        hoodConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.ShooterSubsystem.Hood_StatorCurrentLimitEnable;
-        hoodConfig.CurrentLimits.StatorCurrentLimit = Constants.ShooterSubsystem.Hood_CurrentLimit;
-        hoodConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ShooterSubsystem.Hood_SupplyCurrentLimitEnable;
-        hoodConfig.CurrentLimits.SupplyCurrentLimit = Constants.ShooterSubsystem.Hood_SupplyCurrentLimit;
-
-        // Voltage
-        hoodConfig.Voltage.PeakForwardVoltage = Constants.ShooterSubsystem.Hood_PeakForwardVoltage;
-        hoodConfig.Voltage.PeakReverseVoltage = Constants.ShooterSubsystem.Hood_PeakReverseVoltage;
-
-        // Motion Magic
-        hoodConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Hood_MotionMagicCruiseVelocity;
-        hoodConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Hood_MotionMagicAcceleration;
-
-        hood.getConfigurator().apply(hoodConfig);
-
+    
+      
         shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
 
     }
 
-    public void zeroHood() {
-        hood.setPosition(0);
-    }
+ 
 
-    public void setHoodPosition(Pose2d robotPose) {
-        hood.setControl(m_request.withPosition(calculateHoodPosition(robotPose)));// (-0.0383332*calculateHoodPosition(robotPose)+2.52999));
-        SmartDashboard.putNumber("hood target", calculateHoodPosition(robotPose));
-    }
-
-    public void RuntoRPMs(Pose2d robotPose) {
-        shooterMotorL.setControl(m_velocity.withVelocity(CalculateRpms(robotPose)));
+    public void RuntoRPMs(double distanceToHub) {
+        shooterMotorL.setControl(m_velocity.withVelocity(CalculateRpms(distanceToHub)));
     }
 
     public void SetShooterRPMS(double setRPMS) {
@@ -127,14 +91,13 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("hood position", hood.getPosition().getValueAsDouble());
         SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
     }
 
-    public double CalculateRpms(Pose2d robotpose) {
+    public double CalculateRpms(double distanceToHub) {
         double m = 6.99334;
         double b = 28.69392;
-        double targetRPM = m * (calculateDistanceToHub(robotpose)) + b;
+        double targetRPM = m * (distanceToHub) + b;
         SmartDashboard.putNumber("ShooterGoalRPMS", targetRPM);
 
         // y=mx+b where "y" is the target RPM and "x" is the distance between the robot
@@ -144,44 +107,8 @@ public class ShooterSubsystem extends SubsystemBase {
         return targetRPM;
     }
 
-    public double CalculateTof(Pose2d robotpose) {
-        double y = 0;
-        double b = 0;
-        tof = y * (calculateDistanceToHub(robotpose)) + b; // the slope is a placeholder
-        // y=mx+b where "y" is the time of flight and "x" is the distance between the
-        // robot
-        // and target
-        // to find the slope, determine positions and rpms that we know work on certain
-        // spots on the field, and create a line of best fit.
 
-        return tof;
-    }
 
-    public double calculateDistanceToHub(Pose2d robotPose) { // can't we just pull the botpose from the swerve drive?
-        Translation2d hubPosition;
-        Transform2d turretOffsetFromRobot = new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
 
-        if (GameManager.isBlueAlliance) {
-            hubPosition = BlueHubPosition;
-        } else {
-            hubPosition = RedHubPosistion;
-        }
 
-        double DistanceToTarget = robotPose.transformBy(turretOffsetFromRobot).getTranslation()
-                .getDistance(hubPosition);
-
-        SmartDashboard.putNumber("Distance To Target", DistanceToTarget);
-        return DistanceToTarget;
-
-    }
-
-    public double calculateHoodPosition(Pose2d robotPose) {
-        double m = .222;// -5.555;
-        double b = -.1111;
-        double slope = (1.0 - 0) / (5 - .5);
-        double intercept = 0 - (slope * .5);
-
-        return MathUtil.clamp((m * (calculateDistanceToHub(robotPose))) + b, 0, 1);
-
-    }
 }

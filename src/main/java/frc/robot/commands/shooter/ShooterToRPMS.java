@@ -27,8 +27,6 @@ public class ShooterToRPMS extends Command {
   public void execute() {
     double RPM = SmartDashboard.getNumber("Shooter RPM", 65);
     shooterSubsystem.SetShooterRPMS(RPM);
-    double distanceFromHub = shooterSubsystem.calculateDistanceToHub(drivetrain.getPose());
-    SmartDashboard.putNumber("distance to hub", distanceFromHub);
   }
 
   // Called once the command ends or is interrupted.

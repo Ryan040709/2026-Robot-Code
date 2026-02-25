@@ -4,16 +4,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.hoodSubsystem;
 
 public class Hood_SetToPosition extends Command {
-  ShooterSubsystem shooterSubsystem;
+  hoodSubsystem hoodSubsystem;
   CommandSwerveDrivetrain drivetrain;
 
   /** Creates a new Shooter_RunToPosition. */
-  public Hood_SetToPosition(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain) {
-    this.shooterSubsystem = shooterSubsystem;
+  public Hood_SetToPosition(hoodSubsystem hoodSubsystem, CommandSwerveDrivetrain drivetrain) {
+    this.hoodSubsystem = hoodSubsystem;
     this.drivetrain = drivetrain;
-    addRequirements(shooterSubsystem);
+    addRequirements(hoodSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -26,8 +27,7 @@ public class Hood_SetToPosition extends Command {
   @Override
   public void execute() {
    // System.out.println("hood Run");
-    shooterSubsystem.setHoodPosition(drivetrain.getPose());
-    SmartDashboard.putNumber("Hub Distance from robot", shooterSubsystem.calculateDistanceToHub(drivetrain.getPose()));
+    hoodSubsystem.setHoodPosition(drivetrain.GetDistanceToHub(), drivetrain.getPose());
   }
 
   // Called once the command ends or is interrupted.
