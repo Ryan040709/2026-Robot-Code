@@ -48,10 +48,8 @@ public class RobotContainer {
         private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
                                                                                            // so...
 
-        // 3/4 of a rotation per second max angular velocity
-        private double MaxAngularRate = RotationsPerSecond.of(.75).in(RadiansPerSecond); // TODO change to 1
-        // we want to do one rotation per sec, I think.
-        // faster than last year's if beyond 0.75
+        // was .75 if too fast
+        private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond);
 
         private final SendableChooser<Command> autoChooser;
 
