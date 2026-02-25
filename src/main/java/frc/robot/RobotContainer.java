@@ -85,8 +85,6 @@ public class RobotContainer {
         // out of bumper intake subsystem
         outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
 
-        HopperSubsystem hopperSubsystem = new HopperSubsystem();
-
         hoodSubsystem hoodSubsystem = new hoodSubsystem();
 
         // game manager
