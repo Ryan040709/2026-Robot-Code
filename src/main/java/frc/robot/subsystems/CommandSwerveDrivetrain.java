@@ -365,7 +365,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
-
+        SmartDashboard.putNumber("distances away fron hub", getDistanceToTarget());
         // Translation2d turretOffsetFromRobot = new Translation2d(getPose().getX() -
         // 0.2101215 , getPose().getY() - .1412875 );
         // double distanceFromHub =
@@ -436,7 +436,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     poseEstimator.getEstimatedPosition().getRotation().getDegrees());
             SmartDashboard.putNumber("estimated Pose X", poseEstimator.getEstimatedPosition().getX());
             SmartDashboard.putNumber("estimated Pose Y", poseEstimator.getEstimatedPosition().getY());
-            SmartDashboard.putNumber("distance Away from tag", distance);
+       //     SmartDashboard.putNumber("distance Away from tag", distance);
 
         } else {
             System.out.println("limelight estimation null");
@@ -544,10 +544,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
-        Translation2d BlueHubPosition = new Translation2d(4.62554 + (robotVelocityX * ShooterSubsystem.tof),
-                4.03606 + (robotVelocityY * ShooterSubsystem.tof));
-        Translation2d RedHubPosistion = new Translation2d(11.98482 + (robotVelocityX * ShooterSubsystem.tof),
-                4.03606 + (robotVelocityY * ShooterSubsystem.tof));
+        Translation2d BlueHubPosition = new Translation2d(4.62554 - (robotVelocityX * ShooterSubsystem.tof),
+                4.03606 - (robotVelocityY * ShooterSubsystem.tof));
+        Translation2d RedHubPosistion = new Translation2d(11.98482 - (robotVelocityX * ShooterSubsystem.tof),
+                4.03606 - (robotVelocityY * ShooterSubsystem.tof));
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 

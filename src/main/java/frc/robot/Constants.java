@@ -38,8 +38,8 @@ public final class Constants {
     public static double Turret_SensorToMechanismRatio = 0.07777778059244156;
 
     // Voltage
-    public static double Turret_PeakForwardVoltage = 3;
-    public static double Turret_PeakReverseVoltage = -3;
+    public static double Turret_PeakForwardVoltage = 2;
+    public static double Turret_PeakReverseVoltage = -2;
 
     public static double Turret_MotionMagicExpo_kV = 0;
     // Torque Current

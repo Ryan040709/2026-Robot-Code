@@ -211,6 +211,7 @@ public class RobotContainer {
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
+                driverController.pov(180).whileTrue(outtake).whileFalse(intake_Stop);
 
                 //driverController.a().whileTrue(hoodSetToPosition);
                 driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);

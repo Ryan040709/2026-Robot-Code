@@ -175,6 +175,8 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putBoolean("has turret targets?", hasTurretTargets);
         SmartDashboard.putBoolean("tag is in filter list?", FilterApriltags());
+        // SmartDashboard.putNumber("turret position", turret)
+
 
     }
 
@@ -223,6 +225,9 @@ public class TurretSubsystem extends SubsystemBase {
             txTurret = LimelightHelpers.getTX("limelight-turret");
 
             SmartDashboard.putNumber("Turret Position", turret.getPosition().getValueAsDouble());
+            
+             SmartDashboard.putNumber("limelight target angle (TAGS)", calculateAngleToHub(velocityX, velocityY));
+            
 
         }
 
@@ -232,8 +237,10 @@ public class TurretSubsystem extends SubsystemBase {
         if (hasTurretTargets == true && FilterApriltags()) {
             if (elapsedTime > waitTime + 1 && !isFeeding) {
                 turret.set(calculateTurretPID(velocityX, velocityY, robotpose));
+                System.out.println("using limelight-turret!");
             } else {
                 turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY))));
+                System.out.println("attempting to switch limelights!");
             }
         } else {
             waitTime = elapsedTime;
@@ -280,7 +287,7 @@ public class TurretSubsystem extends SubsystemBase {
 
         turretPID = new PIDController(kP, 0, 0);
 
-        pidPower = MathUtil.clamp(turretPID.calculate(txTurret, 0), -0.2, 0.2);
+        pidPower = MathUtil.clamp(turretPID.calculate(txTurret, turretTxOffset), -0.2, 0.2);
         SmartDashboard.putNumber("pidPower", pidPower);
         SmartDashboard.putNumber("turret kP", kP);
 
@@ -300,7 +307,7 @@ public class TurretSubsystem extends SubsystemBase {
         } else {
             lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                     redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
-            System.out.println("is not feeding!");
+            // System.out.println("is not feeding!");
             isFeeding = false;
         }
         SmartDashboard.putBoolean("in deadzone?", turretDeadZone());
@@ -402,7 +409,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double calculateAngleToHub(double velocityX, double velocityY) {
 
-        determineLockingTarget(velocityX, velocityY);
+        determineLockingTarget(0, 0);
 
         double diffY = (lockingTarget.getY() - robotPos.getY());
         double diffX = (lockingTarget.getX() - robotPos.getX());

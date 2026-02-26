@@ -18,6 +18,8 @@ import frc.robot.subsystems.TurretSubsystem;
 
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 
+import edu.wpi.first.math.MathUtil;
+
 class IntakeTest {
 
   //public final CommandSwerveDrivetrain drivetrain = SwerveConstants.createDrivetrain();
@@ -69,6 +71,19 @@ class IntakeTest {
   //       turretTxOffset = originalHubAngle - offsetInDegrees;
   //       assertEquals(turretTxOffset, 6.9102854777);
   // }
+
+  @Test
+  void turretAngle() {
+
+    double theta = 0;
+
+        double diffX = (4.03606 - 1.7);
+        double diffY = (4.62534 - 6.63);
+        double turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
+        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -30, 330), -20, 315);
+
+        assertEquals(goldenAngle, -40.6341211707);
+  }
 
 
 }
