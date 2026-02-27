@@ -26,7 +26,7 @@ public class Intake_IntakeToHopper extends Command {
     @Override
     public void execute() {
         intakeSubsystem.SetIntakeFront(-.5);
-        intakeSubsystem.SetIntakeBack(-.5);
+        intakeSubsystem.SetIntakeBack(.5);
     }
 
     // Called once the command ends or is interrupted.
