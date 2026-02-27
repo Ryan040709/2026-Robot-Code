@@ -365,6 +365,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     @Override
     public void periodic() {
+
         SmartDashboard.putNumber("distances away fron hub", getDistanceToTarget());
         // Translation2d turretOffsetFromRobot = new Translation2d(getPose().getX() -
         // 0.2101215 , getPose().getY() - .1412875 );
@@ -414,21 +415,34 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putNumber("GetRotationSpeeds", getSpeeds().omegaRadiansPerSecond);
         LimelightHelpers.SetRobotOrientation("limelight-tags",
                 poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-        PoseEstimate robotPoseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-tags");
+        LimelightHelpers.SetRobotOrientation("limelight-turret",
+                TurretSubsystem.turretPosition, 0, 0, 0, 0, 0);
+
+                //turret limelight offset
+                    /* x: 2.93806
+                     * y: 11.08921
+                     * z: 20.39227
+                     * rotated: 20*
+                     */
+        PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-tags");
+        PoseEstimate robotPoseEstimateTurret = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
         Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-tags");
         double distance = Math.sqrt(
                 Math.pow(targetPoseRobotSpace.getX(), 2) +
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
                         Math.pow(targetPoseRobotSpace.getZ(), 2));
-        if (robotPoseEstimate != null) {
-            if (robotPoseEstimate.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) {
-                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * .75, distance * .75, 9999999));
-                poseEstimator.addVisionMeasurement(robotPoseEstimate.pose, robotPoseEstimate.timestampSeconds);
+        if (robotPoseEstimateTags != null) {
+            if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) {
+                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
+                poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
+                        robotPoseEstimateTags.timestampSeconds);
+                // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
+                //         robotPoseEstimateTurret.timestampSeconds);
 
             }
-            SmartDashboard.putNumber("estimated Pose X limelight", robotPoseEstimate.pose.getX());
-            SmartDashboard.putNumber("estimated Pose Y limelight", robotPoseEstimate.pose.getY());
+            SmartDashboard.putNumber("estimated Pose X limelight", robotPoseEstimateTags.pose.getX());
+            SmartDashboard.putNumber("estimated Pose Y limelight", robotPoseEstimateTags.pose.getY());
             poseEstimator.update(gyroAngle, currentPositions);
 
             m_Fields.setRobotPose(poseEstimator.getEstimatedPosition());
@@ -436,7 +450,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                     poseEstimator.getEstimatedPosition().getRotation().getDegrees());
             SmartDashboard.putNumber("estimated Pose X", poseEstimator.getEstimatedPosition().getX());
             SmartDashboard.putNumber("estimated Pose Y", poseEstimator.getEstimatedPosition().getY());
-       //     SmartDashboard.putNumber("distance Away from tag", distance);
+            // SmartDashboard.putNumber("distance Away from tag", distance);
 
         } else {
             System.out.println("limelight estimation null");
@@ -551,15 +565,29 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 
-        Transform2d turretOffsetFromRobot = new Transform2d(-2.9375, 5.6475, Rotation2d.fromDegrees(0)); // switch to THIS if we should stick with current turret offset... the one that's wrong () -> new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
+        Transform2d turretOffsetFromRobot = new Transform2d(-0.0746125, 0.1434465, Rotation2d.fromDegrees(0)); // switch to
+                                                                                                         // THIS if we
+                                                                                                         // should stick
+                                                                                                         // with current
+                                                                                                         // turret
+                                                                                                         // offset...
+                                                                                                         // the one
+                                                                                                         // that's wrong
+                                                                                                         // () -> new
+                                                                                                         // Transform2d(0.2101215,
+                                                                                                         // .1412875,
+                                                                                                         // Rotation2d.fromDegrees(0));
 
         double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
                 .getDistance(hubPosition);
         return DistanceToTarget;
     }
 
-        public Translation2d getTurretOffset() { // used to be called "GetDistanceToHub"
-        Transform2d turretOffsetFromRobot = new Transform2d(2.9375, 5.6475, Rotation2d.fromDegrees(0)); //RYAN RUINED EVERYTHING FOR GOODNESS SAKE!!!
+    public Translation2d getTurretOffset() { // used to be called "GetDistanceToHub"
+        Transform2d turretOffsetFromRobot = new Transform2d(-0.0746125, 0.1434465, Rotation2d.fromDegrees(0)); // RYAN RUINED
+                                                                                                        // EVERYTHING
+                                                                                                        // FOR GOODNESS
+                                                                                                        // SAKE!!!
 
         Translation2d turretOffset = getPose().transformBy(turretOffsetFromRobot).getTranslation();
         return turretOffset;

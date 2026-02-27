@@ -86,6 +86,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     PIDController turretPID = new PIDController(1, 1, 1);
 
+    static double turretPosition;
+
     public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
         this.poseSupplier = poseSupplier;
 
@@ -159,6 +161,8 @@ public class TurretSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+        turretPosition = turret.getPosition().getValueAsDouble();
+
         Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
         isBlue = GameManager.isBlueAlliance;
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
