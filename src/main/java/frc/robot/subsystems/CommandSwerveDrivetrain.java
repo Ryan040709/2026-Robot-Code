@@ -551,7 +551,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 
-        Transform2d turretOffsetFromRobot = new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
+        Transform2d turretOffsetFromRobot = new Transform2d(-2.9375, 5.6475, Rotation2d.fromDegrees(0)); // switch to THIS if we should stick with current turret offset... the one that's wrong () -> new Transform2d(0.2101215, .1412875, Rotation2d.fromDegrees(0));
 
         double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
                 .getDistance(hubPosition);

@@ -68,8 +68,4 @@ public class outOfBumperIntake extends SubsystemBase {
         pivotMotor1.setControl(new PositionVoltage(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
     }
 
-    public void IntakeSpeed(double targetSpeed) {
-        intake.setControl(velocity.withVelocity(targetSpeed));
-    }
-
 }

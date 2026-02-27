@@ -35,9 +35,6 @@ import frc.robot.commands.shooter.ShooterToRPMS;
 //out of bumper intake commands
 import frc.robot.commands.intake.outTheBumper.Intake_LowerIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
-import frc.robot.commands.intake.outTheBumper.Intake_RunOuttake;
-import frc.robot.commands.intake.outTheBumper.Intake_RunIntake;
-import frc.robot.commands.intake.outTheBumper.Intake_StopIntake;
 //turret commands
 import frc.robot.commands.turret.Turret_Toggle;
 //get the game manager
@@ -101,9 +98,6 @@ public class RobotContainer {
         // out of bumper intake commands
         Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
-        Intake_RunIntake intake_RunIntake = new Intake_RunIntake(OutOfBumperIntake);
-        Intake_StopIntake intake_StopIntake = new Intake_StopIntake(OutOfBumperIntake);
-        Intake_RunOuttake intake_RunOuttake = new Intake_RunOuttake(OutOfBumperIntake);
 
         // in the bumper intake commands
         // test
@@ -118,9 +112,6 @@ public class RobotContainer {
                 // out of bumper intake commands
                 NamedCommands.registerCommand("intake-lower", intake_LowerIntake);
                 NamedCommands.registerCommand("intake-raise", intake_RaiseIntake);
-                NamedCommands.registerCommand("intake-intake", intake_RunIntake);
-                NamedCommands.registerCommand("intake-stop", intake_StopIntake);
-                NamedCommands.registerCommand("intake-stop", intake_RunOuttake);
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-hopperToIntake", outtake);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
@@ -249,7 +240,7 @@ public class RobotContainer {
                 // turret.setDefaultCommand(Commands.run(() ->
                 // turret.MoveMotor(manipulatorController.getLeftX()), turret));
                 turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX,
-                                drivetrain.robotVelocityY, (0), drivetrain.getPose(), drivetrain.getTurretOffset()), turret)); // manipulatorController.getLeftX()*0.0125
+                                drivetrain.robotVelocityY, (0), drivetrain.getTurretOffset()), turret)); // manipulatorController.getLeftX()*0.0125
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
                 driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
