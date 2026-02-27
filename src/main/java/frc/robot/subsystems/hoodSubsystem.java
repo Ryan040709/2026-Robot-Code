@@ -58,7 +58,7 @@ public class hoodSubsystem extends SubsystemBase {
     }
 
     public void zeroHood() {
-        hood.setPosition(0);
+        hood.setPosition(0); // goofy ahh comment
     }
 
     public void moveHood(double speed) {

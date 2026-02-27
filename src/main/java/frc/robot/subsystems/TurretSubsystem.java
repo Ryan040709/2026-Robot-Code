@@ -175,7 +175,6 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putBoolean("has turret targets?", hasTurretTargets);
         SmartDashboard.putBoolean("tag is in filter list?", FilterApriltags());
-        // SmartDashboard.putNumber("turret position", turret)
 
 
     }
@@ -213,7 +212,7 @@ public class TurretSubsystem extends SubsystemBase {
         }
     }
 
-    public void setPosition(double velocityX, double velocityY, double targetSpeed, Pose2d robotpose) {
+    public void setPosition(double velocityX, double velocityY, double targetSpeed, Pose2d robotpose, Translation2d turretPose) {
         MoveMotor(targetSpeed);
         determine3dOffset(velocityX, velocityY);
         FilterApriltags();
@@ -281,13 +280,15 @@ public class TurretSubsystem extends SubsystemBase {
 
         SmartDashboard.putNumber("limelight Turret Calculated ofset", offsetInDegrees);
         SmartDashboard.putNumber("turret tx offset", turretTxOffset);
+
+        SmartDashboard.putNumber("turret target (txOffset)", turretTxOffset+txTurret);
         double pidPower;
 
         double kP = SmartDashboard.getNumber("turret kP", 0.0045);
 
         turretPID = new PIDController(kP, 0, 0);
 
-        pidPower = MathUtil.clamp(turretPID.calculate(txTurret, turretTxOffset), -0.2, 0.2);
+        pidPower = MathUtil.clamp(turretPID.calculate(txTurret, 0), -0.5, 0.5);
         SmartDashboard.putNumber("pidPower", pidPower);
         SmartDashboard.putNumber("turret kP", kP);
 
@@ -379,7 +380,7 @@ public class TurretSubsystem extends SubsystemBase {
             if (blueHubPos.getX() > tagPose.get().getX()) {
                 fX = blueHubPos.getX();
                 sX = tagPose.get().getX();
-            } else if (tagX > blueHubPos.getX()) {
+            } else if (tagPose.get().getX() > blueHubPos.getX()) {
                 fX = tagPose.get().getX();
                 sX = blueHubPos.getX();
             }

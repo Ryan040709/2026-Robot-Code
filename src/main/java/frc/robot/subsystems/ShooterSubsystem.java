@@ -95,8 +95,8 @@ public class ShooterSubsystem extends SubsystemBase {
     }
 
     public double CalculateRpms(double distanceToHub) {
-        double m = 6.99334;
-        double b = 28.69392;
+        double m = 6.22766; //6.99334;
+        double b = 30.91754; //28.69392;
         double targetRPM = m * (distanceToHub) + b;
         SmartDashboard.putNumber("ShooterGoalRPMS", targetRPM);
 

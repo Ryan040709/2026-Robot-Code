@@ -557,4 +557,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 .getDistance(hubPosition);
         return DistanceToTarget;
     }
+
+        public Translation2d getTurretOffset() { // used to be called "GetDistanceToHub"
+        Transform2d turretOffsetFromRobot = new Transform2d(2.9375, 5.6475, Rotation2d.fromDegrees(0)); //RYAN RUINED EVERYTHING FOR GOODNESS SAKE!!!
+
+        Translation2d turretOffset = getPose().transformBy(turretOffsetFromRobot).getTranslation();
+        return turretOffset;
+    }
+
+    // turret offset X: 2.9375
+    // turret offset y: 5.6475
 }

@@ -249,7 +249,7 @@ public class RobotContainer {
                 // turret.setDefaultCommand(Commands.run(() ->
                 // turret.MoveMotor(manipulatorController.getLeftX()), turret));
                 turret.setDefaultCommand(Commands.run(() -> turret.setPosition(drivetrain.robotVelocityX,
-                                drivetrain.robotVelocityY, (0), drivetrain.getPose()), turret)); // manipulatorController.getLeftX()*0.0125
+                                drivetrain.robotVelocityY, (0), drivetrain.getPose(), drivetrain.getTurretOffset()), turret)); // manipulatorController.getLeftX()*0.0125
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
                 driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
