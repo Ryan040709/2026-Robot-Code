@@ -35,7 +35,7 @@ public final class Constants {
 
 
     //gear ratio
-    public static double Turret_SensorToMechanismRatio = 0.07777778059244156;
+    public static double Turret_SensorToMechanismRatio = 0.07608695652;
 
     // Voltage
     public static double Turret_PeakForwardVoltage = 2;

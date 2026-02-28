@@ -565,7 +565,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 
-        Transform2d turretOffsetFromRobot = new Transform2d(0.0746125, -0.1434465, Rotation2d.fromDegrees(0)); // switch to
+        Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0)); // switch to
                                                                                                          // THIS if we
                                                                                                          // should stick
                                                                                                          // with current
@@ -583,10 +583,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return DistanceToTarget;
     }
 
-    public Translation2d getTurretOffset() {
-        Transform2d turretOffsetFromRobot = new Transform2d(0.0746125, -0.1434465, Rotation2d.fromDegrees(0));
+    public Pose2d getTurretOffset() {
+        Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0));
 
-        Translation2d turretOffset = getPose().transformBy(turretOffsetFromRobot).getTranslation();
+        Pose2d turretOffset = getPose().transformBy(turretOffsetFromRobot);
 
         SmartDashboard.putNumber("robot X", getPose().getX());
         SmartDashboard.putNumber("turret offset X", turretOffset.getX());
