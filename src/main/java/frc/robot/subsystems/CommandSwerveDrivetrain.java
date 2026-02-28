@@ -565,7 +565,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 
-        Transform2d turretOffsetFromRobot = new Transform2d(-0.0746125, 0.1434465, Rotation2d.fromDegrees(0)); // switch to
+        Transform2d turretOffsetFromRobot = new Transform2d(0.0746125, -0.1434465, Rotation2d.fromDegrees(0)); // switch to
                                                                                                          // THIS if we
                                                                                                          // should stick
                                                                                                          // with current
@@ -583,16 +583,19 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return DistanceToTarget;
     }
 
-    public Translation2d getTurretOffset() { // used to be called "GetDistanceToHub"
-        Transform2d turretOffsetFromRobot = new Transform2d(-0.0746125, 0.1434465, Rotation2d.fromDegrees(0)); // RYAN RUINED
-                                                                                                        // EVERYTHING
-                                                                                                        // FOR GOODNESS
-                                                                                                        // SAKE!!!
+    public Translation2d getTurretOffset() {
+        Transform2d turretOffsetFromRobot = new Transform2d(0.0746125, -0.1434465, Rotation2d.fromDegrees(0));
 
         Translation2d turretOffset = getPose().transformBy(turretOffsetFromRobot).getTranslation();
+
+        SmartDashboard.putNumber("robot X", getPose().getX());
+        SmartDashboard.putNumber("turret offset X", turretOffset.getX());
+
+        SmartDashboard.putNumber("robot Y", getPose().getY());
+        SmartDashboard.putNumber("turret offset Y", turretOffset.getY());
         return turretOffset;
     }
 
-    // turret offset X: 2.9375
-    // turret offset y: 5.6475
+    // turret offset X: 2.9375in
+    // turret offset y: 5.6475in
 }

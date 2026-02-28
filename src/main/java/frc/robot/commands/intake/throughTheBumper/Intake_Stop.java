@@ -1,16 +1,20 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.Constants;
 
 public class Intake_Stop extends Command {
 
     throughBumperIntake intakeSubsystem = new throughBumperIntake();
+    outOfBumperIntake outtaBumperIntakeSubsystem = new outOfBumperIntake();
 
-    public Intake_Stop(throughBumperIntake intakeSubsystem){
+    public Intake_Stop(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake){
  
         this.intakeSubsystem = intakeSubsystem;
-        addRequirements(intakeSubsystem);
+        this.outtaBumperIntakeSubsystem = outttBumperIntake;
+        addRequirements(intakeSubsystem, outttBumperIntake);
 
     }
 
@@ -26,6 +30,8 @@ public class Intake_Stop extends Command {
     public void execute() {
         intakeSubsystem.SetIntakeFront(0);
         intakeSubsystem.SetIntakeBack(0);
+        // outta bumper intake
+        outtaBumperIntakeSubsystem.PivotIntake(0.23);
     }
 
     // Called once the command ends or is interrupted.

@@ -101,10 +101,10 @@ public class RobotContainer {
 
         // in the bumper intake commands
         // test
-        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake);
-        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake);
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake);
+        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, OutOfBumperIntake);
+        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, OutOfBumperIntake);
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake);
 
         public RobotContainer() {
                 // turret commands
@@ -194,7 +194,7 @@ public class RobotContainer {
                 // turret.MoveMotor(manipulatorController.getLeftX()),
                 // turret));
                 // manual zeroing
-                manipulatorController.x().whileTrue(Commands.run(() -> turret.zeroPosition(), turret));
+                //manipulatorController.x().whileTrue(Commands.run(() -> turret.zeroPosition(), turret));
                 // set to run to x position
 
                 driverController.pov(0).whileTrue(turret_Toggle);
@@ -210,26 +210,26 @@ public class RobotContainer {
                 driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 
-                manipulatorController.rightTrigger(0.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
+                //manipulatorController.rightTrigger(0.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 
-                manipulatorController.a().whileTrue(Commands.run(() -> turret.setToZero(), turret));
+                //manipulatorController.a().whileTrue(Commands.run(() -> turret.setToZero(), turret));
 
-                manipulatorController.y().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+                //manipulatorController.y().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
 
-                manipulatorController.pov(0).whileTrue(turret_Toggle);
+                //manipulatorController.pov(0).whileTrue(turret_Toggle);
 
 
                 //thru bumper intake commands
-                manipulatorController.pov(90).whileTrue(outtake).whileFalse(intake_Stop);
+                //manipulatorController.pov(90).whileTrue(outtake).whileFalse(intake_Stop);
 
-                manipulatorController.pov(180).whileTrue(IntakeToHopper).whileFalse(intake_Stop);
+                //manipulatorController.pov(180).whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
-                manipulatorController.pov(270).whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+                //manipulatorController.pov(270).whileTrue(IntakeToShooter).whileFalse(intake_Stop);
 
 
-                manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
+                //manipulatorController.leftTrigger(0.05).whileTrue(shooter_RunToRPM);
 
-                manipulatorController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), hoodSubsystem));
+                // manipulatorController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), hoodSubsystem));
                 // disabled because I dunno if we should use it
                 //manipulatorController.leftBumper().whileTrue(Commands.run(() -> hoodSubsystem.moveHood(manipulatorController.getLeftY()), hoodSubsystem));
 
@@ -244,10 +244,15 @@ public class RobotContainer {
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
                 driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
+                driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
                 // out of bumper intake commands
-                manipulatorController.leftBumper().whileTrue(intake_LowerIntake);
-                manipulatorController.rightBumper().whileTrue(intake_RaiseIntake);
+                //manipulatorController.leftBumper().whileTrue(intake_LowerIntake);
+                manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+                manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
+                manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
+
+                manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 
         }
 

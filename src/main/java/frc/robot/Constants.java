@@ -53,48 +53,19 @@ public final class Constants {
 
   public static final class OutOfBumperIntakeSubsystem {
 
-    public static double OutBumperPivot_PeakForwardDutyCycle = 0;
-    public static double OutBumperPivot_PeakReverseDutyCycle = 0;
+    public static double OutBumperPivot_PeakForwardDutyCycle = 0.2;
+    public static double OutBumperPivot_PeakReverseDutyCycle = -0.05;
 
-    public static double OutBumperPivot_Slot0_kP = 0;
+    public static double OutBumperPivot_Slot0_kP = 5;
     public static double OutBumperPivot_Slot0_kI = 0;
     public static double OutBumperPivot_Slot0_kD = 0;
 
-    public static boolean OutBumperPivot_StatorCurrentLimitEnable = true;
-    public static double OutBumperPivot_CurrentLimit = 0;
     public static boolean OutBumperPivot_SupplyCurrentLimitEnable = true;
-    public static double OutBumperPivot_SupplyCurrentLimit = 0;
-    public static double OutBumperPivot_SupplyCurrentLowerLimit = 0;
-    public static double OutBumperPivot_SupplyCurrentLowerTime = 0;
+    public static double OutBumperPivot_SupplyCurrentLimit = 2;
     public static boolean OutBumperPivot_FowardSoftLimitEnable = true;
-    public static double OutBumperPivot_ForwardSoftLimitThreshold = 0;
+    public static double OutBumperPivot_ForwardSoftLimitThreshold = 0.26;
     public static boolean OutBumperPivot_ReverseSoftLimitEnable = true;
     public static double OutBumperPivot_ReverseSoftLimitThreshold = 0;
-
-    // Voltage
-    public static double OutBumperPivot_PeakForwardVoltage = 0;
-    public static double OutBumperPivot_PeakReverseVoltage = 0;
-    // Differential Constants
-    public static double OutBumperPivot_PeakDifferentialDutyCycle = 0;
-    public static double OutBumperPivot_PeakDifferentialTorqueCurrent = 0;
-    public static double OutBumperPivot_PeakDifferentialVoltage = 0;
-    // Motion Magic
-    public static double OutBumperPivot_MotionMagicCruiseVelocity = 0;
-    public static double OutBumperPivot_MotionMagicAcceleration = 0;
-    public static double OutBumperPivot_MotionMagicExpo_kA = 0;
-  
-    public static double OutBumperPivot_MotionMagicExpo_kV = 0;
-    
-    // Torque Current
-    public static double OutBumperPivot_PeakForwardTorqueCurrent = 0;
-    public static double OutBumperPivot_PeakReverseTorqueCurrent = 0;
-
-    // intake velocities
-    public static double OutBumperIntake_IntakeVelocity = 0;
-    // when the motor is up, it's at its zero position
-    public static double OutBumperPivot_Up = 0;
-    // when the motor moves down, its position goes up
-    public static double OutBumperPivot_Down = 0;
 
   }
 

@@ -1,20 +1,23 @@
 package frc.robot.commands.intake.throughTheBumper;
 
-
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.Constants;
 
 public class Intake_IntakeToHopper extends Command {
 
     throughBumperIntake intakeSubsystem = new throughBumperIntake();
+    outOfBumperIntake outtaBumperIntakeSubsystem = new outOfBumperIntake();
 
-    public Intake_IntakeToHopper(throughBumperIntake intakeSubsystem){
+    public Intake_IntakeToHopper(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake){
  
         this.intakeSubsystem = intakeSubsystem;
-        addRequirements(intakeSubsystem);
+        this.outtaBumperIntakeSubsystem = outttBumperIntake;
+        addRequirements(intakeSubsystem, outttBumperIntake);
 
     }
+
 
     // Called when the command is initially scheduled.
     @Override
@@ -25,8 +28,13 @@ public class Intake_IntakeToHopper extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.SetIntakeFront(-.5);
-        intakeSubsystem.SetIntakeBack(.5);
+        
+        outtaBumperIntakeSubsystem.PivotIntake(0);
+        if(outtaBumperIntakeSubsystem.AtPosition(0)){
+        intakeSubsystem.SetIntakeFront(-0.5);
+        intakeSubsystem.SetIntakeBack(0.3);
+    }
+        // outta bumper intake
     }
 
     // Called once the command ends or is interrupted.

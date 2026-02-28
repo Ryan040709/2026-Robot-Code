@@ -177,9 +177,6 @@ public class TurretSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean("is feeding", isFeeding);
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble());
 
-        SmartDashboard.putBoolean("has turret targets?", hasTurretTargets);
-        SmartDashboard.putBoolean("tag is in filter list?", FilterApriltags());
-
     }
 
     public Pose2d UpdateRobotPose2d() {
@@ -234,7 +231,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void determineLockingMethod(double velocityX, double velocityY, Translation2d robotpose) {
         if (hasTurretTargets == true && FilterApriltags()) {
-            if (elapsedTime > waitTime + 1 && !isFeeding) {
+            if (elapsedTime > waitTime + 1 && !isFeeding && false) {
                 turret.set(calculateTurretPID(velocityX, velocityY, robotpose));
             } else {
                 turret.setControl(m_request.withPosition((calculateAngleToHub(velocityX, velocityY, robotPos))));
@@ -273,8 +270,6 @@ public class TurretSubsystem extends SubsystemBase {
         originalHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
 
         turretTxOffset = originalHubAngle - offsetInDegrees;
-
-
 
         SmartDashboard.putNumber("limelight Turret Calculated ofset", offsetInDegrees);
         SmartDashboard.putNumber("turret tx offset", turretTxOffset);
@@ -358,7 +353,6 @@ public class TurretSubsystem extends SubsystemBase {
     double rotatedX = 0;
     double rotatedY = 0;
 
-
     public void determine3dOffset(double velocityX, double velocityY) {
 
         if (tagID >= 1) {
@@ -412,6 +406,8 @@ public class TurretSubsystem extends SubsystemBase {
         double diffX = (lockingTarget.getX() - turretPose.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - theta), -30, 330), -20, 315);
+
+        SmartDashboard.putNumber("golden angle", goldenAngle);
 
         return goldenAngle;
 
