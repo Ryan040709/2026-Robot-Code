@@ -34,12 +34,6 @@ public class throughBumperIntake extends SubsystemBase {
         intakeConfig.CurrentLimits.StatorCurrentLimit = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_CurrentLimit;
         intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimitEnable;
         intakeConfig.CurrentLimits.SupplyCurrentLimit = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimit;
-        intakeConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_SupplyCurrentLowerLimit;
-        intakeConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_SupplyCurrentLowerTime;
-        intakeConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_FowardSoftLimitEnable;
-        intakeConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 140;
-        intakeConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_ReverseSoftLimitEnable;
-        intakeConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -140;
         // Voltage
         intakeConfig.Voltage.PeakForwardVoltage = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakForwardVoltage;
         intakeConfig.Voltage.PeakReverseVoltage = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakReverseVoltage;

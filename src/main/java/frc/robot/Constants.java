@@ -80,14 +80,8 @@ public final class Constants {
 
     public static boolean ThroughBumperIntake_StatorCurrentLimitEnable = false;
     public static double ThroughBumperIntake_CurrentLimit = 0;
-    public static boolean ThroughBumperIntake_SupplyCurrentLimitEnable = false;
-    public static double ThroughBumperIntake_SupplyCurrentLimit = 10;
-    public static double ThroughBumperIntake_SupplyCurrentLowerLimit = 0;
-    public static double ThroughBumperIntake_SupplyCurrentLowerTime = 0;
-    public static boolean ThroughBumperIntake_FowardSoftLimitEnable = false;
-    public static double ThroughBumperIntake_ForwardSoftLimitThreshold = 0;
-    public static boolean ThroughBumperIntake_ReverseSoftLimitEnable = false;
-    public static double ThroughBumperIntake_ReverseSoftLimitThreshold = 0;
+    public static boolean ThroughBumperIntake_SupplyCurrentLimitEnable = true;
+    public static double ThroughBumperIntake_SupplyCurrentLimit = 40;
 
     // Voltage
     public static double ThroughBumperIntake_PeakForwardVoltage = 8;

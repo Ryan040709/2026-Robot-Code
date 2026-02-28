@@ -68,7 +68,7 @@ public class outOfBumperIntake extends SubsystemBase {
     }
 
     public void PivotIntake(double targetPosition) {
-        rightPivotMotor2.setControl(m_request.withPosition(targetPosition)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
+        rightPivotMotor2.setControl(m_request.withPosition(.23)); // TODO CHANGE VALUE TO ACTUAL PIVOT POSITION!!!!
     }
     public boolean AtPosition(double GoalPosition){
         return true; //MathUtil.isNear(GoalPosition, rightPivotMotor2.getPosition().getValueAsDouble(), .1 );
