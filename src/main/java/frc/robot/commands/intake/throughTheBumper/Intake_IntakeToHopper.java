@@ -1,5 +1,6 @@
 package frc.robot.commands.intake.throughTheBumper;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
@@ -28,12 +29,15 @@ public class Intake_IntakeToHopper extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        
+
+        double speedFront = SmartDashboard.getNumber("intake speed Front", 0.3);
+        double speedBack = SmartDashboard.getNumber("intake speed Back", 0.3);
+
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if(outtaBumperIntakeSubsystem.AtPosition(0)){
-        intakeSubsystem.SetIntakeFront(-0.5);
-        intakeSubsystem.SetIntakeBack(0.3);
-    }
+        intakeSubsystem.SetIntakeFront(-.4);
+        intakeSubsystem.SetIntakeBack(.75);
+        }
         // outta bumper intake
     }
 

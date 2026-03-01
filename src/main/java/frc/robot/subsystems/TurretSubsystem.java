@@ -222,7 +222,7 @@ public class TurretSubsystem extends SubsystemBase {
             determineLockingMethod(velocityX, velocityY, turretPose);
 
             txTurret = LimelightHelpers.getTX("limelight-turret");
-
+            SmartDashboard.putNumber("Turret Limelight TX", txTurret);
             SmartDashboard.putNumber("Turret Position", turret.getPosition().getValueAsDouble());
 
         }
@@ -294,12 +294,12 @@ public class TurretSubsystem extends SubsystemBase {
 
         double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
 
-        if (robotPos.getX() > blueHubPos.getX()) {
+        if (robotPos.getX() > Hx) {
             feedingTargets();
         } else {
             lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
                     redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
-            System.out.println("is not feeding!");
+            //System.out.println("is not feeding!");
             isFeeding = false;
         }
         SmartDashboard.putBoolean("in deadzone?", turretDeadZone());

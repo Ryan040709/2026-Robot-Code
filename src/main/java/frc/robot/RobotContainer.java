@@ -142,6 +142,9 @@ public class RobotContainer {
 
                 SmartDashboard.putNumber("Shooter RPM", 65);
 
+                SmartDashboard.putNumber("intake speed Front", 0.3);
+                 SmartDashboard.putNumber("intake speed Back", 0.3);
+
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
 
@@ -244,7 +247,7 @@ public class RobotContainer {
                 turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
-                driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
+                // driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
                 driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
                 // out of bumper intake commands
