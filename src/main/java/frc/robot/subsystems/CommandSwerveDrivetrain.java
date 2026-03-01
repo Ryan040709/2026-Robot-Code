@@ -418,12 +418,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         LimelightHelpers.SetRobotOrientation("limelight-turret",
                 TurretSubsystem.turretPosition, 0, 0, 0, 0, 0);
 
-                //turret limelight offset
-                    /* x: 2.93806
-                     * y: 11.08921
-                     * z: 20.39227
-                     * rotated: 20*
-                     */
+        // turret limelight offset
+        /*
+         * x: 2.93806
+         * y: 11.08921
+         * z: 20.39227
+         * rotated: 20*
+         */
         PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-tags");
         PoseEstimate robotPoseEstimateTurret = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
@@ -438,7 +439,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                         robotPoseEstimateTags.timestampSeconds);
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
-                //         robotPoseEstimateTurret.timestampSeconds);
+                // robotPoseEstimateTurret.timestampSeconds);
 
             }
             SmartDashboard.putNumber("estimated Pose X limelight", robotPoseEstimateTags.pose.getX());
@@ -557,37 +558,35 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
-    public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
+    public Pose2d getTurretTarget() {
         Translation2d BlueHubPosition = new Translation2d(4.62554 - (robotVelocityX * ShooterSubsystem.tof),
                 4.03606 - (robotVelocityY * ShooterSubsystem.tof));
         Translation2d RedHubPosistion = new Translation2d(11.98482 - (robotVelocityX * ShooterSubsystem.tof),
                 4.03606 - (robotVelocityY * ShooterSubsystem.tof));
 
-        Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
+        return new Pose2d(GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion, Rotation2d.fromDegrees(0));
+    }
 
-        Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0));
+    public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
+        double DistanceToTarget = getTurretOffset().getTranslation().getDistance(getTurretTarget().getTranslation());
 
-        double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
-                .getDistance(hubPosition);
-
-
-        m_Fields.getObject("target").setPose(new Pose2d(hubPosition, Rotation2d.fromDegrees(0)));
+        // puts the target on Glass so we can visualize it
+        m_Fields.getObject("target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         return DistanceToTarget;
     }
 
-
-
     public Pose2d getTurretOffset() {
-        Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0));
+        // turret offset x: 5.6475in OR 0.1434465m
+        // turret offset y: 2.9375in OR 0.0746125m
+        Transform2d turretOffsetFromRobot = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
 
         Pose2d turretOffset = getPose().transformBy(turretOffsetFromRobot);
 
-        SmartDashboard.putString("robot pose", getPose().toString()); // gives the robot pose 
+        // gives the robot pose
+        SmartDashboard.putString("robot pose", getPose().toString());
 
-        SmartDashboard.putString("turret pose", turretOffset.toString()); // gives the turret pose
+        // gives the turret pose
+        SmartDashboard.putString("turret pose", turretOffset.toString());
         return turretOffset;
     }
-
-    // turret offset X: 2.9375in
-    // turret offset y: 5.6475in
 }
