@@ -28,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private VelocityVoltage m_velocity = new VelocityVoltage(0);
 
-    public static double tof = 0; //used to be 1.1
+    public static double tof = 1.1; //used to be 1.1
 
     private Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
     private Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
@@ -96,7 +96,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double CalculateRpms(double distanceToHub) {
         double m = 4.67989; //6.99334;
-        double b = 38.81499; //28.69392;
+        double b = 37;  //38.81499; 
         double targetRPM = m * (distanceToHub) + b;
         SmartDashboard.putNumber("ShooterGoalRPMS", targetRPM);
 

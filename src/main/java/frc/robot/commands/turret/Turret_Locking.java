@@ -28,7 +28,8 @@ public class Turret_Locking extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    turretSubsystem.setPosition(drivetrain.robotVelocityX, drivetrain.robotVelocityY, 0, drivetrain.getTurretOffset());
+    turretSubsystem.setPosition(
+      drivetrain.robotVelocityX, drivetrain.robotVelocityY, 0, drivetrain.getTurretOffset());
   }
 
   // Called once the command ends or is interrupted.

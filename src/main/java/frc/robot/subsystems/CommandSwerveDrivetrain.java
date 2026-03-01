@@ -281,8 +281,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
 
-    public double robotVelocityX = getRobotRelativeSpeeds().vxMetersPerSecond;
-    public double robotVelocityY = getRobotRelativeSpeeds().vyMetersPerSecond;
+    public double robotVelocityX = getSpeeds().vxMetersPerSecond;
+    public double robotVelocityY = getSpeeds().vyMetersPerSecond;
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
 
@@ -565,23 +565,17 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
 
-        Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0)); // switch to
-                                                                                                         // THIS if we
-                                                                                                         // should stick
-                                                                                                         // with current
-                                                                                                         // turret
-                                                                                                         // offset...
-                                                                                                         // the one
-                                                                                                         // that's wrong
-                                                                                                         // () -> new
-                                                                                                         // Transform2d(0.2101215,
-                                                                                                         // .1412875,
-                                                                                                         // Rotation2d.fromDegrees(0));
+        Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0));
 
         double DistanceToTarget = getPose().transformBy(turretOffsetFromRobot).getTranslation()
                 .getDistance(hubPosition);
+
+
+        m_Fields.getObject("target").setPose(new Pose2d(hubPosition, Rotation2d.fromDegrees(0)));
         return DistanceToTarget;
     }
+
+
 
     public Pose2d getTurretOffset() {
         Transform2d turretOffsetFromRobot = new Transform2d(0.1434465,0.0746125 , Rotation2d.fromDegrees(0));

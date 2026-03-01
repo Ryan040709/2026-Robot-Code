@@ -297,8 +297,8 @@ public class TurretSubsystem extends SubsystemBase {
         if (robotPos.getX() > Hx) {
             feedingTargets();
         } else {
-            lockingTarget = new Translation2d(Hx + (velocityX * ShooterSubsystem.tof),
-                    redHubPos.getY() + (velocityY * ShooterSubsystem.tof));
+            lockingTarget = new Translation2d(Hx - (velocityX * ShooterSubsystem.tof),
+                    redHubPos.getY() - (velocityY * ShooterSubsystem.tof));
             //System.out.println("is not feeding!");
             isFeeding = false;
         }
@@ -400,7 +400,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double calculateAngleToHub(double velocityX, double velocityY, Pose2d turretPose) {
 
-        determineLockingTarget(0, 0);
+        determineLockingTarget(velocityX, velocityY);
 
         double diffY = (lockingTarget.getY() - turretPose.getY());
         double diffX = (lockingTarget.getX() - turretPose.getX());
@@ -412,4 +412,6 @@ public class TurretSubsystem extends SubsystemBase {
         return goldenAngle;
 
     }
+
+    
 }
