@@ -39,6 +39,7 @@ import frc.robot.commands.turret.Turret_Locking;
 //turret commands
 import frc.robot.commands.turret.Turret_Toggle;
 //get the game manager
+import frc.robot.commands.turret.ZeroTurret;
 
 public class RobotContainer {
 
@@ -97,6 +98,7 @@ public class RobotContainer {
         // turret commands
         Turret_Toggle turret_Toggle = new Turret_Toggle(turret);
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);
+        ZeroTurret zeroTurret = new ZeroTurret(turret);
         // out of bumper intake commands
         Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
@@ -215,6 +217,7 @@ public class RobotContainer {
                 driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 
+
                 //manipulatorController.rightTrigger(0.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 
                 //manipulatorController.a().whileTrue(Commands.run(() -> turret.setToZero(), turret));
@@ -240,11 +243,11 @@ public class RobotContainer {
 
                 gameManager.setDefaultCommand(Commands.run(() -> {
                 }, gameManager));
-                hoodSubsystem.setDefaultCommand(hoodSetToPosition);
+              //  hoodSubsystem.setDefaultCommand(hoodSetToPosition);
 
                 // turret.setDefaultCommand(Commands.run(() ->
                 // turret.MoveMotor(manipulatorController.getLeftX()), turret));
-                turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
+                //   turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
 
                 driverController.rightBumper().whileTrue(hoodSetToPosition);
                 // driverController.b().whileTrue(Commands.run(() -> hoodSubsystem.zeroHood(), shooter));
@@ -255,6 +258,7 @@ public class RobotContainer {
                 manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
+                manipulatorController.start().whileTrue(zeroTurret);
 
                 manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 

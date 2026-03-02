@@ -25,7 +25,7 @@ import frc.robot.Constants;
 
 public class TurretSubsystem extends SubsystemBase {
 
-    DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
+   public  DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
 
     private Supplier<Pose2d> poseSupplier;
 
@@ -48,6 +48,7 @@ public class TurretSubsystem extends SubsystemBase {
     Translation2d lockingTarget = new Translation2d(0, 0); // robot position
 
     public boolean isFeeding = true;
+    public boolean turretZeroed = false;
 
     public double tagID;
     public Pose2d botPose = new Pose2d();
@@ -159,6 +160,8 @@ public class TurretSubsystem extends SubsystemBase {
     public void periodic() {
         turretPosition = turret.getPosition().getValueAsDouble();
 
+        SmartDashboard.putBoolean("turret zero Switch", zeroingSensor.get());
+
         Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
         isBlue = GameManager.isBlueAlliance;
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
@@ -179,9 +182,6 @@ public class TurretSubsystem extends SubsystemBase {
         return poseSupplier.get();
     }
 
-    public void zeroPosition() {
-        turret.setPosition(0);
-    }
 
     public boolean turretToggle() {
         if (turretLocking == true) {
@@ -255,7 +255,8 @@ public class TurretSubsystem extends SubsystemBase {
         double turretTxOffset;
 
         double offsetInDegrees = Math
-                .toDegrees(Math.atan((turretTarget.getY() - robotpose.getY()) / (turretTarget.getX() - robotpose.getX())));
+                .toDegrees(
+                        Math.atan((turretTarget.getY() - robotpose.getY()) / (turretTarget.getX() - robotpose.getX())));
 
         double diffY = (redHubPos.getY() - robotPos.getY());
         double diffX = (Hx - robotPos.getX());
@@ -290,13 +291,13 @@ public class TurretSubsystem extends SubsystemBase {
             feedingTargets();
         } else {
             // lockingTarget = new Translation2d(Hx - (velocityX * ShooterSubsystem.tof),
-            //         redHubPos.getY() - (velocityY * ShooterSubsystem.tof));
-            //System.out.println("is not feeding!");
+            // redHubPos.getY() - (velocityY * ShooterSubsystem.tof));
+            // System.out.println("is not feeding!");
             isFeeding = false;
 
             lockingTarget = turretTarget.getTranslation();
         }
-        
+
         SmartDashboard.putBoolean("in deadzone?", turretDeadZone());
         return lockingTarget;
     }
@@ -401,7 +402,8 @@ public class TurretSubsystem extends SubsystemBase {
         double diffY = (lockingTarget.getY() - turretPose.getY());
         double diffX = (lockingTarget.getX() - turretPose.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-        double goldenAngle = MathUtil.clamp(MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -20, 315);
+        double goldenAngle = MathUtil.clamp(
+                MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -20, 315);
 
         SmartDashboard.putNumber("golden angle", goldenAngle);
 
@@ -409,5 +411,11 @@ public class TurretSubsystem extends SubsystemBase {
 
     }
 
-    
+    public void setTurretPower(double setSpeed) {
+        turret.set(setSpeed);       
+    }
+    public void zeroTurretPosition(double zeroPosition){
+        turret.setPosition(zeroPosition);
+    }
+
 }
