@@ -406,6 +406,8 @@ public class TurretSubsystem extends SubsystemBase {
                 MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -20, 315);
 
         SmartDashboard.putNumber("golden angle", goldenAngle);
+        SmartDashboard.putBoolean("turretAtGoalAngle", MathUtil.isNear(goldenAngle, turret.getPosition().getValueAsDouble(), 1) );
+        SmartDashboard.putNumber("turret calculated angle diff" , goldenAngle - turret.getPosition().getValueAsDouble());
 
         return goldenAngle;
 
@@ -417,5 +419,7 @@ public class TurretSubsystem extends SubsystemBase {
     public void zeroTurretPosition(double zeroPosition){
         turret.setPosition(zeroPosition);
     }
+
+    
 
 }
