@@ -558,6 +558,37 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
+    public boolean turretDeadZone() {
+        if (getPose().getY() > 2.8 && getPose().getY() < 5.3) {
+            if (getPose().getX() > 5.5 && getPose().getX() < 7.0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+    }
+
+    public Pose2d feedingTargets() {
+
+        double Hy = 4.03606;
+
+        double tX = GameManager.isBlueAlliance ? 4.62554 / 2 : 11.98482 + (4.62554 / 2);
+        double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 : 0.5;
+        double tY = getPose().getY() > Hy ? 6 : 2;
+
+        if (turretDeadZone()) {
+            // do the deadzone swap!
+            return new Pose2d(tX, tYFar, Rotation2d.fromDegrees(0));
+            // isFeeding = true;
+        } else {
+            return new Pose2d(tX, tY, Rotation2d.fromDegrees(0));
+            // isFeeding = true;
+        }
+    }
+
     public Pose2d getTurretTarget() {
         Translation2d BlueHubPosition = new Translation2d(4.62554 - (robotVelocityX * ShooterSubsystem.tof),
                 4.03606 - (robotVelocityY * ShooterSubsystem.tof));
