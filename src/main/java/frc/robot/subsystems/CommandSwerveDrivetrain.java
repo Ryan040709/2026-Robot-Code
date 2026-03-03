@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.Second;
+import static edu.wpi.first.units.Units.Volts;
 
 import java.util.Optional;
 import java.util.function.Supplier;
@@ -28,7 +29,6 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
-import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
@@ -43,8 +43,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import frc.robot.SwerveConstants;
 import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
 import frc.robot.subsystems.LimelightHelpers.PoseEstimate;
@@ -565,6 +563,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
     }
 
+    public boolean isFeeding() {
+        double Hx = GameManager.isBlueAlliance ? 4.62554 : 11.98482;
+
+        return GameManager.isBlueAlliance ? getPose().getX() > Hx : getPose().getX() < Hx ;
+    }
+
     public Pose2d feedingTargets() {
 
         double Hy = 4.03606;
@@ -573,17 +577,17 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 : 0.5;
         double tY = getPose().getY() > Hy ? 6 : 2;
 
-        if (turretDeadZone()) {
+        if (turretDeadZone() ) {
             // do the deadzone swap!
-            return new Pose2d(tX, tYFar, Rotation2d.fromDegrees(0));
+            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tYFar - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
             // isFeeding = true;
         } else {
-            return new Pose2d(tX, tY, Rotation2d.fromDegrees(0));
+            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
             // isFeeding = true;
         }
     }
 
-    public Pose2d getTurretTarget() {
+    public Pose2d getHubTarget() {
         Translation2d BlueHubPosition = new Translation2d(4.62554 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
                 4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
         Translation2d RedHubPosistion = new Translation2d(11.98482 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
@@ -592,11 +596,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return new Pose2d(GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion, Rotation2d.fromDegrees(0));
     }
 
+    public Pose2d getTurretTarget() {
+        return new Pose2d(isFeeding() ? feedingTargets().getTranslation() : getHubTarget().getTranslation(), Rotation2d.fromDegrees(0));
+    }
+
     public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
         double DistanceToTarget = getTurretOffset().getTranslation().getDistance(getTurretTarget().getTranslation());
 
         // puts the target on Glass so we can visualize it
-        m_Fields.getObject("target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
+        m_Fields.getObject("scoring target").setPose(new Pose2d(feedingTargets().getTranslation(), Rotation2d.fromDegrees(0)));
+        //m_Fields.getObject("feeding target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         return DistanceToTarget;
     }
 
