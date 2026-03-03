@@ -363,7 +363,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public void periodic() {
 
-        SmartDashboard.putNumber("distances away fron hub", getDistanceToTarget());
         // Translation2d turretOffsetFromRobot = new Translation2d(getPose().getX() -
         // 0.2101215 , getPose().getY() - .1412875 );
         // double distanceFromHub =
@@ -374,8 +373,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // SmartDashboard.putNumber("DistanceFromBlueHub", distanceFromHub);
 
 
-        SmartDashboard.putNumber("velocity Y", getFieldRelativeSpeeds().vyMetersPerSecond);
-        SmartDashboard.putNumber("velocity X", getFieldRelativeSpeeds().vxMetersPerSecond);
 
         // SmartDashboard.putNumber("steer motor amps", );
         /*
@@ -421,7 +418,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * rotated: 20*
          */
         PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-tags");
-        PoseEstimate robotPoseEstimateTurret = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-turret");
 
         Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-tags");
         double distance = Math.sqrt(
