@@ -126,11 +126,15 @@ public class RobotContainer {
                 // climber commands
 
                 // Setup Routines
+                routineChooser.setDefaultOption("Testing", "testing");
+
                 routineChooser.setDefaultOption("Left Trench Auto", "left_trench");
                 routineChooser.setDefaultOption("Right Trench Auto", "right_trench");
                 routineChooser.setDefaultOption("Hub Auto", "Hub");
 
                 // Setup Variations
+                variationChooser.setDefaultOption("Testing", "to_testing");
+
                 variationChooser.setDefaultOption("Depot", "to_depot");
                 variationChooser.addOption("Sweep", "to_sweep");
                 variationChooser.addOption("Double Sweep", "to_double_sweep");

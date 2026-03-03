@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.665230769230771,
-        "y": 7.68625641025641
+        "x": 1.942855421686747,
+        "y": 3.9694337349397593
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.665230769230771,
-        "y": 7.68625641025641
+        "x": 1.942855421686747,
+        "y": 4.969433734939759
       },
       "isLocked": false,
-      "linkedName": "left trench starting point"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.0488846153846167,
-        "y": 5.965282051282052
+        "x": 1.942855421686747,
+        "y": 6.133120481927712
       },
       "prevControl": {
-        "x": 1.0488846153846167,
-        "y": 6.965282051282052
+        "x": 1.942855421686747,
+        "y": 5.133120481927712
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "blue depot"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Auton Path Links",
+  "folder": null,
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -90.0
+    "velocity": 0.0,
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }
