@@ -35,7 +35,7 @@ public class Intake_IntakeToShooter extends Command {
 
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if(outtaBumperIntakeSubsystem.AtPosition(0)){
-        intakeSubsystem.SetIntakeFront(-.4);
+        intakeSubsystem.SetIntakeFront(-.75);
         intakeSubsystem.SetIntakeBack(-.75);
         }
         
