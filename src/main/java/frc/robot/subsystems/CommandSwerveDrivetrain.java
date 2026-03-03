@@ -281,9 +281,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return m_kinematics.toChassisSpeeds(getModuleStates());
     }
 
-    public double robotVelocityX = getSpeeds().vxMetersPerSecond;
-    public double robotVelocityY = getSpeeds().vyMetersPerSecond;
-
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
 
         ChassisSpeeds targetSpeeds = ChassisSpeeds.discretize(robotRelativeSpeeds, 0.02);
@@ -376,11 +373,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // Translation2d(4.62554, 4.03606));
         // SmartDashboard.putNumber("DistanceFromBlueHub", distanceFromHub);
 
-        robotVelocityY = getRobotRelativeSpeeds().vyMetersPerSecond;
-        robotVelocityX = getRobotRelativeSpeeds().vxMetersPerSecond;
 
-        SmartDashboard.putNumber("velocity Y", robotVelocityY);
-        SmartDashboard.putNumber("velocity X", robotVelocityX);
+        SmartDashboard.putNumber("velocity Y", getFieldRelativeSpeeds().vyMetersPerSecond);
+        SmartDashboard.putNumber("velocity X", getFieldRelativeSpeeds().vxMetersPerSecond);
 
         // SmartDashboard.putNumber("steer motor amps", );
         /*
@@ -410,9 +405,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SwerveModulePosition[] currentPositions = getModulePositions(false);
         // Update the pose
 
-        SmartDashboard.putNumber("GetXSpeeds", getSpeeds().vxMetersPerSecond);
-        SmartDashboard.putNumber("GetYSpeeds", getSpeeds().vyMetersPerSecond);
-        SmartDashboard.putNumber("GetRotationSpeeds", getSpeeds().omegaRadiansPerSecond);
+        SmartDashboard.putNumber("GetXSpeeds", getFieldRelativeSpeeds().vxMetersPerSecond);
+        SmartDashboard.putNumber("GetYSpeeds", getFieldRelativeSpeeds().vyMetersPerSecond);
+        SmartDashboard.putNumber("GetRotationSpeeds", getFieldRelativeSpeeds().omegaRadiansPerSecond);
         LimelightHelpers.SetRobotOrientation("limelight-tags",
                 poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
         LimelightHelpers.SetRobotOrientation("limelight-turret",
@@ -481,12 +476,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     // geting the speed of the swerves
-    public ChassisSpeeds getSpeeds() {
-        return m_kinematics.toChassisSpeeds(getModuleStates());
+    public ChassisSpeeds getFieldRelativeSpeeds() {
+        var speeds = m_kinematics.toChassisSpeeds(getModuleStates());
+        var fieldSpeeds = new Translation2d(speeds.vxMetersPerSecond , speeds.vyMetersPerSecond).rotateBy(getPose().getRotation());
+        
+        return new ChassisSpeeds(fieldSpeeds.getX(), fieldSpeeds.getY(), speeds.omegaRadiansPerSecond);
     }
 
     public double getVelocity() {
-        return Math.sqrt(Math.pow(getSpeeds().vxMetersPerSecond, 2) + Math.pow(getSpeeds().vyMetersPerSecond, 2));
+        return Math.sqrt(Math.pow(getFieldRelativeSpeeds().vxMetersPerSecond, 2) + Math.pow(getFieldRelativeSpeeds().vyMetersPerSecond, 2));
     }
 
     private void startSimThread() {
@@ -590,10 +588,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public Pose2d getTurretTarget() {
-        Translation2d BlueHubPosition = new Translation2d(4.62554 - (robotVelocityX * ShooterSubsystem.tof),
-                4.03606 - (robotVelocityY * ShooterSubsystem.tof));
-        Translation2d RedHubPosistion = new Translation2d(11.98482 - (robotVelocityX * ShooterSubsystem.tof),
-                4.03606 - (robotVelocityY * ShooterSubsystem.tof));
+        Translation2d BlueHubPosition = new Translation2d(4.62554 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
+                4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
+        Translation2d RedHubPosistion = new Translation2d(11.98482 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
+                4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
 
         return new Pose2d(GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion, Rotation2d.fromDegrees(0));
     }

@@ -27,7 +27,7 @@ public class Hood_SetToPosition extends Command {
   @Override
   public void execute() {
    // System.out.println("hood Run");
-    hoodSubsystem.setHoodPosition(drivetrain.getDistanceToTarget(), drivetrain.getPose(), drivetrain.getSpeeds());
+    hoodSubsystem.setHoodPosition(drivetrain.getDistanceToTarget(), drivetrain.getPose(), drivetrain.getFieldRelativeSpeeds());
   }
 
   // Called once the command ends or is interrupted.
