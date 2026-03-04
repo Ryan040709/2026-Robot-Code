@@ -55,7 +55,7 @@ public class throughBumperIntake extends SubsystemBase {
     }
 
     public void SetIntakeFront(double targetSpeed) {
-        intakeMotor1.set(targetSpeed);
+        intakeMotor1.set(-targetSpeed);
     }
 
     public void SetIntakeBack(double targetSpeed) {

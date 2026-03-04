@@ -30,9 +30,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public static double tof = 1.1; //used to be 1.1
 
-    private Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
-    private Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
-
     // Basic targeting data
     // in degrees
     VelocityVoltage velocity = new VelocityVoltage(0);

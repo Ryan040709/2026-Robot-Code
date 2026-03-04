@@ -4,7 +4,6 @@
 
 package frc.robot.commands.turret;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TurretSubsystem;
 
@@ -33,27 +32,19 @@ public class ZeroTurret extends Command {
         if (counter == 0) {
             if (turretSubsystem.zeroingSensor.get() == true) {
                 turretSubsystem.setTurretPower(.04);
-                System.out.println("moving to sensor");
             } else if (turretSubsystem.zeroingSensor.get() == false) {
                 counter = 1;
                turretSubsystem.setTurretPower(.03);
-                
-                System.out.println("at sensor");
             }
         } else {
             if (turretSubsystem.zeroingSensor.get() == true) {
                 turretSubsystem.setTurretPower(0);
                 turretSubsystem.zeroTurretPosition(4.449463);
                 turretIsZeroed = true;
-                
-                System.out.println("zeroing complete");
             } else if (turretSubsystem.zeroingSensor.get() == false) {
                 turretSubsystem.setTurretPower(.03);
-                
-                System.out.println("moving away from sensor");
             }
         }
-        SmartDashboard.putNumber("counter", counter);
   }
 
   // Called once the command ends or is interrupted.

@@ -7,7 +7,6 @@ import frc.robot.subsystems.TurretSubsystem;
 
 public class Turret_Toggle extends Command {
 
-  boolean intakeValue = false;
 
   boolean turretLocking = true;
 
@@ -26,7 +25,6 @@ public class Turret_Toggle extends Command {
     System.out.println("shooter Tracking");
     TurretSubsystem.turretToggle();
 
-    SmartDashboard.putBoolean("turret", intakeValue);
 
     // intakeValue = true;
   }
@@ -43,9 +41,6 @@ public class Turret_Toggle extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-
-    intakeValue = false;
-    SmartDashboard.putBoolean("turret", intakeValue);
 
   }
 
