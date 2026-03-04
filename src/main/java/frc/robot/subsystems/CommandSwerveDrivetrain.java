@@ -573,7 +573,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         double Hy = 4.03606;
 
-        double tX = GameManager.isBlueAlliance ? 4.62554 / 2 : 11.98482 + (4.62554 / 2);
+        double tX = GameManager.isBlueAlliance ? 4.62554 / 4 : 11.98482 + (4.62554 / 4);
         double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 : 0.5;
         double tY = getPose().getY() > Hy ? 6 : 2;
 
