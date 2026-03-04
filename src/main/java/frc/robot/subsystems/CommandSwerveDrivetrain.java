@@ -616,11 +616,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         Pose2d turretOffset = getPose().transformBy(turretOffsetFromRobot);
 
-        // gives the robot pose
-        SmartDashboard.putString("robot pose", getPose().toString());
+        // // gives the robot pose
+        // SmartDashboard.putString("robot pose", getPose().toString());
 
-        // gives the turret pose
-        SmartDashboard.putString("turret pose", turretOffset.toString());
+        // // gives the turret pose
+        // SmartDashboard.putString("turret pose", turretOffset.toString());
         return turretOffset;
     }
 }

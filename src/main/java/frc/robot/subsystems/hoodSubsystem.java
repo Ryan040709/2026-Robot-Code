@@ -72,7 +72,6 @@ public class hoodSubsystem extends SubsystemBase {
         else{
         hood.setControl(m_request.withPosition(0));
         }
-        SmartDashboard.putNumber("hood target", calculateHoodPosition(distanceToHub));
     }
 
 

@@ -44,6 +44,8 @@ public class GameManager extends SubsystemBase {
 
   public boolean isMatch = true;
 
+  public boolean hasAlliance = false;
+
   public boolean isTeleop = DriverStation.isTeleop();
 
   public boolean isActive = true;
@@ -70,16 +72,18 @@ public class GameManager extends SubsystemBase {
   @Override
   public void periodic() {
     Optional<Alliance> alliance = DriverStation.getAlliance();
-    if (alliance.isPresent()) {
+    if (alliance.isPresent() && !hasAlliance) {
       if (alliance.get() == Alliance.Red) {
         isBlueAlliance = false;
+        hasAlliance = true;
       }
       if (alliance.get() == Alliance.Blue) {
         isBlueAlliance = true;
+        hasAlliance = true;
       }
-    } else {
-      isBlueAlliance = false;
     }
+
+    SmartDashboard.putBoolean("is blue?", isBlueAlliance);
 
     isTeleop = DriverStation.isTeleop();
     matchTimer = DriverStation.getMatchTime();
@@ -88,16 +92,16 @@ public class GameManager extends SubsystemBase {
     determineShift();
     determineActiveHub();
 
-    SmartDashboard.putNumber("GameManager Timer", elapsedTime);
+    // SmartDashboard.putNumber("GameManager Timer", elapsedTime);
 
-    SmartDashboard.putString("current shift", currentShift.toString());
+    // SmartDashboard.putString("current shift", currentShift.toString());
 
-    SmartDashboard.putNumber("match timer", matchTimer);
-    SmartDashboard.putBoolean("is teleop", isTeleop);
-    SmartDashboard.putBoolean("win auto?", wonAuto);
+    // SmartDashboard.putNumber("match timer", matchTimer);
+    // SmartDashboard.putBoolean("is teleop", isTeleop);
+    // SmartDashboard.putBoolean("win auto?", wonAuto);
 
-    SmartDashboard.putBoolean("is active?", isActive);
-    SmartDashboard.putBoolean("is in a match?", isMatch);
+    // SmartDashboard.putBoolean("is active?", isActive);
+    // SmartDashboard.putBoolean("is in a match?", isMatch);
 
     getMatchTime();
   }
@@ -127,22 +131,8 @@ public class GameManager extends SubsystemBase {
       switchActive = elapsedTime + 25;
     }
 
-    SmartDashboard.putBoolean("teleop active", active);
-    SmartDashboard.putNumber("time till swicth", switchActive);
-  }
-
-  public void nonMatchFlash() {
-    // system to alert user they ARENT in a real match
-    double timeBeforeFlash = 0;
-
-    if (elapsedTime > timeBeforeFlash) {
-      shiftLights.set(0.69);
-      timeBeforeFlash = elapsedTime+1;
-    } else if (active) {
-      shiftLights.set(0.61);
-    } else if (!active) {
-      shiftLights.set(0.77);
-    }
+    // SmartDashboard.putBoolean("teleop active", active);
+    // SmartDashboard.putNumber("time till swicth", switchActive);
   }
 
   public void lostAuto() {

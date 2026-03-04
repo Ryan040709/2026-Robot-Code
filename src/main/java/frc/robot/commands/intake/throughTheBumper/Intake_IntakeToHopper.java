@@ -30,9 +30,6 @@ public class Intake_IntakeToHopper extends Command {
     @Override
     public void execute() {
 
-        double speedFront = SmartDashboard.getNumber("intake speed Front", 0.3);
-        double speedBack = SmartDashboard.getNumber("intake speed Back", 0.3);
-
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if(outtaBumperIntakeSubsystem.AtPosition(0)){
         intakeSubsystem.SetIntakeFront(-8);
