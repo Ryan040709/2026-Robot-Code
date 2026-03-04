@@ -606,6 +606,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // puts the target on Glass so we can visualize it
         m_Fields.getObject("scoring target").setPose(new Pose2d(feedingTargets().getTranslation(), Rotation2d.fromDegrees(0)));
         //m_Fields.getObject("feeding target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
+        SmartDashboard.putNumber("distance to target", DistanceToTarget);
         return DistanceToTarget;
     }
 

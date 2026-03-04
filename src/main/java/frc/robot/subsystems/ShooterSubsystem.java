@@ -28,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private VelocityVoltage m_velocity = new VelocityVoltage(0);
 
-    public static double tof = 1.1; //used to be 1.1
+    public static double tof = 1.1; // used to be 1.1
 
     // Basic targeting data
     // in degrees
@@ -70,16 +70,12 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotorL.getConfigurator().apply(shooterConfig);
         shooterMotorR.getConfigurator().apply(shooterConfig);
 
-    
-      
         shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
 
     }
 
- 
-
-    public void RuntoRPMs(double distanceToHub) {
-        shooterMotorL.setControl(m_velocity.withVelocity(CalculateRpms(distanceToHub)));
+    public void RuntoRPMs(double distanceToHub, boolean isFeeding) {
+        shooterMotorL.setControl(m_velocity.withVelocity(CalculateRpms(distanceToHub, isFeeding)));
     }
 
     public void SetShooterRPMS(double setRPMS) {
@@ -91,10 +87,18 @@ public class ShooterSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
     }
 
-    public double CalculateRpms(double distanceToHub) {
-        double m = 4.67989; //6.99334;
-        double b = 37;  //38.81499; 
-        double targetRPM = m * (distanceToHub) + b;
+    public double CalculateRpms(double distanceToHub, boolean isFeeding) {
+        double targetRPM;
+        double hubM = 4.67989; // 6.99334;
+        double hubB = 37; // 38.81499;
+        double feedM = 3.43042;
+        double feedB = 40.27793;
+        if (isFeeding) {
+            targetRPM = feedM * (distanceToHub) + feedB;
+        } else {
+            targetRPM = hubM * (distanceToHub) + hubB;
+        }
+
         SmartDashboard.putNumber("ShooterGoalRPMS", targetRPM);
 
         // y=mx+b where "y" is the target RPM and "x" is the distance between the robot
@@ -103,9 +107,5 @@ public class ShooterSubsystem extends SubsystemBase {
 
         return targetRPM;
     }
-
-
-
-
 
 }

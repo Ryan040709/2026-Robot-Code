@@ -53,7 +53,7 @@ public class hoodSubsystem extends SubsystemBase {
         hoodConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ShooterSubsystem.Hood_MotionMagicCruiseVelocity;
         hoodConfig.MotionMagic.MotionMagicAcceleration = Constants.ShooterSubsystem.Hood_MotionMagicAcceleration;
 
-  hood.getConfigurator().apply(hoodConfig);
+        hood.getConfigurator().apply(hoodConfig);
 
     }
 
@@ -65,53 +65,57 @@ public class hoodSubsystem extends SubsystemBase {
         hood.set(speed);
     }
 
-    public void setHoodPosition( double distanceToHub, Pose2d robotPose, ChassisSpeeds chassisSpeeds) {
-        if(!robotIsNeartrench(robotPose, chassisSpeeds)){
-        hood.setControl(m_request.withPosition(calculateHoodPosition(distanceToHub)));
-        }
-        else{
-        hood.setControl(m_request.withPosition(0));
+    public void setHoodPosition(double distanceToTarget, Pose2d robotPose, ChassisSpeeds chassisSpeeds,
+            boolean isFeeding) {
+
+        if (!robotIsNeartrench(robotPose, chassisSpeeds)) {
+            if (isFeeding) {
+                hood.setControl(m_request.withPosition(calculateHoodPosition(distanceToTarget, isFeeding)));
+            } else {
+                hood.setControl(m_request.withPosition(calculateHoodPosition(distanceToTarget, isFeeding)));
+            }
+
+        } else {
+            hood.setControl(m_request.withPosition(0));
         }
     }
 
-
-    public boolean robotIsNeartrench(Pose2d robotPose, ChassisSpeeds robotSpeed){
-        double blueTrenchOffset = 4.66 ;
+    public boolean robotIsNeartrench(Pose2d robotPose, ChassisSpeeds robotSpeed) {
+        double blueTrenchOffset = 4.66;
         double redTrenchOffset = 11.936;
         double lowY = 1.3;
         double highY = 6.7;
 
         double trenchOffset;
-        double tolerance ;
+        double tolerance;
         boolean nearSideOfTrench;
 
-        tolerance = Math.abs( robotSpeed.vxMetersPerSecond) *.05;
+        tolerance = Math.abs(robotSpeed.vxMetersPerSecond) * .05;
 
-        nearSideOfTrench = (robotPose.getY() <lowY ||robotPose.getY() > highY);
+        nearSideOfTrench = (robotPose.getY() < lowY || robotPose.getY() > highY);
 
-             if (GameManager.isBlueAlliance) {
+        if (GameManager.isBlueAlliance) {
             trenchOffset = blueTrenchOffset;
         } else {
             trenchOffset = redTrenchOffset;
         }
 
-
-        return (MathUtil.isNear(trenchOffset, robotPose.getX(), .75+tolerance) && nearSideOfTrench);
-
+        return (MathUtil.isNear(trenchOffset, robotPose.getX(), .75 + tolerance) && nearSideOfTrench);
 
     }
 
-
-    public double calculateHoodPosition(double distanceToHub) {
-        double m = .222;// -5.555;
-        double b = -.1111;
-        double slope = (1.0 - 0) / (5 - .5);
-        double intercept = 0 - (slope * .5);
-
-        return MathUtil.clamp((m * (distanceToHub)) + b, 0, 1);
+    public double calculateHoodPosition(double distanceToHub, boolean isFeeding) {
+        double hubM = .222;// -5.555;
+        double hubB = -.1111;
+        double feedM = 0.218818;
+        double feedB = -0.423414;
+        if (isFeeding == true) {
+            return MathUtil.clamp(( feedM * (distanceToHub)) + feedB, 0.5, 1.5);
+        } else {
+            return MathUtil.clamp((hubM * (distanceToHub)) + hubB, 0, 1);
+        }
 
     }
-    
 
     @Override
     public void periodic() {
