@@ -60,7 +60,8 @@ public class outOfBumperIntake extends SubsystemBase {
         CANcoderConfiguration canConfig = new CANcoderConfiguration();
 
         canConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-        canConfig.MagnetSensor.MagnetOffset = -0.405517578125;
+        canConfig.MagnetSensor.MagnetOffset = -0.897216796875; //-0.405517578125;
+        canConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 1; //-0.405517578125;
 
         canCoder.getConfigurator().apply(canConfig);
 
