@@ -89,7 +89,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public double CalculateRpms(double distanceToHub, boolean isFeeding) {
         double targetRPM;
-        double hubM = 4.67989; // 6.99334;
+        double hubM = 4.9; // 6.99334;
         double hubB = 37; // 38.81499;
         double feedM = 3.43042;
         double feedB = 40.27793;

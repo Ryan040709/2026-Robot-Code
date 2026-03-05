@@ -112,7 +112,7 @@ public class hoodSubsystem extends SubsystemBase {
         if (isFeeding == true) {
             return MathUtil.clamp(( feedM * (distanceToHub)) + feedB, 0.5, 1.5);
         } else {
-            return MathUtil.clamp((hubM * (distanceToHub)) + hubB, 0, 1);
+            return MathUtil.clamp((hubM * (distanceToHub)) + hubB, 0, 1.5);
         }
 
     }

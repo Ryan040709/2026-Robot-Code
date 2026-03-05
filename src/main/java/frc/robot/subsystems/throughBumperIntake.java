@@ -6,6 +6,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -52,6 +54,13 @@ public class throughBumperIntake extends SubsystemBase {
 
         intakeMotor1.getConfigurator().apply(intakeConfig);
         intakeMotor2.getConfigurator().apply(intakeConfig);
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("intake FRONT current", intakeMotor1.getSupplyCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("intake BACK current", intakeMotor2.getSupplyCurrent().getValueAsDouble());
+        super.periodic();
     }
 
     public void SetIntakeFront(double targetVoltage) {

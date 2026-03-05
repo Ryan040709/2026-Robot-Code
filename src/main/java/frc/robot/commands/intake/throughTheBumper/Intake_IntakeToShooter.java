@@ -1,24 +1,29 @@
 package frc.robot.commands.intake.throughTheBumper;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
-import frc.robot.Constants;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.TurretSubsystem;
 
 public class Intake_IntakeToShooter extends Command {
 
-    throughBumperIntake intakeSubsystem = new throughBumperIntake();
-    outOfBumperIntake outtaBumperIntakeSubsystem = new outOfBumperIntake();
+    throughBumperIntake intakeSubsystem;
+    outOfBumperIntake outtaBumperIntakeSubsystem;
+    TurretSubsystem turretSubsystem;
 
-    public Intake_IntakeToShooter(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake){
- 
+    CommandSwerveDrivetrain drivetrain;
+
+    public Intake_IntakeToShooter(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake,
+            TurretSubsystem turretSubsystem, CommandSwerveDrivetrain drivetrain) {
+
         this.intakeSubsystem = intakeSubsystem;
         this.outtaBumperIntakeSubsystem = outttBumperIntake;
+        this.turretSubsystem = turretSubsystem;
+        this.drivetrain = drivetrain;
         addRequirements(intakeSubsystem, outttBumperIntake);
 
     }
-
 
     // Called when the command is initially scheduled.
     @Override
@@ -31,11 +36,16 @@ public class Intake_IntakeToShooter extends Command {
     public void execute() {
 
         outtaBumperIntakeSubsystem.PivotIntake(0);
-        if(outtaBumperIntakeSubsystem.AtPosition(0)){
-        intakeSubsystem.SetIntakeFront(-8);
-        intakeSubsystem.SetIntakeBack(-8);
+        if (outtaBumperIntakeSubsystem.AtPosition(0)) {
+            if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset())) {
+                intakeSubsystem.SetIntakeFront(-8);
+                intakeSubsystem.SetIntakeBack(-8);
+            } else {
+                intakeSubsystem.SetIntakeFront(-8);
+                intakeSubsystem.SetIntakeBack(8);
+            }
         }
-        
+
         // outta bumper intake
     }
 

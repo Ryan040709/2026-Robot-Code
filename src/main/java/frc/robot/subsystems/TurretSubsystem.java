@@ -25,9 +25,7 @@ import frc.robot.Constants;
 
 public class TurretSubsystem extends SubsystemBase {
 
-   public  DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
-
-    private Supplier<Pose2d> poseSupplier;
+    public DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
 
     private TalonFXS turret = new TalonFXS(10);
     private PositionVoltage m_request = new PositionVoltage(0);
@@ -85,8 +83,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     static double turretPosition;
 
-    public TurretSubsystem(Supplier<Pose2d> poseSupplier) {
-        this.poseSupplier = poseSupplier;
+    public TurretSubsystem() {
 
         // pid
         TalonFXSConfiguration motorConfig = new TalonFXSConfiguration();
@@ -166,7 +163,6 @@ public class TurretSubsystem extends SubsystemBase {
         isBlue = GameManager.isBlueAlliance;
         hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
         elapsedTime = Timer.getTimestamp();
-        botPose = UpdateRobotPose2d();
         robotPos = new Translation2d(botPose.getX(), botPose.getY());
         theta = botPose.getRotation().getDegrees();
         tagID = LimelightHelpers.getFiducialID("limelight-turret");
@@ -174,13 +170,8 @@ public class TurretSubsystem extends SubsystemBase {
         turretSensor();
 
         SmartDashboard.putNumber("Turret Angle", turret.getPosition().getValueAsDouble());
-
+        SmartDashboard.putBoolean("turretZeroSwitch", zeroingSensor.get());
     }
-
-    public Pose2d UpdateRobotPose2d() {
-        return poseSupplier.get();
-    }
-
 
     public boolean turretToggle() {
         if (turretLocking == true) {
@@ -399,12 +390,17 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void setTurretPower(double setSpeed) {
-        turret.set(setSpeed);       
+        turret.set(setSpeed);
     }
-    public void zeroTurretPosition(double zeroPosition){
+
+    public void zeroTurretPosition(double zeroPosition) {
         turret.setPosition(zeroPosition);
     }
 
-    
+    public boolean turretAtTarget(Pose2d turretTarget, Pose2d turretPose) {
+        boolean atTarget = MathUtil.isNear(calculateAngleToHub(turretTarget, turretPose), turretPosition, 10);
+        SmartDashboard.putBoolean("Turret Is at Target", atTarget);
+        return atTarget;
+    }
 
 }

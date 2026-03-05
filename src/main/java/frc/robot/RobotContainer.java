@@ -77,7 +77,7 @@ public class RobotContainer {
 
         public final CommandSwerveDrivetrain drivetrain = SwerveConstants.createDrivetrain();
         // turret subsystem
-        TurretSubsystem turret = new TurretSubsystem(drivetrain::getPose);
+        TurretSubsystem turret = new TurretSubsystem();
         // shooter subsystem
         ShooterSubsystem shooter = new ShooterSubsystem();
         // in the bumper intake subsystem
@@ -108,7 +108,7 @@ public class RobotContainer {
         Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, OutOfBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, OutOfBumperIntake);
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
 
         public RobotContainer() {
                 // turret commands

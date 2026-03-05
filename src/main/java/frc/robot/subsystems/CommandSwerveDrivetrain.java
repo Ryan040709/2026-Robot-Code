@@ -427,6 +427,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
                 poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                         robotPoseEstimateTags.timestampSeconds);
+                        System.out.println("using limelight");
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
                 // robotPoseEstimateTurret.timestampSeconds);
 
@@ -604,7 +605,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double DistanceToTarget = getTurretOffset().getTranslation().getDistance(getTurretTarget().getTranslation());
 
         // puts the target on Glass so we can visualize it
-        m_Fields.getObject("scoring target").setPose(new Pose2d(feedingTargets().getTranslation(), Rotation2d.fromDegrees(0)));
+        m_Fields.getObject("scoring target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         //m_Fields.getObject("feeding target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         SmartDashboard.putNumber("distance to target", DistanceToTarget);
         return DistanceToTarget;
@@ -612,8 +613,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public Pose2d getTurretOffset() {
         // turret offset x: 5.6475in OR 0.1434465m
-        // turret offset y: 2.9375in OR 0.0746125m
-        Transform2d turretOffsetFromRobot = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
+        // turret offset y: 2.9375in OR 0.0746125m          //  5.25     //3.25
+        Transform2d turretOffsetFromRobot = new Transform2d(5.6475  / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
 
         Pose2d turretOffset = getPose().transformBy(turretOffsetFromRobot);
 
