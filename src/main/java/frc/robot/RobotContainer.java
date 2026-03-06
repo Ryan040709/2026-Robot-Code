@@ -112,18 +112,19 @@ public class RobotContainer {
 
         public RobotContainer() {
                 // turret commands
-                NamedCommands.registerCommand("turret-locking", turret_Toggle);
-                // out of bumper intake commands
-                NamedCommands.registerCommand("intake-lower", intake_LowerIntake);
-                NamedCommands.registerCommand("intake-raise", intake_RaiseIntake);
+                NamedCommands.registerCommand("turret-locking", turret_Locking);
+                // // out of bumper intake commands
+                // NamedCommands.registerCommand("intake-lower", intake_LowerIntake);
+                // NamedCommands.registerCommand("intake-raise", intake_RaiseIntake);
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-hopperToIntake", outtake);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 // // shooter commands
-                NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
-                NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
+                NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
+                // nothing right now
+
 
                 // Setup Routines
                 routineChooser.setDefaultOption("Testing", "testing");
