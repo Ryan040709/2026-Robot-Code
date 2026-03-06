@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 2.0314679487179492,
-        "y": 0.75
+        "x": 2.456457831325301,
+        "y": 0.7239036144578312
       },
       "prevControl": {
-        "x": 2.3485628752639895,
-        "y": 0.75
+        "x": 2.7035507557379552,
+        "y": 0.7619179105213165
       },
       "nextControl": {
-        "x": 1.714373022171909,
-        "y": 0.75
+        "x": 2.1430501804585926,
+        "y": 0.6756870527860299
       },
       "isLocked": false,
       "linkedName": null
@@ -44,7 +44,12 @@
       "linkedName": "human player zone"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 180.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -58,7 +63,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

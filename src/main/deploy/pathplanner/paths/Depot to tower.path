@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.0488846153846167,
-        "y": 5.965282051282052
+        "x": 0.7954457831325303,
+        "y": 5.783433734939758
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.0488846153846167,
-        "y": 5.965282051282052
+        "x": 1.7954457831325308,
+        "y": 5.783433734939758
       },
       "isLocked": false,
-      "linkedName": "blue depot"
+      "linkedName": "blue depot end"
     },
     {
       "anchor": {
@@ -20,15 +20,20 @@
         "y": 4.174538461538462
       },
       "prevControl": {
-        "x": 1.5721538461538476,
-        "y": 5.174538461538462
+        "x": 2.5721538461538476,
+        "y": 4.174538461538462
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.75,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -48,7 +53,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -135.0
   },
   "useDefaultConstraints": true
 }

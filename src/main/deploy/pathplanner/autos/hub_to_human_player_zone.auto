@@ -13,15 +13,53 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "Human Player Zone"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Human Player Zone"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "Copy of Human Player Zone"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Copy of Human Player Zone"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

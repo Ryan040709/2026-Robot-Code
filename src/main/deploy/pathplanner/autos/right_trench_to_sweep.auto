@@ -13,15 +13,47 @@
                 "data": {
                   "commands": [
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "Right Trench Starting Spot"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Right Trench Starting Spot"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "RIGHT Close Sweep"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "RIGHT Close Sweep"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          }
+                        ]
                       }
                     },
                     {
@@ -31,9 +63,28 @@
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "right trench to tower"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "right trench to tower"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          }
+                        ]
                       }
                     }
                   ]

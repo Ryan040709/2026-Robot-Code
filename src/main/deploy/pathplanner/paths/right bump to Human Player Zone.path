@@ -8,11 +8,27 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.6879999999999975,
-        "y": 2.0
+        "x": 3.024698795180723,
+        "y": 1.2265783132530124
       },
       "isLocked": false,
       "linkedName": "right bump start"
+    },
+    {
+      "anchor": {
+        "x": 2.0412048192771084,
+        "y": 0.5465384615384619
+      },
+      "prevControl": {
+        "x": 2.5659073407893223,
+        "y": 0.546538461538462
+      },
+      "nextControl": {
+        "x": 1.555315730854714,
+        "y": 0.5465384615384618
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -42,7 +58,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

@@ -5,20 +5,25 @@
     "data": {
       "commands": [
         {
+          "type": "path",
+          "data": {
+            "pathName": "testing_to_testing"
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "named",
                 "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "testing_to_testing"
-                      }
-                    }
-                  ]
+                  "name": "intake-intakeToShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot"
                 }
               }
             ]
