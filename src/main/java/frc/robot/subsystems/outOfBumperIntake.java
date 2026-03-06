@@ -66,6 +66,7 @@ public class outOfBumperIntake extends SubsystemBase {
         canCoder.getConfigurator().apply(canConfig);
 
         leftPivotMotor1.setControl(new Follower(26, MotorAlignmentValue.Opposed));
+        rightPivotMotor2.setPosition(canCoder.getAbsolutePosition().getValueAsDouble());
     }
 
     public void PivotIntake(double targetPosition) {

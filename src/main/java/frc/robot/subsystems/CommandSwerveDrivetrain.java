@@ -423,7 +423,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
                         Math.pow(targetPoseRobotSpace.getZ(), 2));
         if (robotPoseEstimateTags != null) {
-            if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60) {
+            if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60 && distance < 3.5) {
                 poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
                 poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                         robotPoseEstimateTags.timestampSeconds);
@@ -432,6 +432,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 // robotPoseEstimateTurret.timestampSeconds);
 
             }
+            SmartDashboard.putNumber("distance from tags", distance);
             SmartDashboard.putNumber("estimated Pose X limelight", robotPoseEstimateTags.pose.getX());
             SmartDashboard.putNumber("estimated Pose Y limelight", robotPoseEstimateTags.pose.getY());
             poseEstimator.update(gyroAngle, currentPositions);
@@ -606,6 +607,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         // puts the target on Glass so we can visualize it
         m_Fields.getObject("scoring target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
+        // turret postions
+         m_Fields.getObject("turret position").setPose(new Pose2d(getTurretOffset().getTranslation(), Rotation2d.fromDegrees(TurretSubsystem.turretPosition)));
         //m_Fields.getObject("feeding target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         SmartDashboard.putNumber("distance to target", DistanceToTarget);
         return DistanceToTarget;
