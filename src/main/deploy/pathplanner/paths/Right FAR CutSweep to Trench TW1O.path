@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.969602409638553,
+        "x": 6.75,
         "y": 0.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.756626506024096,
+        "x": 5.537024096385543,
         "y": 0.6474096385542168
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Return Sweep Right"
     },
     {
       "anchor": {
@@ -79,8 +79,8 @@
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 3.0,
-    "rotation": -59.99999999999999
+    "velocity": 0.3,
+    "rotation": -119.99999999999999
   },
   "useDefaultConstraints": false
 }

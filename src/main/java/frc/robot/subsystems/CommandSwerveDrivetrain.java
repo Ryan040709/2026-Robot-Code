@@ -370,8 +370,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // Translation2d(4.62554, 4.03606));
         // SmartDashboard.putNumber("DistanceFromBlueHub", distanceFromHub);
 
-
-
         // SmartDashboard.putNumber("steer motor amps", );
         /*
          * Periodically try to apply the operator perspective.
@@ -403,50 +401,17 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SmartDashboard.putNumber("GetXSpeeds", getFieldRelativeSpeeds().vxMetersPerSecond);
         SmartDashboard.putNumber("GetYSpeeds", getFieldRelativeSpeeds().vyMetersPerSecond);
         SmartDashboard.putNumber("GetRotationSpeeds", getFieldRelativeSpeeds().omegaRadiansPerSecond);
-        LimelightHelpers.SetRobotOrientation("limelight-tags",
-                poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-        LimelightHelpers.SetRobotOrientation("limelight-turret",
-                TurretSubsystem.turretPosition, 0, 0, 0, 0, 0);
+        
 
-        // turret limelight offset
-        /*
-         * x: 2.93806
-         * y: 11.08921
-         * z: 20.39227
-         * rotated: 20*
-         */
-        PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight-tags");
+            limelightPoseUpdate("limelight-tags");
+            limelightPoseUpdate("limelight-intake");
 
-        Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace("limelight-tags");
-        double distance = Math.sqrt(
-                Math.pow(targetPoseRobotSpace.getX(), 2) +
-                        Math.pow(targetPoseRobotSpace.getY(), 2) +
-                        Math.pow(targetPoseRobotSpace.getZ(), 2));
-        if (robotPoseEstimateTags != null) {
-            if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60 && distance < 3.5) {
-                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
-                poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
-                        robotPoseEstimateTags.timestampSeconds);
-                        System.out.println("using limelight");
-                // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
-                // robotPoseEstimateTurret.timestampSeconds);
-
-            }
-            SmartDashboard.putNumber("distance from tags", distance);
-            SmartDashboard.putNumber("estimated Pose X limelight", robotPoseEstimateTags.pose.getX());
-            SmartDashboard.putNumber("estimated Pose Y limelight", robotPoseEstimateTags.pose.getY());
-            poseEstimator.update(gyroAngle, currentPositions);
-
-            m_Fields.setRobotPose(poseEstimator.getEstimatedPosition());
+             poseEstimator.update(gyroAngle, currentPositions);
             SmartDashboard.putNumber("estimatedRotation",
                     poseEstimator.getEstimatedPosition().getRotation().getDegrees());
             SmartDashboard.putNumber("estimated Pose X", poseEstimator.getEstimatedPosition().getX());
             SmartDashboard.putNumber("estimated Pose Y", poseEstimator.getEstimatedPosition().getY());
-            // SmartDashboard.putNumber("distance Away from tag", distance);
-
-        } else {
-            System.out.println("limelight estimation null");
-        }
+            m_Fields.setRobotPose(poseEstimator.getEstimatedPosition());
     }
 
     // creating array to get the module states
@@ -474,13 +439,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     // geting the speed of the swerves
     public ChassisSpeeds getFieldRelativeSpeeds() {
         var speeds = m_kinematics.toChassisSpeeds(getModuleStates());
-        var fieldSpeeds = new Translation2d(speeds.vxMetersPerSecond , speeds.vyMetersPerSecond).rotateBy(getPose().getRotation());
-        
+        var fieldSpeeds = new Translation2d(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond)
+                .rotateBy(getPose().getRotation());
+
         return new ChassisSpeeds(fieldSpeeds.getX(), fieldSpeeds.getY(), speeds.omegaRadiansPerSecond);
     }
 
     public double getVelocity() {
-        return Math.sqrt(Math.pow(getFieldRelativeSpeeds().vxMetersPerSecond, 2) + Math.pow(getFieldRelativeSpeeds().vyMetersPerSecond, 2));
+        return Math.sqrt(Math.pow(getFieldRelativeSpeeds().vxMetersPerSecond, 2)
+                + Math.pow(getFieldRelativeSpeeds().vyMetersPerSecond, 2));
     }
 
     private void startSimThread() {
@@ -552,13 +519,42 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
+    public void limelightPoseUpdate(String limelightname){
+        LimelightHelpers.SetRobotOrientation( limelightname,
+                poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+     PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightname);
+
+        Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace(limelightname);
+        double distance = Math.sqrt(
+                Math.pow(targetPoseRobotSpace.getX(), 2) +
+                        Math.pow(targetPoseRobotSpace.getY(), 2) +
+                        Math.pow(targetPoseRobotSpace.getZ(), 2));
+        if (robotPoseEstimateTags != null) {
+            if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
+                    && distance < 3.5) {
+                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
+                poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
+                        robotPoseEstimateTags.timestampSeconds);
+                System.out.println("using limelight");
+                // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
+                // robotPoseEstimateTurret.timestampSeconds);
+
+            }
+
+        } else {
+            System.out.println("limelight estimation null");
+        }
+    }
+
+
+
     public boolean turretDeadZone() {
         if (getPose().getY() > 2.8 && getPose().getY() < 5.3) {
-            //if (getPose().getX() > 5.5 && getPose().getX() < 7.0) {
-                return true;
+            // if (getPose().getX() > 5.5 && getPose().getX() < 7.0) {
+            return true;
             // } else {
-            //     return false;
-            //}
+            // return false;
+            // }
 
         } else {
             return false;
@@ -568,56 +564,68 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public boolean isFeeding() {
         double Hx = GameManager.isBlueAlliance ? 4.62554 : 11.98482;
 
-        return GameManager.isBlueAlliance ? getPose().getX() > Hx : getPose().getX() < Hx ;
+        return GameManager.isBlueAlliance ? getPose().getX() > Hx : getPose().getX() < Hx;
     }
 
     public Pose2d feedingTargets() {
 
         double Hy = 4.03606;
 
-        double tX = GameManager.isBlueAlliance ? 4.62554 / 4 : 11.98482 + ((4.62554 / 2)+(4.62554 / 4));
-        double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 : 0.5;
-        double tY = getPose().getY() > Hy ? 6 : 2;
+        // uses new feeder shot positions
+        double tX = GameManager.isBlueAlliance ? 0.5 : 7.5; // 4.62554 / 4 : 11.98482 + ((4.62554 / 2)+(4.62554 / 4));
+        // double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 :
+        // 0.5;
+        double tY = getPose().getY() > Hy ? 7.5 : 0.5;
 
-        if (turretDeadZone() ) {
+        if (turretDeadZone()) {
             // do the deadzone swap!
-            return new Pose2d((2 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
-            // isFeeding = true;
+            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
+                    (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
+                    Rotation2d.fromDegrees(0));
         } else {
-            return new Pose2d((2 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
-            // isFeeding = true;
+            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
+                    (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
+                    Rotation2d.fromDegrees(0));
         }
     }
 
     public Pose2d getHubTarget() {
-        Translation2d BlueHubPosition = new Translation2d(4.62554 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
+        Translation2d BlueHubPosition = new Translation2d(
+                4.62554 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
                 4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
-        Translation2d RedHubPosistion = new Translation2d(11.98482 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
+        Translation2d RedHubPosistion = new Translation2d(
+                11.98482 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
                 4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
 
         return new Pose2d(GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion, Rotation2d.fromDegrees(0));
     }
 
     public Pose2d getTurretTarget() {
-        return new Pose2d(isFeeding() ? feedingTargets().getTranslation() : getHubTarget().getTranslation(), Rotation2d.fromDegrees(0));
+        SmartDashboard.putBoolean("is feeding", isFeeding());
+
+        return new Pose2d(isFeeding() ? feedingTargets().getTranslation() : getHubTarget().getTranslation(),
+                Rotation2d.fromDegrees(0));
     }
 
     public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
         double DistanceToTarget = getTurretOffset().getTranslation().getDistance(getTurretTarget().getTranslation());
 
         // puts the target on Glass so we can visualize it
-        m_Fields.getObject("scoring target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
+        m_Fields.getObject("scoring target")
+                .setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         // turret postions
-         m_Fields.getObject("turret position").setPose(new Pose2d(getTurretOffset().getTranslation(), Rotation2d.fromDegrees(TurretSubsystem.turretPosition)));
-        //m_Fields.getObject("feeding target").setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
+        // m_Fields.getObject("turret position").setPose(
+        //         new Pose2d(getTurretOffset().getTranslation(), Rotation2d.fromDegrees(TurretSubsystem.turretPosition)));
+        // m_Fields.getObject("feeding target").setPose(new
+        // Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         SmartDashboard.putNumber("distance to target", DistanceToTarget);
         return DistanceToTarget;
     }
 
     public Pose2d getTurretOffset() {
         // turret offset x: 5.6475in OR 0.1434465m
-        // turret offset y: 2.9375in OR 0.0746125m          //  5.25     //3.25
-        Transform2d turretOffsetFromRobot = new Transform2d(5.6475  / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
+        // turret offset y: 2.9375in OR 0.0746125m
+        Transform2d turretOffsetFromRobot = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
 
         Pose2d turretOffset = getPose().transformBy(turretOffsetFromRobot);
 

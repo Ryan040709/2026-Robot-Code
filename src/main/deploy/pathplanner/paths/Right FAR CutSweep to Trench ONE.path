@@ -8,24 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.800337349397592,
-        "y": 5.543024096385542
+        "x": 6.639728958630526,
+        "y": 4.895420827389444
       },
       "isLocked": false,
       "linkedName": "Right Far CutSweep END"
     },
     {
       "anchor": {
-        "x": 6.5,
+        "x": 6.75,
         "y": 0.6
       },
       "prevControl": {
-        "x": 7.375772450307971,
-        "y": 0.5657700905672411
+        "x": 7.480741797432238,
+        "y": 0.5739087018544944
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Return Sweep Right"
     }
   ],
   "rotationTargets": [
@@ -84,7 +84,7 @@
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 3.0,
+    "velocity": 0.3,
     "rotation": 119.99999999999999
   },
   "useDefaultConstraints": false

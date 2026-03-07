@@ -67,9 +67,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public boolean turretLocking = true;
 
-    double txTurret = LimelightHelpers.getTX("limelight-turret");
-    boolean hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
-
     boolean limelightTurret = false;
 
     double txnc = LimelightHelpers.getTXNC("limelight-tags"); // Horizontal offset from principal pixel/point to
@@ -161,11 +158,9 @@ public class TurretSubsystem extends SubsystemBase {
 
         Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
         isBlue = GameManager.isBlueAlliance;
-        hasTurretTargets = LimelightHelpers.getTV("limelight-turret");
         elapsedTime = Timer.getTimestamp();
         robotPos = new Translation2d(botPose.getX(), botPose.getY());
         theta = botPose.getRotation().getDegrees();
-        tagID = LimelightHelpers.getFiducialID("limelight-turret");
 
         turretSensor();
 
@@ -200,114 +195,21 @@ public class TurretSubsystem extends SubsystemBase {
 
     public void setPosition(Pose2d turretTarget, double targetSpeed, Pose2d turretPose) {
         MoveMotor(targetSpeed);
-        determine3dOffset();
         FilterApriltags();
 
         if (turretLocking) {
-
             determineLockingMethod(turretTarget, turretPose);
-
-            txTurret = LimelightHelpers.getTX("limelight-turret");
-
         }
 
     }
 
     public void determineLockingMethod(Pose2d turretTarget, Pose2d turretPose) {
-        if (hasTurretTargets == true && FilterApriltags()) {
-            if (elapsedTime > waitTime + 1 && !isFeeding && false) {
-                turret.set(calculateTurretPID(turretTarget, turretPose));
-            } else {
-                turret.setControl(m_request.withPosition((calculateAngleToHub(turretTarget, turretPose))));
-            }
-        } else {
-            waitTime = elapsedTime;
-
             turret.setControl(m_request.withPosition((calculateAngleToHub(turretTarget, turretPose))));
             limelightTurret = false;
-
-        }
-    }
-
-    public double calculateTurretLimelightAngle() {
-        return MathUtil.clamp(turret.getPosition().getValueAsDouble() + -txTurret,
-                turret.getPosition().getValueAsDouble() - 10, turret.getPosition().getValueAsDouble() + 10);
-    }
-
-    public double calculateTurretPID(Pose2d turretTarget, Pose2d robotpose) {
-
-        double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
-
-        double originalHubAngle;
-        double turretTxOffset;
-
-        double offsetInDegrees = Math
-                .toDegrees(
-                        Math.atan((turretTarget.getY() - robotpose.getY()) / (turretTarget.getX() - robotpose.getX())));
-
-        double diffY = (redHubPos.getY() - robotPos.getY());
-        double diffX = (Hx - robotPos.getX());
-        originalHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
-
-        turretTxOffset = originalHubAngle - offsetInDegrees;
-
-        double pidPower;
-
-        turretPID = new PIDController(0.0045, 0, 0);
-
-        pidPower = MathUtil.clamp(turretPID.calculate(txTurret, 0), -0.2, 0.2);
-
-        return pidPower;
     }
 
     public void setToZero() {
         turret.setControl(m_request.withPosition(-(0)));
-    }
-
-    public Translation2d determineLockingTarget(Pose2d turretTarget) {
-
-        double Hx = isBlue ? blueHubPos.getX() : redHubPos.getX();
-
-        if (robotPos.getX() > Hx && false) {
-            feedingTargets();
-        } else {
-            // lockingTarget = new Translation2d(Hx - (velocityX * ShooterSubsystem.tof),
-            // redHubPos.getY() - (velocityY * ShooterSubsystem.tof));
-            // System.out.println("is not feeding!");
-            isFeeding = false;
-
-            lockingTarget = turretTarget.getTranslation();
-        }
-
-        return lockingTarget;
-    }
-
-    public void feedingTargets() {
-        double tX = isBlue ? blueFx : redFx;
-        double tYFar = robotPos.getY() > Hy && robotPos.getY() < 6.5 ? leftFyFar : rightFyFar;
-        double tY = robotPos.getY() > Hy ? leftFy : rightFy;
-
-        if (turretDeadZone()) {
-            // do the deadzone swap!
-            lockingTarget = new Translation2d(tX, tYFar);
-            isFeeding = true;
-        } else {
-            lockingTarget = new Translation2d(tX, tY);
-            isFeeding = true;
-        }
-    }
-
-    public boolean turretDeadZone() {
-        if (robotPos.getY() > 2.8 && robotPos.getY() < 5.3) {
-            if (robotPos.getX() > 5.5 && robotPos.getX() < 7.0) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } else {
-            return false;
-        }
     }
 
     double tagX = 0;
@@ -330,54 +232,7 @@ public class TurretSubsystem extends SubsystemBase {
     double rotatedX = 0;
     double rotatedY = 0;
 
-    public void determine3dOffset() {
-
-        if (tagID >= 1) {
-
-            tagPose = (Constants.AprilTagPositions.aprilTags.getTagPose((int) tagID));
-
-            if (Hy > tagPose.get().getY()) {
-                fY = Hy;
-                sY = tagPose.get().getY();
-            } else if (tagPose.get().getY() > Hy) {
-                fY = tagPose.get().getY();
-                sY = Hy;
-            }
-
-            if (blueHubPos.getX() > tagPose.get().getX()) {
-                fX = blueHubPos.getX();
-                sX = tagPose.get().getX();
-            } else if (tagX > blueHubPos.getX()) {
-                fX = tagPose.get().getX();
-                sX = blueHubPos.getX();
-            }
-
-            offsetX = (fX) - (sX);
-
-            offsetY = (fY) - (sY);
-
-            // offsets are tag-relative, not field relative and should change depending on
-            // tag rotation
-            if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 180) {
-                rotatedX = -offsetX;
-                rotatedY = offsetY;
-            } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 90) {
-                rotatedY = offsetX;
-                rotatedX = -offsetY;
-            } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 270) {
-                rotatedY = offsetX;
-                rotatedX = -offsetY;
-            } else if (Math.toDegrees(tagPose.get().getRotation().getZ()) == 0) {
-                rotatedX = -offsetX;
-                rotatedY = offsetY;
-            }
-            LimelightHelpers.SetFidcuial3DOffset("limelight-turret", rotatedX, rotatedY, 0);
-        }
-    }
-
     public double calculateAngleToHub(Pose2d turretTarget, Pose2d turretPose) {
-
-        determineLockingTarget(turretTarget);
 
         double diffY = (lockingTarget.getY() - turretPose.getY());
         double diffX = (lockingTarget.getX() - turretPose.getX());
@@ -399,7 +254,7 @@ public class TurretSubsystem extends SubsystemBase {
 
     public boolean turretAtTarget(Pose2d turretTarget, Pose2d turretPose) {
         boolean atTarget = MathUtil.isNear(calculateAngleToHub(turretTarget, turretPose), turretPosition, 10);
-        SmartDashboard.putBoolean("Turret Is at Target", atTarget);
+        SmartDashboard.putBoolean("Turret is at Target", atTarget);
         return atTarget;
     }
 
