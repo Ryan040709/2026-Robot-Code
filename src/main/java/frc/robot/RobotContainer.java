@@ -107,7 +107,8 @@ public class RobotContainer {
         Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, OutOfBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, OutOfBumperIntake);
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake,
+                        turret, drivetrain);
 
         public RobotContainer() {
                 // turret commands
@@ -121,7 +122,6 @@ public class RobotContainer {
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
                 // nothing right now
-
 
                 // Setup Routines
                 routineChooser.setDefaultOption("Testing", "testing");
@@ -147,7 +147,7 @@ public class RobotContainer {
                 SmartDashboard.putNumber("Shooter RPM", 65);
 
                 SmartDashboard.putNumber("intake speed Front", 0.3);
-                 SmartDashboard.putNumber("intake speed Back", 0.3);
+                SmartDashboard.putNumber("intake speed Back", 0.3);
 
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();
@@ -161,15 +161,26 @@ public class RobotContainer {
                 // and Y is defined as to the left according to WPILib convention.
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
-                                drivetrain.applyRequest(() -> drive
-                                                // Drive forward with negative Y (forward) Drive left with negative X
-                                                // (left)
-                                                .withVelocityX(-driverController.getLeftY() * MaxSpeed*OverrideSpeed)
+                                drivetrain.applyRequest(() -> {
+                                        if (driverController.rightBumper().getAsBoolean()) {
+                                                OverrideSpeed = .25;
+                                        } else {
+                                                OverrideSpeed = .5;
+                                        }
+                                        return drive
+                                                        // Drive forward with negative Y (forward) Drive left with
+                                                        // negative X
+                                                        // (left)
+                                                        .withVelocityX(-driverController.getLeftY() * MaxSpeed
+                                                                        * OverrideSpeed)
 
-                                                .withVelocityY(-driverController.getLeftX() * MaxSpeed*OverrideSpeed)
+                                                        .withVelocityY(-driverController.getLeftX() * MaxSpeed
+                                                                        * OverrideSpeed)
 
-                                                // Drive counter clockwise with negative X (left)
-                                                .withRotationalRate(-driverController.getRightX() * MaxAngularRate*OverrideSpeed)));
+                                                        // Drive counter clockwise with negative X (left)
+                                                        .withRotationalRate(-driverController.getRightX()
+                                                                        * MaxAngularRate * OverrideSpeed);
+                                }));
 
                 // Idle while the robot is disabled. This ensures the configured
                 // neutral mode is applied to the drive motors while disabled.
@@ -212,14 +223,13 @@ public class RobotContainer {
                 }, gameManager));
                 hoodSubsystem.setDefaultCommand(hoodSetToPosition);
 
-                driverController.rightBumper().whileTrue(hoodSetToPosition);
+                driverController.leftBumper().whileTrue(hoodSetToPosition);
                 driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
                 // out of bumper intake commands
                 manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
-                
 
                 manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
 
@@ -232,10 +242,13 @@ public class RobotContainer {
                 // String autoName = routine + "_" + variation;
 
                 // try {
-                //         return AutoBuilder.buildAuto(autoName);
-                // } catch (Exception e) { // if for whatever reason the driver requests an inalid auto
-                //         DriverStation.reportError("Auto " + autoName + " not found!", e.getStackTrace());
-                //         return AutoBuilder.buildAuto("nothing_auto"); // the auton that does... nothing
+                // return AutoBuilder.buildAuto(autoName);
+                // } catch (Exception e) { // if for whatever reason the driver requests an
+                // inalid auto
+                // DriverStation.reportError("Auto " + autoName + " not found!",
+                // e.getStackTrace());
+                // return AutoBuilder.buildAuto("nothing_auto"); // the auton that does...
+                // nothing
                 // }
 
                 return autoChooser.getSelected();

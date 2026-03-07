@@ -71,8 +71,11 @@ public class GameManager extends SubsystemBase {
 
   @Override
   public void periodic() {
-    Optional<Alliance> alliance = DriverStation.getAlliance();
-    if (alliance.isPresent() && !hasAlliance) {
+   
+    if(!hasAlliance){
+     Optional<Alliance> alliance = DriverStation.getAlliance();
+    if (alliance.isPresent() ) {
+      
       if (alliance.get() == Alliance.Red) {
         isBlueAlliance = false;
         hasAlliance = true;
@@ -82,6 +85,7 @@ public class GameManager extends SubsystemBase {
         hasAlliance = true;
       }
     }
+  }
 
     SmartDashboard.putBoolean("is blue?", isBlueAlliance);
 

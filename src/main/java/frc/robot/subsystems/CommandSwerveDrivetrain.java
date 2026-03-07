@@ -49,6 +49,8 @@ import frc.robot.subsystems.LimelightHelpers.PoseEstimate;
 
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private static final double kSimLoopPeriod = 0.004; // 4 ms
+    private static final Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
+    private static final Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
     private Notifier simNotifier = null;
     private double lastSimTime;
 
@@ -78,22 +80,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     // gyro
     Pigeon2 gyro = new Pigeon2(SwerveConstants.kPigeonId, SwerveConstants.kCANBus.getName());
 
-    // setting the postions of our swerve modules for kinematics
-    private Translation2d m_frontLeftLocation = new Translation2d(0.282575, 0.282575);
-    private Translation2d m_frontRightLocation = new Translation2d(0.282575, -0.282575);
-    private Translation2d m_backLeftLocation = new Translation2d(-0.282575, 0.282575);
-    private Translation2d m_backRightLocation = new Translation2d(-0.282575, -0.282575);
-
-    // Creating my kinematics object using the module locations
-    private SwerveDriveKinematics kinematics = new SwerveDriveKinematics(
-            m_frontLeftLocation, m_frontRightLocation, m_backLeftLocation,
-            m_backRightLocation);
     // setting up odometery
-    private SwerveDrivePoseEstimator poseEstimator;
+    // private SwerveDrivePoseEstimator poseEstimator;
+
     private Field2d m_Fields = new Field2d();
     public HolonomicDriveController controller;
     private SendableChooser<Boolean> visionSwitch;
-    TalonFX frontRightDrive = new TalonFX(4);
+    private Pose2d target = new Pose2d();
 
     /*
      * SysId routine for characterizing translation. This is used to find PID gains
@@ -255,25 +248,25 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     private void setUpPoseEstimater() {
-        poseEstimator = new SwerveDrivePoseEstimator(
-                m_kinematics,
-                gyro.getRotation2d(),
-                getModulePositions(true),
+        // poseEstimator = new SwerveDrivePoseEstimator(
+        // m_kinematics,
+        // gyro.getRotation2d(),
+        // getModulePositions(true),
 
-                new Pose2d(3, 3, Rotation2d.fromDegrees(180)));
+        // new Pose2d(3, 3, Rotation2d.fromDegrees(180)));
 
         SmartDashboard.putData("Field", m_Fields);
     }
 
     // creating array for swerve module postions
-    private SwerveModulePosition[] getModulePositions(boolean refresh) {
-        SwerveModulePosition[] positions = {
-                getModules()[0].getPosition(refresh),
-                getModules()[1].getPosition(refresh),
-                getModules()[2].getPosition(refresh),
-                getModules()[3].getPosition(refresh) };
-        return positions;
-    }
+    // private SwerveModulePosition[] getModulePositions(boolean refresh) {
+    // SwerveModulePosition[] positions = {
+    // getModules()[0].getPosition(refresh),
+    // getModules()[1].getPosition(refresh),
+    // getModules()[2].getPosition(refresh),
+    // getModules()[3].getPosition(refresh) };
+    // return positions;
+    // }
 
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
@@ -361,16 +354,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public void periodic() {
 
-        // Translation2d turretOffsetFromRobot = new Translation2d(getPose().getX() -
-        // 0.2101215 , getPose().getY() - .1412875 );
-        // double distanceFromHub =
-        // getPose()
-        // .getTranslation()
-        // .rotateAround(turretOffsetFromRobot, getPose().getRotation()).getDistance(new
-        // Translation2d(4.62554, 4.03606));
-        // SmartDashboard.putNumber("DistanceFromBlueHub", distanceFromHub);
-
-        // SmartDashboard.putNumber("steer motor amps", );
         /*
          * Periodically try to apply the operator perspective.
          * If we haven't applied the operator perspective before, then we should apply
@@ -392,26 +375,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 m_hasAppliedOperatorPerspective = true;
             });
         }
-
-        var gyroAngle = gyro.getRotation2d();
-
-        SwerveModulePosition[] currentPositions = getModulePositions(false);
         // Update the pose
 
-        SmartDashboard.putNumber("GetXSpeeds", getFieldRelativeSpeeds().vxMetersPerSecond);
-        SmartDashboard.putNumber("GetYSpeeds", getFieldRelativeSpeeds().vyMetersPerSecond);
-        SmartDashboard.putNumber("GetRotationSpeeds", getFieldRelativeSpeeds().omegaRadiansPerSecond);
-        
+        limelightPoseUpdate("limelight-tags");
+        limelightPoseUpdate("limelight-intake");
 
-            limelightPoseUpdate("limelight-tags");
-            limelightPoseUpdate("limelight-intake");
+        // poseEstimator.update(gyroAngle, currentPositions);
 
-             poseEstimator.update(gyroAngle, currentPositions);
-            SmartDashboard.putNumber("estimatedRotation",
-                    poseEstimator.getEstimatedPosition().getRotation().getDegrees());
-            SmartDashboard.putNumber("estimated Pose X", poseEstimator.getEstimatedPosition().getX());
-            SmartDashboard.putNumber("estimated Pose Y", poseEstimator.getEstimatedPosition().getY());
-            m_Fields.setRobotPose(poseEstimator.getEstimatedPosition());
+        m_Fields.setRobotPose(getPose());
+        computeTurretTaget();
     }
 
     // creating array to get the module states
@@ -426,13 +398,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     // updating the robot pose
     public Pose2d getPose() {
-        return poseEstimator.getEstimatedPosition();
+        // return poseEstimator.getEstimatedPosition();
+        return getState().Pose;
     }
 
     // reseting the robot pose
     public void resetPose(Pose2d pose) {
         System.out.println(pose);
-        poseEstimator.resetPosition(gyro.getRotation2d(), getModulePositions(true), pose);
+        // poseEstimator.resetPosition(gyro.getRotation2d(), getModulePositions(true),
+        // pose);
+
         super.resetPose(pose);
     }
 
@@ -443,11 +418,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 .rotateBy(getPose().getRotation());
 
         return new ChassisSpeeds(fieldSpeeds.getX(), fieldSpeeds.getY(), speeds.omegaRadiansPerSecond);
-    }
-
-    public double getVelocity() {
-        return Math.sqrt(Math.pow(getFieldRelativeSpeeds().vxMetersPerSecond, 2)
-                + Math.pow(getFieldRelativeSpeeds().vyMetersPerSecond, 2));
     }
 
     private void startSimThread() {
@@ -519,10 +489,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
     }
 
-    public void limelightPoseUpdate(String limelightname){
-        LimelightHelpers.SetRobotOrientation( limelightname,
-                poseEstimator.getEstimatedPosition().getRotation().getDegrees(), 0, 0, 0, 0, 0);
-     PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightname);
+    public void limelightPoseUpdate(String limelightname) {
+        LimelightHelpers.SetRobotOrientation(limelightname,
+                getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
+        PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightname);
 
         Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace(limelightname);
         double distance = Math.sqrt(
@@ -532,33 +502,20 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (robotPoseEstimateTags != null) {
             if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
                     && distance < 3.5) {
-                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
-                poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
-                        robotPoseEstimateTags.timestampSeconds);
-                System.out.println("using limelight");
+                // poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75,
+                // distance * 0.75, 9999999));
+                // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
+                // robotPoseEstimateTags.timestampSeconds);
+                addVisionMeasurement(robotPoseEstimateTags.pose, robotPoseEstimateTags.timestampSeconds,
+                        VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
                 // robotPoseEstimateTurret.timestampSeconds);
 
             }
-
-        } else {
-            System.out.println("limelight estimation null");
         }
-    }
-
-
-
-    public boolean turretDeadZone() {
-        if (getPose().getY() > 2.8 && getPose().getY() < 5.3) {
-            // if (getPose().getX() > 5.5 && getPose().getX() < 7.0) {
-            return true;
-            // } else {
-            // return false;
-            // }
-
-        } else {
-            return false;
-        }
+        // } else {
+        //     System.out.println("limelight estimation null");
+        // }
     }
 
     public boolean isFeeding() {
@@ -567,57 +524,40 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         return GameManager.isBlueAlliance ? getPose().getX() > Hx : getPose().getX() < Hx;
     }
 
-    public Pose2d feedingTargets() {
-
-        double Hy = 4.03606;
-
-        // uses new feeder shot positions
-        double tX = GameManager.isBlueAlliance ? 0.5 : 7.5; // 4.62554 / 4 : 11.98482 + ((4.62554 / 2)+(4.62554 / 4));
-        // double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 :
-        // 0.5;
-        double tY = getPose().getY() > Hy ? 7.5 : 0.5;
-
-        if (turretDeadZone()) {
-            // do the deadzone swap!
-            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
-                    (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
-                    Rotation2d.fromDegrees(0));
-        } else {
-            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
-                    (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)),
-                    Rotation2d.fromDegrees(0));
-        }
+    public Pose2d feedingTargets(Translation2d swimOffset) {
+        double Huby = 4.03606;
+        Translation2d feedPosition = new Translation2d(
+                GameManager.isBlueAlliance ? 0.5 : 7.5,
+                getPose().getY() > Huby ? 7.5 : 0.5);
+        return new Pose2d(feedPosition.minus(swimOffset), Rotation2d.fromDegrees(0));
     }
 
-    public Pose2d getHubTarget() {
-        Translation2d BlueHubPosition = new Translation2d(
-                4.62554 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
-                4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
-        Translation2d RedHubPosistion = new Translation2d(
-                11.98482 - (getFieldRelativeSpeeds().vxMetersPerSecond * ShooterSubsystem.tof),
-                4.03606 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof));
-
-        return new Pose2d(GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion, Rotation2d.fromDegrees(0));
+    public Pose2d getHubTarget(Translation2d swimOffset) {
+        Translation2d hubPosition = GameManager.isBlueAlliance ? BlueHubPosition : RedHubPosistion;
+        return new Pose2d(hubPosition.minus(swimOffset), Rotation2d.fromDegrees(0));
     }
 
     public Pose2d getTurretTarget() {
-        SmartDashboard.putBoolean("is feeding", isFeeding());
+        return target;
+    }
 
-        return new Pose2d(isFeeding() ? feedingTargets().getTranslation() : getHubTarget().getTranslation(),
+    public void computeTurretTaget() {
+        boolean feeding = isFeeding();
+        ChassisSpeeds chassisSpeeds = getFieldRelativeSpeeds();
+        Translation2d swimoffset = new Translation2d(
+                chassisSpeeds.vxMetersPerSecond * ShooterSubsystem.tof,
+                chassisSpeeds.vyMetersPerSecond * ShooterSubsystem.tof);
+        SmartDashboard.putBoolean("is feeding", feeding);
+
+        target = new Pose2d(
+                feeding ? feedingTargets(swimoffset).getTranslation() : getHubTarget(swimoffset).getTranslation(),
                 Rotation2d.fromDegrees(0));
+        m_Fields.getObject("scoring target")
+                .setPose(target);
     }
 
     public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
         double DistanceToTarget = getTurretOffset().getTranslation().getDistance(getTurretTarget().getTranslation());
-
-        // puts the target on Glass so we can visualize it
-        m_Fields.getObject("scoring target")
-                .setPose(new Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
-        // turret postions
-        // m_Fields.getObject("turret position").setPose(
-        //         new Pose2d(getTurretOffset().getTranslation(), Rotation2d.fromDegrees(TurretSubsystem.turretPosition)));
-        // m_Fields.getObject("feeding target").setPose(new
-        // Pose2d(getTurretTarget().getTranslation(), Rotation2d.fromDegrees(0)));
         SmartDashboard.putNumber("distance to target", DistanceToTarget);
         return DistanceToTarget;
     }

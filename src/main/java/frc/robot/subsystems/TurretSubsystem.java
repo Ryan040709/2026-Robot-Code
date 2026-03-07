@@ -43,8 +43,6 @@ public class TurretSubsystem extends SubsystemBase {
     public double leftFy = 6; // left feedingY
     public double leftFyFar = 7.5; // left feedingY
 
-    Translation2d lockingTarget = new Translation2d(0, 0); // robot position
-
     public boolean isFeeding = true;
     public boolean turretZeroed = false;
 
@@ -234,12 +232,11 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double calculateAngleToHub(Pose2d turretTarget, Pose2d turretPose) {
 
-        double diffY = (lockingTarget.getY() - turretPose.getY());
-        double diffX = (lockingTarget.getX() - turretPose.getX());
+        double diffY = (turretTarget.getY() - turretPose.getY());
+        double diffX = (turretTarget.getX() - turretPose.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(
                 MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -20, 315);
-
         return goldenAngle;
 
     }

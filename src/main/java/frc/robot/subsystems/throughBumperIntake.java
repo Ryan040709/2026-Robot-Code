@@ -58,9 +58,6 @@ public class throughBumperIntake extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("intake FRONT current", intakeMotor1.getSupplyCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("intake BACK current", intakeMotor2.getSupplyCurrent().getValueAsDouble());
-        super.periodic();
     }
 
     public void SetIntakeFront(double targetVoltage) {
