@@ -104,7 +104,6 @@ public class RobotContainer {
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
 
         // in the bumper intake commands
-        // test
         Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, OutOfBumperIntake);
         Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, OutOfBumperIntake);
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
@@ -113,13 +112,11 @@ public class RobotContainer {
         public RobotContainer() {
                 // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
-                // // out of bumper intake commands
-                // NamedCommands.registerCommand("intake-lower", intake_LowerIntake);
-                // NamedCommands.registerCommand("intake-raise", intake_RaiseIntake);
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-hopperToIntake", outtake);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
+                NamedCommands.registerCommand("intake-stop", intake_Stop);
                 // // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
@@ -230,15 +227,17 @@ public class RobotContainer {
 
         public Command getAutonomousCommand() {
 
-                String routine = routineChooser.getSelected();
-                String variation = variationChooser.getSelected();
-                String autoName = routine + "_" + variation;
+                // String routine = routineChooser.getSelected();
+                // String variation = variationChooser.getSelected();
+                // String autoName = routine + "_" + variation;
 
-                try {
-                        return AutoBuilder.buildAuto(autoName);
-                } catch (Exception e) { // if for whatever reason the driver requests an inalid auto
-                        DriverStation.reportError("Auto " + autoName + " not found!", e.getStackTrace());
-                        return AutoBuilder.buildAuto("nothing_auto"); // the auton that does... nothing
-                }
+                // try {
+                //         return AutoBuilder.buildAuto(autoName);
+                // } catch (Exception e) { // if for whatever reason the driver requests an inalid auto
+                //         DriverStation.reportError("Auto " + autoName + " not found!", e.getStackTrace());
+                //         return AutoBuilder.buildAuto("nothing_auto"); // the auton that does... nothing
+                // }
+
+                return autoChooser.getSelected();
         }
 }

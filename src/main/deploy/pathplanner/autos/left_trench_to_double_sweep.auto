@@ -5,11 +5,36 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
-                "type": "sequential",
+                "type": "parallel",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shoot"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 3.0
+                }
+              },
+              {
+                "type": "deadline",
                 "data": {
                   "commands": [
                     {
@@ -19,11 +44,37 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "close LEFT Trench Sweep"
                       }
                     },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
                     {
                       "type": "path",
                       "data": {
@@ -31,11 +82,37 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "Far RIGHT Trench Sweep"
                       }
                     },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
                     {
                       "type": "path",
                       "data": {
@@ -43,9 +120,34 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "deadline",
+                "data": {
+                  "commands": [
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "Left trench to tower"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "intake-intakeToShooter"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "shoot"
                       }
                     }
                   ]

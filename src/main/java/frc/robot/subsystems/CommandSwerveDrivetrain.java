@@ -554,11 +554,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public boolean turretDeadZone() {
         if (getPose().getY() > 2.8 && getPose().getY() < 5.3) {
-            if (getPose().getX() > 5.5 && getPose().getX() < 7.0) {
+            //if (getPose().getX() > 5.5 && getPose().getX() < 7.0) {
                 return true;
-            } else {
-                return false;
-            }
+            // } else {
+            //     return false;
+            //}
 
         } else {
             return false;
@@ -575,16 +575,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         double Hy = 4.03606;
 
-        double tX = GameManager.isBlueAlliance ? 4.62554 / 4 : 11.98482 + (4.62554 / 4);
+        double tX = GameManager.isBlueAlliance ? 4.62554 / 4 : 11.98482 + ((4.62554 / 2)+(4.62554 / 4));
         double tYFar = getPose().getY() > 4.03606 && getPose().getY() < 6.5 ? 7.5 : 0.5;
         double tY = getPose().getY() > Hy ? 6 : 2;
 
         if (turretDeadZone() ) {
             // do the deadzone swap!
-            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tYFar - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
+            return new Pose2d((2 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
             // isFeeding = true;
         } else {
-            return new Pose2d((tX - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
+            return new Pose2d((2 - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), (tY - (getFieldRelativeSpeeds().vyMetersPerSecond * ShooterSubsystem.tof)), Rotation2d.fromDegrees(0));
             // isFeeding = true;
         }
     }

@@ -5,7 +5,7 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "sequential",
           "data": {
             "commands": [
               {
@@ -20,18 +20,6 @@
                             "type": "path",
                             "data": {
                               "pathName": "Right Trench Starting Spot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-intakeToShooter"
                             }
                           }
                         ]
@@ -52,14 +40,33 @@
                             "data": {
                               "name": "intake-intakeToShooter"
                             }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
                           }
                         ]
                       }
                     },
                     {
-                      "type": "path",
+                      "type": "deadline",
                       "data": {
-                        "pathName": "Left CLOSE CutSweep to Trench"
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Left CLOSE CutSweep to Trench"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-stop"
+                            }
+                          }
+                        ]
                       }
                     },
                     {

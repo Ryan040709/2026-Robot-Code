@@ -19,19 +19,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "New New Path"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-intakeToShooter"
+                              "pathName": "Right Trench Starting Spot"
                             }
                           }
                         ]
@@ -44,7 +32,64 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "depot collect"
+                              "pathName": "RIGHT fAR CutSweep"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Right FAR CutSweep to Trench ONE"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Right FAR CutSweep to Trench TW1O"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-stop"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "right trench to tower"
                             }
                           },
                           {
@@ -60,12 +105,6 @@
                             }
                           }
                         ]
-                      }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Depot to tower"
                       }
                     }
                   ]
