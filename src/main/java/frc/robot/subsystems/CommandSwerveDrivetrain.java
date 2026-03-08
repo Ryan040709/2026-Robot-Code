@@ -527,8 +527,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Pose2d feedingTargets(Translation2d swimOffset) {
         double Huby = 4.03606;
         Translation2d feedPosition = new Translation2d(
-                GameManager.isBlueAlliance ? 0.5 : 7.5,
-                getPose().getY() > Huby ? 7.5 : 0.5);
+                GameManager.isBlueAlliance ? 0.5 : 7,
+                getPose().getY() > Huby ? 7 : 0.5);
         return new Pose2d(feedPosition.minus(swimOffset), Rotation2d.fromDegrees(0));
     }
 

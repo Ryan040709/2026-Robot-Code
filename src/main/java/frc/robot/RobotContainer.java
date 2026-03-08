@@ -2,6 +2,8 @@ package frc.robot;
 
 import static edu.wpi.first.units.Units.*;
 
+import org.ejml.generic.GenericMatrixOps_F32;
+
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
@@ -32,6 +34,8 @@ import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterToRPMS;
+import frc.robot.commands.SetLEDColor;
+import frc.robot.commands.resetLEDTimer;
 //out of bumper intake commands
 import frc.robot.commands.intake.outTheBumper.Intake_LowerIntake;
 import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
@@ -219,8 +223,7 @@ public class RobotContainer {
 
                 turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
 
-                gameManager.setDefaultCommand(Commands.run(() -> {
-                }, gameManager));
+                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
                 hoodSubsystem.setDefaultCommand(hoodSetToPosition);
 
                 driverController.leftBumper().whileTrue(hoodSetToPosition);
@@ -230,9 +233,8 @@ public class RobotContainer {
                 manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
-
                 manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
-
+                manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
         }
 
         public Command getAutonomousCommand() {

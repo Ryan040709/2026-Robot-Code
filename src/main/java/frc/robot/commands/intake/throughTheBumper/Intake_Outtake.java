@@ -33,8 +33,8 @@ public class Intake_Outtake extends Command {
 
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if(outtaBumperIntakeSubsystem.AtPosition(0)){
-        intakeSubsystem.SetIntakeFront(8);
-        intakeSubsystem.SetIntakeBack(8);
+        intakeSubsystem.SetIntakeFront(5);
+        intakeSubsystem.SetIntakeBack(5);
         }
         // outta bumper intake
     }

@@ -12,7 +12,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkFlex;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -31,9 +33,12 @@ public class GameManager extends SubsystemBase {
   public List<ShiftList> LoseShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
   public List<ShiftList> alwaysActiveShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
 
+ private final SendableChooser<Command> winChooser;
+
   public ShiftList currentShift = ShiftList.Autonomous;
 
-  public PWMSparkFlex shiftLights = new PWMSparkFlex(0);
+  private Timer timer = new Timer();
+  public PWMSparkFlex shiftLights = new PWMSparkFlex(9);
 
   public double matchTimer = DriverStation.getMatchTime();
   public double elapsedTime = Timer.getFPGATimestamp();
@@ -66,12 +71,18 @@ public class GameManager extends SubsystemBase {
     LoseShifts.add(ShiftList.One);
     LoseShifts.add(ShiftList.Three);
     alwaysActiveShifts.add(ShiftList.EndGame);
+    timer.reset();
+    timer.start();
+    winChooser = new SendableChooser<>();
+winChooser.setDefaultOption("lost", runOnce(() -> lostAuto()));
+winChooser.addOption("win", runOnce(() -> wonAuto()));
 
+ SmartDashboard.putData("winChooser", winChooser);
   }
 
   @Override
   public void periodic() {
-   
+   winChooser.getSelected();
     if(!hasAlliance){
      Optional<Alliance> alliance = DriverStation.getAlliance();
     if (alliance.isPresent() ) {
@@ -88,6 +99,8 @@ public class GameManager extends SubsystemBase {
   }
 
     SmartDashboard.putBoolean("is blue?", isBlueAlliance);
+    SmartDashboard.putBoolean("won Auto", wonAuto);
+    SmartDashboard.putNumber("timer", matchTimer());
 
     isTeleop = DriverStation.isTeleop();
     matchTimer = DriverStation.getMatchTime();
@@ -108,6 +121,11 @@ public class GameManager extends SubsystemBase {
     // SmartDashboard.putBoolean("is in a match?", isMatch);
 
     getMatchTime();
+
+  }
+
+  public void setLEDcolor( double setColor){
+    shiftLights.set(setColor);
   }
 
   public void getMatchTime() {
@@ -119,11 +137,12 @@ public class GameManager extends SubsystemBase {
   }
 
   public void wonAuto() {
-    if (!wonAuto) {
-      wonAuto = true;
-    } else {
-      wonAuto = false;
-    }
+    // if (!wonAuto) {
+    //   wonAuto = true;
+    // } else {
+    //   wonAuto = false;
+    // }
+    wonAuto = true;
   }
 
   public void switchActiveHubs() {
@@ -140,11 +159,12 @@ public class GameManager extends SubsystemBase {
   }
 
   public void lostAuto() {
-    if (!wonAuto) {
-      lostAuto = true;
-    } else {
-      lostAuto = false;
-    }
+    // if (!wonAuto) {
+    //   lostAuto = true;
+    // } else {
+    //   lostAuto = false;
+    // }
+    wonAuto = false;
   }
 
   public void determineShift() {
@@ -164,37 +184,148 @@ public class GameManager extends SubsystemBase {
       }
     }
   }
-
+  public void resetTimer(){
+    timer.reset();
+  }
+  public double matchTimer(){
+    return timer.get();
+  }
   public void determineActiveHub() {
-    if (isMatch) {
-      if (wonAuto) {
-        if (LoseShifts.contains(currentShift)) {
-          // not active
-          // shiftLights.set(0.61);
-          isActive = false;
-        } else {
-          // active
-          // shiftLights.set(0.77);
-          isActive = true;
-        }
-      } else {
-        if (LoseShifts.contains(currentShift) || alwaysActiveShifts.contains(currentShift)) {
-          // active
-          // shiftLights.set(0.77);
-          isActive = true;
-        } else {
-          // not active
-          // shiftLights.set(0.61);
-          isActive = false;
-        }
+      double elapsedTime = matchTimer();
+      double activeColor = 0.75; // dark green
+      double nonActiveColor = 0.61; //red
+      double autoColor = 0.85; //dark blue
+      double transitionColor = 0.87;//blue
+      double warningColor = 0.69;//yellow
+      double endgameColor = 0.91;//violet
+      double defaultColor = -0.85;//shot red
+   
+      //auto
+      if(elapsedTime <= 17){
+        shiftLights.set(autoColor);
+     //   System.out.println("auto");
       }
-    } else if (elapsedTime > switchActive) {
-      switchActiveHubs();
-      if (!active) {
-        shiftLights.set(0.61);
-      } else {
-        shiftLights.set(0.77);
+      //warning
+       else if( elapsedTime > 17 && elapsedTime <=20){
+        shiftLights.set(warningColor);
+     //   System.out.println("warning");
       }
-    }
+      //transistion
+      else if( elapsedTime > 20 && elapsedTime <=27){
+        shiftLights.set(transitionColor);
+      //  System.out.println("transistion");
+      }
+      //warning
+       else if( elapsedTime > 27 && elapsedTime <=30){
+        shiftLights.set(warningColor);
+      //   System.out.println("warning");
+      }
+      //phase 1
+      else if( elapsedTime > 30 && elapsedTime <=52){
+        
+        if(wonAuto){
+          shiftLights.set(nonActiveColor);
+        }
+        else{
+            shiftLights.set(activeColor);
+        }
+       //  System.out.println("phase 1");
+      }
+      //warning
+       else if( elapsedTime > 52 && elapsedTime <=55){
+        shiftLights.set(warningColor);
+      //   System.out.println("warning");
+        
+      }
+      //phase 2
+      else if( elapsedTime > 55 && elapsedTime <=77){
+         if(wonAuto){
+          shiftLights.set(activeColor);
+        }
+        else{
+            shiftLights.set(nonActiveColor);
+        }
+     //   System.out.println("phase 2");
+      }
+      // warning
+       else if( elapsedTime > 77 && elapsedTime <=80){
+        shiftLights.set(warningColor);
+     //   System.out.println("warning");
+      }
+      //phase 3
+      else if( elapsedTime > 80 && elapsedTime <=102){
+         if(wonAuto){
+          shiftLights.set(nonActiveColor);
+        }
+        else{
+            shiftLights.set(activeColor);
+        }
+      //  System.out.println("phase 3");
+      }
+      //warning
+       else if( elapsedTime > 102 && elapsedTime <=105){
+        shiftLights.set(warningColor);
+      //  System.out.println("warning");
+      }
+      // phase 4
+      else if( elapsedTime > 105 && elapsedTime <=127){
+         if(wonAuto){
+          shiftLights.set(activeColor);
+        }
+        else{
+            shiftLights.set(nonActiveColor);
+        }
+        System.out.println("phase 4");
+      }
+        // warning
+         else if( elapsedTime > 127 && elapsedTime <=130){
+        shiftLights.set(warningColor);
+      //   System.out.println("warning");
+      }
+      else if( elapsedTime > 130 && elapsedTime <=160){
+        shiftLights.set(endgameColor);
+     //    System.out.println("endgame");
+      }
+      else{
+        shiftLights.set(defaultColor);
+      //   System.out.println("default");
+      }
+      
+    
+
+
+
+
+    
+    // if (isMatch) {
+    //   if (wonAuto) {
+    //     if (LoseShifts.contains(currentShift)) {
+    //       // not active
+    //        shiftLights.set(0.61);
+    //       isActive = false;
+    //     } else {
+    //       // active
+    //        shiftLights.set(0.77);
+    //       isActive = true;
+    //     }
+    //   } else {
+    //     if (LoseShifts.contains(currentShift) || alwaysActiveShifts.contains(currentShift)) {
+    //       // active
+    //        shiftLights.set(0.77);
+    //       isActive = true;
+    //     } else {
+    //       // not active
+    //       shiftLights.set(0.61);
+    //       isActive = false;
+    //     }
+    //   }
+    // } else if (elapsedTime > switchActive) {
+    //   switchActiveHubs();
+    //   if (!active) {
+    //     shiftLights.set(0.61);
+    //   } else {
+    //     shiftLights.set(0.77);
+    //   }
+    // }
   }
 }
