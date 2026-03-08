@@ -63,8 +63,8 @@ public class GameManager extends SubsystemBase {
 
   /** Creates a new GameManager. */
   public GameManager() {
-    SmartDashboard.putData("Win Auto?", runOnce(() -> wonAuto()));
-    SmartDashboard.putData("Lost Auto?", runOnce(() -> lostAuto()));
+    // SmartDashboard.putData("Win Auto?", runOnce(() -> wonAuto()));
+    // SmartDashboard.putData("Lost Auto?", runOnce(() -> lostAuto()));
 
     alwaysActiveShifts.add(ShiftList.Autonomous);
     alwaysActiveShifts.add(ShiftList.Transistion);
@@ -195,8 +195,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       double activeColor = 0.75; // dark green
       double nonActiveColor = 0.61; //red
       double autoColor = 0.85; //dark blue
-      double transitionColor = 0.87;//blue
-      double warningColor = 0.69;//yellow
+      double transitionColor = 0.57;//hot pink
+      double warningColor = -.07;// gold strobe
       double endgameColor = 0.91;//violet
       double defaultColor = -0.85;//shot red
    
@@ -275,7 +275,7 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         else{
             shiftLights.set(nonActiveColor);
         }
-        System.out.println("phase 4");
+      //  System.out.println("phase 4");
       }
         // warning
          else if( elapsedTime > 127 && elapsedTime <=130){

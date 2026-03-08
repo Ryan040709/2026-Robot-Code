@@ -153,8 +153,8 @@ public final class Constants {
 
     public static boolean Shooter_StatorCurrentLimitEnable = false;
     public static double Shooter_CurrentLimit = 10;
-    public static boolean Shooter_SupplyCurrentLimitEnable = false;
-    public static double Shooter_SupplyCurrentLimit = 10;
+    public static boolean Shooter_SupplyCurrentLimitEnable = true;
+    public static double Shooter_SupplyCurrentLimit = 80;
     public static double Shooter_SupplyCurrentLowerLimit = 0;
     public static double Shooter_SupplyCurrentLowerTime = 0;
 

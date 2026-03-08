@@ -85,6 +85,7 @@ public class ShooterSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
+        
     }
 
     public double CalculateRpms(double distanceToHub, boolean isFeeding) {

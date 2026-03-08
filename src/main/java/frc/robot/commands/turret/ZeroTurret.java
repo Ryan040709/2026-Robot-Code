@@ -5,16 +5,19 @@
 package frc.robot.commands.turret;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class ZeroTurret extends Command {
   TurretSubsystem turretSubsystem;
+  CommandSwerveDrivetrain drivetrain;
   private int counter;
   private boolean turretIsZeroed;
   /** Creates a new ZeroTurret. */
-  public ZeroTurret( TurretSubsystem turretSubsystem) {
+  public ZeroTurret( TurretSubsystem turretSubsystem, CommandSwerveDrivetrain drivetrain) {
     this.turretSubsystem = turretSubsystem;
+    this.drivetrain = drivetrain;
     addRequirements(turretSubsystem);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -49,7 +52,9 @@ public class ZeroTurret extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+     turretSubsystem.setPosition(drivetrain.getTurretTarget(), 0, drivetrain.getTurretOffset());
+  }
 
   // Returns true when the command should end.
   @Override

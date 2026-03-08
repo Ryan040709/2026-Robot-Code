@@ -102,7 +102,7 @@ public class RobotContainer {
         // turret commands
         Turret_Toggle turret_Toggle = new Turret_Toggle(turret);
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);
-        ZeroTurret zeroTurret = new ZeroTurret(turret);
+        ZeroTurret zeroTurret = new ZeroTurret(turret, drivetrain);
         // out of bumper intake commands
         Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
         Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
@@ -122,6 +122,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
+                NamedCommands.registerCommand("zero-turret", zeroTurret);
                 // // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
@@ -235,6 +236,8 @@ public class RobotContainer {
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
                 manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
                 manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
+                manipulatorController.pov(270).onTrue(Commands.runOnce(()-> gameManager.lostAuto(), gameManager));
+                manipulatorController.pov(90).onTrue(Commands.runOnce(()-> gameManager.wonAuto(), gameManager));
         }
 
         public Command getAutonomousCommand() {

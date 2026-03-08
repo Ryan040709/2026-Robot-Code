@@ -1,0 +1,153 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "zero-turret"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 4.0
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "1right_trench_to_Middle_than_Human_player"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-stop"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "2right_trench_to_Middle_than_Human_player"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToHopper"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "3right_trench_to_Middle_than_Human_player"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-stop"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake-intakeToShooter"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "shoot"
+                            }
+                          },
+                          {
+                            "type": "sequential",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "path",
+                                  "data": {
+                                    "pathName": "4right_trench_to_Middle_than_Human_player"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "2026 Autons",
+  "choreoAuto": false
+}

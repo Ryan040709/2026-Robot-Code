@@ -3,34 +3,50 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 0.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 3.636650602409638,
+        "y": 0.4616385542168677
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.489469879518075,
-        "y": 0.7676144578313244
+        "x": 5.538072289156626,
+        "y": 0.43978313253012047
       },
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.5605256410256425,
-        "y": 3.2907948717948714
+        "x": 6.827542168674698,
+        "y": 0.6364819277108438
       },
       "prevControl": {
-        "x": 2.560525641025642,
-        "y": 3.2907948717948714
+        "x": 6.3795060240963855,
+        "y": 0.6255542168674697
+      },
+      "nextControl": {
+        "x": 7.27974440347037,
+        "y": 0.6475112505107388
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.161,
+        "y": 0.8659638554216871
+      },
+      "prevControl": {
+        "x": 7.537795180722891,
+        "y": 0.6915903614457837
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "tower right"
+      "linkedName": null
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.75,
+      "waypointRelativePos": 0.5,
       "rotationDegrees": 0.0
     }
   ],
@@ -47,10 +63,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 110.0
   },
   "reversed": false,
-  "folder": "Auton Path Links",
+  "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0

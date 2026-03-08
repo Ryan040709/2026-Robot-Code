@@ -3,58 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.665230769230771,
-        "y": 0.5
+        "x": 0.326,
+        "y": 0.768
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.665230769230768,
-        "y": 0.5000000000000001
-      },
-      "isLocked": false,
-      "linkedName": "right trench starting point"
-    },
-    {
-      "anchor": {
-        "x": 2.456457831325301,
-        "y": 0.7239036144578312
-      },
-      "prevControl": {
-        "x": 2.7035507557379552,
-        "y": 0.7619179105213165
-      },
-      "nextControl": {
-        "x": 2.1430501804585926,
-        "y": 0.67568705278603
+        "x": 0.432944244136993,
+        "y": 0.5420289207753186
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 0.326,
+        "y": 0.41792771084337454
       },
       "prevControl": {
-        "x": 1.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 0.15545514158624446,
+        "y": 0.600723912304543
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 1.0,
-      "rotationDegrees": 180.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.0,
-      "maxWaypointRelativePos": 2.0,
+      "minWaypointRelativePos": 0.5,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 0.3,
         "maxAcceleration": 0.3,
@@ -68,8 +47,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -83,7 +62,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 90.0
+    "rotation": 0.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

@@ -5,61 +5,66 @@
     "data": {
       "commands": [
         {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "zero-turret"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.5
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "parallel",
           "data": {
             "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "intake-intakeToShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot"
+                }
+              },
               {
                 "type": "sequential",
                 "data": {
                   "commands": [
                     {
-                      "type": "deadline",
+                      "type": "path",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "right bump to Human Player Zone"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-intakeToShooter"
-                            }
-                          }
-                        ]
+                        "pathName": "right bump to Human Player Zone"
                       }
                     },
                     {
-                      "type": "deadline",
+                      "type": "wait",
                       "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Copy of Human Player Zone"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-intakeToShooter"
-                            }
-                          }
-                        ]
+                        "waitTime": 3.0
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "right bump to Human Player Zone2"
                       }
                     }
                   ]

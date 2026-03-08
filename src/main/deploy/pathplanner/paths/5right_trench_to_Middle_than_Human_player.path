@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 4.25
+        "x": 0.2599879518072288,
+        "y": 1.008024096385542
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.549999999999997,
-        "y": 4.25
+        "x": 0.2599879518072288,
+        "y": 0.7020481927710842
       },
       "isLocked": false,
-      "linkedName": "Hub Starting Point"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 0.2599879518072288,
+        "y": 0.5272048192771093
       },
       "prevControl": {
-        "x": 1.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 0.2709156626506025,
+        "y": 0.8003975903614469
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -45,10 +45,10 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Auton Path Links",
+  "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 3.2104698795180724,
-        "y": 2.210072289156627
+        "y": 2.2100722891566273
       },
       "isLocked": false,
       "linkedName": "Hub Starting Point"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 0.7,
-        "y": 0.5465384615384619
+        "x": 0.4894698795180723,
+        "y": 0.7676144578313244
       },
       "prevControl": {
-        "x": 1.7,
-        "y": 0.5465384615384618
+        "x": 1.4894698795180723,
+        "y": 0.7676144578313243
       },
       "nextControl": null,
       "isLocked": false,
@@ -72,7 +72,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

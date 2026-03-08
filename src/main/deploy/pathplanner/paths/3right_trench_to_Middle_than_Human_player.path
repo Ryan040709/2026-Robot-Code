@@ -3,32 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.55,
-        "y": 4.25
+        "x": 8.161,
+        "y": 1.948
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.549999999999997,
-        "y": 4.25
+        "x": 7.679843373493975,
+        "y": 2.2761204819277108
       },
       "isLocked": false,
-      "linkedName": "Hub Starting Point"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 2.5438795180722895,
+        "y": 2.4832650602409636
       },
       "prevControl": {
-        "x": 1.4894698795180723,
-        "y": 0.7676144578313244
+        "x": 2.9263504909679043,
+        "y": 2.330279841905918
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "human player zone"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.41244813278008724,
+      "rotationDegrees": 45.0
+    },
+    {
+      "waypointRelativePos": 0.6199170124481351,
+      "rotationDegrees": 45.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -42,13 +51,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 45.0
   },
   "reversed": false,
-  "folder": "Auton Path Links",
+  "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 110.0
   },
   "useDefaultConstraints": true
 }
