@@ -3,32 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.5438795180722895,
-        "y": 2.4832650602409636
+        "x": 3.516,
+        "y": 0.6
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.309293738868012,
-        "y": 2.3968387205341246
+        "x": 3.2814142207957224,
+        "y": 0.5135736602931611
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "right trench START"
     },
     {
       "anchor": {
-        "x": 0.2599879518072288,
-        "y": 1.008024096385542
+        "x": 0.26,
+        "y": 0.9
       },
       "prevControl": {
-        "x": 0.7533334088243853,
-        "y": 1.043507418395573
+        "x": 0.7533454570171565,
+        "y": 0.935483322010031
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.85,
+      "rotationDegrees": 0.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -47,8 +52,8 @@
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 45.0
+    "velocity": 1.5,
+    "rotation": 0.0
   },
   "useDefaultConstraints": false
 }

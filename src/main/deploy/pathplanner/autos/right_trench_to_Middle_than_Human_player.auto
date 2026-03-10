@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "zero-turret"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "zero-turret"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.25
+                }
+              }
+            ]
           }
         },
         {
@@ -31,7 +44,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 4.0
+                              "waitTime": 3.0
                             }
                           },
                           {
@@ -94,7 +107,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "3right_trench_to_Middle_than_Human_player"
+                              "pathName": "Right pickup to Trench"
                             }
                           },
                           {
@@ -113,12 +126,6 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-intakeToShooter"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
                               "name": "shoot"
                             }
                           },
@@ -127,9 +134,85 @@
                             "data": {
                               "commands": [
                                 {
+                                  "type": "race",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "intake-no-outta"
+                                        }
+                                      },
+                                      {
+                                        "type": "path",
+                                        "data": {
+                                          "pathName": "4right_trench_to_Middle_than_Human_player"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "race",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 2.0
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "intake-no-outta"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "race",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 0.25
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "intake-intakeToHopper"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
+                                  "type": "race",
+                                  "data": {
+                                    "commands": [
+                                      {
+                                        "type": "wait",
+                                        "data": {
+                                          "waitTime": 2.0
+                                        }
+                                      },
+                                      {
+                                        "type": "named",
+                                        "data": {
+                                          "name": "intake-no-outta"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                },
+                                {
                                   "type": "path",
                                   "data": {
-                                    "pathName": "4right_trench_to_Middle_than_Human_player"
+                                    "pathName": "right bump to Human Player Zone2"
                                   }
                                 }
                               ]

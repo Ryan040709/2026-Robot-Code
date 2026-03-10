@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 5.771348955262218,
-        "y": 0.4035184293395091
+        "y": 0.40351842933950915
       },
       "nextControl": {
         "x": 5.212123387965638,
@@ -58,7 +58,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

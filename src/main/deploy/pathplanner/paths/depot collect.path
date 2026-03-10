@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 0.7,
-        "y": 7.018265060240964
+        "y": 4.942
       },
       "prevControl": null,
       "nextControl": {
         "x": 0.6781445783132529,
-        "y": 6.592084337349398
+        "y": 4.5158192771084344
       },
       "isLocked": false,
       "linkedName": "blue depot"
@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 0.7,
-        "y": 5.783433734939758
+        "y": 7.39
       },
       "prevControl": {
-        "x": 0.6890708068191133,
-        "y": 6.20961441982009
+        "x": 0.6890708068191134,
+        "y": 7.816180684880331
       },
       "nextControl": null,
       "isLocked": false,
@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -110.0
+    "rotation": 110.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": -110.0
+    "rotation": 110.0
   },
   "useDefaultConstraints": false
 }

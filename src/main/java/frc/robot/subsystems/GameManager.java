@@ -10,7 +10,9 @@ import java.util.Optional;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkFlex;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,7 +31,8 @@ public class GameManager extends SubsystemBase {
     Four, // alternates
     EndGame // active for both
   }
-
+  private XboxController driverController = new XboxController(0);
+  private XboxController manipulatorController = new XboxController(1);
   public List<ShiftList> LoseShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
   public List<ShiftList> alwaysActiveShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
 
@@ -204,20 +207,30 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       if(elapsedTime <= 17){
         shiftLights.set(autoColor);
      //   System.out.println("auto");
+     
+        // driverController.setRumble(RumbleType.kBothRumble, 0);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, 0);
       }
       //warning
        else if( elapsedTime > 17 && elapsedTime <=20){
         shiftLights.set(warningColor);
+        // driverController.setRumble(RumbleType.kBothRumble, .2);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, .2);
      //   System.out.println("warning");
       }
       //transistion
       else if( elapsedTime > 20 && elapsedTime <=27){
         shiftLights.set(transitionColor);
+        
+        // driverController.setRumble(RumbleType.kBothRumble, 0);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, 0);
       //  System.out.println("transistion");
       }
       //warning
        else if( elapsedTime > 27 && elapsedTime <=30){
         shiftLights.set(warningColor);
+        // driverController.setRumble(RumbleType.kBothRumble, .2);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, .2);
       //   System.out.println("warning");
       }
       //phase 1
@@ -229,11 +242,16 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         else{
             shiftLights.set(activeColor);
         }
+        
+        // driverController.setRumble(RumbleType.kBothRumble, 0);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, 0);
        //  System.out.println("phase 1");
       }
       //warning
        else if( elapsedTime > 52 && elapsedTime <=55){
         shiftLights.set(warningColor);
+        // driverController.setRumble(RumbleType.kBothRumble, .2);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, .2);
       //   System.out.println("warning");
         
       }
@@ -245,11 +263,16 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         else{
             shiftLights.set(nonActiveColor);
         }
+        
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
      //   System.out.println("phase 2");
       }
       // warning
        else if( elapsedTime > 77 && elapsedTime <=80){
         shiftLights.set(warningColor);
+        // driverController.setRumble(RumbleType.kBothRumble, .2);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, .2);
      //   System.out.println("warning");
       }
       //phase 3
@@ -260,11 +283,16 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         else{
             shiftLights.set(activeColor);
         }
+        
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
       //  System.out.println("phase 3");
       }
       //warning
        else if( elapsedTime > 102 && elapsedTime <=105){
         shiftLights.set(warningColor);
+        // driverController.setRumble(RumbleType.kBothRumble, .2);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, .2);
       //  System.out.println("warning");
       }
       // phase 4
@@ -275,20 +303,31 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         else{
             shiftLights.set(nonActiveColor);
         }
+        
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
       //  System.out.println("phase 4");
       }
         // warning
          else if( elapsedTime > 127 && elapsedTime <=130){
         shiftLights.set(warningColor);
+        // driverController.setRumble(RumbleType.kBothRumble, .2);
+        // manipulatorController.setRumble(RumbleType.kBothRumble, .2);
       //   System.out.println("warning");
       }
       else if( elapsedTime > 130 && elapsedTime <=160){
         shiftLights.set(endgameColor);
      //    System.out.println("endgame");
+     
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
       }
       else{
         shiftLights.set(defaultColor);
       //   System.out.println("default");
+      
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
       }
       
     

@@ -9,25 +9,19 @@
           "data": {
             "commands": [
               {
-                "type": "deadline",
+                "type": "race",
                 "data": {
                   "commands": [
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "zero-turret"
+                      }
+                    },
+                    {
                       "type": "wait",
                       "data": {
-                        "waitTime": 1.0
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "shoot"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "intake-intakeToShooter"
+                        "waitTime": 0.25
                       }
                     }
                   ]
@@ -54,6 +48,12 @@
                       "data": {
                         "name": "intake-intakeToShooter"
                       }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "turret-locking"
+                      }
                     }
                   ]
                 }
@@ -79,30 +79,11 @@
                       "data": {
                         "name": "intake-intakeToShooter"
                       }
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "deadline",
-                "data": {
-                  "commands": [
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Depot to tower"
-                      }
                     },
                     {
                       "type": "named",
                       "data": {
-                        "name": "shoot"
-                      }
-                    },
-                    {
-                      "type": "named",
-                      "data": {
-                        "name": "intake-intakeToShooter"
+                        "name": "turret-locking"
                       }
                     }
                   ]

@@ -30,6 +30,7 @@ import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
+import frc.robot.commands.intake.throughTheBumper.IntakeToShooterNoOutta;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
 import frc.robot.commands.shooter.ShooterStop;
@@ -113,6 +114,7 @@ public class RobotContainer {
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
         Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake,
                         turret, drivetrain);
+        IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
 
         public RobotContainer() {
                 // turret commands
@@ -123,6 +125,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("zero-turret", zeroTurret);
+                NamedCommands.registerCommand("intake-no-outta", intakeNoOutta);
                 // // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands

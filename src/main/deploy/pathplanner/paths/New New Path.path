@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 0.7,
-        "y": 7.018265060240964
+        "y": 4.942
       },
       "prevControl": {
         "x": 1.7000000000000002,
-        "y": 7.018265060240964
+        "y": 4.942
       },
       "nextControl": null,
       "isLocked": false,
@@ -47,7 +47,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -110.0
+    "rotation": 110.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

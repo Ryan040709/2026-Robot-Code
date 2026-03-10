@@ -25,17 +25,17 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "weird path i guess"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.41244813278008724,
-      "rotationDegrees": 45.0
+      "rotationDegrees": 135.0
     },
     {
       "waypointRelativePos": 0.6199170124481351,
-      "rotationDegrees": 45.0
+      "rotationDegrees": 135.0
     }
   ],
   "constraintZones": [],
@@ -50,14 +50,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 45.0
+    "velocity": 0.0,
+    "rotation": 135.0
   },
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.3,
     "rotation": 110.0
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

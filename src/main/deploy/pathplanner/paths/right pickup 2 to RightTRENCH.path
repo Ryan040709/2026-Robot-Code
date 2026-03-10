@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 6.615169541879281,
-        "y": 1.651969310422211
+        "y": 1.6519693104222108
       },
       "isLocked": false,
       "linkedName": "pickup 2"
@@ -21,7 +21,7 @@
       },
       "prevControl": {
         "x": 5.7748827611084055,
-        "y": 0.38355283572748977
+        "y": 0.3835528357274898
       },
       "nextControl": {
         "x": 4.868020801859004,
@@ -58,7 +58,7 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": -90.0
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
