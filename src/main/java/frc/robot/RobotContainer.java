@@ -261,4 +261,7 @@ public class RobotContainer {
 
                 return autoChooser.getSelected();
         }
+        public void teleopInit(){
+                gameManager.resetTimer();
+        }
 }
