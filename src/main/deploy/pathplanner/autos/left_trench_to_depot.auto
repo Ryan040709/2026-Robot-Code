@@ -61,12 +61,6 @@
                           }
                         ]
                       }
-                    },
-                    {
-                      "type": "path",
-                      "data": {
-                        "pathName": "Depot to tower"
-                      }
                     }
                   ]
                 }

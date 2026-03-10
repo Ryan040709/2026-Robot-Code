@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.160722891566266,
-        "y": 0.84410843373494
+        "y": 7.156
       },
       "prevControl": null,
       "nextControl": {
         "x": 8.127602409638556,
-        "y": 1.283036144578314
+        "y": 7.594927710843374
       },
       "isLocked": false,
       "linkedName": null
@@ -17,15 +17,15 @@
     {
       "anchor": {
         "x": 8.160722891566266,
-        "y": 1.9480000000000004
+        "y": 6.052
       },
       "prevControl": {
         "x": 8.149457831325302,
-        "y": 1.456253012048193
+        "y": 5.560253012048192
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "right middle pickup 1"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.3,
-    "rotation": 110.0
+    "velocity": 0.5,
+    "rotation": -110.0
   },
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
-    "velocity": 0.3,
-    "rotation": 110.0
+    "velocity": 0.5,
+    "rotation": -110.0
   },
   "useDefaultConstraints": false
 }

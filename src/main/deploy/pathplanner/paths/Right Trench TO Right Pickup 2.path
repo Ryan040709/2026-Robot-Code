@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 3.516,
-        "y": 0.6
+        "y": 0.5999999999999996
       },
       "prevControl": null,
       "nextControl": {
         "x": 4.539954288254186,
-        "y": 0.6219127044081741
+        "y": 0.6219127044081745
       },
       "isLocked": false,
       "linkedName": "right trench START"
