@@ -3,43 +3,52 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.516,
-        "y": 0.5999999999999996
+        "x": 0.326,
+        "y": 7.232
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.281414220795722,
-        "y": 0.5135736602931615
+        "x": 0.4329459636962541,
+        "y": 7.457970265409146
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 0.26,
-        "y": 0.9000000000000004
+        "x": 0.326,
+        "y": 7.582
       },
       "prevControl": {
-        "x": 0.7533454570171565,
-        "y": 0.9354833220100307
+        "x": 0.15545573921934552,
+        "y": 7.399203240962045
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": null
     }
   ],
-  "rotationTargets": [
+  "rotationTargets": [],
+  "constraintZones": [
     {
-      "waypointRelativePos": 0.85,
-      "rotationDegrees": 0.0
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.5,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 0.3,
+        "maxAcceleration": 0.3,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
     }
   ],
-  "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.5,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -50,9 +59,9 @@
     "rotation": 0.0
   },
   "reversed": false,
-  "folder": "Ryan's autos",
+  "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 1.5,
+    "velocity": 0,
     "rotation": 0.0
   },
   "useDefaultConstraints": false

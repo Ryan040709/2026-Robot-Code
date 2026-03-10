@@ -49,11 +49,11 @@
     {
       "anchor": {
         "x": 3.516,
-        "y": 0.6
+        "y": 0.5999999999999996
       },
       "prevControl": {
         "x": 1.516,
-        "y": 0.6000000000000002
+        "y": 0.6000000000000005
       },
       "nextControl": null,
       "isLocked": false,
@@ -91,7 +91,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -45.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

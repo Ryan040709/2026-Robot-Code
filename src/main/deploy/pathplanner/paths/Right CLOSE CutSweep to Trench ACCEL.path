@@ -9,7 +9,7 @@
       "prevControl": null,
       "nextControl": {
         "x": 7.00463313526982,
-        "y": 0.22924093497742692
+        "y": 0.22924093497742715
       },
       "isLocked": false,
       "linkedName": "left close sweep end"
@@ -69,7 +69,7 @@
   },
   "goalEndState": {
     "velocity": 3.0,
-    "rotation": -45.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
