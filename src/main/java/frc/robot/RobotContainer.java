@@ -51,7 +51,9 @@ public class RobotContainer {
         // kSpeedAt12Volts desired top speed
         private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
                                                                                            // so...
-        private double OverrideSpeed = .5;
+        private double OverrideSpeed = .75;
+        private double DeadZone = .1;
+
 
         // was .75 if too fast
         private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond);
@@ -66,7 +68,7 @@ public class RobotContainer {
         /* Setting up bindings for necessary control of the swerve drive platform */
         private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
                         // Add a 10% deadband
-                        .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1)
+                        .withDeadband(MaxSpeed * 0.05).withRotationalDeadband(MaxAngularRate * 0.05)
                         // Use open-loop control for drive motors
                         .withDriveRequestType(DriveRequestType.OpenLoopVoltage);
 
@@ -113,7 +115,7 @@ public class RobotContainer {
         Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, OutOfBumperIntake);
         Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
         Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake,
-                        turret, drivetrain);
+                        turret, drivetrain, hoodSubsystem);
         IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
 
         public RobotContainer() {
@@ -224,6 +226,7 @@ public class RobotContainer {
                 driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
                 driverController.start().whileTrue(zeroTurret);
+                driverController.a().whileTrue(intake_LowerIntake).whileFalse(intake_RaiseIntake);
 
                 turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
 
@@ -231,13 +234,18 @@ public class RobotContainer {
                 hoodSubsystem.setDefaultCommand(hoodSetToPosition);
 
                 driverController.leftBumper().whileTrue(hoodSetToPosition);
-                driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
+               // driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
                 // out of bumper intake commands
+               // manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+                
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
+
                 manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
+
+
                 manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
                 manipulatorController.pov(270).onTrue(Commands.runOnce(()-> gameManager.lostAuto(), gameManager));
                 manipulatorController.pov(90).onTrue(Commands.runOnce(()-> gameManager.wonAuto(), gameManager));

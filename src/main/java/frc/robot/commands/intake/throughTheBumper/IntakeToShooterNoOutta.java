@@ -5,21 +5,26 @@ import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.hoodSubsystem;
 
 public class IntakeToShooterNoOutta extends Command {
 
     throughBumperIntake intakeSubsystem;
     outOfBumperIntake outtaBumperIntakeSubsystem;
     TurretSubsystem turretSubsystem;
-
     CommandSwerveDrivetrain drivetrain;
 
-    public IntakeToShooterNoOutta(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake, TurretSubsystem turretSubsystem, CommandSwerveDrivetrain drivetrain) {
+    public IntakeToShooterNoOutta(
+            throughBumperIntake intakeSubsystem,
+            outOfBumperIntake outttBumperIntake,
+            TurretSubsystem turretSubsystem,
+            CommandSwerveDrivetrain drivetrain) {
 
         this.intakeSubsystem = intakeSubsystem;
         this.outtaBumperIntakeSubsystem = outttBumperIntake;
         this.turretSubsystem = turretSubsystem;
         this.drivetrain = drivetrain;
+        
         addRequirements(intakeSubsystem, outttBumperIntake);
 
     }
@@ -33,13 +38,15 @@ public class IntakeToShooterNoOutta extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-            if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset())) {
-                intakeSubsystem.SetIntakeFront(-8);
-                intakeSubsystem.SetIntakeBack(-8);
-            } else {
-                intakeSubsystem.SetIntakeFront(-8);
-                intakeSubsystem.SetIntakeBack(8);
-            }
+        if (turretSubsystem.turretAtTarget(
+                drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) ) {
+
+            intakeSubsystem.SetIntakeFront(-8);
+            intakeSubsystem.SetIntakeBack(-8);
+        } else {
+            intakeSubsystem.SetIntakeFront(-8);
+            intakeSubsystem.SetIntakeBack(8);
+        }
 
         // outta bumper intake
     }

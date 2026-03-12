@@ -47,6 +47,8 @@ public class outOfBumperIntake extends SubsystemBase {
         pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 0.23;
         pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_ReverseSoftLimitEnable;
         pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+        pivotConfig.Voltage.PeakForwardVoltage = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_ForwardVoltage;
+        pivotConfig.Voltage.PeakReverseVoltage = Constants.OutOfBumperIntakeSubsystem.OutBumperPivot_ReverseVoltage;
 
         pivotConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
 

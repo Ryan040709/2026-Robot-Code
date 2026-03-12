@@ -5,22 +5,26 @@ import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.throughBumperIntake;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
+import frc.robot.subsystems.hoodSubsystem;
 
 public class Intake_IntakeToShooter extends Command {
 
     throughBumperIntake intakeSubsystem;
     outOfBumperIntake outtaBumperIntakeSubsystem;
     TurretSubsystem turretSubsystem;
+    hoodSubsystem hoodSubsystem;
 
     CommandSwerveDrivetrain drivetrain;
 
     public Intake_IntakeToShooter(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake,
-            TurretSubsystem turretSubsystem, CommandSwerveDrivetrain drivetrain) {
+            TurretSubsystem turretSubsystem, CommandSwerveDrivetrain drivetrain,
+            hoodSubsystem hoodSubsystem) {
 
         this.intakeSubsystem = intakeSubsystem;
         this.outtaBumperIntakeSubsystem = outttBumperIntake;
         this.turretSubsystem = turretSubsystem;
         this.drivetrain = drivetrain;
+        this.hoodSubsystem = hoodSubsystem;
         addRequirements(intakeSubsystem, outttBumperIntake);
 
     }
@@ -37,7 +41,8 @@ public class Intake_IntakeToShooter extends Command {
 
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if (outtaBumperIntakeSubsystem.AtPosition(0)) {
-            if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset())) {
+            if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset())&&
+                !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getFieldRelativeSpeeds())) {
                 intakeSubsystem.SetIntakeFront(-8);
                 intakeSubsystem.SetIntakeBack(-8);
             } else {

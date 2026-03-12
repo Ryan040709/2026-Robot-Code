@@ -202,6 +202,7 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       double warningColor = -.07;// gold strobe
       double endgameColor = 0.91;//violet
       double defaultColor = -0.85;//shot red
+      double vibrationPower = .1;
    
       //auto
       if(elapsedTime <= 17){
@@ -214,8 +215,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       //warning
        else if( elapsedTime > 17 && elapsedTime <=20){
         shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, .05);
-        manipulatorController.setRumble(RumbleType.kBothRumble, .05);
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
      //   System.out.println("warning");
       }
       //transistion
@@ -229,8 +230,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       //warning
        else if( elapsedTime > 27 && elapsedTime <=30){
         shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, .05);
-        manipulatorController.setRumble(RumbleType.kBothRumble, .05);
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
       //   System.out.println("warning");
       }
       //phase 1
@@ -250,8 +251,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       //warning
        else if( elapsedTime > 52 && elapsedTime <=55){
         shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, .05);
-        manipulatorController.setRumble(RumbleType.kBothRumble, .05);
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower );
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
       //   System.out.println("warning");
         
       }
@@ -271,8 +272,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       // warning
        else if( elapsedTime > 77 && elapsedTime <=80){
         shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, .05);
-        manipulatorController.setRumble(RumbleType.kBothRumble, .05);
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
      //   System.out.println("warning");
       }
       //phase 3
@@ -291,8 +292,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       //warning
        else if( elapsedTime > 102 && elapsedTime <=105){
         shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, .05);
-        manipulatorController.setRumble(RumbleType.kBothRumble, .05);
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
       //  System.out.println("warning");
       }
       // phase 4
@@ -311,8 +312,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         // warning
          else if( elapsedTime > 127 && elapsedTime <=130){
         shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, .05);
-        manipulatorController.setRumble(RumbleType.kBothRumble, .05);
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
       //   System.out.println("warning");
       }
       else if( elapsedTime > 130 && elapsedTime <=160){

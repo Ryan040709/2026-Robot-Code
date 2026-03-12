@@ -23,7 +23,7 @@ public class Intake_RaiseIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_outOfBumperIntake.PivotIntake(23);
+    s_outOfBumperIntake.PivotIntake(.23);
   }
 
   // Called once the command ends or is interrupted.

@@ -22,7 +22,7 @@ public final class Constants {
 
     public static double Turret_Slot0_kP = 0.3;
     public static double Turret_Slot0_kI = 0;
-    public static double Turret_Slot0_kD = 0;
+    public static double Turret_Slot0_kD = 0.003;
 
     public static boolean Turret_StatorCurrentLimitEnable = false;
     public static double Turret_StatorCurrentLimit = 0;
@@ -38,8 +38,8 @@ public final class Constants {
     public static double Turret_SensorToMechanismRatio = 0.07608695652;
 
     // Voltage
-    public static double Turret_PeakForwardVoltage = 2;
-    public static double Turret_PeakReverseVoltage = -2;
+    public static double Turret_PeakForwardVoltage = 3.9;
+    public static double Turret_PeakReverseVoltage = -3.9;
 
     public static double Turret_MotionMagicExpo_kV = 0;
     // Torque Current
@@ -56,9 +56,9 @@ public final class Constants {
     public static double OutBumperPivot_PeakForwardDutyCycle = 0.2;
     public static double OutBumperPivot_PeakReverseDutyCycle = -0.05;
 
-    public static double OutBumperPivot_Slot0_kP = 5;
+    public static double OutBumperPivot_Slot0_kP = 8;
     public static double OutBumperPivot_Slot0_kI = 0;
-    public static double OutBumperPivot_Slot0_kD = 0;
+    public static double OutBumperPivot_Slot0_kD = 0.7;
 
     public static boolean OutBumperPivot_SupplyCurrentLimitEnable = true;
     public static double OutBumperPivot_SupplyCurrentLimit = 2;
@@ -66,7 +66,8 @@ public final class Constants {
     public static double OutBumperPivot_ForwardSoftLimitThreshold = 0.26;
     public static boolean OutBumperPivot_ReverseSoftLimitEnable = true;
     public static double OutBumperPivot_ReverseSoftLimitThreshold = 0;
-
+    public static double OutBumperPivot_ForwardVoltage= 2;
+    public static double OutBumperPivot_ReverseVoltage= -1.1;
   }
 
   public static final class ThroughBumperIntakeSubsystem {

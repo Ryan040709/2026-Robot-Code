@@ -8,6 +8,9 @@ import java.util.function.Supplier;
 
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
+import com.ctre.phoenix6.configs.GyroTrimConfigs;
+import com.ctre.phoenix6.configs.Pigeon2Configuration;
+import com.ctre.phoenix6.configs.Pigeon2Configurator;
 import com.ctre.phoenix6.hardware.Pigeon2;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
@@ -60,6 +63,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private static final Rotation2d kRedAlliancePerspectiveRotation = Rotation2d.k180deg;
     /* Keep track if we've ever applied the operator perspective before or not */
     private boolean m_hasAppliedOperatorPerspective = false;
+    
 
     private Translation2d frontLeftLocation = new Translation2d(.3429, .3429);
     private Translation2d frontRightLocation = new Translation2d(.3429, -0.3429);
@@ -79,6 +83,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     // gyro
     Pigeon2 gyro = new Pigeon2(SwerveConstants.kPigeonId, SwerveConstants.kCANBus.getName());
+    Pigeon2Configuration gyroConfig;
 
     // setting up odometery
     // private SwerveDrivePoseEstimator poseEstimator;
@@ -197,6 +202,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (Utils.isSimulation()) {
             startSimThread();
         }
+        gyroConfig = new Pigeon2Configuration();
+        gyroConfig.GyroTrim.GyroScalarZ = -3.28;
+        gyro.getConfigurator().apply(gyroConfig);
 
         setUpPoseEstimater();
         PathPlannerSetup();
@@ -378,6 +386,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // Update the pose
 
         limelightPoseUpdate("limelight-tags");
+        limelightPoseUpdate("limelight-back");
         limelightPoseUpdate("limelight-intake");
 
         // poseEstimator.update(gyroAngle, currentPositions);
@@ -507,7 +516,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                 // robotPoseEstimateTags.timestampSeconds);
                 addVisionMeasurement(robotPoseEstimateTags.pose, robotPoseEstimateTags.timestampSeconds,
-                        VecBuilder.fill(distance * 0.75, distance * 0.75, 9999999));
+                        VecBuilder.fill(Math.pow( distance,2),Math.pow( distance,2), 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
                 // robotPoseEstimateTurret.timestampSeconds);
 
@@ -527,8 +536,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Pose2d feedingTargets(Translation2d swimOffset) {
         double Huby = 4.03606;
         Translation2d feedPosition = new Translation2d(
-                GameManager.isBlueAlliance ? 0.5 : 7,
-                getPose().getY() > Huby ? 7 : 0.5);
+                GameManager.isBlueAlliance ? 0.5 : 15,
+                getPose().getY() > Huby ? 6.75 : 1.25);
         return new Pose2d(feedPosition.minus(swimOffset), Rotation2d.fromDegrees(0));
     }
 
