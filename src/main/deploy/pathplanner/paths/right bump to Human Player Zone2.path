@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 0.432944244136993,
+        "x": 0.43294424413699306,
         "y": 0.5420289207753186
       },
       "isLocked": false,
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "human player end"
     }
   ],
   "rotationTargets": [],
