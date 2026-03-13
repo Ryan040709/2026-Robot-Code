@@ -5,7 +5,26 @@
     "data": {
       "commands": [
         {
-          "type": "parallel",
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 0.25
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "zero-turret"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "race",
           "data": {
             "commands": [
               {
@@ -17,7 +36,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intake-intakeToShooter"
+                  "name": "intake-no-outta"
                 }
               },
               {
@@ -73,7 +92,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intake-intakeToShooter"
+                  "name": "intake-no-outta"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
                 }
               }
             ]
@@ -98,7 +123,13 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "intake-intakeToShooter"
+                  "name": "intake-no-outta"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
                 }
               }
             ]
@@ -124,6 +155,12 @@
                 "type": "named",
                 "data": {
                   "name": "intake-intakeToShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "turret-locking"
                 }
               }
             ]

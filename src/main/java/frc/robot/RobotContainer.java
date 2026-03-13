@@ -127,7 +127,7 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("zero-turret", zeroTurret);
-                NamedCommands.registerCommand("intake-no-outta", intakeNoOutta);
+                NamedCommands.registerCommand("intake-no-outta", IntakeToShooter);
                 // // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands

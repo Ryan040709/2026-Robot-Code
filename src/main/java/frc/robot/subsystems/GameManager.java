@@ -86,8 +86,8 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
   @Override
   public void periodic() {
    winChooser.getSelected();
-    if(!hasAlliance){
-     Optional<Alliance> alliance = DriverStation.getAlliance();
+    // if(!hasAlliance){
+    Optional<Alliance> alliance = DriverStation.getAlliance();
     if (alliance.isPresent() ) {
       
       if (alliance.get() == Alliance.Red) {
@@ -99,7 +99,7 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
         hasAlliance = true;
       }
     }
-  }
+  // }
 
     SmartDashboard.putBoolean("is blue?", isBlueAlliance);
     SmartDashboard.putBoolean("won Auto", wonAuto);
