@@ -12,6 +12,8 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -29,6 +31,8 @@ public class ShooterSubsystem extends SubsystemBase {
     private VelocityVoltage m_velocity = new VelocityVoltage(0);
 
     public static double tof = 1.1; // used to be 1.1
+     double targetRPM = 0;
+     Timer timer = new Timer();
 
     // Basic targeting data
     // in degrees
@@ -71,6 +75,7 @@ public class ShooterSubsystem extends SubsystemBase {
         shooterMotorR.getConfigurator().apply(shooterConfig);
 
         shooterMotorR.setControl(new Follower(15, MotorAlignmentValue.Opposed));
+        timer.start();
 
     }
 
@@ -84,24 +89,34 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
-        SmartDashboard.putNumber("shooterAMPS", shooterMotorL.getSupplyCurrent().getValueAsDouble());
+        if(timer.advanceIfElapsed(1)){
+            System.out.println(String.format("targetRpms: %f, actualRpms: %f", targetRPM , shooterMotorL.getVelocity().getValueAsDouble()));
+        }
+
+        //SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
+     //   SmartDashboard.putNumber("shooterAMPS", shooterMotorL.getSupplyCurrent().getValueAsDouble());
 
     }
 
     public double CalculateRpms(double distanceToHub, boolean isFeeding) {
-        double targetRPM;
-        double hubM = 4.67989; // 6.99334;
-        double hubB = 37; // 38.81499;
+       
+        double closeHubM = 4.67989; // 6.99334;
+        double closeHubB = 37; // 38.81499;
+        double farHubM = 6.48875;
+        double farHubB = 28.85963;
         double feedM = 3.43042;
         double feedB = 40.27793;
         if (isFeeding) {
             targetRPM = feedM * (distanceToHub) + feedB;
         } else {
-            targetRPM = hubM * (distanceToHub) + hubB;
+            if(distanceToHub <= 4.5){
+                targetRPM = closeHubM * (distanceToHub) + closeHubB;
+            } else {
+                targetRPM = farHubM * (distanceToHub) + farHubB;
+            }
         }
 
-        SmartDashboard.putNumber("ShooterGoalRPMS", targetRPM);
+       
 
         // y=mx+b where "y" is the target RPM and "x" is the distance between the robot
         // and target. to find the slope, determine positions and rpms that we know work

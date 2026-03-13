@@ -31,12 +31,13 @@ public class GameManager extends SubsystemBase {
     Four, // alternates
     EndGame // active for both
   }
+
   private XboxController driverController = new XboxController(0);
   private XboxController manipulatorController = new XboxController(1);
   public List<ShiftList> LoseShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
   public List<ShiftList> alwaysActiveShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
 
- private final SendableChooser<Command> winChooser;
+  private final SendableChooser<Command> winChooser;
 
   public ShiftList currentShift = ShiftList.Autonomous;
 
@@ -63,6 +64,7 @@ public class GameManager extends SubsystemBase {
   public boolean lostAuto = true;
 
   public static boolean isBlueAlliance = true;
+  private int shiftNumber = 0;
 
   /** Creates a new GameManager. */
   public GameManager() {
@@ -77,32 +79,32 @@ public class GameManager extends SubsystemBase {
     timer.reset();
     timer.start();
     winChooser = new SendableChooser<>();
-winChooser.setDefaultOption("lost", runOnce(() -> lostAuto()));
-winChooser.addOption("win", runOnce(() -> wonAuto()));
+    winChooser.setDefaultOption("lost", runOnce(() -> lostAuto()));
+    winChooser.addOption("win", runOnce(() -> wonAuto()));
 
- SmartDashboard.putData("winChooser", winChooser);
+    SmartDashboard.putData("winChooser", winChooser);
+    SmartDashboard.putBoolean("won Auto", wonAuto);
   }
 
   @Override
   public void periodic() {
-   winChooser.getSelected();
-    // if(!hasAlliance){
-    Optional<Alliance> alliance = DriverStation.getAlliance();
-    if (alliance.isPresent() ) {
-      
-      if (alliance.get() == Alliance.Red) {
-        isBlueAlliance = false;
-        hasAlliance = true;
-      }
-      if (alliance.get() == Alliance.Blue) {
-        isBlueAlliance = true;
-        hasAlliance = true;
+    winChooser.getSelected();
+    if (!hasAlliance || DriverStation.isDisabled()) {
+      Optional<Alliance> alliance = DriverStation.getAlliance();
+      if (alliance.isPresent()) {
+
+        if (alliance.get() == Alliance.Red) {
+          isBlueAlliance = false;
+          hasAlliance = true;
+        }
+        if (alliance.get() == Alliance.Blue) {
+          isBlueAlliance = true;
+          hasAlliance = true;
+        }
+        SmartDashboard.putBoolean("is blue?", isBlueAlliance);
       }
     }
-  // }
 
-    SmartDashboard.putBoolean("is blue?", isBlueAlliance);
-    SmartDashboard.putBoolean("won Auto", wonAuto);
     SmartDashboard.putNumber("timer", matchTimer());
 
     isTeleop = DriverStation.isTeleop();
@@ -127,7 +129,7 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
 
   }
 
-  public void setLEDcolor( double setColor){
+  public void setLEDcolor(double setColor) {
     shiftLights.set(setColor);
   }
 
@@ -141,11 +143,12 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
 
   public void wonAuto() {
     // if (!wonAuto) {
-    //   wonAuto = true;
+    // wonAuto = true;
     // } else {
-    //   wonAuto = false;
+    // wonAuto = false;
     // }
     wonAuto = true;
+    SmartDashboard.putBoolean("won Auto", wonAuto);
   }
 
   public void switchActiveHubs() {
@@ -163,11 +166,13 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
 
   public void lostAuto() {
     // if (!wonAuto) {
-    //   lostAuto = true;
+    // lostAuto = true;
     // } else {
-    //   lostAuto = false;
+    // lostAuto = false;
     // }
+
     wonAuto = false;
+    SmartDashboard.putBoolean("won Auto", wonAuto);
   }
 
   public void determineShift() {
@@ -187,185 +192,215 @@ winChooser.addOption("win", runOnce(() -> wonAuto()));
       }
     }
   }
-  public void resetTimer(){
+
+  public void resetTimer() {
     timer.reset();
   }
-  public double matchTimer(){
+
+  public double matchTimer() {
     return timer.get() + 20;
   }
+
   public void determineActiveHub() {
-      double elapsedTime = matchTimer();
-      double activeColor = 0.75; // dark green
-      double nonActiveColor = 0.61; //red
-      double autoColor = 0.85; //dark blue
-      double transitionColor = 0.57;//hot pink
-      double warningColor = -.07;// gold strobe
-      double endgameColor = 0.91;//violet
-      double defaultColor = -0.85;//shot red
-      double vibrationPower = .1;
-   
-      //auto
-      if(elapsedTime <= 17){
-        shiftLights.set(autoColor);
-     //   System.out.println("auto");
-     
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-      }
-      //warning
-       else if( elapsedTime > 17 && elapsedTime <=20){
-        shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
-        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
-     //   System.out.println("warning");
-      }
-      //transistion
-      else if( elapsedTime > 20 && elapsedTime <=27){
-        shiftLights.set(transitionColor);
-        
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-      //  System.out.println("transistion");
-      }
-      //warning
-       else if( elapsedTime > 27 && elapsedTime <=30){
-        shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
-        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
-      //   System.out.println("warning");
-      }
-      //phase 1
-      else if( elapsedTime > 30 && elapsedTime <=52){
-        
-        if(wonAuto){
-          shiftLights.set(nonActiveColor);
-        }
-        else{
-            shiftLights.set(activeColor);
-        }
-        
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-       //  System.out.println("phase 1");
-      }
-      //warning
-       else if( elapsedTime > 52 && elapsedTime <=55){
-        shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, vibrationPower );
-        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
-      //   System.out.println("warning");
-        
-      }
-      //phase 2
-      else if( elapsedTime > 55 && elapsedTime <=77){
-         if(wonAuto){
-          shiftLights.set(activeColor);
-        }
-        else{
-            shiftLights.set(nonActiveColor);
-        }
-        
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-     //   System.out.println("phase 2");
-      }
-      // warning
-       else if( elapsedTime > 77 && elapsedTime <=80){
-        shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
-        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
-     //   System.out.println("warning");
-      }
-      //phase 3
-      else if( elapsedTime > 80 && elapsedTime <=102){
-         if(wonAuto){
-          shiftLights.set(nonActiveColor);
-        }
-        else{
-            shiftLights.set(activeColor);
-        }
-        
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-      //  System.out.println("phase 3");
-      }
-      //warning
-       else if( elapsedTime > 102 && elapsedTime <=105){
-        shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
-        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
-      //  System.out.println("warning");
-      }
-      // phase 4
-      else if( elapsedTime > 105 && elapsedTime <=127){
-         if(wonAuto){
-          shiftLights.set(activeColor);
-        }
-        else{
-            shiftLights.set(nonActiveColor);
-        }
-        
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-      //  System.out.println("phase 4");
-      }
-        // warning
-         else if( elapsedTime > 127 && elapsedTime <=130){
-        shiftLights.set(warningColor);
-        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
-        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
-      //   System.out.println("warning");
-      }
-      else if( elapsedTime > 130 && elapsedTime <=160){
-        shiftLights.set(endgameColor);
-     //    System.out.println("endgame");
-     
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-      }
-      else{
-        shiftLights.set(defaultColor);
-      //   System.out.println("default");
-      
-        driverController.setRumble(RumbleType.kBothRumble, 0);
-        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
-      }
-      
-    
+    double elapsedTime = matchTimer();
+    double activeColor = 0.75; // dark green
+    double nonActiveColor = 0.61; // red
+    double autoColor = 0.85; // dark blue
+    double transitionColor = 0.57;// hot pink
+    double warningColor = -.07;// gold strobe
+    double endgameColor = 0.91;// violet
+    double defaultColor = -0.85;// shot red
+    double vibrationPower = .1;
 
+    // auto
+    if (elapsedTime <= 17) {
+      shiftLights.set(autoColor);
+      if (shiftNumber != 1) {
+        shiftNumber = 1;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+      // System.out.println("auto");
 
+    }
+    // warning
+    else if (elapsedTime > 17 && elapsedTime <= 20) {
+      shiftLights.set(warningColor);
+      if (shiftNumber != 2) {
+        shiftNumber = 2;
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
+      }
+      // System.out.println("warning");
+    }
+    // transistion
+    else if (elapsedTime > 20 && elapsedTime <= 27) {
+      shiftLights.set(transitionColor);
+      if (shiftNumber != 3) {
+        shiftNumber = 3;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+      // System.out.println("transistion");
+    }
+    // warning
+    else if (elapsedTime > 27 && elapsedTime <= 30) {
+      shiftLights.set(warningColor);
+      if (shiftNumber != 4) {
+        shiftNumber = 4;
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
+      }
+      // System.out.println("warning");
+    }
+    // phase 1
+    else if (elapsedTime > 30 && elapsedTime <= 52) {
 
+      if (wonAuto) {
+        shiftLights.set(nonActiveColor);
+      } else {
+        shiftLights.set(activeColor);
+      }
+      if (shiftNumber != 5) {
+        shiftNumber = 5;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+      // System.out.println("phase 1");
+    }
+    // warning
+    else if (elapsedTime > 52 && elapsedTime <= 55) {
+      shiftLights.set(warningColor);
+      if (shiftNumber != 6) {
+        shiftNumber = 6;
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
+      }
+      // System.out.println("warning");
 
-    
+    }
+    // phase 2
+    else if (elapsedTime > 55 && elapsedTime <= 77) {
+      if (wonAuto) {
+        shiftLights.set(activeColor);
+      } else {
+        shiftLights.set(nonActiveColor);
+      }
+      if (shiftNumber != 7) {
+        shiftNumber = 7;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+
+      // System.out.println("phase 2");
+    }
+    // warning
+    else if (elapsedTime > 77 && elapsedTime <= 80) {
+      shiftLights.set(warningColor);
+      if (shiftNumber != 8) {
+        shiftNumber = 8;
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
+      }
+      // System.out.println("warning");
+    }
+    // phase 3
+    else if (elapsedTime > 80 && elapsedTime <= 102) {
+      if (wonAuto) {
+        shiftLights.set(nonActiveColor);
+      } else {
+        shiftLights.set(activeColor);
+      }
+      if (shiftNumber != 9) {
+        shiftNumber = 9;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+
+      // System.out.println("phase 3");
+    }
+    // warning
+    else if (elapsedTime > 102 && elapsedTime <= 105) {
+      shiftLights.set(warningColor);
+      if (shiftNumber != 10) {
+        shiftNumber = 10;
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
+      }
+      // System.out.println("warning");
+    }
+    // phase 4
+    else if (elapsedTime > 105 && elapsedTime <= 127) {
+      if (wonAuto) {
+        shiftLights.set(activeColor);
+      } else {
+        shiftLights.set(nonActiveColor);
+      }
+      if (shiftNumber != 11) {
+        shiftNumber = 11;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+      // System.out.println("phase 4");
+    }
+    // warning
+    else if (elapsedTime > 127 && elapsedTime <= 130) {
+      shiftLights.set(warningColor);
+      if (shiftNumber != 12) {
+        shiftNumber = 12;
+        driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
+        manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
+      }
+      // System.out.println("warning");
+    } else if (elapsedTime > 130 && elapsedTime <= 160) {
+      shiftLights.set(endgameColor);
+      // System.out.println("endgame");
+      if (shiftNumber != 13) {
+        shiftNumber = 13;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+
+    } else {
+      shiftLights.set(defaultColor);
+      // System.out.println("default");
+      if (shiftNumber != 14) {
+        shiftNumber = 14;
+        driverController.setRumble(RumbleType.kBothRumble, 0);
+        manipulatorController.setRumble(RumbleType.kBothRumble, 0);
+      }
+    }
+
     // if (isMatch) {
-    //   if (wonAuto) {
-    //     if (LoseShifts.contains(currentShift)) {
-    //       // not active
-    //        shiftLights.set(0.61);
-    //       isActive = false;
-    //     } else {
-    //       // active
-    //        shiftLights.set(0.77);
-    //       isActive = true;
-    //     }
-    //   } else {
-    //     if (LoseShifts.contains(currentShift) || alwaysActiveShifts.contains(currentShift)) {
-    //       // active
-    //        shiftLights.set(0.77);
-    //       isActive = true;
-    //     } else {
-    //       // not active
-    //       shiftLights.set(0.61);
-    //       isActive = false;
-    //     }
-    //   }
+    // if (wonAuto) {
+    // if (LoseShifts.contains(currentShift)) {
+    // // not active
+    // shiftLights.set(0.61);
+    // isActive = false;
+    // } else {
+    // // active
+    // shiftLights.set(0.77);
+    // isActive = true;
+    // }
+    // } else {
+    // if (LoseShifts.contains(currentShift) ||
+    // alwaysActiveShifts.contains(currentShift)) {
+    // // active
+    // shiftLights.set(0.77);
+    // isActive = true;
+    // } else {
+    // // not active
+    // shiftLights.set(0.61);
+    // isActive = false;
+    // }
+    // }
     // } else if (elapsedTime > switchActive) {
-    //   switchActiveHubs();
-    //   if (!active) {
-    //     shiftLights.set(0.61);
-    //   } else {
-    //     shiftLights.set(0.77);
-    //   }
+    // switchActiveHubs();
+    // if (!active) {
+    // shiftLights.set(0.61);
+    // } else {
+    // shiftLights.set(0.77);
+    // }
     // }
   }
 }
