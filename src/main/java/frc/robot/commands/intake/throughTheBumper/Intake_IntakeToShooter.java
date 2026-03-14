@@ -43,11 +43,11 @@ public class Intake_IntakeToShooter extends Command {
         if (outtaBumperIntakeSubsystem.AtPosition(0)) {
             if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset())&&
                 !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getFieldRelativeSpeeds())) {
-                intakeSubsystem.SetIntakeFront(-8);
-                intakeSubsystem.SetIntakeBack(-8);
+                intakeSubsystem.SetIntakeFront(-7);
+                intakeSubsystem.SetIntakeBack(-7);
             } else {
-                intakeSubsystem.SetIntakeFront(-8);
-                intakeSubsystem.SetIntakeBack(8);
+                intakeSubsystem.SetIntakeFront(-7);
+                intakeSubsystem.SetIntakeBack(7);
             }
         }
 

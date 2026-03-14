@@ -64,6 +64,9 @@ public class hoodSubsystem extends SubsystemBase {
     public void moveHood(double speed) {
         hood.set(speed);
     }
+    public void moveHoodToPosition(double setPoint){
+         hood.setControl(m_request.withPosition(setPoint));
+    }
 
     public void setHoodPosition(double distanceToTarget, Pose2d robotPose, ChassisSpeeds chassisSpeeds,
             boolean isFeeding) {
@@ -100,8 +103,8 @@ public class hoodSubsystem extends SubsystemBase {
             trenchOffset = redTrenchOffset;
         }
 
-        return (MathUtil.isNear(blueTrenchOffset, robotPose.getX(), .75 + tolerance)
-        ||MathUtil.isNear(redTrenchOffset, robotPose.getX(), .75 + tolerance)
+        return (MathUtil.isNear(blueTrenchOffset, robotPose.getX(), 1 + tolerance)
+        ||MathUtil.isNear(redTrenchOffset, robotPose.getX(), 1 + tolerance)
          && nearSideOfTrench);
 
     }

@@ -41,11 +41,11 @@ public class IntakeToShooterNoOutta extends Command {
         if (turretSubsystem.turretAtTarget(
                 drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) ) {
 
-            intakeSubsystem.SetIntakeFront(-8);
-            intakeSubsystem.SetIntakeBack(-8);
+            intakeSubsystem.SetIntakeFront(-7);
+            intakeSubsystem.SetIntakeBack(-7);
         } else {
-            intakeSubsystem.SetIntakeFront(-8);
-            intakeSubsystem.SetIntakeBack(8);
+            intakeSubsystem.SetIntakeFront(-7);
+            intakeSubsystem.SetIntakeBack(7);
         }
 
         // outta bumper intake

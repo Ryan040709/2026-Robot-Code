@@ -85,8 +85,8 @@ public final class Constants {
     public static double ThroughBumperIntake_SupplyCurrentLimit = 40;
 
     // Voltage
-    public static double ThroughBumperIntake_PeakForwardVoltage = 8;
-    public static double ThroughBumperIntake_PeakReverseVoltage = -8;
+    public static double ThroughBumperIntake_PeakForwardVoltage = 7;
+    public static double ThroughBumperIntake_PeakReverseVoltage = -7;
     // Differential Constants
     public static double ThroughBumperIntake_PeakDifferentialDutyCycle = 0;
     public static double ThroughBumperIntake_PeakDifferentialTorqueCurrent = 0;
@@ -186,7 +186,7 @@ public final class Constants {
     public static boolean Hood_StatorCurrentLimitEnable = false;
     public static double Hood_CurrentLimit = 10;
     public static boolean Hood_SupplyCurrentLimitEnable = true;
-    public static double Hood_SupplyCurrentLimit = 10;
+    public static double Hood_SupplyCurrentLimit = 15;
 
     // Voltage
     public static double Hood_PeakForwardVoltage = 4;

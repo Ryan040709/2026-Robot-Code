@@ -33,6 +33,7 @@ import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
 import frc.robot.commands.intake.throughTheBumper.IntakeToShooterNoOutta;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
+import frc.robot.commands.shooter.OverrideHoodPosition;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterToRPMS;
 import frc.robot.commands.SetLEDColor;
@@ -100,6 +101,7 @@ public class RobotContainer {
         // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
         Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
+        OverrideHoodPosition overrideHoodPosition = new OverrideHoodPosition(hoodSubsystem);
         ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain);
         ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
         // turret commands
@@ -227,6 +229,7 @@ public class RobotContainer {
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
                 driverController.start().whileTrue(zeroTurret);
                 driverController.a().whileTrue(intake_LowerIntake).whileFalse(intake_RaiseIntake);
+                driverController.leftTrigger(.5).whileTrue(overrideHoodPosition);
 
                 turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
 

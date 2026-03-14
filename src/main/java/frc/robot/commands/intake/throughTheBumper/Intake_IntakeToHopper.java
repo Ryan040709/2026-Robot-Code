@@ -32,8 +32,8 @@ public class Intake_IntakeToHopper extends Command {
 
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if(outtaBumperIntakeSubsystem.AtPosition(0)){
-        intakeSubsystem.SetIntakeFront(-8);
-        intakeSubsystem.SetIntakeBack(8);
+        intakeSubsystem.SetIntakeFront(-7);
+        intakeSubsystem.SetIntakeBack(7);
         }
         // outta bumper intake
     }
