@@ -100,6 +100,7 @@ public class RobotContainer {
 
         // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
+        Shooter_RunToRPM shooter_RunToRpmTele = new Shooter_RunToRPM(shooter, drivetrain);
         Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
         ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain);
@@ -247,7 +248,7 @@ public class RobotContainer {
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
 
-                manipulatorController.rightBumper().whileTrue(shooter_RunToRPM.alongWith(hoodSetToPosition)).whileFalse(shooterStop.alongWith(hoodDown));
+                manipulatorController.rightBumper().whileTrue(shooter_RunToRpmTele.alongWith(hoodSetToPosition));
 
 
                 manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));

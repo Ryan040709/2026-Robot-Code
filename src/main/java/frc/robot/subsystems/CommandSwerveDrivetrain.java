@@ -6,6 +6,9 @@ import static edu.wpi.first.units.Units.Volts;
 import java.util.Optional;
 import java.util.function.Supplier;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.GyroTrimConfigs;
@@ -51,6 +54,8 @@ import frc.robot.SwerveConstants.TunerSwerveDrivetrain;
 import frc.robot.subsystems.LimelightHelpers.PoseEstimate;
 
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
+    private static final Logger log = LogManager.getLogger(CommandSwerveDrivetrain.class);
+
     private static final double kSimLoopPeriod = 0.004; // 4 ms
     private static final Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
     private static final Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
@@ -411,13 +416,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     // updating the robot pose
     public Pose2d getPose() {
+        log.info("robot pose: {}", robotPose);
         // return poseEstimator.getEstimatedPosition();
         return robotPose;
     }
 
     // reseting the robot pose
     public void resetPose(Pose2d pose) {
-        System.out.println(pose);
+        //log.info("robot pose: {}", pose);
+        
         // poseEstimator.resetPosition(gyro.getRotation2d(), getModulePositions(true),
         // pose);
 
