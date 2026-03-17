@@ -416,14 +416,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     // updating the robot pose
     public Pose2d getPose() {
-        log.info("robot pose: {}", robotPose);
         // return poseEstimator.getEstimatedPosition();
         return robotPose;
     }
 
     // reseting the robot pose
     public void resetPose(Pose2d pose) {
-        //log.info("robot pose: {}", pose);
+        log.info("robot pose: {}", pose);
         
         // poseEstimator.resetPosition(gyro.getRotation2d(), getModulePositions(true),
         // pose);
@@ -568,6 +567,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 chassisSpeeds.vxMetersPerSecond * ShooterSubsystem.tof,
                 chassisSpeeds.vyMetersPerSecond * ShooterSubsystem.tof);
       //  SmartDashboard.putBoolean("is feeding", feeding);
+      log.info("feeding {}", isFeeding());
 
         target = new Pose2d(
                 feeding ? feedingTargets(swimoffset).getTranslation() : getHubTarget(swimoffset).getTranslation(),
@@ -578,7 +578,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     public double getDistanceToTarget() { // used to be called "GetDistanceToHub"
         double DistanceToTarget = getTurretOffset().getTranslation().getDistance(getTurretTarget().getTranslation());
-       // SmartDashboard.putNumber("distance to target", DistanceToTarget);
         return DistanceToTarget;
     }
 
