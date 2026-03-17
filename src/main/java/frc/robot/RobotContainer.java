@@ -101,8 +101,9 @@ public class RobotContainer {
 
         // shooter commands
         Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
+        Shooter_RunToRPM shooter_RunToRpmTele = new Shooter_RunToRPM(shooter, drivetrain);
         Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
-        OverrideHoodPosition overrideHoodPosition = new OverrideHoodPosition(hoodSubsystem);
+        OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
         ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain);
         ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
         // turret commands
@@ -231,14 +232,15 @@ public class RobotContainer {
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
                 driverController.start().whileTrue(zeroTurret);
                 driverController.a().whileTrue(intake_LowerIntake).whileFalse(intake_RaiseIntake);
-                driverController.leftTrigger(.5).whileTrue(overrideHoodPosition);
+                driverController.leftTrigger(.5).whileTrue(hoodDown);
 
                 turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
 
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
-                hoodSubsystem.setDefaultCommand(hoodSetToPosition);
+                hoodSubsystem.setDefaultCommand(hoodDown);
+                shooter.setDefaultCommand(shooterToRPMS);
 
-                driverController.leftBumper().whileTrue(hoodSetToPosition);
+                //driverController.leftBumper().whileTrue(hoodSetToPosition);
                // driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
 
                 // out of bumper intake commands
@@ -248,7 +250,7 @@ public class RobotContainer {
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
 
-                manipulatorController.rightBumper().whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
+                manipulatorController.rightBumper().whileTrue(shooter_RunToRpmTele.alongWith(hoodSetToPosition));
 
 
                 manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
