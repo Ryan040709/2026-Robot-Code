@@ -25,8 +25,8 @@ public class ShooterToRPMS extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double RPM = SmartDashboard.getNumber("Shooter RPM", 65);
-    shooterSubsystem.SetShooterRPMS(RPM);
+    double RPS = SmartDashboard.getNumber("Shooter RPM", 35);
+    shooterSubsystem.SetShooterRPMS(RPS);
   }
 
   // Called once the command ends or is interrupted.
