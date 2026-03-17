@@ -30,6 +30,7 @@ import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
 import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
+import frc.robot.commands.intake.throughTheBumper.Auto_Intake_IntakeToShooter;
 import frc.robot.commands.intake.throughTheBumper.IntakeToShooterNoOutta;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
@@ -119,6 +120,7 @@ public class RobotContainer {
         Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake,
                         turret, drivetrain, hoodSubsystem);
         IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
+        Auto_Intake_IntakeToShooter auto_Intake_IntakeToShooter = new Auto_Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake);
 
         public RobotContainer() {
                 // turret commands
@@ -126,10 +128,10 @@ public class RobotContainer {
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-hopperToIntake", outtake);
                 NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
-                NamedCommands.registerCommand("intake-intakeToShooter", IntakeToShooter);
+                NamedCommands.registerCommand("intake-intakeToShooter", auto_Intake_IntakeToShooter);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("zero-turret", zeroTurret);
-                NamedCommands.registerCommand("intake-no-outta", IntakeToShooter);
+                NamedCommands.registerCommand("intake-no-outta", auto_Intake_IntakeToShooter);
                 // // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
