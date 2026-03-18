@@ -9,10 +9,10 @@
     <Root level="debug">
       <AppenderRef ref="Console"/>
     </Root>
-    <Logger name="frc.robot.subsystems.CommandSwerveDrivetrain" level="info" additivity="false">
+    <Logger name="frc.robot.subsystems.CommandSwerveDrivetrain" level="error" additivity="false">
       <AppenderRef ref="Console"/>
     </Logger>
-    <Logger name="frc.robot.subsystems.TurretSubsystem" level="info" additivity="false">
+    <Logger name="frc.robot.subsystems.TurretSubsystem" level="error" additivity="false">
       <AppenderRef ref="Console"/>
     </Logger>
       

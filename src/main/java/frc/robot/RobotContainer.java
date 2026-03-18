@@ -123,6 +123,8 @@ public class RobotContainer {
         IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
         Auto_Intake_IntakeToShooter auto_Intake_IntakeToShooter = new Auto_Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake);
 
+        Command shooterAndHood = shooter_RunToRpmTele.alongWith(hoodSetToPosition);
+
         public RobotContainer() {
                 // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
@@ -177,10 +179,10 @@ public class RobotContainer {
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
                                 drivetrain.applyRequest(() -> {
-                                        if (driverController.rightBumper().getAsBoolean()) {
+                                        if (driverController.getHID().getRightBumperButton()) {
                                                 OverrideSpeed = .25;
                                         } else {
-                                                OverrideSpeed = .5;
+                                                OverrideSpeed = .75;
                                         }
                                         return drive
                                                         // Drive forward with negative Y (forward) Drive left with
@@ -219,6 +221,14 @@ public class RobotContainer {
 
                 drivetrain.registerTelemetry(logger::telemeterize);
 
+                
+
+                turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
+
+                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
+                hoodSubsystem.setDefaultCommand(hoodDown);
+                shooter.setDefaultCommand(shooterToRPMS);
+
                 driverController.pov(0).whileTrue(turret_Toggle);
 
                 driverController.pov(90)
@@ -229,16 +239,10 @@ public class RobotContainer {
                 driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
 
                 driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
-                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM).whileFalse(shooterStop);
+                driverController.rightTrigger(.5).whileTrue(shooterAndHood);
                 driverController.start().whileTrue(zeroTurret);
                 driverController.a().whileTrue(intake_LowerIntake).whileFalse(intake_RaiseIntake);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
-
-                turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
-
-                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
-                hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterToRPMS);
 
                 //driverController.leftBumper().whileTrue(hoodSetToPosition);
                // driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
@@ -250,7 +254,8 @@ public class RobotContainer {
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
 
-                manipulatorController.rightBumper().whileTrue(shooter_RunToRpmTele.alongWith(hoodSetToPosition));
+                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
+                
 
 
                 manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
