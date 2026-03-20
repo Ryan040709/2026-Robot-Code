@@ -20,7 +20,7 @@ public final class Constants {
     public static double Turret_PeakForwardDutyCycle = 0.5;
     public static double Turret_PeakReverseDutyCycle = -0.5;
 
-    public static double Turret_Slot0_kP = 0.3;
+    public static double Turret_Slot0_kP = 0.35;
     public static double Turret_Slot0_kI = 0;
     public static double Turret_Slot0_kD = 0.003;
 

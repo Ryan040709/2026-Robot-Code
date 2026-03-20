@@ -62,9 +62,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     public double waitTime = 0;
 
-    public List<Integer> blueTagFilter = new ArrayList<>();
-    public List<Integer> redTagFilter = new ArrayList<>();
-
     public double theta = 0;
     public boolean isBlue = true;
 
@@ -115,25 +112,6 @@ public class TurretSubsystem extends SubsystemBase {
 
         turret.getConfigurator().apply(motorConfig);
 
-        // apriltag filter list
-        blueTagFilter.add(18);
-        // blueTagFilter.add(19);
-        blueTagFilter.add(20);
-        blueTagFilter.add(21);
-        // blueTagFilter.add(24);
-        // blueTagFilter.add(25);
-        blueTagFilter.add(26);
-        // blueTagFilter.add(27);
-
-        redTagFilter.add(2);
-        redTagFilter.add(3);
-        redTagFilter.add(4);
-        redTagFilter.add(5);
-        redTagFilter.add(8);
-        redTagFilter.add(9);
-        redTagFilter.add(10);
-        redTagFilter.add(11);
-
         Optional<Pose3d> poseTest = Constants.AprilTagPositions.aprilTags.getTagPose(1);
 
     }
@@ -180,25 +158,8 @@ public class TurretSubsystem extends SubsystemBase {
         return turretLocking;
     }
 
-    public boolean FilterApriltags() {
-        if (isBlue) {
-            if (blueTagFilter.contains((int) tagID)) {
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            if (redTagFilter.contains((int) tagID)) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-    }
-
     public void setPosition(Pose2d turretTarget, double targetSpeed, Pose2d turretPose) {
         MoveMotor(targetSpeed);
-        FilterApriltags();
 
         if (turretLocking) {
             determineLockingMethod(turretTarget, turretPose);
@@ -257,6 +218,7 @@ public class TurretSubsystem extends SubsystemBase {
     public boolean turretAtTarget(Pose2d turretTarget, Pose2d turretPose) {
         boolean atTarget = MathUtil.isNear(calculateAngleToHub(turretTarget, turretPose), turretPosition, 10);
         SmartDashboard.putBoolean("Turret is at Target", atTarget);
+        log.warn("turret is off {} degrees", calculateAngleToHub(turretTarget, turretPose)-turretPosition);
         return atTarget;
     }
 
