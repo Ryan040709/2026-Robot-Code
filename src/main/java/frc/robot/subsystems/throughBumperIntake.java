@@ -7,6 +7,8 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -66,6 +68,32 @@ public class throughBumperIntake extends SubsystemBase {
 
     public void SetIntakeBack(double targetVoltage) {
         intakeMotor2.set(targetVoltage);
+    }
+
+    public boolean robotIsNeartrench(Pose2d robotPose, ChassisSpeeds robotSpeed) {
+        double blueTrenchOffset = 4.66;
+        double redTrenchOffset = 11.936;
+        double lowY = 1.3;
+        double highY = 6.7;
+
+        double trenchOffset;
+        double tolerance;
+        boolean nearSideOfTrench;
+
+        tolerance = Math.abs(robotSpeed.vxMetersPerSecond) * .05;
+
+        nearSideOfTrench = (robotPose.getY() < lowY || robotPose.getY() > highY);
+
+        if (GameManager.isBlueAlliance) {
+            trenchOffset = blueTrenchOffset;
+        } else {
+            trenchOffset = redTrenchOffset;
+        }
+
+        return (MathUtil.isNear(blueTrenchOffset, robotPose.getX(), 1 + tolerance)
+        ||MathUtil.isNear(redTrenchOffset, robotPose.getX(), 1 + tolerance)
+         && nearSideOfTrench);
+
     }
 
 }

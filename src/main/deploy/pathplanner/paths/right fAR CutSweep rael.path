@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.0,
-        "y": 7.0
+        "x": 8.65,
+        "y": 1.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0,
-        "y": 7.0
+        "x": 8.65,
+        "y": 2.098085962819856
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "right far sweep start"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 6.0
+        "x": 8.65,
+        "y": 3.75
       },
       "prevControl": {
-        "x": 3.0,
-        "y": 6.0
+        "x": 8.65,
+        "y": 3.4351782913279862
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "right far cutsweep end rael"
     }
   ],
   "rotationTargets": [],
@@ -33,22 +33,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 10.0,
-    "maxAcceleration": 10.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.3,
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": 0.0
+    "velocity": 0.0,
+    "rotation": 119.99999999999999
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

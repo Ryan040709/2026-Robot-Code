@@ -41,8 +41,10 @@ public class Intake_IntakeToShooter extends Command {
 
         outtaBumperIntakeSubsystem.PivotIntake(0);
         if (outtaBumperIntakeSubsystem.AtPosition(0)) {
-            if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset())&&
-                !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getRobotFieldRelativeSpeeds())) {
+            if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) &&
+                    !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getRobotFieldRelativeSpeeds())
+                    && intakeSubsystem.robotIsNeartrench(drivetrain.getTurretOffset(),
+                            drivetrain.getRobotFieldRelativeSpeeds())) {
                 intakeSubsystem.SetIntakeFront(-7);
                 intakeSubsystem.SetIntakeBack(-7);
             } else {

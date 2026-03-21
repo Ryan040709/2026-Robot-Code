@@ -24,7 +24,7 @@ public class IntakeToShooterNoOutta extends Command {
         this.outtaBumperIntakeSubsystem = outttBumperIntake;
         this.turretSubsystem = turretSubsystem;
         this.drivetrain = drivetrain;
-        
+
         addRequirements(intakeSubsystem, outttBumperIntake);
 
     }
@@ -38,14 +38,16 @@ public class IntakeToShooterNoOutta extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (turretSubsystem.turretAtTarget(
-                drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) ) {
+        if (intakeSubsystem.robotIsNeartrench(drivetrain.getTurretOffset(), drivetrain.getRobotFieldRelativeSpeeds())) {
+            if (turretSubsystem.turretAtTarget(
+                    drivetrain.getTurretTarget(), drivetrain.getTurretOffset())) {
 
-            intakeSubsystem.SetIntakeFront(-7);
-            intakeSubsystem.SetIntakeBack(-7);
-        } else {
-            intakeSubsystem.SetIntakeFront(-7);
-            intakeSubsystem.SetIntakeBack(7);
+                intakeSubsystem.SetIntakeFront(-7);
+                intakeSubsystem.SetIntakeBack(-7);
+            } else {
+                intakeSubsystem.SetIntakeFront(-7);
+                intakeSubsystem.SetIntakeBack(7);
+            }
         }
 
         // outta bumper intake

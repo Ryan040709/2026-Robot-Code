@@ -261,9 +261,7 @@ public class RobotContainer {
                 manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
                 manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
 
-                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
-                
-
+                manipulatorController.rightBumper().whileTrue(shooterAndHood);
 
                 manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
                 manipulatorController.pov(270).onTrue(Commands.runOnce(()-> gameManager.lostAuto(), gameManager));

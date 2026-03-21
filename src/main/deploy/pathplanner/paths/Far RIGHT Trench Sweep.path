@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.85,
+        "x": 8.65,
         "y": 1.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.85,
+        "x": 8.65,
         "y": 2.098085962819856
       },
       "isLocked": false,
@@ -48,7 +48,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 90.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }
