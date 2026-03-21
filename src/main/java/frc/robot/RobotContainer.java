@@ -228,7 +228,7 @@ public class RobotContainer {
 
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
                 hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterToRPMS);
+                shooter.setDefaultCommand(shooterStop);
 
                 driverController.pov(0).whileTrue(turret_Toggle);
 
