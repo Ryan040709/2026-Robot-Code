@@ -141,26 +141,9 @@ public class RobotContainer {
                 // climber commands
                 // nothing right now
 
-                // Setup Routines
-                routineChooser.setDefaultOption("Testing", "testing");
-
-                routineChooser.setDefaultOption("Left Trench Auto", "left_trench");
-                routineChooser.setDefaultOption("Right Trench Auto", "right_trench");
-                routineChooser.setDefaultOption("Hub Auto", "Hub");
-
-                // Setup Variations
-                variationChooser.setDefaultOption("Testing", "to_testing");
-
-                variationChooser.setDefaultOption("Depot", "to_depot");
-                variationChooser.addOption("Sweep", "to_sweep");
-                variationChooser.addOption("Double Sweep", "to_double_sweep");
-                variationChooser.addOption("Human Player", "to_human_player_zone");
-
                 SmartDashboard.putData("turreet", turret);
 
                 // Put both on the Dashboard
-                SmartDashboard.putData("Auto Routine", routineChooser);
-                SmartDashboard.putData("Auto Variation", variationChooser);
 
                 SmartDashboard.putNumber("Shooter RPM", 65);
 
