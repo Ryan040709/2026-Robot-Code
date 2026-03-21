@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.65,
+        "y": 4.25
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 8.40341292579393,
+        "y": 3.134493249241504
+      },
+      "isLocked": false,
+      "linkedName": "left far cutsweep end RAEL"
+    },
+    {
+      "anchor": {
+        "x": 5.75,
+        "y": 5.8
+      },
+      "prevControl": {
+        "x": 6.513,
+        "y": 5.8
+      },
+      "nextControl": {
+        "x": 5.5,
+        "y": 5.8
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.374385542168675,
+        "y": 5.8
+      },
+      "prevControl": {
+        "x": 3.874385542168675,
+        "y": 5.8
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": -45.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -45.0
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": -119.99999999999999
+  },
+  "useDefaultConstraints": true
+}

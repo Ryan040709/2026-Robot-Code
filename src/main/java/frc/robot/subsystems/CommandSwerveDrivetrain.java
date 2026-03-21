@@ -398,7 +398,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         robotPose = getState().Pose;
         limelightPoseUpdate("limelight-tags");
         limelightPoseUpdate("limelight-back");
-        limelightPoseUpdate("limelight-intake");
         robotPose = getState().Pose;
         // poseEstimator.update(gyroAngle, currentPositions);
 

@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.35,
+        "y": 7.68625641025641
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.35,
+        "y": 7.68625641025641
+      },
+      "isLocked": false,
+      "linkedName": "left trench starting point FAR"
+    },
+    {
+      "anchor": {
+        "x": 8.65,
+        "y": 6.9
+      },
+      "prevControl": {
+        "x": 8.65,
+        "y": 7.568737399100954
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "left far cutsweep start"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": true
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": -119.99999999999999
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 3.0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": false
+}

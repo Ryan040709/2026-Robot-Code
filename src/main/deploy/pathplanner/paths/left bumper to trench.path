@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.374385542168675,
+        "y": 2.2
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.84529745257656,
+        "y": 1.7056396647620322
+      },
+      "isLocked": false,
+      "linkedName": "right bumper stop"
+    },
+    {
+      "anchor": {
+        "x": 3.516,
+        "y": 0.5999999999999996
+      },
+      "prevControl": {
+        "x": 3.016,
+        "y": 0.5999999999999998
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "right trench START"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 3.0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 45.0
+  },
+  "useDefaultConstraints": true
+}
