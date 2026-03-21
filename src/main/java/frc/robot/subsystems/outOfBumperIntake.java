@@ -80,7 +80,7 @@ public class outOfBumperIntake extends SubsystemBase {
 
     @Override
     public void periodic() {
-    //    SmartDashboard.putNumber("pivot position", leftPivotMotor1.getPosition().getValueAsDouble());
+        SmartDashboard.putNumber("intake pivot position", leftPivotMotor1.getPosition().getValueAsDouble());
     }
 
 }

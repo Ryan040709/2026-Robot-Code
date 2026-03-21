@@ -540,17 +540,23 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
                         Math.pow(targetPoseRobotSpace.getZ(), 2));
         if (robotPoseEstimateTags != null) {
-            if (robotPoseEstimateTags.tagCount != 0 && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
-                    && distance < 3.5) {
+            if (robotPoseEstimateTags.tagCount != 0 
+                    && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
+                    && distance < 3.5
+                    && !(robotPose.getY() > ((0.95 * robotPose.getX()) + 4))) {
                 // poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75,
                 // distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                 // robotPoseEstimateTags.timestampSeconds);
+                //  System.out.println("update Limelight");
                 addVisionMeasurement(robotPoseEstimateTags.pose, robotPoseEstimateTags.timestampSeconds,
                         VecBuilder.fill(Math.pow(distance, 2), Math.pow(distance, 2), 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
                 // robotPoseEstimateTurret.timestampSeconds);
 
+            }
+            else{
+             //   System.out.println("not using limelight");
             }
         }
         // } else {
