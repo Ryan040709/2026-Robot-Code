@@ -25,7 +25,6 @@ import frc.robot.subsystems.HopperSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
-import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.Intake_Run;
@@ -210,11 +209,12 @@ public class RobotContainer {
 
                 driverController.y().whileTrue(shooterCoast);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
-                driverController.start().whileTrue(zeroTurret);
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
 
                 // turret commands
                 turret.setDefaultCommand(turret_Locking);
+
+                driverController.start().whileTrue(zeroTurret);
 
                 // game manager commands
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
