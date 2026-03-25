@@ -1,4 +1,4 @@
-package frc.robot.commands.intake.throughTheBumper;
+package frc.robot.commands.intake;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
@@ -7,14 +7,14 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 
-public class IntakeToShooterNoOutta extends Command {
+public class Intake_Run extends Command {
 
     IntakeSubsystem intakeSubsystem;
     HopperSubsystem hopperSubsystem;
     TurretSubsystem turretSubsystem;
     CommandSwerveDrivetrain drivetrain;
 
-    public IntakeToShooterNoOutta(
+    public Intake_Run(
             IntakeSubsystem intakeSubsystem,
             HopperSubsystem hopperSubsystem,
             TurretSubsystem turretSubsystem,

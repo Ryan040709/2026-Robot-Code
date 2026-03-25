@@ -1,17 +1,17 @@
-package frc.robot.commands.intake.throughTheBumper;
+package frc.robot.commands.intake;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants;
 
-public class Intake_IntakeToHopper extends Command {
+public class Intake_Stop extends Command {
 
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
-    public Intake_IntakeToHopper(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem){
+    public Intake_Stop(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem){
  
         this.intakeSubsystem = intakeSubsystem;
         this.hopperSubsystem = hopperSubsystem;
@@ -29,12 +29,8 @@ public class Intake_IntakeToHopper extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
-        hopperSubsystem.pivotIntake(0);
-        if(hopperSubsystem.atPosition(0)){
-        intakeSubsystem.setIntakeVoltage(-7);
-        }
-        // outta bumper intake
+        intakeSubsystem.setIntakeVoltage(0);
+        hopperSubsystem.pivotIntake(0.23);
     }
 
     // Called once the command ends or is interrupted.

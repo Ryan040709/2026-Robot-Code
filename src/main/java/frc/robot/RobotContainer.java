@@ -27,12 +27,9 @@ import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
-import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
-import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToHopper;
-import frc.robot.commands.intake.throughTheBumper.Intake_IntakeToShooter;
-import frc.robot.commands.intake.throughTheBumper.Auto_Intake_IntakeToShooter;
-import frc.robot.commands.intake.throughTheBumper.IntakeToShooterNoOutta;
+import frc.robot.commands.intake.Intake_Run;
+import frc.robot.commands.intake.Intake_Outtake;
+import frc.robot.commands.intake.Intake_Stop;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
 import frc.robot.commands.shooter.Hood_SetToPosition;
 import frc.robot.commands.shooter.OverrideHoodPosition;
@@ -117,12 +114,8 @@ public class RobotContainer {
 
         // in the bumper intake commands
         Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, hopperSubsystem);
-        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, hopperSubsystem);
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, hopperSubsystem);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, hopperSubsystem,
-                        turret, drivetrain, hoodSubsystem);
-        IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, hopperSubsystem, turret, drivetrain);
-        Auto_Intake_IntakeToShooter auto_Intake_IntakeToShooter = new Auto_Intake_IntakeToShooter(throughBumperIntake, hopperSubsystem);
+        Intake_Outtake intake_Outtake = new Intake_Outtake(throughBumperIntake, hopperSubsystem);
+        Intake_Run intake_Run = new Intake_Run(throughBumperIntake, hopperSubsystem, turret, drivetrain);
 
         Command shooterAndHood = shooter_RunToRpmTele.alongWith(hoodSetToPosition);
 
@@ -130,12 +123,12 @@ public class RobotContainer {
                 // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
                 // in the bumper intake commands
-                NamedCommands.registerCommand("intake-hopperToIntake", outtake);
-                NamedCommands.registerCommand("intake-intakeToHopper", IntakeToHopper);
-                NamedCommands.registerCommand("intake-intakeToShooter", auto_Intake_IntakeToShooter);
+                NamedCommands.registerCommand("intake-hopperToIntake", intake_Outtake);
+                NamedCommands.registerCommand("intake-intakeToHopper", intake_Run);
+                NamedCommands.registerCommand("intake-intakeToShooter", intake_Run);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("zero-turret", zeroTurret);
-                NamedCommands.registerCommand("intake-no-outta", auto_Intake_IntakeToShooter);
+                NamedCommands.registerCommand("intake-no-outta", intake_Run);
                 // // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
@@ -218,12 +211,12 @@ public class RobotContainer {
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
-                driverController.pov(180).whileTrue(outtake).whileFalse(intake_Stop);
+                driverController.pov(180).whileTrue(intake_Outtake).whileFalse(intake_Stop);
 
                 driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
 
-                driverController.b().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
-                driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+                driverController.b().whileTrue(intake_Run).whileFalse(intake_Stop);
+                driverController.x().whileTrue(intake_Run).whileFalse(intake_Stop);
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER)).whileFalse(shooterStop);
                 driverController.start().whileTrue(zeroTurret);
                 driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
@@ -239,10 +232,10 @@ public class RobotContainer {
 
                 // out of bumper intake commands
                // manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
-                manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
+                manipulatorController.a().whileTrue(intake_Run).whileFalse(intake_Stop);
                 
-                manipulatorController.y().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
-                manipulatorController.b().whileTrue(outtake).whileFalse(intake_Stop);
+                manipulatorController.y().whileTrue(intake_Run).whileFalse(intake_Stop);
+                manipulatorController.b().whileTrue(intake_Outtake).whileFalse(intake_Stop);
 
                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
 
