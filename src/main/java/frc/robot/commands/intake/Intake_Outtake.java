@@ -11,14 +11,13 @@ public class Intake_Outtake extends Command {
     IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
     HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
-    public Intake_Outtake(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem){
- 
+    public Intake_Outtake(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem) {
+
         this.intakeSubsystem = intakeSubsystem;
         this.hopperSubsystem = hopperSubsystem;
         addRequirements(intakeSubsystem, hopperSubsystem);
 
     }
-
 
     // Called when the command is initially scheduled.
     @Override
@@ -30,10 +29,9 @@ public class Intake_Outtake extends Command {
     @Override
     public void execute() {
 
-
         hopperSubsystem.pivotIntake(0);
-        if(hopperSubsystem.atPosition(0)){
-        intakeSubsystem.setIntakeVoltage(6);
+        if (hopperSubsystem.atPosition(0)) {
+            intakeSubsystem.setIntakeVoltage(-7);
         }
         // outta bumper intake
     }

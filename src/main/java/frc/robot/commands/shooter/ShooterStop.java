@@ -28,7 +28,7 @@ public class ShooterStop extends Command {
   @Override
   public void execute() {
     shooterSubsystem.SetShooterRPMS(0);
-        indexer.SetBeltVoltage(7);
+    indexer.SetBeltVoltage(7); // TODO: still needs to be tuned to real robot?
     indexer.SetIndexSpeed(0.5);
   }
 

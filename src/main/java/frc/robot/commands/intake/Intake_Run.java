@@ -38,17 +38,11 @@ public class Intake_Run extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        if (intakeSubsystem.robotIsNeartrench(drivetrain.getTurretOffset(), drivetrain.getRobotFieldRelativeSpeeds())) {
-            if (turretSubsystem.turretAtTarget(
-                    drivetrain.getTurretTarget(), drivetrain.getTurretOffset())) {
 
-                intakeSubsystem.setIntakeVoltage(-7);
-            } else {
-                intakeSubsystem.setIntakeVoltage(-7);
-            }
+        hopperSubsystem.pivotIntake(0); // TODO: tune the target positions!
+        if (hopperSubsystem.atPosition(0)) {
+            intakeSubsystem.setIntakeVoltage(7);
         }
-
-        // outta bumper intake
     }
 
     // Called once the command ends or is interrupted.
