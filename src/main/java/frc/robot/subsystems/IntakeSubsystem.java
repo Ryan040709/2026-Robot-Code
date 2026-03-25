@@ -27,34 +27,34 @@ public class IntakeSubsystem extends SubsystemBase {
     public IntakeSubsystem() {
 
         TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
-        intakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakForwardDutyCycle;
-        intakeConfig.MotorOutput.PeakReverseDutyCycle = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakReverseDutyCycle;
+        intakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.IntakeSubsystem.ThroughBumperIntake_PeakForwardDutyCycle;
+        intakeConfig.MotorOutput.PeakReverseDutyCycle = Constants.IntakeSubsystem.ThroughBumperIntake_PeakReverseDutyCycle;
         // motor "friction" type?
         intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         intakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        intakeConfig.Slot0.kP = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_Slot0_kP;
-        intakeConfig.Slot0.kI = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_Slot0_kI;
-        intakeConfig.Slot0.kD = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_Slot0_kD;
-        intakeConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_StatorCurrentLimitEnable;
-        intakeConfig.CurrentLimits.StatorCurrentLimit = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_CurrentLimit;
-        intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimitEnable;
-        intakeConfig.CurrentLimits.SupplyCurrentLimit = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimit;
+        intakeConfig.Slot0.kP = Constants.IntakeSubsystem.ThroughBumperIntake_Slot0_kP;
+        intakeConfig.Slot0.kI = Constants.IntakeSubsystem.ThroughBumperIntake_Slot0_kI;
+        intakeConfig.Slot0.kD = Constants.IntakeSubsystem.ThroughBumperIntake_Slot0_kD;
+        intakeConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.IntakeSubsystem.ThroughBumperIntake_StatorCurrentLimitEnable;
+        intakeConfig.CurrentLimits.StatorCurrentLimit = Constants.IntakeSubsystem.ThroughBumperIntake_CurrentLimit;
+        intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.IntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimitEnable;
+        intakeConfig.CurrentLimits.SupplyCurrentLimit = Constants.IntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimit;
         // Voltage
-        intakeConfig.Voltage.PeakForwardVoltage = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakForwardVoltage;
-        intakeConfig.Voltage.PeakReverseVoltage = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakReverseVoltage;
+        intakeConfig.Voltage.PeakForwardVoltage = Constants.IntakeSubsystem.ThroughBumperIntake_PeakForwardVoltage;
+        intakeConfig.Voltage.PeakReverseVoltage = Constants.IntakeSubsystem.ThroughBumperIntake_PeakReverseVoltage;
         // Differential Constants
-        intakeConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakDifferentialDutyCycle;
-        intakeConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakDifferentialDutyCycle;
-        intakeConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakDifferentialVoltage;
+        intakeConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.IntakeSubsystem.ThroughBumperIntake_PeakDifferentialDutyCycle;
+        intakeConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.IntakeSubsystem.ThroughBumperIntake_PeakDifferentialDutyCycle;
+        intakeConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.IntakeSubsystem.ThroughBumperIntake_PeakDifferentialVoltage;
         // Motion Magic
-        intakeConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_MotionMagicCruiseVelocity;
-        intakeConfig.MotionMagic.MotionMagicAcceleration = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_MotionMagicAcceleration;
-        intakeConfig.MotionMagic.MotionMagicExpo_kA = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_MotionMagicExpo_kA;
-        intakeConfig.MotionMagic.MotionMagicExpo_kV = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_MotionMagicExpo_kV;
+        intakeConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicCruiseVelocity;
+        intakeConfig.MotionMagic.MotionMagicAcceleration = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicAcceleration;
+        intakeConfig.MotionMagic.MotionMagicExpo_kA = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicExpo_kA;
+        intakeConfig.MotionMagic.MotionMagicExpo_kV = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicExpo_kV;
         // Torque Current
-        intakeConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakForwardTorqueCurrent;
-        intakeConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakReverseTorqueCurrent;
+        intakeConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.IntakeSubsystem.ThroughBumperIntake_PeakForwardTorqueCurrent;
+        intakeConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.IntakeSubsystem.ThroughBumperIntake_PeakReverseTorqueCurrent;
 
         intakeMotor1.getConfigurator().apply(intakeConfig);
         intakeMotor2.getConfigurator().apply(intakeConfig);

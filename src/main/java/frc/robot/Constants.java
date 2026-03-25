@@ -5,18 +5,18 @@ import edu.wpi.first.apriltag.AprilTagFields;
 
 public final class Constants {
   public static final class GameManager {
-    public static double ShiftAuto = 20; 
-    public static double ShiftTransistion = 140; 
+    public static double ShiftAuto = 20;
+    public static double ShiftTransistion = 140;
     public static double ShiftOne = 130;
     public static double ShiftTwo = 105;
     public static double ShiftThree = 80;
     public static double ShiftFour = 55;
-    public static double ShiftEndGame = 30;     
+    public static double ShiftEndGame = 30;
   }
 
   public static final class TurretSubsystem {
 
-    //duty cycles
+    // duty cycles
     public static double Turret_PeakForwardDutyCycle = 0.5;
     public static double Turret_PeakReverseDutyCycle = -0.5;
 
@@ -33,8 +33,7 @@ public final class Constants {
     public static boolean Turret_FowardSoftLimitEnable = true;
     public static boolean Turret_ReverseSoftLimitEnable = true;
 
-
-    //gear ratio
+    // gear ratio
     public static double Turret_SensorToMechanismRatio = 0.07608695652;
 
     // Voltage
@@ -45,7 +44,7 @@ public final class Constants {
     // Torque Current
     public static double Turret_PeakForwardTorqueCurrent = 0;
     public static double Turret_PeakReverseTorqueCurrent = 0;
-    //soft limits
+    // soft limits
     public static double Turret_FowardSoftLimit = 315;
     public static double Turret_ReverseSoftLimit = -20;
 
@@ -66,11 +65,11 @@ public final class Constants {
     public static double OutBumperPivot_ForwardSoftLimitThreshold = 0.26;
     public static boolean OutBumperPivot_ReverseSoftLimitEnable = true;
     public static double OutBumperPivot_ReverseSoftLimitThreshold = 0;
-    public static double OutBumperPivot_ForwardVoltage= 2;
-    public static double OutBumperPivot_ReverseVoltage= -1.1;
+    public static double OutBumperPivot_ForwardVoltage = 2;
+    public static double OutBumperPivot_ReverseVoltage = -1.1;
   }
 
-  public static final class ThroughBumperIntakeSubsystem {
+  public static final class IntakeSubsystem {
 
     public static double ThroughBumperIntake_PeakForwardDutyCycle = 1;
     public static double ThroughBumperIntake_PeakReverseDutyCycle = -1;
@@ -97,7 +96,7 @@ public final class Constants {
     public static double ThroughBumperIntake_MotionMagicExpo_kA = 0;
 
     public static double ThroughBumperIntake_MotionMagicExpo_kV = 0;
-    
+
     // Torque Current
     public static double ThroughBumperIntake_PeakForwardTorqueCurrent = 0;
     public static double ThroughBumperIntake_PeakReverseTorqueCurrent = 0;
@@ -109,7 +108,7 @@ public final class Constants {
 
   }
 
-    public static final class HopperSubsystem {
+  public static final class HopperSubsystem {
 
     public static double hopper_PeakForwardDutyCycle = 1;
     public static double hopper_PeakReverseDutyCycle = -1;
@@ -136,7 +135,7 @@ public final class Constants {
     public static double hopper_MotionMagicExpo_kA = 0;
 
     public static double hopper_MotionMagicExpo_kV = 0;
-    
+
     // Torque Current
     public static double hopper_PeakForwardTorqueCurrent = 0;
     public static double hopper_PeakReverseTorqueCurrent = 0;
@@ -148,35 +147,117 @@ public final class Constants {
 
   }
 
-  public static final class ClimberSubsystem {
-    //TODO fix PIDs
-    public static double Climber_kP = 0;
-    public static double Climber_kI = 0;
-    public static double Climber_kD = 0;// was .15
-    // volts for static energy
-    public static double Climber_kS = 0;
-    // volts to overcome gravity
-    public static double Climber_kG = 0;
-    // volts * seconds / distance
-    public static double Climber_kV = 0;
-    // volts * seconds^2 / distance
-    public static double Climber_kA = (0);
-    // motion magic stuff
-    public static double Climber_MotionMagicCruiseVelocity = 0;
-    public static double Climber_MotionMagicCruiseAcceleration = 0;
-    public static double Climber_MotionMagicJerk = 0;
+  public static final class IndexerSubsystem {
 
-    // fix all values
-    public static double Climber_SupplyCurrentLimit = 70;// 60 before speed up
-    public static double Climber_ForwardPercent = 0;
-    public static double Climber_BackwardPercent = 0;
+    // PIDs for the index motor
+    public static double index_PeakForwardDutyCycle = 1;
+    public static double index_PeakReverseDutyCycle = -1;
 
-    // Climber Positions
-    public static double Climber_First_Bar_Pos = 0;
-    public static double Climber_Upper_Bar_Pos = 0;
-    public static double Climber_Down_Pos = 0;
-    public static double Climber_Hooks_Closed_Pos = 0;
-    public static double Climber_Hooks_Opened_Pose= 0;
+    public static double index_Slot0_kP = 0;
+    public static double index_Slot0_kI = 0;
+    public static double index_Slot0_kD = 0;
+
+    public static boolean index_StatorCurrentLimitEnable = false;
+    public static double index_CurrentLimit = 0;
+    public static boolean index_SupplyCurrentLimitEnable = true;
+    public static double index_SupplyCurrentLimit = 40;
+
+    // Voltage
+    public static double index_PeakForwardVoltage = 7;
+    public static double index_PeakReverseVoltage = -7;
+    // Differential Constants
+    public static double index_PeakDifferentialDutyCycle = 0;
+    public static double index_PeakDifferentialTorqueCurrent = 0;
+    public static double index_PeakDifferentialVoltage = 0;
+    // Motion Magic
+    public static double index_MotionMagicCruiseVelocity = 0;
+    public static double index_MotionMagicAcceleration = 0;
+    public static double index_MotionMagicExpo_kA = 0;
+
+    public static double index_MotionMagicExpo_kV = 0;
+
+    // Torque Current
+    public static double index_PeakForwardTorqueCurrent = 0;
+    public static double index_PeakReverseTorqueCurrent = 0;
+
+    // intake velocities
+    public static double index_FrontSpeed = 0;
+
+    public static double index_BackSpeed = 0;
+
+    //PIDs for the belt motor
+    public static double belt_PeakForwardDutyCycle = 1;
+    public static double belt_PeakReverseDutyCycle = -1;
+
+    public static double belt_Slot0_kP = 0;
+    public static double belt_Slot0_kI = 0;
+    public static double belt_Slot0_kD = 0;
+
+    public static boolean belt_StatorCurrentLimitEnable = false;
+    public static double belt_CurrentLimit = 0;
+    public static boolean belt_SupplyCurrentLimitEnable = true;
+    public static double belt_SupplyCurrentLimit = 40;
+
+    // Voltage
+    public static double belt_PeakForwardVoltage = 7;
+    public static double belt_PeakReverseVoltage = -7;
+    // Differential Constants
+    public static double belt_PeakDifferentialDutyCycle = 0;
+    public static double belt_PeakDifferentialTorqueCurrent = 0;
+    public static double belt_PeakDifferentialVoltage = 0;
+    // Motion Magic
+    public static double belt_MotionMagicCruiseVelocity = 0;
+    public static double belt_MotionMagicAcceleration = 0;
+    public static double belt_MotionMagicExpo_kA = 0;
+
+    public static double belt_MotionMagicExpo_kV = 0;
+
+    // Torque Current
+    public static double belt_PeakForwardTorqueCurrent = 0;
+    public static double belt_PeakReverseTorqueCurrent = 0;
+
+    // intake velocities
+    public static double belt_FrontSpeed = 0;
+
+    public static double belt_BackSpeed = 0;
+
+
+
+    //PIDs for the shooterIntake motor
+    public static double shooterIntake_PeakForwardDutyCycle = 1;
+    public static double shooterIntake_PeakReverseDutyCycle = -1;
+
+    public static double shooterIntake_Slot0_kP = 0;
+    public static double shooterIntake_Slot0_kI = 0;
+    public static double shooterIntake_Slot0_kD = 0;
+
+    public static boolean shooterIntake_StatorCurrentLimitEnable = false;
+    public static double shooterIntake_CurrentLimit = 0;
+    public static boolean shooterIntake_SupplyCurrentLimitEnable = true;
+    public static double shooterIntake_SupplyCurrentLimit = 40;
+
+    // Voltage
+    public static double shooterIntake_PeakForwardVoltage = 7;
+    public static double shooterIntake_PeakReverseVoltage = -7;
+    // Differential Constants
+    public static double shooterIntake_PeakDifferentialDutyCycle = 0;
+    public static double shooterIntake_PeakDifferentialTorqueCurrent = 0;
+    public static double shooterIntake_PeakDifferentialVoltage = 0;
+    // Motion Magic
+    public static double shooterIntake_MotionMagicCruiseVelocity = 0;
+    public static double shooterIntake_MotionMagicAcceleration = 0;
+    public static double shooterIntake_MotionMagicExpo_kA = 0;
+
+    public static double shooterIntake_MotionMagicExpo_kV = 0;
+
+    // Torque Current
+    public static double shooterIntake_PeakForwardTorqueCurrent = 0;
+    public static double shooterIntake_PeakReverseTorqueCurrent = 0;
+
+    // intake velocities
+    public static double shooterIntake_FrontSpeed = 0;
+
+    public static double shooterIntake_BackSpeed = 0;
 
   }
 
@@ -209,7 +290,7 @@ public final class Constants {
     public static double Shooter_MotionMagicCruiseVelocity = 0;
     public static double Shooter_MotionMagicAcceleration = 0;
     public static double Shooter_MotionMagicExpo_kA = 0;
-    
+
     public static double Shooter_MotionMagicExpo_kV = 0;
     // Torque Current
     public static double Shooter_PeakForwardTorqueCurrent = 800;

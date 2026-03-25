@@ -21,41 +21,112 @@ public class IndexerSubsystem extends SubsystemBase { // Brian didn't know wheth
 
     private TalonFX indexerBottom = new TalonFX(23);
     private TalonFX beltMotor = new TalonFX(24);
+    private TalonFX shooterIntake = new TalonFX(24);
 
     public IndexerSubsystem() {
 
-        TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
-        intakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.HopperSubsystem.hopper_PeakForwardDutyCycle;
-        intakeConfig.MotorOutput.PeakReverseDutyCycle = Constants.HopperSubsystem.hopper_PeakReverseDutyCycle;
+        // indexer motor config
+        TalonFXConfiguration indexerConfig = new TalonFXConfiguration();
+        indexerConfig.MotorOutput.PeakForwardDutyCycle = Constants.IndexerSubsystem.index_PeakForwardDutyCycle;
+        indexerConfig.MotorOutput.PeakReverseDutyCycle = Constants.IndexerSubsystem.index_PeakReverseDutyCycle;
         // motor "friction" type?
-        intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        intakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        indexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        indexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        intakeConfig.Slot0.kP = Constants.HopperSubsystem.hopper_Slot0_kP;
-        intakeConfig.Slot0.kI = Constants.HopperSubsystem.hopper_Slot0_kI;
-        intakeConfig.Slot0.kD = Constants.HopperSubsystem.hopper_Slot0_kD;
-        intakeConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.HopperSubsystem.hopper_StatorCurrentLimitEnable;
-        intakeConfig.CurrentLimits.StatorCurrentLimit = Constants.HopperSubsystem.hopper_CurrentLimit;
-        intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.HopperSubsystem.hopper_SupplyCurrentLimitEnable;
-        intakeConfig.CurrentLimits.SupplyCurrentLimit = Constants.HopperSubsystem.hopper_SupplyCurrentLimit;
+        indexerConfig.Slot0.kP = Constants.IndexerSubsystem.index_Slot0_kP;
+        indexerConfig.Slot0.kI = Constants.IndexerSubsystem.index_Slot0_kI;
+        indexerConfig.Slot0.kD = Constants.IndexerSubsystem.index_Slot0_kD;
+        indexerConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.IndexerSubsystem.index_StatorCurrentLimitEnable;
+        indexerConfig.CurrentLimits.StatorCurrentLimit = Constants.IndexerSubsystem.index_CurrentLimit;
+        indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.IndexerSubsystem.index_SupplyCurrentLimitEnable;
+        indexerConfig.CurrentLimits.SupplyCurrentLimit = Constants.IndexerSubsystem.index_SupplyCurrentLimit;
         // Voltage
-        intakeConfig.Voltage.PeakForwardVoltage = Constants.HopperSubsystem.hopper_PeakForwardVoltage;
-        intakeConfig.Voltage.PeakReverseVoltage = Constants.HopperSubsystem.hopper_PeakReverseVoltage;
+        indexerConfig.Voltage.PeakForwardVoltage = Constants.IndexerSubsystem.index_PeakForwardVoltage;
+        indexerConfig.Voltage.PeakReverseVoltage = Constants.IndexerSubsystem.index_PeakReverseVoltage;
         // Differential Constants
-        intakeConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.HopperSubsystem.hopper_PeakDifferentialDutyCycle;
-        intakeConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.HopperSubsystem.hopper_PeakDifferentialDutyCycle;
-        intakeConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.HopperSubsystem.hopper_PeakDifferentialVoltage;
+        indexerConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.IndexerSubsystem.index_PeakDifferentialDutyCycle;
+        indexerConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.IndexerSubsystem.index_PeakDifferentialDutyCycle;
+        indexerConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.IndexerSubsystem.index_PeakDifferentialVoltage;
         // Motion Magic
-        intakeConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.HopperSubsystem.hopper_MotionMagicCruiseVelocity;
-        intakeConfig.MotionMagic.MotionMagicAcceleration = Constants.HopperSubsystem.hopper_MotionMagicAcceleration;
-        intakeConfig.MotionMagic.MotionMagicExpo_kA = Constants.HopperSubsystem.hopper_MotionMagicExpo_kA;
-        intakeConfig.MotionMagic.MotionMagicExpo_kV = Constants.HopperSubsystem.hopper_MotionMagicExpo_kV;
+        indexerConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.IndexerSubsystem.index_MotionMagicCruiseVelocity;
+        indexerConfig.MotionMagic.MotionMagicAcceleration = Constants.IndexerSubsystem.index_MotionMagicAcceleration;
+        indexerConfig.MotionMagic.MotionMagicExpo_kA = Constants.IndexerSubsystem.index_MotionMagicExpo_kA;
+        indexerConfig.MotionMagic.MotionMagicExpo_kV = Constants.IndexerSubsystem.index_MotionMagicExpo_kV;
         // Torque Current
-        intakeConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.HopperSubsystem.hopper_PeakForwardTorqueCurrent;
-        intakeConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.HopperSubsystem.hopper_PeakReverseTorqueCurrent;
+        indexerConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.IndexerSubsystem.index_PeakForwardTorqueCurrent;
+        indexerConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.IndexerSubsystem.index_PeakReverseTorqueCurrent;
 
-        indexerBottom.getConfigurator().apply(intakeConfig);
-        beltMotor.getConfigurator().apply(intakeConfig);
+        indexerBottom.getConfigurator().apply(indexerConfig);
+
+
+
+        // belt motor config
+        TalonFXConfiguration beltConfig = new TalonFXConfiguration();
+        beltConfig.MotorOutput.PeakForwardDutyCycle = Constants.IndexerSubsystem.belt_PeakForwardDutyCycle;
+        beltConfig.MotorOutput.PeakReverseDutyCycle = Constants.IndexerSubsystem.belt_PeakReverseDutyCycle;
+        // motor "friction" type?
+        beltConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        beltConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        // regulars
+        beltConfig.Slot0.kP = Constants.IndexerSubsystem.belt_Slot0_kP;
+        beltConfig.Slot0.kI = Constants.IndexerSubsystem.belt_Slot0_kI;
+        beltConfig.Slot0.kD = Constants.IndexerSubsystem.belt_Slot0_kD;
+        beltConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.IndexerSubsystem.belt_StatorCurrentLimitEnable;
+        beltConfig.CurrentLimits.StatorCurrentLimit = Constants.IndexerSubsystem.belt_CurrentLimit;
+        beltConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.IndexerSubsystem.belt_SupplyCurrentLimitEnable;
+        beltConfig.CurrentLimits.SupplyCurrentLimit = Constants.IndexerSubsystem.belt_SupplyCurrentLimit;
+        // Voltage
+        beltConfig.Voltage.PeakForwardVoltage = Constants.IndexerSubsystem.belt_PeakForwardVoltage;
+        beltConfig.Voltage.PeakReverseVoltage = Constants.IndexerSubsystem.belt_PeakReverseVoltage;
+        // Differential Constants
+        beltConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.IndexerSubsystem.belt_PeakDifferentialDutyCycle;
+        beltConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.IndexerSubsystem.belt_PeakDifferentialDutyCycle;
+        beltConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.IndexerSubsystem.belt_PeakDifferentialVoltage;
+        // Motion Magic
+        beltConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.IndexerSubsystem.belt_MotionMagicCruiseVelocity;
+        beltConfig.MotionMagic.MotionMagicAcceleration = Constants.IndexerSubsystem.belt_MotionMagicAcceleration;
+        beltConfig.MotionMagic.MotionMagicExpo_kA = Constants.IndexerSubsystem.belt_MotionMagicExpo_kA;
+        beltConfig.MotionMagic.MotionMagicExpo_kV = Constants.IndexerSubsystem.belt_MotionMagicExpo_kV;
+        // Torque Current
+        beltConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.IndexerSubsystem.belt_PeakForwardTorqueCurrent;
+        beltConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.IndexerSubsystem.belt_PeakReverseTorqueCurrent;
+
+        beltMotor.getConfigurator().apply(beltConfig);
+
+
+
+        // shooter intake motor config
+        TalonFXConfiguration shooterIntakeConfig = new TalonFXConfiguration();
+        shooterIntakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.IndexerSubsystem.shooterIntake_PeakForwardDutyCycle;
+        shooterIntakeConfig.MotorOutput.PeakReverseDutyCycle = Constants.IndexerSubsystem.shooterIntake_PeakReverseDutyCycle;
+        // motor "friction" type?
+        shooterIntakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        shooterIntakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        // regulars
+        shooterIntakeConfig.Slot0.kP = Constants.IndexerSubsystem.shooterIntake_Slot0_kP;
+        shooterIntakeConfig.Slot0.kI = Constants.IndexerSubsystem.shooterIntake_Slot0_kI;
+        shooterIntakeConfig.Slot0.kD = Constants.IndexerSubsystem.shooterIntake_Slot0_kD;
+        shooterIntakeConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.IndexerSubsystem.shooterIntake_StatorCurrentLimitEnable;
+        shooterIntakeConfig.CurrentLimits.StatorCurrentLimit = Constants.IndexerSubsystem.shooterIntake_CurrentLimit;
+        shooterIntakeConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.IndexerSubsystem.shooterIntake_SupplyCurrentLimitEnable;
+        shooterIntakeConfig.CurrentLimits.SupplyCurrentLimit = Constants.IndexerSubsystem.shooterIntake_SupplyCurrentLimit;
+        // Voltage
+        shooterIntakeConfig.Voltage.PeakForwardVoltage = Constants.IndexerSubsystem.shooterIntake_PeakForwardVoltage;
+        shooterIntakeConfig.Voltage.PeakReverseVoltage = Constants.IndexerSubsystem.shooterIntake_PeakReverseVoltage;
+        // Differential Constants
+        shooterIntakeConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.IndexerSubsystem.shooterIntake_PeakDifferentialDutyCycle;
+        shooterIntakeConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.IndexerSubsystem.shooterIntake_PeakDifferentialDutyCycle;
+        shooterIntakeConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.IndexerSubsystem.shooterIntake_PeakDifferentialVoltage;
+        // Motion Magic
+        shooterIntakeConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.IndexerSubsystem.shooterIntake_MotionMagicCruiseVelocity;
+        shooterIntakeConfig.MotionMagic.MotionMagicAcceleration = Constants.IndexerSubsystem.shooterIntake_MotionMagicAcceleration;
+        shooterIntakeConfig.MotionMagic.MotionMagicExpo_kA = Constants.IndexerSubsystem.shooterIntake_MotionMagicExpo_kA;
+        shooterIntakeConfig.MotionMagic.MotionMagicExpo_kV = Constants.IndexerSubsystem.shooterIntake_MotionMagicExpo_kV;
+        // Torque Current
+        shooterIntakeConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.IndexerSubsystem.shooterIntake_PeakForwardTorqueCurrent;
+        shooterIntakeConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.IndexerSubsystem.shooterIntake_PeakReverseTorqueCurrent;
+
+        shooterIntake.getConfigurator().apply(shooterIntakeConfig);
     }
 
     @Override
@@ -65,6 +136,10 @@ public class IndexerSubsystem extends SubsystemBase { // Brian didn't know wheth
     // uses voltage for better control, much like the original intake
     public void SetIndexSpeed(double targetPower) { 
         indexerBottom.set(targetPower);
+    }
+
+    public void SetIntakeSpeed(double targetPower) { 
+        shooterIntake.set(targetPower);
     }
 
     // uses voltage for better control, much like the original intake

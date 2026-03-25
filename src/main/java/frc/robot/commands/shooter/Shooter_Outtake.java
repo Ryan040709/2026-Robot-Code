@@ -31,6 +31,7 @@ public class Shooter_Outtake extends Command {
     double RPS = SmartDashboard.getNumber("Shooter RPM", 35);
     indexer.SetBeltVoltage(-7);
     indexer.SetIndexSpeed(-0.5);
+    indexer.SetIntakeSpeed(-0.5);
     shooterSubsystem.SetShooterRPMS(RPS);
   }
 

@@ -30,6 +30,7 @@ public class Shooter_RunToRPM extends Command {
     shooterSubsystem.RuntoRPMs(drivetrain.getDistanceToTarget(), drivetrain.isFeeding());
     indexer.SetBeltVoltage(7);
     indexer.SetIndexSpeed(0.5);
+    indexer.SetIntakeSpeed(0.5);
   }
 
   // Called once the command ends or is interrupted.
