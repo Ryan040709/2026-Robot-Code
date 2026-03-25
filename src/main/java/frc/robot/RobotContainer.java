@@ -53,7 +53,6 @@ public class RobotContainer {
                                                                                            // so...
         private double OverrideSpeed = .75;
 
-
         // was .75 if too fast
         private double MaxAngularRate = RotationsPerSecond.of(1).in(RadiansPerSecond);
 
@@ -82,7 +81,7 @@ public class RobotContainer {
         // shooter subsystem
         ShooterSubsystem shooter = new ShooterSubsystem();
         // in the bumper intake subsystem
-        IntakeSubsystem throughBumperIntake = new IntakeSubsystem();
+        IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
         // hopper subsystem
         HopperSubsystem hopperSubsystem = new HopperSubsystem();
         // hood subsystem
@@ -109,9 +108,9 @@ public class RobotContainer {
         Hopper_PivotDown hopper_In = new Hopper_PivotDown(hopperSubsystem);
 
         // in the bumper intake commands
-        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, hopperSubsystem);
-        Intake_Outtake intake_Outtake = new Intake_Outtake(throughBumperIntake, hopperSubsystem);
-        Intake_Run intake_Run = new Intake_Run(throughBumperIntake, hopperSubsystem, turret, drivetrain);
+        Intake_Stop intake_Stop = new Intake_Stop(intakeSubsystem, hopperSubsystem);
+        Intake_Outtake intake_Outtake = new Intake_Outtake(intakeSubsystem, hopperSubsystem);
+        Intake_Run intake_Run = new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain);
 
         Command shooterAndHood = shooter_RunToRpmTele.alongWith(hoodSetToPosition);
 
@@ -194,65 +193,52 @@ public class RobotContainer {
 
                 drivetrain.registerTelemetry(logger::telemeterize);
 
-                
-
-                turret.setDefaultCommand(turret_Locking);
-
-                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
-                hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterCoast);
-
                 driverController.pov(0).whileTrue(turret_Toggle);
 
                 driverController.pov(90)
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
-                driverController.pov(180).whileTrue(intake_Outtake).whileFalse(intake_Stop);
 
-                driverController.y().whileTrue(shooterCoast).whileFalse(shooterStop);
-
-                driverController.b().whileTrue(intake_Run).whileFalse(intake_Stop);
-                driverController.x().whileTrue(intake_Run).whileFalse(intake_Stop);
-                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
-                driverController.start().whileTrue(zeroTurret);
+                // hopper commands
                 driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
-                driverController.leftTrigger(.5).whileTrue(hoodDown);
 
-                turret.setDefaultCommand(turret_Locking);
-
-                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
+                // shooter and hood commands
                 hoodSubsystem.setDefaultCommand(hoodDown);
-                manipulatorController.a().whileTrue(intake_Run).whileFalse(intake_Stop);
-                
-                manipulatorController.y().whileTrue(intake_Run).whileFalse(intake_Stop);
-                manipulatorController.b().whileTrue(intake_Outtake).whileFalse(intake_Stop);
+                shooter.setDefaultCommand(shooterCoast);
 
                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
 
-                manipulatorController.start().onTrue(Commands.runOnce(()-> gameManager.resetTimer(), gameManager));
-                manipulatorController.pov(270).onTrue(Commands.runOnce(()-> gameManager.lostAuto(), gameManager));
-                manipulatorController.pov(90).onTrue(Commands.runOnce(()-> gameManager.wonAuto(), gameManager));
+                driverController.y().whileTrue(shooterCoast);
+                driverController.leftTrigger(.5).whileTrue(hoodDown);
+                driverController.start().whileTrue(zeroTurret);
+                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
+
+                // turret commands
+                turret.setDefaultCommand(turret_Locking);
+
+                // game manager commands
+                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
+
+                manipulatorController.start().onTrue(Commands.runOnce(() -> gameManager.resetTimer(), gameManager));
+                manipulatorController.pov(270).onTrue(Commands.runOnce(() -> gameManager.lostAuto(), gameManager));
+                manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
+
+                // intake commands
+                intakeSubsystem.setDefaultCommand(intake_Stop);
+
+                driverController.b().whileTrue(intake_Run);
+                driverController.x().whileTrue(intake_Run);
+                driverController.pov(180).whileTrue(intake_Outtake);
+
+                manipulatorController.a().whileTrue(intake_Run);
+                manipulatorController.b().whileTrue(intake_Outtake);
         }
 
         public Command getAutonomousCommand() {
-
-                // String routine = routineChooser.getSelected();
-                // String variation = variationChooser.getSelected();
-                // String autoName = routine + "_" + variation;
-
-                // try {
-                // return AutoBuilder.buildAuto(autoName);
-                // } catch (Exception e) { // if for whatever reason the driver requests an
-                // inalid auto
-                // DriverStation.reportError("Auto " + autoName + " not found!",
-                // e.getStackTrace());
-                // return AutoBuilder.buildAuto("nothing_auto"); // the auton that does...
-                // nothing
-                // }
-
                 return autoChooser.getSelected();
         }
-        public void teleopInit(){
+
+        public void teleopInit() {
                 gameManager.resetTimer();
         }
 }
