@@ -21,11 +21,11 @@ import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.GameManager;
+import frc.robot.subsystems.HopperSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
-import frc.robot.subsystems.newRobotSubsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.Intake_Run;
@@ -52,7 +52,6 @@ public class RobotContainer {
         private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
                                                                                            // so...
         private double OverrideSpeed = .75;
-        private double DeadZone = .1;
 
 
         // was .75 if too fast
@@ -60,12 +59,7 @@ public class RobotContainer {
 
         private final SendableChooser<Command> autoChooser;
 
-        // let's the driver pick the actual auton they want.
-        private final SendableChooser<String> routineChooser = new SendableChooser<>();
-        // let's the driver pick an auton "variation"
-        private final SendableChooser<String> variationChooser = new SendableChooser<>();
-
-        /* Setting up bindings for necessary control of the swerve drive platform */
+        /* Setting up bindings for necessary control of the swerve drive platform */ // fancy comment [;
         private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
                         // Add a 10% deadband
                         .withDeadband(MaxSpeed * 0.05).withRotationalDeadband(MaxAngularRate * 0.05)
@@ -104,7 +98,7 @@ public class RobotContainer {
         Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         Hood_SetToPosition hoodSetToPositionDRIVER = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
-        ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain, indexerSubsystem);
+        ShooterToRPMS shooterCoast = new ShooterToRPMS(shooter, drivetrain, indexerSubsystem);
         ShooterStop shooterStop = new ShooterStop(shooter, drivetrain, indexerSubsystem);
         // turret commands
         Turret_Toggle turret_Toggle = new Turret_Toggle(turret);
@@ -202,11 +196,11 @@ public class RobotContainer {
 
                 
 
-                turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
+                turret.setDefaultCommand(turret_Locking);
 
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
                 hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterStop);
+                shooter.setDefaultCommand(shooterCoast);
 
                 driverController.pov(0).whileTrue(turret_Toggle);
 
@@ -215,25 +209,19 @@ public class RobotContainer {
                                                 drivetrain));
                 driverController.pov(180).whileTrue(intake_Outtake).whileFalse(intake_Stop);
 
-                driverController.y().whileTrue(shooterToRPMS).whileFalse(shooterStop);
+                driverController.y().whileTrue(shooterCoast).whileFalse(shooterStop);
 
                 driverController.b().whileTrue(intake_Run).whileFalse(intake_Stop);
                 driverController.x().whileTrue(intake_Run).whileFalse(intake_Stop);
-                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER)).whileFalse(shooterStop);
+                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
                 driverController.start().whileTrue(zeroTurret);
                 driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
 
-                turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125
+                turret.setDefaultCommand(turret_Locking);
 
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
                 hoodSubsystem.setDefaultCommand(hoodDown);
-                //shooter.setDefaultCommand(shooterStop);
-                //driverController.leftBumper().whileTrue(hoodSetToPosition);
-               // driverController.a().whileTrue(IntakeToHopper).whileFalse(intake_Stop);
-
-                // out of bumper intake commands
-               // manipulatorController.a().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 manipulatorController.a().whileTrue(intake_Run).whileFalse(intake_Stop);
                 
                 manipulatorController.y().whileTrue(intake_Run).whileFalse(intake_Stop);

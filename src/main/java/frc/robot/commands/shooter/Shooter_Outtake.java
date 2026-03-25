@@ -3,8 +3,8 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.newRobotSubsystems.IndexerSubsystem;
 
 public class Shooter_Outtake extends Command {
   ShooterSubsystem shooterSubsystem;
