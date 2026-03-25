@@ -25,6 +25,7 @@ import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 import frc.robot.subsystems.outOfBumperIntake;
 import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.newRobotSubsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.Intake_Run;
@@ -88,22 +89,23 @@ public class RobotContainer {
         ShooterSubsystem shooter = new ShooterSubsystem();
         // in the bumper intake subsystem
         IntakeSubsystem throughBumperIntake = new IntakeSubsystem();
-        // out of bumper intake subsystem
+        // hopper subsystem
         HopperSubsystem hopperSubsystem = new HopperSubsystem();
-
+        // hood subsystem
         hoodSubsystem hoodSubsystem = new hoodSubsystem();
-
         // game manager
         GameManager gameManager = new GameManager();
+        // indexer subsystem
+        IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
         // shooter commands
-        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
-        Shooter_RunToRPM shooter_RunToRpmTele = new Shooter_RunToRPM(shooter, drivetrain);
+        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain, indexerSubsystem);
+        Shooter_RunToRPM shooter_RunToRpmTele = new Shooter_RunToRPM(shooter, drivetrain, indexerSubsystem);
         Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         Hood_SetToPosition hoodSetToPositionDRIVER = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
-        ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain);
-        ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
+        ShooterToRPMS shooterToRPMS = new ShooterToRPMS(shooter, drivetrain, indexerSubsystem);
+        ShooterStop shooterStop = new ShooterStop(shooter, drivetrain, indexerSubsystem);
         // turret commands
         Turret_Toggle turret_Toggle = new Turret_Toggle(turret);
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);

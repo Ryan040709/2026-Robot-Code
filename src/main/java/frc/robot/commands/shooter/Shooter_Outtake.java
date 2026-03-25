@@ -6,13 +6,13 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.newRobotSubsystems.IndexerSubsystem;
 
-public class ShooterToRPMS extends Command {
+public class Shooter_Outtake extends Command {
   ShooterSubsystem shooterSubsystem;
   CommandSwerveDrivetrain drivetrain;
   IndexerSubsystem indexer;
 
   /** Creates a new Shooter_RunToRPM. */
-  public ShooterToRPMS(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain, IndexerSubsystem indexer) {
+  public Shooter_Outtake(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain, IndexerSubsystem indexer) {
     this.shooterSubsystem = shooterSubsystem;
     this.drivetrain = drivetrain;
     this.indexer = indexer;
