@@ -1,17 +1,16 @@
-package frc.robot.commands.intake.outTheBumper;
-
+package frc.robot.commands.intake;
+ 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.outOfBumperIntake;
+import frc.robot.subsystems.IntakeSubsystem;
 
-public class Intake_LowerIntake extends Command {
-  outOfBumperIntake s_outOfBumperIntake;
+public class Outtake extends Command {
+  IntakeSubsystem intakeSubsystem;
 
   /** Creates a new Hood_RunToPosition. */
-  public Intake_LowerIntake(outOfBumperIntake s_outOfBumperIntake) {
-    this.s_outOfBumperIntake = s_outOfBumperIntake;
-    addRequirements(s_outOfBumperIntake);
-
+  public Outtake(IntakeSubsystem intakeSubsystem) {
+    this.intakeSubsystem = intakeSubsystem;
+    addRequirements(intakeSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -23,7 +22,8 @@ public class Intake_LowerIntake extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    s_outOfBumperIntake.PivotIntake(0);
+    intakeSubsystem.setIntakeVoltage(-7);
+    intakeSubsystem.setHopperPower(-0.5);
   }
 
   // Called once the command ends or is interrupted.

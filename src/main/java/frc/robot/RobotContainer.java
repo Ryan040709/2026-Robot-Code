@@ -24,7 +24,8 @@ import frc.robot.subsystems.GameManager;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.throughTheBumper.Intake_Outtake;
 import frc.robot.commands.intake.throughTheBumper.Intake_Stop;
@@ -39,9 +40,8 @@ import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterToRPMS;
 import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.resetLEDTimer;
-//out of bumper intake commands
-import frc.robot.commands.intake.outTheBumper.Intake_LowerIntake;
-import frc.robot.commands.intake.outTheBumper.Intake_RaiseIntake;
+import frc.robot.commands.hopper.Hopper_PivotDown;
+import frc.robot.commands.hopper.Hopper_PivotUp;
 import frc.robot.commands.turret.Turret_Locking;
 //turret commands
 import frc.robot.commands.turret.Turret_Toggle;
@@ -90,9 +90,9 @@ public class RobotContainer {
         // shooter subsystem
         ShooterSubsystem shooter = new ShooterSubsystem();
         // in the bumper intake subsystem
-        throughBumperIntake throughBumperIntake = new throughBumperIntake();
+        IntakeSubsystem throughBumperIntake = new IntakeSubsystem();
         // out of bumper intake subsystem
-        outOfBumperIntake OutOfBumperIntake = new outOfBumperIntake();
+        HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
         hoodSubsystem hoodSubsystem = new hoodSubsystem();
 
@@ -112,17 +112,17 @@ public class RobotContainer {
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);
         ZeroTurret zeroTurret = new ZeroTurret(turret, drivetrain);
         // out of bumper intake commands
-        Intake_LowerIntake intake_LowerIntake = new Intake_LowerIntake(OutOfBumperIntake);
-        Intake_RaiseIntake intake_RaiseIntake = new Intake_RaiseIntake(OutOfBumperIntake);
+        Hopper_PivotUp hopper_Out = new Hopper_PivotUp(hopperSubsystem);
+        Hopper_PivotDown hopper_In = new Hopper_PivotDown(hopperSubsystem);
 
         // in the bumper intake commands
-        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, OutOfBumperIntake);
-        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, OutOfBumperIntake);
-        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, OutOfBumperIntake);
-        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake,
+        Intake_Stop intake_Stop = new Intake_Stop(throughBumperIntake, hopperSubsystem);
+        Intake_Outtake outtake = new Intake_Outtake(throughBumperIntake, hopperSubsystem);
+        Intake_IntakeToHopper IntakeToHopper = new Intake_IntakeToHopper(throughBumperIntake, hopperSubsystem);
+        Intake_IntakeToShooter IntakeToShooter = new Intake_IntakeToShooter(throughBumperIntake, hopperSubsystem,
                         turret, drivetrain, hoodSubsystem);
-        IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, OutOfBumperIntake, turret, drivetrain);
-        Auto_Intake_IntakeToShooter auto_Intake_IntakeToShooter = new Auto_Intake_IntakeToShooter(throughBumperIntake, OutOfBumperIntake);
+        IntakeToShooterNoOutta intakeNoOutta = new IntakeToShooterNoOutta(throughBumperIntake, hopperSubsystem, turret, drivetrain);
+        Auto_Intake_IntakeToShooter auto_Intake_IntakeToShooter = new Auto_Intake_IntakeToShooter(throughBumperIntake, hopperSubsystem);
 
         Command shooterAndHood = shooter_RunToRpmTele.alongWith(hoodSetToPosition);
 
@@ -226,7 +226,7 @@ public class RobotContainer {
                 driverController.x().whileTrue(IntakeToShooter).whileFalse(intake_Stop);
                 driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER)).whileFalse(shooterStop);
                 driverController.start().whileTrue(zeroTurret);
-                driverController.a().whileTrue(intake_LowerIntake).whileFalse(intake_RaiseIntake);
+                driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
 
                 turret.setDefaultCommand(turret_Locking); // manipulatorController.getLeftX()*0.0125

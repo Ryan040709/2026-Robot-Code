@@ -1,31 +1,31 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 
 public class Intake_IntakeToShooter extends Command {
 
-    throughBumperIntake intakeSubsystem;
-    outOfBumperIntake outtaBumperIntakeSubsystem;
+    IntakeSubsystem intakeSubsystem;
+    HopperSubsystem hopperSubsystem;
     TurretSubsystem turretSubsystem;
     hoodSubsystem hoodSubsystem;
 
     CommandSwerveDrivetrain drivetrain;
 
-    public Intake_IntakeToShooter(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake,
+    public Intake_IntakeToShooter(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem,
             TurretSubsystem turretSubsystem, CommandSwerveDrivetrain drivetrain,
             hoodSubsystem hoodSubsystem) {
 
         this.intakeSubsystem = intakeSubsystem;
-        this.outtaBumperIntakeSubsystem = outttBumperIntake;
+        this.hopperSubsystem = hopperSubsystem;
         this.turretSubsystem = turretSubsystem;
         this.drivetrain = drivetrain;
         this.hoodSubsystem = hoodSubsystem;
-        addRequirements(intakeSubsystem, outttBumperIntake);
+        addRequirements(intakeSubsystem, hopperSubsystem);
 
     }
 
@@ -39,17 +39,15 @@ public class Intake_IntakeToShooter extends Command {
     @Override
     public void execute() {
 
-        outtaBumperIntakeSubsystem.PivotIntake(0);
-        if (outtaBumperIntakeSubsystem.AtPosition(0)) {
+        hopperSubsystem.pivotIntake(0);
+        if (hopperSubsystem.atPosition(0)) {
             if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) &&
                     !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getRobotFieldRelativeSpeeds())
                     && intakeSubsystem.robotIsNeartrench(drivetrain.getTurretOffset(),
                             drivetrain.getRobotFieldRelativeSpeeds())) {
-                intakeSubsystem.SetIntakeFront(-7);
-                intakeSubsystem.SetIntakeBack(-7);
+                intakeSubsystem.setIntakeVoltage(-7);
             } else {
-                intakeSubsystem.SetIntakeFront(-7);
-                intakeSubsystem.SetIntakeBack(7);
+                intakeSubsystem.setIntakeVoltage(-7);
             }
         }
 

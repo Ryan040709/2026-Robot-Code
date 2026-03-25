@@ -109,6 +109,45 @@ public final class Constants {
 
   }
 
+    public static final class HopperSubsystem {
+
+    public static double hopper_PeakForwardDutyCycle = 1;
+    public static double hopper_PeakReverseDutyCycle = -1;
+
+    public static double hopper_Slot0_kP = 0;
+    public static double hopper_Slot0_kI = 0;
+    public static double hopper_Slot0_kD = 0;
+
+    public static boolean hopper_StatorCurrentLimitEnable = false;
+    public static double hopper_CurrentLimit = 0;
+    public static boolean hopper_SupplyCurrentLimitEnable = true;
+    public static double hopper_SupplyCurrentLimit = 40;
+
+    // Voltage
+    public static double hopper_PeakForwardVoltage = 7;
+    public static double hopper_PeakReverseVoltage = -7;
+    // Differential Constants
+    public static double hopper_PeakDifferentialDutyCycle = 0;
+    public static double hopper_PeakDifferentialTorqueCurrent = 0;
+    public static double hopper_PeakDifferentialVoltage = 0;
+    // Motion Magic
+    public static double hopper_MotionMagicCruiseVelocity = 0;
+    public static double hopper_MotionMagicAcceleration = 0;
+    public static double hopper_MotionMagicExpo_kA = 0;
+
+    public static double hopper_MotionMagicExpo_kV = 0;
+    
+    // Torque Current
+    public static double hopper_PeakForwardTorqueCurrent = 0;
+    public static double hopper_PeakReverseTorqueCurrent = 0;
+
+    // intake velocities
+    public static double hopper_FrontSpeed = 0;
+
+    public static double hopper_BackSpeed = 0;
+
+  }
+
   public static final class ClimberSubsystem {
     //TODO fix PIDs
     public static double Climber_kP = 0;

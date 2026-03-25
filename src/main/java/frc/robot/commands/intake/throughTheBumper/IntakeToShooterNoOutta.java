@@ -1,31 +1,31 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 
 public class IntakeToShooterNoOutta extends Command {
 
-    throughBumperIntake intakeSubsystem;
-    outOfBumperIntake outtaBumperIntakeSubsystem;
+    IntakeSubsystem intakeSubsystem;
+    HopperSubsystem hopperSubsystem;
     TurretSubsystem turretSubsystem;
     CommandSwerveDrivetrain drivetrain;
 
     public IntakeToShooterNoOutta(
-            throughBumperIntake intakeSubsystem,
-            outOfBumperIntake outttBumperIntake,
+            IntakeSubsystem intakeSubsystem,
+            HopperSubsystem hopperSubsystem,
             TurretSubsystem turretSubsystem,
             CommandSwerveDrivetrain drivetrain) {
 
         this.intakeSubsystem = intakeSubsystem;
-        this.outtaBumperIntakeSubsystem = outttBumperIntake;
+        this.hopperSubsystem = hopperSubsystem;
         this.turretSubsystem = turretSubsystem;
         this.drivetrain = drivetrain;
 
-        addRequirements(intakeSubsystem, outttBumperIntake);
+        addRequirements(intakeSubsystem, hopperSubsystem);
 
     }
 
@@ -42,11 +42,9 @@ public class IntakeToShooterNoOutta extends Command {
             if (turretSubsystem.turretAtTarget(
                     drivetrain.getTurretTarget(), drivetrain.getTurretOffset())) {
 
-                intakeSubsystem.SetIntakeFront(-7);
-                intakeSubsystem.SetIntakeBack(-7);
+                intakeSubsystem.setIntakeVoltage(-7);
             } else {
-                intakeSubsystem.SetIntakeFront(-7);
-                intakeSubsystem.SetIntakeBack(7);
+                intakeSubsystem.setIntakeVoltage(-7);
             }
         }
 

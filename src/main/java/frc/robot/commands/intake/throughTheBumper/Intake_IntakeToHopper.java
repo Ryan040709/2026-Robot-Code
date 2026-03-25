@@ -2,20 +2,20 @@ package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants;
 
 public class Intake_IntakeToHopper extends Command {
 
-    throughBumperIntake intakeSubsystem = new throughBumperIntake();
-    outOfBumperIntake outtaBumperIntakeSubsystem = new outOfBumperIntake();
+    IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
-    public Intake_IntakeToHopper(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake){
+    public Intake_IntakeToHopper(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem){
  
         this.intakeSubsystem = intakeSubsystem;
-        this.outtaBumperIntakeSubsystem = outttBumperIntake;
-        addRequirements(intakeSubsystem, outttBumperIntake);
+        this.hopperSubsystem = hopperSubsystem;
+        addRequirements(intakeSubsystem, hopperSubsystem);
 
     }
 
@@ -30,10 +30,9 @@ public class Intake_IntakeToHopper extends Command {
     @Override
     public void execute() {
 
-        outtaBumperIntakeSubsystem.PivotIntake(0);
-        if(outtaBumperIntakeSubsystem.AtPosition(0)){
-        intakeSubsystem.SetIntakeFront(-7);
-        intakeSubsystem.SetIntakeBack(7);
+        hopperSubsystem.pivotIntake(0);
+        if(hopperSubsystem.atPosition(0)){
+        intakeSubsystem.setIntakeVoltage(-7);
         }
         // outta bumper intake
     }

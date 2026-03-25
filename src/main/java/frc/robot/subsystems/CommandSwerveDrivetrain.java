@@ -85,6 +85,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveSteerGains steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
+    // IMPORTANT: Old Turret Position = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
+
     private static final Transform2d turretOffsetFromRobot = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37,
             Rotation2d.fromDegrees(0));
     
@@ -617,6 +619,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Pose2d getTurretOffset() {
         // turret offset x: 5.6475in OR 0.1434465m
         // turret offset y: 2.9375in OR 0.0746125m
+
+        //
         Pose2d turretOffset = getPose().transformBy(turretOffsetFromRobot);
         return turretOffset;
     }

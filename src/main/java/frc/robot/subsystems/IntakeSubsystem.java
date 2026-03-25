@@ -15,14 +15,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class throughBumperIntake extends SubsystemBase {
+public class IntakeSubsystem extends SubsystemBase {
 
     VelocityVoltage velocity = new VelocityVoltage(0);
 
     private TalonFX intakeMotor1 = new TalonFX(23);
     private TalonFX intakeMotor2 = new TalonFX(24);
 
-    public throughBumperIntake() {
+    private TalonFX hopperMotor = new TalonFX(24);
+
+    public IntakeSubsystem() {
 
         TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
         intakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.ThroughBumperIntakeSubsystem.ThroughBumperIntake_PeakForwardDutyCycle;
@@ -62,12 +64,13 @@ public class throughBumperIntake extends SubsystemBase {
     public void periodic() {
     }
 
-    public void SetIntakeFront(double targetVoltage) {
-        intakeMotor1.setVoltage(-targetVoltage);
+    public void setIntakeVoltage(double targetVoltage) {
+        intakeMotor1.setVoltage(targetVoltage);
+        intakeMotor2.setVoltage(targetVoltage);
     }
 
-    public void SetIntakeBack(double targetVoltage) {
-        intakeMotor2.set(targetVoltage);
+    public void setHopperPower(double targetPower) {
+        hopperMotor.setVoltage(targetPower);
     }
 
     public boolean robotIsNeartrench(Pose2d robotPose, ChassisSpeeds robotSpeed) {

@@ -2,19 +2,20 @@ package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.Constants;
 
 public class Intake_Stop extends Command {
 
-    throughBumperIntake intakeSubsystem = new throughBumperIntake();
-    outOfBumperIntake outtaBumperIntakeSubsystem = new outOfBumperIntake();
+    IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    HopperSubsystem hopperSubsystem = new HopperSubsystem();
 
-    public Intake_Stop(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake){
+    public Intake_Stop(IntakeSubsystem intakeSubsystem, HopperSubsystem hopperSubsystem){
  
         this.intakeSubsystem = intakeSubsystem;
-        this.outtaBumperIntakeSubsystem = outttBumperIntake;
-        addRequirements(intakeSubsystem, outttBumperIntake);
+        this.hopperSubsystem = hopperSubsystem;
+        addRequirements(intakeSubsystem, hopperSubsystem);
 
     }
 
@@ -28,10 +29,8 @@ public class Intake_Stop extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        intakeSubsystem.SetIntakeFront(0);
-        intakeSubsystem.SetIntakeBack(0);
-        // outta bumper intake
-        outtaBumperIntakeSubsystem.PivotIntake(0.23);
+        intakeSubsystem.setIntakeVoltage(0);
+        hopperSubsystem.pivotIntake(0.23);
     }
 
     // Called once the command ends or is interrupted.

@@ -1,23 +1,23 @@
 package frc.robot.commands.intake.throughTheBumper;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.outOfBumperIntake;
-import frc.robot.subsystems.throughBumperIntake;
+import frc.robot.subsystems.newRobotSubsystems.HopperSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.hoodSubsystem;
 
 public class Auto_Intake_IntakeToShooter extends Command {
 
-    throughBumperIntake intakeSubsystem;
-    outOfBumperIntake outtaBumperIntakeSubsystem;
+    IntakeSubsystem intakeSubsystem;
+    HopperSubsystem HopperSubsystem;
 
 
-    public Auto_Intake_IntakeToShooter(throughBumperIntake intakeSubsystem, outOfBumperIntake outttBumperIntake) {
+    public Auto_Intake_IntakeToShooter(IntakeSubsystem intakeSubsystem, HopperSubsystem HopperSubsystem) {
 
         this.intakeSubsystem = intakeSubsystem;
-        this.outtaBumperIntakeSubsystem = outttBumperIntake;
-        addRequirements(intakeSubsystem, outttBumperIntake);
+        this.HopperSubsystem = HopperSubsystem;
+        addRequirements(intakeSubsystem, HopperSubsystem);
 
     }
 
@@ -31,10 +31,9 @@ public class Auto_Intake_IntakeToShooter extends Command {
     @Override
     public void execute() {
 
-        outtaBumperIntakeSubsystem.PivotIntake(0);
-        if (outtaBumperIntakeSubsystem.AtPosition(0)) {
-                intakeSubsystem.SetIntakeFront(-7);
-                intakeSubsystem.SetIntakeBack(-7);
+        HopperSubsystem.pivotIntake(0);
+        if (HopperSubsystem.atPosition(0)) {
+                intakeSubsystem.setIntakeVoltage(-7);
           
         }
 
