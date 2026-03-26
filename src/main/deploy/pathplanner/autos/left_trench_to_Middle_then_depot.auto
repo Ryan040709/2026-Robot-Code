@@ -56,7 +56,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-intakeToShooter"
+                              "name": "intake"
                             }
                           }
                         ]
@@ -94,7 +94,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-intakeToHopper"
+                              "name": "intake"
                             }
                           }
                         ]
@@ -134,7 +134,7 @@
                                       {
                                         "type": "named",
                                         "data": {
-                                          "name": "intake-intakeToShooter"
+                                          "name": "intake"
                                         }
                                       },
                                       {
@@ -182,7 +182,7 @@
                                             {
                                               "type": "named",
                                               "data": {
-                                                "name": "intake-intakeToShooter"
+                                                "name": "intake"
                                               }
                                             }
                                           ]

@@ -38,13 +38,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-intakeToHopper"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
+                              "name": "intake"
                             }
                           }
                         ]
@@ -65,12 +59,6 @@
                             "data": {
                               "name": "intake-stop"
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
                           }
                         ]
                       }
@@ -88,7 +76,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-intakeToShooter"
+                              "name": "intake"
                             }
                           },
                           {
@@ -113,7 +101,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-stop"
+                              "name": "intake"
                             }
                           },
                           {
@@ -140,12 +128,6 @@
                             "data": {
                               "name": "intake-stop"
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
                           }
                         ]
                       }
@@ -163,7 +145,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-stop"
+                              "name": "intake"
                             }
                           },
                           {

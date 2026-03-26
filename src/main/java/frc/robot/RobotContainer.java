@@ -116,26 +116,18 @@ public class RobotContainer {
         public RobotContainer() {
                 // turret commands
                 NamedCommands.registerCommand("turret-locking", turret_Locking);
-                // in the bumper intake commands
-                NamedCommands.registerCommand("intake-hopperToIntake", intake_Outtake);
-                NamedCommands.registerCommand("intake-intakeToHopper", intake_Run);
-                NamedCommands.registerCommand("intake-intakeToShooter", intake_Run);
-                NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("zero-turret", zeroTurret);
-                NamedCommands.registerCommand("intake-no-outta", intake_Run);
-                // // shooter commands
+
+                // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
-                // climber commands
-                // nothing right now
+                
+                // in the bumper intake commands
+                NamedCommands.registerCommand("intake-outtake", intake_Outtake);
+                NamedCommands.registerCommand("intake", intake_Run);
+                NamedCommands.registerCommand("intake-stop", intake_Stop);
+                NamedCommands.registerCommand("intake-no-outta", intake_Run);
 
-                SmartDashboard.putData("turreet", turret);
 
-                // Put both on the Dashboard
-
-                SmartDashboard.putNumber("Shooter RPM", 65);
-
-                SmartDashboard.putNumber("intake speed Front", 0.3);
-                SmartDashboard.putNumber("intake speed Back", 0.3);
 
                 configureBindings();
                 autoChooser = AutoBuilder.buildAutoChooser();

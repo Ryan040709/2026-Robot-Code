@@ -31,32 +31,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake-intakeToShooter"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Copy of Human Player Zone"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-intakeToShooter"
+                              "name": "intake"
                             }
                           }
                         ]
