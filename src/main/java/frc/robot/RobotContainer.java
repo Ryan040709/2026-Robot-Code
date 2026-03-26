@@ -8,6 +8,7 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -126,6 +127,25 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake", intake_Run);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("intake-no-outta", intake_Run);
+                // // shooter commands
+                NamedCommands.registerCommand("shoot", shooter_RunToRPM);
+                // climber commands
+                // nothing right now
+                // driving commands
+                try{
+                NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
+                        PathPlannerPath.fromPathFile("splitPath2")));
+                }catch(Exception e){
+                        
+                }
+                SmartDashboard.putData("turreet", turret);
+
+                // Put both on the Dashboard
+
+                SmartDashboard.putNumber("Shooter RPM", 65);
+
+                SmartDashboard.putNumber("intake speed Front", 0.3);
+                SmartDashboard.putNumber("intake speed Back", 0.3);
 
 
 
