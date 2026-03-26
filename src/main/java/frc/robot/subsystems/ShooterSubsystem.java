@@ -28,9 +28,6 @@ public class ShooterSubsystem extends SubsystemBase {
     private TalonFX shooterMotorL = new TalonFX(15);
     private TalonFX shooterMotorR = new TalonFX(16);
 
-    // maybe move to indexSubsystem?
-    private TalonFX shooterIndexer = new TalonFX(16);
-
     private VelocityVoltage m_velocity = new VelocityVoltage(0);
 
     public static double tof = 1.1; // used to be 1.1
@@ -84,11 +81,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     public void RuntoRPMs(double distanceToHub, boolean isFeeding) {
         shooterMotorL.setControl(m_velocity.withVelocity(CalculateRpms(distanceToHub, isFeeding)));
-    }
-
-    // uses voltage for better control, much like the original intake
-    public void SetIndexVoltage(double targetVoltage) { 
-        shooterIndexer.setVoltage(targetVoltage);
     }
 
     public void SetShooterRPMS(double setRPMS) {

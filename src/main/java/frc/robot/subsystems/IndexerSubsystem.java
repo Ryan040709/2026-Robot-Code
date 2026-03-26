@@ -19,9 +19,9 @@ public class IndexerSubsystem extends SubsystemBase { // Brian didn't know wheth
 
     VelocityVoltage velocity = new VelocityVoltage(0);
 
-    private TalonFX indexerBottom = new TalonFX(23);
-    private TalonFX beltMotor = new TalonFX(24);
-    private TalonFX shooterIntake = new TalonFX(24);
+    private TalonFX indexerBottom = new TalonFX(18);
+    private TalonFX beltMotor = new TalonFX(19);
+    private TalonFX shooterIntake = new TalonFX(20);
 
     public IndexerSubsystem() {
 
