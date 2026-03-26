@@ -25,9 +25,6 @@ public class HopperSubsystem extends SubsystemBase {
 
     private TalonFX pivotMotor = new TalonFX(23);
 
-    // after talking with Kellen, he said we can probably add a CANcoder to the hopper. Feel free to 
-    private CANcoder canCoder = new CANcoder(7); 
-
     private PositionVoltage positionRequest = new PositionVoltage(0);
 
     public HopperSubsystem() {
@@ -63,22 +60,13 @@ public class HopperSubsystem extends SubsystemBase {
         intakeConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.HopperSubsystem.hopper_PeakReverseTorqueCurrent;
 
         pivotMotor.getConfigurator().apply(intakeConfig);
-
-        CANcoderConfiguration canConfig = new CANcoderConfiguration();
-
-        canConfig.MagnetSensor.SensorDirection = SensorDirectionValue.Clockwise_Positive;
-        canConfig.MagnetSensor.MagnetOffset = -0.722900390625; //-0.405517578125;
-        canConfig.MagnetSensor.AbsoluteSensorDiscontinuityPoint = 1.0; //-0.405517578125;
-
-        canCoder.getConfigurator().apply(canConfig);
     }
 
     public void pivotIntake(double targetPosition) {
         pivotMotor.setControl(positionRequest.withPosition(targetPosition));
     }
     public boolean atPosition(double GoalPosition){
-        //return MathUtil.isNear(GoalPosition, pivotMotor.getPosition().getValueAsDouble(), 0.1);
-        return MathUtil.isNear(GoalPosition, canCoder.getPosition().getValueAsDouble(), 0.1); // TODO: REMOVE THIS IF WE DON'T END UP USING A CANCODER!!!
+        return MathUtil.isNear(GoalPosition, pivotMotor.getPosition().getValueAsDouble(), 0.1);
 
     }
 
