@@ -3,32 +3,53 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.516,
-        "y": 0.5999999999999996
+        "x": 8.65,
+        "y": 3.75
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.516000000000004,
-        "y": 0.5999999999999996
+        "x": 8.40341292579393,
+        "y": 4.865506750758496
       },
       "isLocked": false,
-      "linkedName": "right trench START"
+      "linkedName": "right far cutsweep end rael"
     },
     {
       "anchor": {
-        "x": 8.65,
-        "y": 1.2
+        "x": 5.75,
+        "y": 2.2
       },
       "prevControl": {
-        "x": 8.65,
-        "y": 0.19999999999999973
+        "x": 6.513,
+        "y": 2.2
+      },
+      "nextControl": {
+        "x": 5.5,
+        "y": 2.2
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.374385542168675,
+        "y": 2.2
+      },
+      "prevControl": {
+        "x": 3.874385542168675,
+        "y": 2.2
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "right far sweep start"
+      "linkedName": null
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 45.0
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [],
@@ -41,14 +62,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 3.0,
-    "rotation": 119.99999999999999
+    "velocity": 0.0,
+    "rotation": 45.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": 0.0
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }
