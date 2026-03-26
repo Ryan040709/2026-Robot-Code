@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.0,
+        "y": 0.5
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 9.0,
+        "y": 0.5
+      },
+      "isLocked": false,
+      "linkedName": "splitPathSpot"
+    },
+    {
+      "anchor": {
+        "x": 8.115397727272727,
+        "y": 6.465691287878787
+      },
+      "prevControl": {
+        "x": 8.115397727272727,
+        "y": 3.465691287878787
+      },
+      "nextControl": {
+        "x": 8.115397727272727,
+        "y": 7.924693980874396
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.0,
+        "y": 0.5
+      },
+      "prevControl": {
+        "x": 6.008586572842542,
+        "y": -0.1355871542116036
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "splitPathSpot"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 10.0,
+    "maxAcceleration": 10.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Split path test",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}
