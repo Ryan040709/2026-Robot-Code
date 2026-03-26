@@ -5,10 +5,9 @@ import frc.robot.subsystems.CommandSwerveDrivetrain;
 
 public class drive_Path extends Command {
   CommandSwerveDrivetrain drivetrain;
-  String pathName;
+  Command delegate;
 
-  public drive_Path(String pathName, CommandSwerveDrivetrain drivetrain){
-    this.pathName = pathName;
+  public drive_Path(CommandSwerveDrivetrain drivetrain){
     this.drivetrain = drivetrain;
     addRequirements(drivetrain);
   }
