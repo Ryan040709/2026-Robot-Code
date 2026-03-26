@@ -69,11 +69,6 @@ public class TurretSubsystem extends SubsystemBase {
 
     boolean limelightTurret = false;
 
-    double txnc = LimelightHelpers.getTXNC("limelight-tags"); // Horizontal offset from principal pixel/point to
-                                                              // target in degrees
-    double tync = LimelightHelpers.getTYNC("limelight-tags"); // Vertical offset from principal pixel/point to target
-                                                              // in degrees
-
     double Hy = isBlue ? blueHubPos.getY() : redHubPos.getY();
 
     PIDController turretPID = new PIDController(1, 1, 1);
