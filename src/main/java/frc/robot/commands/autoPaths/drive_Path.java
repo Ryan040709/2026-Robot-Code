@@ -1,6 +1,7 @@
-package frc.robot.commands.drivetrain;
+package frc.robot.commands.autoPaths;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathPlannerPath;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,11 +21,21 @@ public class drive_Path extends Command {
     if(true){
       try{
         delegate = AutoBuilder.followPath(PathPlannerPath.fromPathFile("splitPath2"));
-      }catch(Exception e){}
+      }catch(Exception e){
+        try{
+          NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
+            PathPlannerPath.fromPathFile("splitPath3")));
+          }catch(Exception e2){}
+      }
     }else{
       try{
         delegate = AutoBuilder.followPath(PathPlannerPath.fromPathFile("splitPath3"));
-      }catch(Exception e){}
+      }catch(Exception e){
+        try{
+          NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
+            PathPlannerPath.fromPathFile("splitPath2")));
+          }catch(Exception e2){}
+      }
     }
     delegate.initialize();
   }

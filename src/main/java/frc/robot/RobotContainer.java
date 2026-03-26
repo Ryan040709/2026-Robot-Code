@@ -136,7 +136,10 @@ public class RobotContainer {
                 NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
                         PathPlannerPath.fromPathFile("splitPath2")));
                 }catch(Exception e){
-                        
+                        try{
+                            NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
+                                PathPlannerPath.fromPathFile("splitPath3")));
+                        }catch(Exception e2){}       
                 }
                 SmartDashboard.putData("turreet", turret);
 
