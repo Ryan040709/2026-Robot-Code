@@ -27,7 +27,7 @@ public class Intake_Stop extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hopperSubsystem.pivotIntake(0); // TODO: tune the target positions!
+        hopperSubsystem.setHopperPosition(0); // TODO: tune the target positions!
         intakeSubsystem.setIntakeVoltage(0);
     }
 

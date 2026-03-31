@@ -28,9 +28,9 @@ public class ShooterStop extends Command {
   @Override
   public void execute() {
     shooterSubsystem.SetShooterRPMS(0);
-    indexer.SetBeltVoltage(0); // TODO: still needs to be tuned to real robot?
-    indexer.SetIndexSpeed(0);
-    indexer.SetIntakeSpeed(0);
+    indexer.setBeltVoltage(0); // TODO: still needs to be tuned to real robot?
+    indexer.setIndexVoltage(0);
+    indexer.setIntakeVoltage(0);
   }
 
   // Called once the command ends or is interrupted.

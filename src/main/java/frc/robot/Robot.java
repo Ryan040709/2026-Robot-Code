@@ -12,9 +12,9 @@ public class Robot extends TimedRobot {
     private final RobotContainer robotContainer;
 
     /* log and replay timestamp and joystick data */
-    // private final HootAutoReplay timeAndJoystickReplay = new HootAutoReplay()
-    //     .withTimestampReplay()
-    //     .withJoystickReplay();
+    private final HootAutoReplay timeAndJoystickReplay = new HootAutoReplay()
+        .withTimestampReplay()
+        .withJoystickReplay();
 
     public Robot() {
         robotContainer = new RobotContainer();
@@ -22,7 +22,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-      //  timeAndJoystickReplay.update();
+        timeAndJoystickReplay.update();
         CommandScheduler.getInstance().run(); 
     }
 

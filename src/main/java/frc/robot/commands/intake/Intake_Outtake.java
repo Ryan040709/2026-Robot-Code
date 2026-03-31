@@ -29,7 +29,7 @@ public class Intake_Outtake extends Command {
     @Override
     public void execute() {
 
-        hopperSubsystem.pivotIntake(0);
+        hopperSubsystem.setHopperPosition(0);
         if (hopperSubsystem.atPosition(0)) {
             intakeSubsystem.setIntakeVoltage(-7);
         }

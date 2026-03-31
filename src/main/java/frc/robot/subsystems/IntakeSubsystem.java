@@ -1,17 +1,14 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.math.MathUtil;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
-import frc.robot.Constants;
 
 public class IntakeSubsystem extends SubsystemBase {
 
@@ -19,43 +16,26 @@ public class IntakeSubsystem extends SubsystemBase {
 
     private TalonFX intakeMotor1 = new TalonFX(23);
     private TalonFX intakeMotor2 = new TalonFX(24);
-
+    //assuming these are hopper rollers
     private TalonFX hopperMotor = new TalonFX(21);
 
     public IntakeSubsystem() {
 
         TalonFXConfiguration intakeConfig = new TalonFXConfiguration();
-        intakeConfig.MotorOutput.PeakForwardDutyCycle = Constants.IntakeSubsystem.ThroughBumperIntake_PeakForwardDutyCycle;
-        intakeConfig.MotorOutput.PeakReverseDutyCycle = Constants.IntakeSubsystem.ThroughBumperIntake_PeakReverseDutyCycle;
         // motor "friction" type?
         intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         intakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        intakeConfig.Slot0.kP = Constants.IntakeSubsystem.ThroughBumperIntake_Slot0_kP;
-        intakeConfig.Slot0.kI = Constants.IntakeSubsystem.ThroughBumperIntake_Slot0_kI;
-        intakeConfig.Slot0.kD = Constants.IntakeSubsystem.ThroughBumperIntake_Slot0_kD;
-        intakeConfig.CurrentLimits.StatorCurrentLimitEnable = Constants.IntakeSubsystem.ThroughBumperIntake_StatorCurrentLimitEnable;
-        intakeConfig.CurrentLimits.StatorCurrentLimit = Constants.IntakeSubsystem.ThroughBumperIntake_CurrentLimit;
-        intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.IntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimitEnable;
-        intakeConfig.CurrentLimits.SupplyCurrentLimit = Constants.IntakeSubsystem.ThroughBumperIntake_SupplyCurrentLimit;
+        intakeConfig.CurrentLimits.StatorCurrentLimitEnable = false;
+        intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        intakeConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
-        intakeConfig.Voltage.PeakForwardVoltage = Constants.IntakeSubsystem.ThroughBumperIntake_PeakForwardVoltage;
-        intakeConfig.Voltage.PeakReverseVoltage = Constants.IntakeSubsystem.ThroughBumperIntake_PeakReverseVoltage;
-        // Differential Constants
-        intakeConfig.DifferentialConstants.PeakDifferentialDutyCycle = Constants.IntakeSubsystem.ThroughBumperIntake_PeakDifferentialDutyCycle;
-        intakeConfig.DifferentialConstants.PeakDifferentialTorqueCurrent = Constants.IntakeSubsystem.ThroughBumperIntake_PeakDifferentialDutyCycle;
-        intakeConfig.DifferentialConstants.PeakDifferentialVoltage = Constants.IntakeSubsystem.ThroughBumperIntake_PeakDifferentialVoltage;
-        // Motion Magic
-        intakeConfig.MotionMagic.MotionMagicCruiseVelocity = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicCruiseVelocity;
-        intakeConfig.MotionMagic.MotionMagicAcceleration = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicAcceleration;
-        intakeConfig.MotionMagic.MotionMagicExpo_kA = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicExpo_kA;
-        intakeConfig.MotionMagic.MotionMagicExpo_kV = Constants.IntakeSubsystem.ThroughBumperIntake_MotionMagicExpo_kV;
-        // Torque Current
-        intakeConfig.TorqueCurrent.PeakForwardTorqueCurrent = Constants.IntakeSubsystem.ThroughBumperIntake_PeakForwardTorqueCurrent;
-        intakeConfig.TorqueCurrent.PeakReverseTorqueCurrent = Constants.IntakeSubsystem.ThroughBumperIntake_PeakReverseTorqueCurrent;
-
+        intakeConfig.Voltage.PeakForwardVoltage = 7;
+        intakeConfig.Voltage.PeakReverseVoltage = -7;
+        
         intakeMotor1.getConfigurator().apply(intakeConfig);
         intakeMotor2.getConfigurator().apply(intakeConfig);
+        intakeMotor2.setControl(new Follower(23, MotorAlignmentValue.Opposed));
     }
 
     @Override
@@ -64,37 +44,9 @@ public class IntakeSubsystem extends SubsystemBase {
 
     public void setIntakeVoltage(double targetVoltage) {
         intakeMotor1.setVoltage(targetVoltage);
-        intakeMotor2.setVoltage(targetVoltage);
     }
 
-    public void setHopperPower(double targetPower) {
-        hopperMotor.setVoltage(targetPower);
+    public void setHopperVoltage(double targetVoltage) {
+        hopperMotor.setVoltage(targetVoltage);
     }
-
-    public boolean robotIsNeartrench(Pose2d robotPose, ChassisSpeeds robotSpeed) {
-        double blueTrenchOffset = 4.66;
-        double redTrenchOffset = 11.936;
-        double lowY = 1.3;
-        double highY = 6.7;
-
-        double trenchOffset;
-        double tolerance;
-        boolean nearSideOfTrench;
-
-        tolerance = Math.abs(robotSpeed.vxMetersPerSecond) * .05;
-
-        nearSideOfTrench = (robotPose.getY() < lowY || robotPose.getY() > highY);
-
-        if (GameManager.isBlueAlliance) {
-            trenchOffset = blueTrenchOffset;
-        } else {
-            trenchOffset = redTrenchOffset;
-        }
-
-        return (MathUtil.isNear(blueTrenchOffset, robotPose.getX(), 1 + tolerance)
-        ||MathUtil.isNear(redTrenchOffset, robotPose.getX(), 1 + tolerance)
-         && nearSideOfTrench);
-
-    }
-
 }

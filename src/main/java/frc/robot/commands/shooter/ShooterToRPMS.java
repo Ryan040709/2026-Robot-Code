@@ -29,9 +29,9 @@ public class ShooterToRPMS extends Command {
   @Override
   public void execute() {
     double RPS = SmartDashboard.getNumber("Shooter RPM", 35);
-    indexer.SetBeltVoltage(7);
-    indexer.SetIndexSpeed(0.5);
-    indexer.SetIntakeSpeed(0.5);
+    indexer.setBeltVoltage(7);
+    indexer.setIndexVoltage(6);
+    indexer.setIntakeVoltage(6);
     shooterSubsystem.SetShooterRPMS(RPS);
   }
 

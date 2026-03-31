@@ -14,9 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkFlex;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -36,8 +34,6 @@ public class GameManager extends SubsystemBase {
   private XboxController manipulatorController = new XboxController(1);
   public List<ShiftList> LoseShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
   public List<ShiftList> alwaysActiveShifts = new ArrayList<>(); // active shifts ASSUMING you lost auto.
-
-  private final SendableChooser<Command> winChooser;
 
   public ShiftList currentShift = ShiftList.Autonomous;
 
@@ -68,8 +64,6 @@ public class GameManager extends SubsystemBase {
 
   /** Creates a new GameManager. */
   public GameManager() {
-    // SmartDashboard.putData("Win Auto?", runOnce(() -> wonAuto()));
-    // SmartDashboard.putData("Lost Auto?", runOnce(() -> lostAuto()));
 
     alwaysActiveShifts.add(ShiftList.Autonomous);
     alwaysActiveShifts.add(ShiftList.Transistion);
@@ -78,17 +72,11 @@ public class GameManager extends SubsystemBase {
     alwaysActiveShifts.add(ShiftList.EndGame);
     timer.reset();
     timer.start();
-    winChooser = new SendableChooser<>();
-    winChooser.setDefaultOption("lost", runOnce(() -> lostAuto()));
-    winChooser.addOption("win", runOnce(() -> wonAuto()));
-
-    SmartDashboard.putData("winChooser", winChooser);
     SmartDashboard.putBoolean("won Auto", wonAuto);
   }
 
   @Override
   public void periodic() {
-    winChooser.getSelected();
     if (!hasAlliance || DriverStation.isDisabled()) {
       Optional<Alliance> alliance = DriverStation.getAlliance();
       if (alliance.isPresent()) {
@@ -114,17 +102,6 @@ public class GameManager extends SubsystemBase {
     determineShift();
     determineActiveHub();
 
-    // SmartDashboard.putNumber("GameManager Timer", elapsedTime);
-
-    // SmartDashboard.putString("current shift", currentShift.toString());
-
-    // SmartDashboard.putNumber("match timer", matchTimer);
-    // SmartDashboard.putBoolean("is teleop", isTeleop);
-    // SmartDashboard.putBoolean("win auto?", wonAuto);
-
-    // SmartDashboard.putBoolean("is active?", isActive);
-    // SmartDashboard.putBoolean("is in a match?", isMatch);
-
     getMatchTime();
 
   }
@@ -142,11 +119,6 @@ public class GameManager extends SubsystemBase {
   }
 
   public void wonAuto() {
-    // if (!wonAuto) {
-    // wonAuto = true;
-    // } else {
-    // wonAuto = false;
-    // }
     wonAuto = true;
     SmartDashboard.putBoolean("won Auto", wonAuto);
   }
@@ -159,17 +131,9 @@ public class GameManager extends SubsystemBase {
       active = false;
       switchActive = elapsedTime + 25;
     }
-
-    // SmartDashboard.putBoolean("teleop active", active);
-    // SmartDashboard.putNumber("time till swicth", switchActive);
   }
 
   public void lostAuto() {
-    // if (!wonAuto) {
-    // lostAuto = true;
-    // } else {
-    // lostAuto = false;
-    // }
 
     wonAuto = false;
     SmartDashboard.putBoolean("won Auto", wonAuto);
@@ -221,7 +185,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, 0);
           manipulatorController.setRumble(RumbleType.kBothRumble, 0);
         }
-        // System.out.println("auto");
 
       }
       // warning
@@ -232,7 +195,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
           manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
         }
-        // System.out.println("warning");
       }
       // transistion
       else if (elapsedTime > 20 && elapsedTime <= 27) {
@@ -242,7 +204,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, 0);
           manipulatorController.setRumble(RumbleType.kBothRumble, 0);
         }
-        // System.out.println("transistion");
       }
       // warning
       else if (elapsedTime > 27 && elapsedTime <= 30) {
@@ -252,7 +213,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
           manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
         }
-        // System.out.println("warning");
       }
       // phase 1
       else if (elapsedTime > 30 && elapsedTime <= 52) {
@@ -267,7 +227,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, 0);
           manipulatorController.setRumble(RumbleType.kBothRumble, 0);
         }
-        // System.out.println("phase 1");
       }
       // warning
       else if (elapsedTime > 52 && elapsedTime <= 55) {
@@ -277,8 +236,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
           manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
         }
-        // System.out.println("warning");
-
       }
       // phase 2
       else if (elapsedTime > 55 && elapsedTime <= 77) {
@@ -292,8 +249,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, 0);
           manipulatorController.setRumble(RumbleType.kBothRumble, 0);
         }
-
-        // System.out.println("phase 2");
       }
       // warning
       else if (elapsedTime > 77 && elapsedTime <= 80) {
@@ -303,7 +258,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
           manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
         }
-        // System.out.println("warning");
       }
       // phase 3
       else if (elapsedTime > 80 && elapsedTime <= 102) {
@@ -317,8 +271,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, 0);
           manipulatorController.setRumble(RumbleType.kBothRumble, 0);
         }
-
-        // System.out.println("phase 3");
       }
       // warning
       else if (elapsedTime > 102 && elapsedTime <= 105) {
@@ -328,7 +280,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
           manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
         }
-        // System.out.println("warning");
       }
       // phase 4
       else if (elapsedTime > 105 && elapsedTime <= 127) {
@@ -342,7 +293,6 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, 0);
           manipulatorController.setRumble(RumbleType.kBothRumble, 0);
         }
-        // System.out.println("phase 4");
       }
       // warning
       else if (elapsedTime > 127 && elapsedTime <= 130) {
@@ -352,10 +302,8 @@ public class GameManager extends SubsystemBase {
           driverController.setRumble(RumbleType.kBothRumble, vibrationPower);
           manipulatorController.setRumble(RumbleType.kBothRumble, vibrationPower);
         }
-        // System.out.println("warning");
       } else if (elapsedTime > 130 && elapsedTime <= 160) {
         shiftLights.set(endgameColor);
-        // System.out.println("endgame");
         if (shiftNumber != 13) {
           shiftNumber = 13;
           driverController.setRumble(RumbleType.kBothRumble, 0);
@@ -364,7 +312,6 @@ public class GameManager extends SubsystemBase {
 
       } else {
         shiftLights.set(defaultColor);
-        // System.out.println("default");
         if (shiftNumber != 14) {
           shiftNumber = 14;
           driverController.setRumble(RumbleType.kBothRumble, 0);
@@ -372,37 +319,5 @@ public class GameManager extends SubsystemBase {
         }
       }
     }
-
-    // if (isMatch) {
-    // if (wonAuto) {
-    // if (LoseShifts.contains(currentShift)) {
-    // // not active
-    // shiftLights.set(0.61);
-    // isActive = false;
-    // } else {
-    // // active
-    // shiftLights.set(0.77);
-    // isActive = true;
-    // }
-    // } else {
-    // if (LoseShifts.contains(currentShift) ||
-    // alwaysActiveShifts.contains(currentShift)) {
-    // // active
-    // shiftLights.set(0.77);
-    // isActive = true;
-    // } else {
-    // // not active
-    // shiftLights.set(0.61);
-    // isActive = false;
-    // }
-    // }
-    // } else if (elapsedTime > switchActive) {
-    // switchActiveHubs();
-    // if (!active) {
-    // shiftLights.set(0.61);
-    // } else {
-    // shiftLights.set(0.77);
-    // }
-    // }
   }
 }

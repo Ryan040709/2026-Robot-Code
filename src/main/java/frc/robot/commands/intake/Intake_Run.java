@@ -39,7 +39,7 @@ public class Intake_Run extends Command {
     @Override
     public void execute() {
 
-        hopperSubsystem.pivotIntake(0); // TODO: tune the target positions!
+        hopperSubsystem.setHopperPosition(0); // TODO: tune the target positions!
         if (hopperSubsystem.atPosition(0)) {
             intakeSubsystem.setIntakeVoltage(7);
         }

@@ -28,9 +28,9 @@ public class Shooter_RunToRPM extends Command {
   @Override
   public void execute() {
     shooterSubsystem.RuntoRPMs(drivetrain.getDistanceToTarget(), drivetrain.isFeeding());
-    indexer.SetBeltVoltage(7);
-    indexer.SetIndexSpeed(0.5);
-    indexer.SetIntakeSpeed(0.5);
+    indexer.setBeltVoltage(7);
+    indexer.setIndexVoltage(6);
+    indexer.setIntakeVoltage(6);
   }
 
   // Called once the command ends or is interrupted.
