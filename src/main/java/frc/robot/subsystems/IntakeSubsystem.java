@@ -17,7 +17,6 @@ public class IntakeSubsystem extends SubsystemBase {
     private TalonFX intakeMotor1 = new TalonFX(23);
     private TalonFX intakeMotor2 = new TalonFX(24);
     //assuming these are hopper rollers
-    private TalonFX hopperMotor = new TalonFX(21);
 
     public IntakeSubsystem() {
 
@@ -26,7 +25,6 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         intakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        intakeConfig.CurrentLimits.StatorCurrentLimitEnable = false;
         intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         intakeConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
@@ -42,11 +40,18 @@ public class IntakeSubsystem extends SubsystemBase {
     public void periodic() {
     }
 
-    public void setIntakeVoltage(double targetVoltage) {
+    private void setIntakeVoltage(double targetVoltage) {
         intakeMotor1.setVoltage(targetVoltage);
     }
 
-    public void setHopperVoltage(double targetVoltage) {
-        hopperMotor.setVoltage(targetVoltage);
+
+    public void IntakeForward(){
+         setIntakeVoltage(6);
+    }
+    public void intakeReverse(){
+        setIntakeVoltage(-6);
+    }
+    public void intakeStop(){
+        setIntakeVoltage(0);
     }
 }

@@ -15,7 +15,7 @@ public class Intake_Outtake extends Command {
 
         this.intakeSubsystem = intakeSubsystem;
         this.hopperSubsystem = hopperSubsystem;
-        addRequirements(intakeSubsystem, hopperSubsystem);
+        addRequirements(intakeSubsystem);
 
     }
 
@@ -29,17 +29,14 @@ public class Intake_Outtake extends Command {
     @Override
     public void execute() {
 
-        hopperSubsystem.setHopperPosition(0);
-        if (hopperSubsystem.atPosition(0)) {
-            intakeSubsystem.setIntakeVoltage(-7);
-        }
+       intakeSubsystem.intakeReverse();
         // outta bumper intake
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
+        intakeSubsystem.intakeStop();
     }
 
     // Returns true when the command should end.

@@ -25,7 +25,7 @@ public class Intake_Run extends Command {
         this.turretSubsystem = turretSubsystem;
         this.drivetrain = drivetrain;
 
-        addRequirements(intakeSubsystem, hopperSubsystem);
+        addRequirements(intakeSubsystem);
 
     }
 
@@ -39,16 +39,13 @@ public class Intake_Run extends Command {
     @Override
     public void execute() {
 
-        hopperSubsystem.setHopperPosition(0); // TODO: tune the target positions!
-        if (hopperSubsystem.atPosition(0)) {
-            intakeSubsystem.setIntakeVoltage(7);
-        }
+      intakeSubsystem.IntakeForward();
     }
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-
+        intakeSubsystem.intakeStop();
     }
 
     // Returns true when the command should end.

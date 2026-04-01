@@ -38,8 +38,8 @@ import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterToRPMS;
 import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.resetLEDTimer;
-import frc.robot.commands.hopper.Hopper_PivotDown;
-import frc.robot.commands.hopper.Hopper_PivotUp;
+import frc.robot.commands.hopper.Hopper_In;
+import frc.robot.commands.hopper.Hopper_Out;
 import frc.robot.commands.turret.Turret_Locking;
 //turret commands
 import frc.robot.commands.turret.Turret_Toggle;
@@ -92,27 +92,30 @@ public class RobotContainer {
         IndexerSubsystem indexerSubsystem = new IndexerSubsystem();
 
         // shooter commands
-        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain, indexerSubsystem);
-        Shooter_RunToRPM shooter_RunToRpmTele = new Shooter_RunToRPM(shooter, drivetrain, indexerSubsystem);
+        Shooter_RunToRPM shooter_RunToRPM = new Shooter_RunToRPM(shooter, drivetrain);
+        Shooter_RunToRPM shooter_RunToRpmTele = new Shooter_RunToRPM(shooter, drivetrain);
         Hood_SetToPosition hoodSetToPosition = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         Hood_SetToPosition hoodSetToPositionDRIVER = new Hood_SetToPosition(hoodSubsystem, drivetrain);
         OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
-        ShooterToRPMS shooterCoast = new ShooterToRPMS(shooter, drivetrain, indexerSubsystem);
-        ShooterStop shooterStop = new ShooterStop(shooter, drivetrain, indexerSubsystem);
+        ShooterToRPMS shooterCoast = new ShooterToRPMS(shooter, drivetrain);
+        ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
         // turret commands
         Turret_Toggle turret_Toggle = new Turret_Toggle(turret);
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);
         ZeroTurret zeroTurret = new ZeroTurret(turret, drivetrain);
         // out of bumper intake commands
-        Hopper_PivotUp hopper_Out = new Hopper_PivotUp(hopperSubsystem);
-        Hopper_PivotDown hopper_In = new Hopper_PivotDown(hopperSubsystem);
+        Hopper_In hopper_Out = new Hopper_In(hopperSubsystem);
+        Hopper_Out hopper_In = new Hopper_Out(hopperSubsystem);
 
         // in the bumper intake commands
         Intake_Stop intake_Stop = new Intake_Stop(intakeSubsystem, hopperSubsystem);
         Intake_Outtake intake_Outtake = new Intake_Outtake(intakeSubsystem, hopperSubsystem);
         Intake_Run intake_Run = new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain);
 
-        Command shooterAndHood = shooter_RunToRpmTele.alongWith(hoodSetToPosition);
+        Command shooterAndHood = shooter_RunToRpmTele
+                                        .alongWith(hoodSetToPosition)
+                                        .alongWith(indexerSubsystem.indexShooter())
+                                        .alongWith(hopperSubsystem.runHopper());
 
         public RobotContainer() {
                 // turret commands
@@ -121,39 +124,39 @@ public class RobotContainer {
 
                 // shooter commands
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
-                
+
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-outtake", intake_Outtake);
                 NamedCommands.registerCommand("intake", intake_Run);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("intake-no-outta", intake_Run);
                 // // shooter commands
+                NamedCommands.registerCommand("intake-intakeToHopper", Commands.none());
                 NamedCommands.registerCommand("shoot", shooter_RunToRPM);
                 // climber commands
                 // nothing right now
                 // driving commands
-                try{
-                NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
-                        PathPlannerPath.fromPathFile("splitPath2")));
-                }catch(Exception e){
-                        try{
-                            NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
-                                PathPlannerPath.fromPathFile("splitPath3")));
-                        }catch(Exception e2){}       
+                try {
+                        NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
+                                        PathPlannerPath.fromPathFile("splitPath2")));
+                } catch (Exception e) {
+                        try {
+                                NamedCommands.registerCommand("right sweep", AutoBuilder.followPath(
+                                                PathPlannerPath.fromPathFile("splitPath3")));
+                        } catch (Exception e2) {
+                        }
                 }
-                SmartDashboard.putData("turreet", turret);
+                //SmartDashboard.putData("turreet", turret);
 
                 // Put both on the Dashboard
 
-                SmartDashboard.putNumber("Shooter RPM", 65);
+              //  SmartDashboard.putNumber("Shooter RPM", 65);
 
-                SmartDashboard.putNumber("intake speed Front", 0.3);
-                SmartDashboard.putNumber("intake speed Back", 0.3);
-
-
+              //  SmartDashboard.putNumber("intake speed Front", 0.3);
+              //  SmartDashboard.putNumber("intake speed Back", 0.3);
 
                 configureBindings();
-                autoChooser = AutoBuilder.buildAutoChooser();
+               autoChooser = AutoBuilder.buildAutoChooser();
 
                 SmartDashboard.putData("autoChoose", autoChooser);
 
@@ -213,44 +216,33 @@ public class RobotContainer {
                                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
                                                 drivetrain));
 
-                // hopper commands
-                driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
-
-                // shooter and hood commands
-                hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterCoast);
-
-                manipulatorController.rightBumper().whileTrue(shooterAndHood);
-
-                driverController.y().whileTrue(shooterCoast);
-                driverController.leftTrigger(.5).whileTrue(hoodDown);
-                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
-
-                // turret commands
-                turret.setDefaultCommand(turret_Locking);
-
-                driverController.start().whileTrue(zeroTurret);
-
                 // game manager commands
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
+                intakeSubsystem.setDefaultCommand(intake_Stop);
+                // turret.setDefaultCommand(turret_Locking);
+                hoodSubsystem.setDefaultCommand(hoodDown);
+                shooter.setDefaultCommand(shooterStop);
 
+                manipulatorController.rightBumper().whileTrue(shooterAndHood);
                 manipulatorController.start().onTrue(Commands.runOnce(() -> gameManager.resetTimer(), gameManager));
                 manipulatorController.pov(270).onTrue(Commands.runOnce(() -> gameManager.lostAuto(), gameManager));
                 manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
-
-                // intake commands
-                intakeSubsystem.setDefaultCommand(intake_Stop);
-
-                driverController.b().whileTrue(intake_Run);
-                driverController.x().whileTrue(intake_Run);
-                driverController.pov(180).whileTrue(intake_Outtake);
-
                 manipulatorController.a().whileTrue(intake_Run);
                 manipulatorController.b().whileTrue(intake_Outtake);
+
+                // intake commands
+
+                driverController.pov(180).whileTrue(intake_Outtake);
+                driverController.start().whileTrue(zeroTurret);
+                driverController.y().whileTrue(shooterCoast);
+                driverController.leftTrigger(.5).whileTrue(hoodDown);
+                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
+                driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
+
         }
 
         public Command getAutonomousCommand() {
-                return autoChooser.getSelected();
+                return  autoChooser.getSelected();
         }
 
         public void teleopInit() {

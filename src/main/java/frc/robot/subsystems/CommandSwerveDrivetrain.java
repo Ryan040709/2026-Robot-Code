@@ -82,7 +82,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
     // IMPORTANT: Old Turret Position = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
 
-    private static final Transform2d turretOffsetFromRobot = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37,
+    private static final Transform2d turretOffsetFromRobot = new Transform2d(5.625 / 39.37, 5.63954 / 39.37,
+
             Rotation2d.fromDegrees(0));
     
     // turret variables

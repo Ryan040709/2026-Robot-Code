@@ -3,19 +3,16 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterToRPMS extends Command {
   ShooterSubsystem shooterSubsystem;
   CommandSwerveDrivetrain drivetrain;
-  IndexerSubsystem indexer;
 
   /** Creates a new Shooter_RunToRPM. */
-  public ShooterToRPMS(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain, IndexerSubsystem indexer) {
+  public ShooterToRPMS(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain) {
     this.shooterSubsystem = shooterSubsystem;
     this.drivetrain = drivetrain;
-    this.indexer = indexer;
     addRequirements(shooterSubsystem);
   }
 
@@ -29,9 +26,6 @@ public class ShooterToRPMS extends Command {
   @Override
   public void execute() {
     double RPS = SmartDashboard.getNumber("Shooter RPM", 35);
-    indexer.setBeltVoltage(7);
-    indexer.setIndexVoltage(6);
-    indexer.setIntakeVoltage(6);
     shooterSubsystem.SetShooterRPMS(RPS);
   }
 

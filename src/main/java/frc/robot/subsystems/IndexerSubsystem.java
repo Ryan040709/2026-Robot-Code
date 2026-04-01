@@ -6,44 +6,40 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IndexerSubsystem extends SubsystemBase {
 
     VelocityVoltage velocity = new VelocityVoltage(0);
 
-    private TalonFX indexerBottom = new TalonFX(18);
+    private TalonFX rollMotor = new TalonFX(18);
     private TalonFX beltMotor = new TalonFX(19);
-    private TalonFX shooterIntake = new TalonFX(20);
+    private TalonFX rampMotor = new TalonFX(20);
 
     public IndexerSubsystem() {
 
         // indexer motor config
-        TalonFXConfiguration indexerConfig = new TalonFXConfiguration();
-        indexerConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        indexerConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        TalonFXConfiguration rollConfig = new TalonFXConfiguration();
         // motor "friction" type?
-        indexerConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        indexerConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        rollConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
+        rollConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        indexerConfig.Slot0.kP = 0;
-        indexerConfig.Slot0.kI = 0;
-        indexerConfig.Slot0.kD = 0;
-        indexerConfig.CurrentLimits.StatorCurrentLimitEnable = false;
-        indexerConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        indexerConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        rollConfig.Slot0.kP = 0;
+        rollConfig.Slot0.kI = 0;
+        rollConfig.Slot0.kD = 0;
+        rollConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        rollConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
-        indexerConfig.Voltage.PeakForwardVoltage = 7;
-        indexerConfig.Voltage.PeakReverseVoltage = -7;
+        rollConfig.Voltage.PeakForwardVoltage = 12;
+        rollConfig.Voltage.PeakReverseVoltage = -12;
        
-        indexerBottom.getConfigurator().apply(indexerConfig);
+        rollMotor.getConfigurator().apply(rollConfig);
 
 
 
         // belt motor config
         TalonFXConfiguration beltConfig = new TalonFXConfiguration();
-        beltConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        beltConfig.MotorOutput.PeakReverseDutyCycle = -1;
         // motor "friction" type?
         beltConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         beltConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
@@ -51,36 +47,32 @@ public class IndexerSubsystem extends SubsystemBase {
         beltConfig.Slot0.kP = 0;
         beltConfig.Slot0.kI = 0;
         beltConfig.Slot0.kD = 0;
-        beltConfig.CurrentLimits.StatorCurrentLimitEnable = false;
         beltConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        beltConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        beltConfig.CurrentLimits.SupplyCurrentLimit = 60;
         // Voltage
-        beltConfig.Voltage.PeakForwardVoltage = 7;
-        beltConfig.Voltage.PeakReverseVoltage = -7;
+        beltConfig.Voltage.PeakForwardVoltage = 12;
+        beltConfig.Voltage.PeakReverseVoltage = -12;
        
         beltMotor.getConfigurator().apply(beltConfig);
 
 
 
         // shooterIntake motor config
-        TalonFXConfiguration shooterIntakeConfig = new TalonFXConfiguration();
-        shooterIntakeConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        shooterIntakeConfig.MotorOutput.PeakReverseDutyCycle = -1;
+        TalonFXConfiguration rampConfig = new TalonFXConfiguration();
         // motor "friction" type?
-        shooterIntakeConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        shooterIntakeConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
+        rampConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        rampConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        shooterIntakeConfig.Slot0.kP = 0;
-        shooterIntakeConfig.Slot0.kI = 0;
-        shooterIntakeConfig.Slot0.kD = 0;
-        shooterIntakeConfig.CurrentLimits.StatorCurrentLimitEnable = false;
-        shooterIntakeConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        shooterIntakeConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        rampConfig.Slot0.kP = 0;
+        rampConfig.Slot0.kI = 0;
+        rampConfig.Slot0.kD = 0;
+        rampConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        rampConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
-        shooterIntakeConfig.Voltage.PeakForwardVoltage = 7;
-        shooterIntakeConfig.Voltage.PeakReverseVoltage = -7;
+        rampConfig.Voltage.PeakForwardVoltage = 12;
+        rampConfig.Voltage.PeakReverseVoltage = -12;
        
-        shooterIntake.getConfigurator().apply(shooterIntakeConfig);
+        rampMotor.getConfigurator().apply(rampConfig);
     }
 
     @Override
@@ -89,28 +81,43 @@ public class IndexerSubsystem extends SubsystemBase {
 
     // uses voltage for better control, much like the original intake
     public void setIndexVelocity(double targetRPM) {
-        indexerBottom.setControl(velocity.withVelocity(targetRPM));
+        rollMotor.setControl(velocity.withVelocity(targetRPM));
     }
 
-    public void setIntakeVelocity(double targetRPM) {
-        shooterIntake.setControl(velocity.withVelocity(targetRPM));
+    public void setRampVelocity(double targetRPM) {
+        rampMotor.setControl(velocity.withVelocity(targetRPM));
     }
 
     // uses voltage for better control, much like the original intake
     public void setBeltVelocity(double targetRPM) {
         beltMotor.setControl(velocity.withVelocity(targetRPM));
     }
-    public void setIndexVoltage(double targetVoltage) {
-        indexerBottom.setVoltage(targetVoltage);
+
+    public void setRollerVoltage(double targetVoltage) {
+        rollMotor.setVoltage(targetVoltage);
     }
 
-    public void setIntakeVoltage(double targetVoltage) {
-        shooterIntake.setVoltage(targetVoltage);
+    public void setRampVoltage(double targetVoltage) {
+        rampMotor.setVoltage(targetVoltage);
     }
 
     // uses voltage for better control, much like the original intake
     public void setBeltVoltage(double targetVoltage) {
         beltMotor.setVoltage(targetVoltage);
+    }
+
+    public Command indexShooter(){
+        return startEnd(()-> {
+            setBeltVoltage(8);
+            setRollerVoltage(3);
+            setRampVoltage(4);
+        },
+        ()->{
+             setBeltVoltage(0);
+            setRollerVoltage(0);
+            setRampVoltage(0);
+        }
+        );
     }
 }
 

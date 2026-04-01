@@ -8,34 +8,52 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class HopperSubsystem extends SubsystemBase {
 
     private TalonFX extensionMotor = new TalonFX(25);
+    private TalonFX hopperMotor = new TalonFX(21);
 
     private PositionVoltage positionRequest = new PositionVoltage(0);
 
     public HopperSubsystem() {
 
         TalonFXConfiguration extensionConfig = new TalonFXConfiguration();
-        extensionConfig.MotorOutput.PeakForwardDutyCycle = 1;
-        extensionConfig.MotorOutput.PeakReverseDutyCycle = -1;
         // motor "friction" type?
-        extensionConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        extensionConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         extensionConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
         extensionConfig.Slot0.kP = 0;
         extensionConfig.Slot0.kI = 0;
         extensionConfig.Slot0.kD = 0;
-        extensionConfig.CurrentLimits.StatorCurrentLimitEnable = false;
         extensionConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         extensionConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
         extensionConfig.Voltage.PeakForwardVoltage = 7;
         extensionConfig.Voltage.PeakReverseVoltage = -7;
+        //limits
+        extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+        extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 31;
+        extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+        extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
 
         extensionMotor.getConfigurator().apply(extensionConfig);
+        
+        
+
+        TalonFXConfiguration hopperConfig = new TalonFXConfiguration();        
+        // motor "friction" type?
+        hopperConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        hopperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        // regulars
+        hopperConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        hopperConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        // Voltage
+        hopperConfig.Voltage.PeakForwardVoltage = 7;
+        hopperConfig.Voltage.PeakReverseVoltage = -7;
+        hopperMotor.getConfigurator().apply(hopperConfig);
     }
 
     public void setHopperPosition(double targetPosition) {
@@ -43,6 +61,23 @@ public class HopperSubsystem extends SubsystemBase {
     }
     public boolean atPosition(double GoalPosition){
         return MathUtil.isNear(GoalPosition, extensionMotor.getPosition().getValueAsDouble(), 0.1);
+    }
+
+     private void setHopperVoltage(double targetVoltage) {
+        hopperMotor.setVoltage(targetVoltage);
+    }
+    public void hopperForward(){
+        setHopperVoltage(3);
+    }
+     public void hopperReverse(){
+        setHopperVoltage(-3);
+    }
+     public void hopperStop(){
+        setHopperVoltage(0);
+    }
+
+    public Command runHopper(){
+        return startEnd(this::hopperForward, this::hopperStop);
     }
 
     @Override

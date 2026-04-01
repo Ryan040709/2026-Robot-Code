@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.HopperSubsystem;
 
-public class Hopper_PivotDown extends Command {
+public class Hopper_In extends Command {
   HopperSubsystem hopperSubsystem;
 
   /** Creates a new Hood_RunToPosition. */
-  public Hopper_PivotDown(HopperSubsystem hopperSubsystem) {
+  public Hopper_In(HopperSubsystem hopperSubsystem) {
     this.hopperSubsystem = hopperSubsystem;
     addRequirements(hopperSubsystem);
 

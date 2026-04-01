@@ -2,19 +2,16 @@ package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterStop extends Command {
   ShooterSubsystem shooterSubsystem;
   CommandSwerveDrivetrain drivetrain;
-  IndexerSubsystem indexer;
 
   /** Creates a new Shooter_RunToRPM. */
-  public ShooterStop(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain, IndexerSubsystem indexer) {
+  public ShooterStop(ShooterSubsystem shooterSubsystem, CommandSwerveDrivetrain drivetrain) {
     this.shooterSubsystem = shooterSubsystem;
     this.drivetrain = drivetrain;
-    this.indexer = indexer;
     addRequirements(shooterSubsystem);
   }
 
@@ -28,9 +25,7 @@ public class ShooterStop extends Command {
   @Override
   public void execute() {
     shooterSubsystem.SetShooterRPMS(0);
-    indexer.setBeltVoltage(0); // TODO: still needs to be tuned to real robot?
-    indexer.setIndexVoltage(0);
-    indexer.setIntakeVoltage(0);
+
   }
 
   // Called once the command ends or is interrupted.

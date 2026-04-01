@@ -14,7 +14,7 @@ public class Intake_Stop extends Command {
 
         this.intakeSubsystem = intakeSubsystem;
         this.hopperSubsystem = hopperSubsystem;
-        addRequirements(intakeSubsystem, hopperSubsystem);
+        addRequirements(intakeSubsystem);
 
     }
 
@@ -27,8 +27,7 @@ public class Intake_Stop extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        hopperSubsystem.setHopperPosition(0); // TODO: tune the target positions!
-        intakeSubsystem.setIntakeVoltage(0);
+        intakeSubsystem.intakeStop();
     }
 
     // Called once the command ends or is interrupted.
