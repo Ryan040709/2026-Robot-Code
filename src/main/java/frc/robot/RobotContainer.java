@@ -104,8 +104,8 @@ public class RobotContainer {
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);
         ZeroTurret zeroTurret = new ZeroTurret(turret, drivetrain);
         // out of bumper intake commands
-        Hopper_In hopper_Out = new Hopper_In(hopperSubsystem);
-        Hopper_Out hopper_In = new Hopper_Out(hopperSubsystem);
+        Hopper_Out hopper_Out = new Hopper_Out(hopperSubsystem);
+        Hopper_In hopper_In = new Hopper_In(hopperSubsystem);
 
         // in the bumper intake commands
         Intake_Stop intake_Stop = new Intake_Stop(intakeSubsystem, hopperSubsystem);
@@ -236,9 +236,11 @@ public class RobotContainer {
                 driverController.start().whileTrue(zeroTurret);
                 driverController.y().whileTrue(shooterCoast);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
-                driverController.rightTrigger(.5).whileTrue(shooter_RunToRPM.alongWith(hoodSetToPositionDRIVER));
-                driverController.a().whileTrue(hopper_Out).whileFalse(hopper_In);
-
+                driverController.rightTrigger(.5).whileTrue(new Shooter_RunToRPM(shooter, drivetrain)
+                                                                        .alongWith(new Hood_SetToPosition(hoodSubsystem,drivetrain))
+                                                                        .alongWith(indexerSubsystem.indexShooter())
+                                                                        .alongWith(hopperSubsystem.runHopper()));
+                driverController.rightBumper().whileTrue(hopper_Out.alongWith(intake_Run));
         }
 
         public Command getAutonomousCommand() {

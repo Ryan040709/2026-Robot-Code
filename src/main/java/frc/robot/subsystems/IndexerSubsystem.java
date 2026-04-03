@@ -25,9 +25,11 @@ public class IndexerSubsystem extends SubsystemBase {
         rollConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         rollConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        rollConfig.Slot0.kP = 0;
+        rollConfig.Slot0.kP = 0.1;
         rollConfig.Slot0.kI = 0;
         rollConfig.Slot0.kD = 0;
+        rollConfig.Slot0.kS = .35;
+        rollConfig.Slot0.kV = .128;
         rollConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         rollConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
@@ -47,6 +49,8 @@ public class IndexerSubsystem extends SubsystemBase {
         beltConfig.Slot0.kP = 0;
         beltConfig.Slot0.kI = 0;
         beltConfig.Slot0.kD = 0;
+        beltConfig.Slot0.kS = .6;
+        beltConfig.Slot0.kV = .126;
         beltConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         beltConfig.CurrentLimits.SupplyCurrentLimit = 60;
         // Voltage
@@ -63,9 +67,11 @@ public class IndexerSubsystem extends SubsystemBase {
         rampConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         rampConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        rampConfig.Slot0.kP = 0;
+        rampConfig.Slot0.kP = 0.25;
         rampConfig.Slot0.kI = 0;
         rampConfig.Slot0.kD = 0;
+        rampConfig.Slot0.kS = .4;
+        rampConfig.Slot0.kV = .121;
         rampConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         rampConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
@@ -80,7 +86,7 @@ public class IndexerSubsystem extends SubsystemBase {
     }
 
     // uses voltage for better control, much like the original intake
-    public void setIndexVelocity(double targetRPM) {
+    public void setRollerVelocity(double targetRPM) {
         rollMotor.setControl(velocity.withVelocity(targetRPM));
     }
 
@@ -108,9 +114,9 @@ public class IndexerSubsystem extends SubsystemBase {
 
     public Command indexShooter(){
         return startEnd(()-> {
-            setBeltVoltage(8);
-            setRollerVoltage(3);
-            setRampVoltage(4);
+            setBeltVelocity(50);
+            setRollerVelocity(25);
+            setRampVelocity(37);
         },
         ()->{
              setBeltVoltage(0);

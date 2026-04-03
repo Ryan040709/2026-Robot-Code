@@ -17,6 +17,7 @@ public class HopperSubsystem extends SubsystemBase {
     private TalonFX hopperMotor = new TalonFX(21);
 
     private PositionVoltage positionRequest = new PositionVoltage(0);
+    double extentionPosition;
 
     public HopperSubsystem() {
 
@@ -25,19 +26,22 @@ public class HopperSubsystem extends SubsystemBase {
         extensionConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
         extensionConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        extensionConfig.Slot0.kP = 0;
+        extensionConfig.Slot0.kP = 2;
         extensionConfig.Slot0.kI = 0;
-        extensionConfig.Slot0.kD = 0;
+        extensionConfig.Slot0.kD = 0.2;
         extensionConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        extensionConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        extensionConfig.CurrentLimits.SupplyCurrentLimit = 7;
         // Voltage
-        extensionConfig.Voltage.PeakForwardVoltage = 7;
-        extensionConfig.Voltage.PeakReverseVoltage = -7;
+        extensionConfig.Voltage.PeakForwardVoltage = 6;
+        extensionConfig.Voltage.PeakReverseVoltage = -6;
         //limits
         extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 31;
         extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
+
+        extensionConfig.MotionMagic.MotionMagicAcceleration = 90;
+        extensionConfig.MotionMagic.MotionMagicCruiseVelocity = 50;
 
         extensionMotor.getConfigurator().apply(extensionConfig);
         
@@ -60,7 +64,10 @@ public class HopperSubsystem extends SubsystemBase {
         extensionMotor.setControl(positionRequest.withPosition(targetPosition));
     }
     public boolean atPosition(double GoalPosition){
-        return MathUtil.isNear(GoalPosition, extensionMotor.getPosition().getValueAsDouble(), 0.1);
+        return MathUtil.isNear(GoalPosition, extensionMotor.getPosition().getValueAsDouble(), 1);
+    }
+    public boolean PastPosition(double position){
+        return extensionMotor.getPosition().getValueAsDouble() > position;
     }
 
      private void setHopperVoltage(double targetVoltage) {

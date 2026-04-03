@@ -23,7 +23,7 @@ public class Hopper_Out extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hopperSubsystem.setHopperPosition(0); // TODO: REPLACE WITH ACTUAL POSITION
+    hopperSubsystem.setHopperPosition(31); // TODO: REPLACE WITH ACTUAL POSITION
   }
 
   // Called once the command ends or is interrupted.

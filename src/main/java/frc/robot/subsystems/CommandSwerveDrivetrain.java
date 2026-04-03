@@ -384,6 +384,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          */
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+            throttleLimelight("limelight-tags", true);
+            throttleLimelight("limelight-back", true);
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
                         allianceColor == Alliance.Red
@@ -391,6 +393,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                                 : kBlueAlliancePerspectiveRotation);
                 m_hasAppliedOperatorPerspective = true;
             });
+        }
+        else{
+            
+            throttleLimelight("limelight-tags", false);
+            throttleLimelight("limelight-back", false);
         }
         // Update the pose
         robotPose = getState().Pose;
@@ -560,6 +567,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // } else {
         // System.out.println("limelight estimation null");
         // }
+    }
+    public void throttleLimelight( String limelightName, boolean turnOn ){
+        
+        LimelightHelpers.SetThrottle( limelightName, turnOn? 100 : 0);
     }
 
     public boolean isFeeding() {

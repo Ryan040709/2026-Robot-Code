@@ -28,8 +28,8 @@ public class IntakeSubsystem extends SubsystemBase {
         intakeConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
         intakeConfig.CurrentLimits.SupplyCurrentLimit = 40;
         // Voltage
-        intakeConfig.Voltage.PeakForwardVoltage = 7;
-        intakeConfig.Voltage.PeakReverseVoltage = -7;
+        intakeConfig.Voltage.PeakForwardVoltage = 12;
+        intakeConfig.Voltage.PeakReverseVoltage = -12;
         
         intakeMotor1.getConfigurator().apply(intakeConfig);
         intakeMotor2.getConfigurator().apply(intakeConfig);

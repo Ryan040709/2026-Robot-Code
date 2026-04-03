@@ -38,7 +38,7 @@ public class Intake_Run extends Command {
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-
+        if(hopperSubsystem.PastPosition(5))
       intakeSubsystem.IntakeForward();
     }
 
