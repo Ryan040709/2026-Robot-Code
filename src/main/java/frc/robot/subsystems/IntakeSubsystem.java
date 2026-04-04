@@ -8,6 +8,9 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class IntakeSubsystem extends SubsystemBase {
@@ -46,7 +49,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public void IntakeForward(){
-         setIntakeVoltage(6);
+         setIntakeVoltage(8);
     }
     public void intakeReverse(){
         setIntakeVoltage(-6);
@@ -54,4 +57,5 @@ public class IntakeSubsystem extends SubsystemBase {
     public void intakeStop(){
         setIntakeVoltage(0);
     }
+    
 }

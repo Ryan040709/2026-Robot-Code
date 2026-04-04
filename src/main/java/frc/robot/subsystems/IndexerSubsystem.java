@@ -6,6 +6,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -16,6 +17,10 @@ public class IndexerSubsystem extends SubsystemBase {
     private TalonFX rollMotor = new TalonFX(18);
     private TalonFX beltMotor = new TalonFX(19);
     private TalonFX rampMotor = new TalonFX(20);
+
+    double rollerSpeed;
+    double beltSpeed;
+    double rampSpeed;
 
     public IndexerSubsystem() {
 
@@ -83,6 +88,10 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
+       beltSpeed =  SmartDashboard.getNumber("BeltSpeed", 60);
+       rollerSpeed = SmartDashboard.getNumber("rollerSpeed", 25);
+       rampSpeed = SmartDashboard.getNumber("rampSpeed", 37);
+
     }
 
     // uses voltage for better control, much like the original intake
@@ -111,17 +120,35 @@ public class IndexerSubsystem extends SubsystemBase {
     public void setBeltVoltage(double targetVoltage) {
         beltMotor.setVoltage(targetVoltage);
     }
+    public void stopIndexer(){
+        setBeltVoltage(0);
+            setRollerVoltage(0);
+            setRampVoltage(0);
+    }
+
+    public void setIndexSpeed(){
+        setBeltVelocity(30); 
+            setRollerVelocity(70);
+            setRampVelocity(37);
+    }
 
     public Command indexShooter(){
         return startEnd(()-> {
-            setBeltVelocity(50);
-            setRollerVelocity(25);
+            setIndexSpeed();
+        },
+        ()->{
+             stopIndexer();
+        }
+        );
+    }
+    public Command unjamShooter(){
+        return startEnd(()-> {
+            setBeltVelocity(60); //50 starting velocity
+            setRollerVelocity(0);
             setRampVelocity(37);
         },
         ()->{
-             setBeltVoltage(0);
-            setRollerVoltage(0);
-            setRampVoltage(0);
+           stopIndexer();
         }
         );
     }

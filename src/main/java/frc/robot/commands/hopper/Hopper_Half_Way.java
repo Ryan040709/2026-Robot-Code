@@ -5,12 +5,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.HopperSubsystem;
 
-public class Hopper_Out extends Command {
+public class Hopper_Half_Way extends Command {
   HopperSubsystem hopperSubsystem;
   IntakeSubsystem intakeSubsystem;
 
   /** Creates a new Hood_RunToPosition. */
-  public Hopper_Out(HopperSubsystem hopperSubsystem, IntakeSubsystem intakeSubsystem) {
+  public Hopper_Half_Way(HopperSubsystem hopperSubsystem, IntakeSubsystem intakeSubsystem) {
     this.hopperSubsystem = hopperSubsystem;
     this.intakeSubsystem = intakeSubsystem;
     addRequirements(hopperSubsystem);
@@ -26,11 +26,8 @@ public class Hopper_Out extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hopperSubsystem.setHopperPosition(31); 
-         if(hopperSubsystem.PastPosition(5))
-         {
-      hopperSubsystem.hopperForward();
-    }
+    hopperSubsystem.setHopperPosition(15);
+    hopperSubsystem.hopperForward();
   }
 
   // Called once the command ends or is interrupted.

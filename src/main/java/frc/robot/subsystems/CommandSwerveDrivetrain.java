@@ -212,7 +212,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
         gyroConfig = new Pigeon2Configuration();
-        gyroConfig.GyroTrim.GyroScalarZ = -1.37;
+        gyroConfig.GyroTrim.GyroScalarZ = .8;
         gyro.getConfigurator().apply(gyroConfig);
 
         setUpPoseEstimater();
@@ -384,8 +384,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          */
 
         if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
-            throttleLimelight("limelight-tags", true);
-            throttleLimelight("limelight-back", true);
+            throttleLimelight("limelight-front", true);
+            throttleLimelight("limelight-left", true);
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
                         allianceColor == Alliance.Red
@@ -396,13 +396,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         else{
             
-            throttleLimelight("limelight-tags", false);
-            throttleLimelight("limelight-back", false);
+            throttleLimelight("limelight-front", false);
+            throttleLimelight("limelight-left", false);
         }
         // Update the pose
         robotPose = getState().Pose;
-        limelightPoseUpdate("limelight-tags");
-        limelightPoseUpdate("limelight-back");
+        limelightPoseUpdate("limelight-front");
+        limelightPoseUpdate("limelight-left");
         robotPose = getState().Pose;
         // poseEstimator.update(gyroAngle, currentPositions);
 

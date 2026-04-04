@@ -38,8 +38,10 @@ import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterToRPMS;
 import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.resetLEDTimer;
+import frc.robot.commands.hopper.Hopper_Half_Way;
 import frc.robot.commands.hopper.Hopper_In;
 import frc.robot.commands.hopper.Hopper_Out;
+import frc.robot.commands.indexer.Index_Shooter;
 import frc.robot.commands.turret.Turret_Locking;
 //turret commands
 import frc.robot.commands.turret.Turret_Toggle;
@@ -99,12 +101,15 @@ public class RobotContainer {
         OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
         ShooterToRPMS shooterCoast = new ShooterToRPMS(shooter, drivetrain);
         ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
+        //index commands
+        Index_Shooter index_Shooter = new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem);
+
         // turret commands
         Turret_Toggle turret_Toggle = new Turret_Toggle(turret);
         Turret_Locking turret_Locking = new Turret_Locking(turret, drivetrain);
         ZeroTurret zeroTurret = new ZeroTurret(turret, drivetrain);
         // out of bumper intake commands
-        Hopper_Out hopper_Out = new Hopper_Out(hopperSubsystem);
+        Hopper_Out hopper_Out = new Hopper_Out(hopperSubsystem, intakeSubsystem);
         Hopper_In hopper_In = new Hopper_In(hopperSubsystem);
 
         // in the bumper intake commands
@@ -114,8 +119,7 @@ public class RobotContainer {
 
         Command shooterAndHood = shooter_RunToRpmTele
                                         .alongWith(hoodSetToPosition)
-                                        .alongWith(indexerSubsystem.indexShooter())
-                                        .alongWith(hopperSubsystem.runHopper());
+                                        .alongWith(index_Shooter);
 
         public RobotContainer() {
                 // turret commands
@@ -168,7 +172,7 @@ public class RobotContainer {
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
                                 drivetrain.applyRequest(() -> {
-                                        if (driverController.rightBumper().getAsBoolean()) {
+                                        if (driverController.leftBumper().getAsBoolean()) {
                                                 OverrideSpeed = 0.25;
                                         } else {
                                                 OverrideSpeed = 0.75;
@@ -219,7 +223,7 @@ public class RobotContainer {
                 // game manager commands
                 gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
                 intakeSubsystem.setDefaultCommand(intake_Stop);
-                // turret.setDefaultCommand(turret_Locking);
+                turret.setDefaultCommand(turret_Locking);
                 hoodSubsystem.setDefaultCommand(hoodDown);
                 shooter.setDefaultCommand(shooterStop);
 
@@ -227,8 +231,9 @@ public class RobotContainer {
                 manipulatorController.start().onTrue(Commands.runOnce(() -> gameManager.resetTimer(), gameManager));
                 manipulatorController.pov(270).onTrue(Commands.runOnce(() -> gameManager.lostAuto(), gameManager));
                 manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
-                manipulatorController.a().whileTrue(intake_Run);
-                manipulatorController.b().whileTrue(intake_Outtake);
+                manipulatorController.a().whileTrue(hopper_Out.alongWith(intake_Run));
+                manipulatorController.y().whileTrue(new Hopper_Half_Way(hopperSubsystem,intakeSubsystem));
+                manipulatorController.b().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
 
                 // intake commands
 
@@ -238,9 +243,13 @@ public class RobotContainer {
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
                 driverController.rightTrigger(.5).whileTrue(new Shooter_RunToRPM(shooter, drivetrain)
                                                                         .alongWith(new Hood_SetToPosition(hoodSubsystem,drivetrain))
-                                                                        .alongWith(indexerSubsystem.indexShooter())
-                                                                        .alongWith(hopperSubsystem.runHopper()));
-                driverController.rightBumper().whileTrue(hopper_Out.alongWith(intake_Run));
+                                                                        .alongWith(indexerSubsystem.indexShooter()));
+                driverController.rightBumper().whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
+                                                                                .alongWith(new Hopper_Out(hopperSubsystem, intakeSubsystem)));
+                driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem,intakeSubsystem));
+                driverController.b().whileTrue(indexerSubsystem.unjamShooter());
+
+                
         }
 
         public Command getAutonomousCommand() {
