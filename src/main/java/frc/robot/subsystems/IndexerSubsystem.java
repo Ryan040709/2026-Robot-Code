@@ -126,15 +126,15 @@ public class IndexerSubsystem extends SubsystemBase {
             setRampVoltage(0);
     }
 
-    public void setIndexSpeed(){
-        setBeltVelocity(30); 
-            setRollerVelocity(70);
-            setRampVelocity(37);
+    public void setIndexSpeed(double beltSpeed, double rollerSpeed, double rampSpeed){
+        setBeltVelocity(beltSpeed); 
+            setRollerVelocity(rollerSpeed);
+            setRampVelocity(rampSpeed);
     }
 
     public Command indexShooter(){
         return startEnd(()-> {
-            setIndexSpeed();
+            setIndexSpeed(70,30,37);
         },
         ()->{
              stopIndexer();

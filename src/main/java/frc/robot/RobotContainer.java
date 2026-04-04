@@ -101,7 +101,7 @@ public class RobotContainer {
         OverrideHoodPosition hoodDown = new OverrideHoodPosition(hoodSubsystem);
         ShooterToRPMS shooterCoast = new ShooterToRPMS(shooter, drivetrain);
         ShooterStop shooterStop = new ShooterStop(shooter, drivetrain);
-        //index commands
+        // index commands
         Index_Shooter index_Shooter = new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem);
 
         // turret commands
@@ -118,8 +118,12 @@ public class RobotContainer {
         Intake_Run intake_Run = new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain);
 
         Command shooterAndHood = shooter_RunToRpmTele
-                                        .alongWith(hoodSetToPosition)
-                                        .alongWith(index_Shooter);
+                        .alongWith(hoodSetToPosition)
+                        .alongWith(index_Shooter);
+
+        Command shooterAndHoodDriver = new Shooter_RunToRPM(shooter, drivetrain)
+                        .alongWith(new Hood_SetToPosition(hoodSubsystem, drivetrain))
+                        .alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem));
 
         public RobotContainer() {
                 // turret commands
@@ -150,17 +154,17 @@ public class RobotContainer {
                         } catch (Exception e2) {
                         }
                 }
-                //SmartDashboard.putData("turreet", turret);
+                // SmartDashboard.putData("turreet", turret);
 
                 // Put both on the Dashboard
 
-              //  SmartDashboard.putNumber("Shooter RPM", 65);
+                // SmartDashboard.putNumber("Shooter RPM", 65);
 
-              //  SmartDashboard.putNumber("intake speed Front", 0.3);
-              //  SmartDashboard.putNumber("intake speed Back", 0.3);
+                // SmartDashboard.putNumber("intake speed Front", 0.3);
+                // SmartDashboard.putNumber("intake speed Back", 0.3);
 
                 configureBindings();
-               autoChooser = AutoBuilder.buildAutoChooser();
+                autoChooser = AutoBuilder.buildAutoChooser();
 
                 SmartDashboard.putData("autoChoose", autoChooser);
 
@@ -232,7 +236,7 @@ public class RobotContainer {
                 manipulatorController.pov(270).onTrue(Commands.runOnce(() -> gameManager.lostAuto(), gameManager));
                 manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
                 manipulatorController.a().whileTrue(hopper_Out.alongWith(intake_Run));
-                manipulatorController.y().whileTrue(new Hopper_Half_Way(hopperSubsystem,intakeSubsystem));
+                manipulatorController.y().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem));
                 manipulatorController.b().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
 
                 // intake commands
@@ -241,19 +245,16 @@ public class RobotContainer {
                 driverController.start().whileTrue(zeroTurret);
                 driverController.y().whileTrue(shooterCoast);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
-                driverController.rightTrigger(.5).whileTrue(new Shooter_RunToRPM(shooter, drivetrain)
-                                                                        .alongWith(new Hood_SetToPosition(hoodSubsystem,drivetrain))
-                                                                        .alongWith(indexerSubsystem.indexShooter()));
+                driverController.rightTrigger(.5).whileTrue(shooterAndHoodDriver);
                 driverController.rightBumper().whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
-                                                                                .alongWith(new Hopper_Out(hopperSubsystem, intakeSubsystem)));
-                driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem,intakeSubsystem));
-                driverController.b().whileTrue(indexerSubsystem.unjamShooter());
+                                                        .alongWith(new Hopper_Out(hopperSubsystem, intakeSubsystem)));
+                driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem));
+                driverController.b().whileTrue(new Intake_Outtake(intakeSubsystem, hopperSubsystem));
 
-                
         }
 
         public Command getAutonomousCommand() {
-                return  autoChooser.getSelected();
+                return autoChooser.getSelected();
         }
 
         public void teleopInit() {

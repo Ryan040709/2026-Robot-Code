@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
+import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.TalonFXS;
 import com.ctre.phoenix6.signals.MotorArrangementValue;
@@ -29,7 +30,7 @@ public class TurretSubsystem extends SubsystemBase {
     public DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
 
     private TalonFXS turret = new TalonFXS(10);
-    private PositionVoltage m_request = new PositionVoltage(0);
+    private MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
     Translation2d redHubPos = new Translation2d(11.98482, 4.03606); // red hub
 
@@ -96,6 +97,9 @@ public class TurretSubsystem extends SubsystemBase {
         // Voltage
         motorConfig.Voltage.PeakForwardVoltage = Constants.TurretSubsystem.Turret_PeakForwardVoltage;
         motorConfig.Voltage.PeakReverseVoltage = Constants.TurretSubsystem.Turret_PeakReverseVoltage;
+        //motion magic
+        motorConfig.MotionMagic.MotionMagicAcceleration = 2000;
+        motorConfig.MotionMagic.MotionMagicCruiseVelocity = 500;
         // gear ratio
         motorConfig.ExternalFeedback.SensorToMechanismRatio = Constants.TurretSubsystem.Turret_SensorToMechanismRatio;
 
@@ -193,7 +197,8 @@ public class TurretSubsystem extends SubsystemBase {
         double diffX = (turretTarget.getX() - turretPose.getX());
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(
-                MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -20, 315);
+                MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -30, 320);
+            SmartDashboard.putNumber("golden angle", goldenAngle);
         return goldenAngle;
 
     }

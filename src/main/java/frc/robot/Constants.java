@@ -20,9 +20,9 @@ public final class Constants {
     public static double Turret_PeakForwardDutyCycle = 0.5;
     public static double Turret_PeakReverseDutyCycle = -0.5;
 
-    public static double Turret_Slot0_kP = 0.35;
+    public static double Turret_Slot0_kP = 0.5;
     public static double Turret_Slot0_kI = 0;
-    public static double Turret_Slot0_kD = 0.003;
+    public static double Turret_Slot0_kD = 0.006;
 
     public static boolean Turret_StatorCurrentLimitEnable = false;
     public static double Turret_StatorCurrentLimit = 0;
@@ -45,8 +45,8 @@ public final class Constants {
     public static double Turret_PeakForwardTorqueCurrent = 0;
     public static double Turret_PeakReverseTorqueCurrent = 0;
     // soft limits
-    public static double Turret_FowardSoftLimit = 315;
-    public static double Turret_ReverseSoftLimit = -20;
+    public static double Turret_FowardSoftLimit = 320;
+    public static double Turret_ReverseSoftLimit = -30;
 
   }
 
@@ -123,7 +123,7 @@ public final class Constants {
     public static double Hood_PeakForwardDutyCycle = 0.5;
     public static double Hood_PeakReverseDutyCycle = -0.5;
 
-    public static double Hood_Slot0_kP = 6;
+    public static double Hood_Slot0_kP = 3;
     public static double Hood_Slot0_kI = 0;
     public static double Hood_Slot0_kD = 0;
 

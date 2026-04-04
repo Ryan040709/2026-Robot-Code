@@ -4,6 +4,7 @@
 
 package frc.robot.commands.indexer;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.TurretSubsystem;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -16,6 +17,7 @@ public class Index_Shooter extends Command {
   CommandSwerveDrivetrain drivetrain;
   TurretSubsystem turretSubsystem;
   hoodSubsystem hoodSubsystem;
+  Timer timer = new Timer();
 
   /** Creates a new Index_Shooter. */
   public Index_Shooter(IndexerSubsystem indexerSubsystem, CommandSwerveDrivetrain drivetrain,
@@ -31,6 +33,8 @@ public class Index_Shooter extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.reset();
+    timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -38,9 +42,11 @@ public class Index_Shooter extends Command {
   public void execute() {
     if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) &&
         !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getRobotFieldRelativeSpeeds())) {
-      indexerSubsystem.setIndexSpeed();
+      if (timer.hasElapsed(.1)) {
+        indexerSubsystem.setIndexSpeed(70, 30, 37);
+      }
     } else {
-      indexerSubsystem.stopIndexer();
+      indexerSubsystem.setRollerVelocity(0);
     }
   }
 
