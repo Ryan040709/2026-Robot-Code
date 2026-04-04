@@ -14,7 +14,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class HopperSubsystem extends SubsystemBase {
 
     private TalonFX extensionMotor = new TalonFX(25);
-    private TalonFX hopperMotor = new TalonFX(21);
 
     private PositionVoltage positionRequest = new PositionVoltage(0);
     double extentionPosition;
@@ -47,17 +46,7 @@ public class HopperSubsystem extends SubsystemBase {
         
         
 
-        TalonFXConfiguration hopperConfig = new TalonFXConfiguration();        
-        // motor "friction" type?
-        hopperConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
-        hopperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
-        // regulars
-        hopperConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        hopperConfig.CurrentLimits.SupplyCurrentLimit = 40;
-        // Voltage
-        hopperConfig.Voltage.PeakForwardVoltage = 7;
-        hopperConfig.Voltage.PeakReverseVoltage = -7;
-        hopperMotor.getConfigurator().apply(hopperConfig);
+
     }
 
     public void setHopperPosition(double targetPosition) {
@@ -70,22 +59,8 @@ public class HopperSubsystem extends SubsystemBase {
         return extensionMotor.getPosition().getValueAsDouble() > position;
     }
 
-     private void setHopperVoltage(double targetVoltage) {
-        hopperMotor.setVoltage(targetVoltage);
-    }
-    public void hopperForward(){
-        setHopperVoltage(3);
-    }
-     public void hopperReverse(){
-        setHopperVoltage(-3);
-    }
-     public void hopperStop(){
-        setHopperVoltage(0);
-    }
 
-    public Command runHopper(){
-        return startEnd(this::hopperForward, this::hopperStop);
-    }
+
 
     @Override
     public void periodic() {

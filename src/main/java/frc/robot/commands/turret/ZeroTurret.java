@@ -42,7 +42,7 @@ public class ZeroTurret extends Command {
         } else {
             if (turretSubsystem.zeroingSensor.get() == true) {
                 turretSubsystem.setTurretPower(0);
-                turretSubsystem.zeroTurretPosition(2.449463);
+                turretSubsystem.zeroTurretPosition(4.99);
                 turretIsZeroed = true;
             } else if (turretSubsystem.zeroingSensor.get() == false) {
                 turretSubsystem.setTurretPower(.03);

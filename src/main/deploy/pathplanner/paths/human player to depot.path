@@ -79,7 +79,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 110.0
+    "rotation": -70.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

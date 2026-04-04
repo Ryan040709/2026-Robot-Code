@@ -45,8 +45,8 @@ public final class Constants {
     public static double Turret_PeakForwardTorqueCurrent = 0;
     public static double Turret_PeakReverseTorqueCurrent = 0;
     // soft limits
-    public static double Turret_FowardSoftLimit = 320;
-    public static double Turret_ReverseSoftLimit = -30;
+    public static double Turret_FowardSoftLimit = 190;
+    public static double Turret_ReverseSoftLimit = -155;
 
   }
 
@@ -90,7 +90,7 @@ public final class Constants {
     public static double Shooter_PeakForwardDutyCycle = 1;
     public static double Shooter_PeakReverseDutyCycle = -1;
 
-    public static double Shooter_Slot0_kP = 0.2;
+    public static double Shooter_Slot0_kP = 0.35;
     public static double Shooter_Slot0_kI = 0;
     public static double Shooter_Slot0_kD = 0;
     public static double Shooter_Slot0_kV = 0.1195;

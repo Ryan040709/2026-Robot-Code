@@ -17,6 +17,7 @@ public class IndexerSubsystem extends SubsystemBase {
     private TalonFX rollMotor = new TalonFX(18);
     private TalonFX beltMotor = new TalonFX(19);
     private TalonFX rampMotor = new TalonFX(20);
+    private TalonFX hopperMotor = new TalonFX(21);
 
     double rollerSpeed;
     double beltSpeed;
@@ -72,7 +73,7 @@ public class IndexerSubsystem extends SubsystemBase {
         rampConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         rampConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        rampConfig.Slot0.kP = 0.25;
+        rampConfig.Slot0.kP = 0.5;
         rampConfig.Slot0.kI = 0;
         rampConfig.Slot0.kD = 0;
         rampConfig.Slot0.kS = .4;
@@ -84,6 +85,18 @@ public class IndexerSubsystem extends SubsystemBase {
         rampConfig.Voltage.PeakReverseVoltage = -12;
        
         rampMotor.getConfigurator().apply(rampConfig);
+        
+     TalonFXConfiguration hopperConfig = new TalonFXConfiguration();        
+        // motor "friction" type?
+        hopperConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        hopperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
+        // regulars
+        hopperConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
+        hopperConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        // Voltage
+        hopperConfig.Voltage.PeakForwardVoltage = 7;
+        hopperConfig.Voltage.PeakReverseVoltage = -7;
+        hopperMotor.getConfigurator().apply(hopperConfig);
     }
 
     @Override
@@ -116,6 +129,11 @@ public class IndexerSubsystem extends SubsystemBase {
         rampMotor.setVoltage(targetVoltage);
     }
 
+   private void setHopperVoltage(double targetVoltage) {
+        hopperMotor.setVoltage(targetVoltage);
+    }
+   
+
     // uses voltage for better control, much like the original intake
     public void setBeltVoltage(double targetVoltage) {
         beltMotor.setVoltage(targetVoltage);
@@ -124,17 +142,19 @@ public class IndexerSubsystem extends SubsystemBase {
         setBeltVoltage(0);
             setRollerVoltage(0);
             setRampVoltage(0);
+            setHopperVoltage(0);
     }
 
-    public void setIndexSpeed(double beltSpeed, double rollerSpeed, double rampSpeed){
+    public void setIndexSpeed(double beltSpeed, double rollerSpeed, double rampSpeed, double hopperVoltage){
         setBeltVelocity(beltSpeed); 
-            setRollerVelocity(rollerSpeed);
-            setRampVelocity(rampSpeed);
+        setRollerVelocity(rollerSpeed);        
+        setRampVelocity(rampSpeed);
+        setHopperVoltage(hopperVoltage);
     }
 
     public Command indexShooter(){
         return startEnd(()-> {
-            setIndexSpeed(70,30,37);
+            setIndexSpeed(70,30,37, 3);
         },
         ()->{
              stopIndexer();
@@ -144,7 +164,7 @@ public class IndexerSubsystem extends SubsystemBase {
     public Command unjamShooter(){
         return startEnd(()-> {
             setBeltVelocity(60); //50 starting velocity
-            setRollerVelocity(0);
+            setRollerVelocity(-10);
             setRampVelocity(37);
         },
         ()->{

@@ -42,8 +42,11 @@ public class Index_Shooter extends Command {
   public void execute() {
     if (turretSubsystem.turretAtTarget(drivetrain.getTurretTarget(), drivetrain.getTurretOffset()) &&
         !hoodSubsystem.robotIsNeartrench(drivetrain.getPose(), drivetrain.getRobotFieldRelativeSpeeds())) {
-      if (timer.hasElapsed(.1)) {
-        indexerSubsystem.setIndexSpeed(70, 30, 37);
+      if (timer.hasElapsed(.05)&& !timer.hasElapsed(.1)) {
+        indexerSubsystem.setIndexSpeed(70, 0, 37, 3);
+      }
+      else if(timer.hasElapsed(.1)){
+      indexerSubsystem.setIndexSpeed(70, 30, 37, 3);
       }
     } else {
       indexerSubsystem.setRollerVelocity(0);

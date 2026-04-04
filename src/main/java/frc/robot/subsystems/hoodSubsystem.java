@@ -107,8 +107,8 @@ public class hoodSubsystem extends SubsystemBase {
             trenchOffset = redTrenchOffset;
         }
 
-        return (MathUtil.isNear(blueTrenchOffset, robotPose.getX(), 1 + tolerance)
-        ||MathUtil.isNear(redTrenchOffset, robotPose.getX(), 1 + tolerance)
+        return (MathUtil.isNear(blueTrenchOffset, robotPose.getX(), .75 + tolerance)
+        ||MathUtil.isNear(redTrenchOffset, robotPose.getX(), .75 + tolerance)
          && nearSideOfTrench);
 
     }

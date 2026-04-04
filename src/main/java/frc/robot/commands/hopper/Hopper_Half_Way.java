@@ -27,13 +27,13 @@ public class Hopper_Half_Way extends Command {
   @Override
   public void execute() {
     hopperSubsystem.setHopperPosition(15);
-    hopperSubsystem.hopperForward();
+    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hopperSubsystem.hopperStop();
+    
   }
 
   // Returns true when the command should end.

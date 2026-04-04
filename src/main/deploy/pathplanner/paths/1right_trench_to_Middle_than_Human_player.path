@@ -8,68 +8,98 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.538072289156626,
-        "y": 0.43978313253012047
+        "x": 5.423495007132667,
+        "y": 0.4703994293865924
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.827542168674698,
-        "y": 0.6364819277108438
+        "x": 7.946533523537802,
+        "y": 0.6256633380884444
       },
       "prevControl": {
-        "x": 6.3795060240963855,
-        "y": 0.6255542168674697
+        "x": 7.4678031383737515,
+        "y": 0.48333808844507875
       },
       "nextControl": {
-        "x": 7.27974440347037,
-        "y": 0.6475112505107388
+        "x": 8.375473071042533,
+        "y": 0.7531859062655257
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 8.161,
-        "y": 0.8659638554216871
+        "x": 8.215361445783133,
+        "y": 2.756457831325301
       },
       "prevControl": {
-        "x": 7.537795180722891,
-        "y": 0.6915903614457837
+        "x": 9.010387484316723,
+        "y": 1.993076946874516
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "right middle pickup 1"
     }
   ],
   "rotationTargets": [
     {
       "waypointRelativePos": 0.5,
-      "rotationDegrees": 0.0
+      "rotationDegrees": -90.0
     }
   ],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "hopperOut",
+      "waypointRelativePos": 0.34747474747474266,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "hopperOut"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.8484848484848312,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "intake"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 10.0,
-    "maxAcceleration": 10.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.3,
-    "rotation": 110.0
+    "velocity": 2.0,
+    "rotation": -70.0
   },
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

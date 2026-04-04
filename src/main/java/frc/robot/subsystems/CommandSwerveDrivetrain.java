@@ -216,7 +216,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
         gyroConfig = new Pigeon2Configuration();
-        gyroConfig.GyroTrim.GyroScalarZ = .8;
+        gyroConfig.GyroTrim.GyroScalarZ = -
+        1.37;
         gyro.getConfigurator().apply(gyroConfig);
 
         setUpPoseEstimater();

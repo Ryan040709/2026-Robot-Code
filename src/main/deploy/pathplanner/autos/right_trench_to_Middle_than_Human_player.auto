@@ -42,59 +42,9 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "wait",
-                            "data": {
-                              "waitTime": 3.0
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
                             "type": "path",
                             "data": {
                               "pathName": "1right_trench_to_Middle_than_Human_player"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-stop"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "2right_trench_to_Middle_than_Human_player"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
                             }
                           }
                         ]
@@ -108,12 +58,6 @@
                             "type": "path",
                             "data": {
                               "pathName": "Right pickup to Trench"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake-stop"
                             }
                           }
                         ]
@@ -130,89 +74,25 @@
                             }
                           },
                           {
+                            "type": "named",
+                            "data": {
+                              "name": "indexShooter"
+                            }
+                          },
+                          {
                             "type": "sequential",
                             "data": {
                               "commands": [
                                 {
-                                  "type": "race",
+                                  "type": "wait",
                                   "data": {
-                                    "commands": [
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "intake"
-                                        }
-                                      },
-                                      {
-                                        "type": "path",
-                                        "data": {
-                                          "pathName": "4right_trench_to_Middle_than_Human_player"
-                                        }
-                                      }
-                                    ]
+                                    "waitTime": 5.0
                                   }
                                 },
                                 {
-                                  "type": "race",
+                                  "type": "named",
                                   "data": {
-                                    "commands": [
-                                      {
-                                        "type": "wait",
-                                        "data": {
-                                          "waitTime": 2.0
-                                        }
-                                      },
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "intake"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "race",
-                                  "data": {
-                                    "commands": [
-                                      {
-                                        "type": "wait",
-                                        "data": {
-                                          "waitTime": 0.25
-                                        }
-                                      },
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "intake"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "race",
-                                  "data": {
-                                    "commands": [
-                                      {
-                                        "type": "wait",
-                                        "data": {
-                                          "waitTime": 2.0
-                                        }
-                                      },
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "intake"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "path",
-                                  "data": {
-                                    "pathName": "right bump to Human Player Zone2"
+                                    "name": "hopperInHalfWay"
                                   }
                                 }
                               ]

@@ -3,41 +3,41 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.160722891566266,
-        "y": 1.9480000000000004
+        "x": 8.215361445783133,
+        "y": 2.756457831325301
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.428775700173987,
-        "y": 1.3983964410434142
+        "x": 6.652698795180723,
+        "y": 1.9929366481618325
       },
       "isLocked": false,
       "linkedName": "right middle pickup 1"
     },
     {
       "anchor": {
-        "x": 5.691060240963855,
-        "y": 0.6
+        "x": 6.193734939759036,
+        "y": 0.48349397590361487
       },
       "prevControl": {
-        "x": 7.7174361541219305,
-        "y": 0.6163591997599056
+        "x": 7.278451506920856,
+        "y": 0.7053678191867168
       },
       "nextControl": {
-        "x": 4.2628195167855605,
-        "y": 0.5884696244362423
+        "x": 5.712915662650602,
+        "y": 0.3851445783132522
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.516,
-        "y": 0.5999999999999996
+        "x": 2.9263493975903616,
+        "y": 0.48349397590361487
       },
       "prevControl": {
-        "x": 5.223390722950215,
-        "y": 0.6256752227659224
+        "x": 5.122819277108435,
+        "y": 0.4616385542168677
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,27 +46,16 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 0.7063527321190601,
       "rotationDegrees": 0.0
     }
   ],
   "constraintZones": [],
-  "pointTowardsZones": [
-    {
-      "fieldPosition": {
-        "x": 4.62554,
-        "y": 4.03606
-      },
-      "rotationOffset": 0.0,
-      "minWaypointRelativePos": 1.5,
-      "maxWaypointRelativePos": 1.5,
-      "name": "Point Towards Zone"
-    }
-  ],
+  "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 10.0,
-    "maxAcceleration": 10.0,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
     "nominalVoltage": 12.0,
@@ -79,8 +68,8 @@
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
-    "velocity": 1.0,
-    "rotation": 110.0
+    "velocity": 2.0,
+    "rotation": -70.0
   },
   "useDefaultConstraints": true
 }

@@ -42,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 110.0
+    "rotation": -70.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -45.0
+    "rotation": 135.0
   },
   "useDefaultConstraints": false
 }

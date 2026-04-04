@@ -111,6 +111,7 @@ public class RobotContainer {
         // out of bumper intake commands
         Hopper_Out hopper_Out = new Hopper_Out(hopperSubsystem, intakeSubsystem);
         Hopper_In hopper_In = new Hopper_In(hopperSubsystem);
+        Hopper_Half_Way hopper_Half_Way = new Hopper_Half_Way(hopperSubsystem, intakeSubsystem);
 
         // in the bumper intake commands
         Intake_Stop intake_Stop = new Intake_Stop(intakeSubsystem, hopperSubsystem);
@@ -137,10 +138,12 @@ public class RobotContainer {
                 NamedCommands.registerCommand("intake-outtake", intake_Outtake);
                 NamedCommands.registerCommand("intake", intake_Run);
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
-                NamedCommands.registerCommand("intake-no-outta", intake_Run);
+                NamedCommands.registerCommand("hopperOut", hopper_Out);
+                NamedCommands.registerCommand("hopperIn", hopper_In);
+                NamedCommands.registerCommand("hoodUp", hoodSetToPosition);
+                NamedCommands.registerCommand("hopperInHalfWay", hopper_Half_Way);
                 // // shooter commands
-                NamedCommands.registerCommand("intake-intakeToHopper", Commands.none());
-                NamedCommands.registerCommand("shoot", shooter_RunToRPM);
+                NamedCommands.registerCommand("indexShooter", index_Shooter);
                 // climber commands
                 // nothing right now
                 // driving commands
@@ -237,13 +240,15 @@ public class RobotContainer {
                 manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
                 manipulatorController.a().whileTrue(hopper_Out.alongWith(intake_Run));
                 manipulatorController.y().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem));
-                manipulatorController.b().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
+                manipulatorController.x().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
+                manipulatorController.b().whileTrue(indexerSubsystem.unjamShooter());
 
                 // intake commands
 
                 driverController.pov(180).whileTrue(intake_Outtake);
                 driverController.start().whileTrue(zeroTurret);
                 driverController.y().whileTrue(shooterCoast);
+                driverController.x().whileTrue(hopper_In);
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
                 driverController.rightTrigger(.5).whileTrue(shooterAndHoodDriver);
                 driverController.rightBumper().whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)

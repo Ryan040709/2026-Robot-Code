@@ -27,21 +27,17 @@ public class Hopper_Out extends Command {
   @Override
   public void execute() {
     hopperSubsystem.setHopperPosition(31); 
-         if(hopperSubsystem.PastPosition(5))
-         {
-      hopperSubsystem.hopperForward();
-    }
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    hopperSubsystem.hopperStop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return hopperSubsystem.atPosition(31);
   }
 }
