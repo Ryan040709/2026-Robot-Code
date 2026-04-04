@@ -18,7 +18,7 @@ public class drive_Path extends Command {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    if(true){
+    if(false && true){ // I get its a test, but I think we could maybe try something else?
       try{
         delegate = AutoBuilder.followPath(PathPlannerPath.fromPathFile("splitPath2"));
       }catch(Exception e){

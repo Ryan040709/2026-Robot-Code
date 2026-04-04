@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.ctre.phoenix6.HootReplay;
 import com.ctre.phoenix6.SignalLogger;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.configs.Pigeon2Configuration;
@@ -20,6 +21,8 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+
+import com.ctre.phoenix6.HootReplay;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
@@ -80,15 +83,16 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveSteerGains steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
-    // IMPORTANT: Old Turret Position = new Transform2d(5.6475 / 39.37, 2.9375 / 39.37, Rotation2d.fromDegrees(0));
+    // IMPORTANT: Old Turret Position = new Transform2d(5.6475 / 39.37, 2.9375 /
+    // 39.37, Rotation2d.fromDegrees(0));
 
     private static final Transform2d turretOffsetFromRobot = new Transform2d(5.625 / 39.37, -5.63954 / 39.37,
 
             Rotation2d.fromDegrees(0));
-    
+
     // turret variables
     private static final double turretToRobotRadius = turretOffsetFromRobot.getTranslation().getNorm();
-    private static final double turretTanAngle = turretOffsetFromRobot.getTranslation().getAngle().getDegrees()+90; 
+    private static final double turretTanAngle = turretOffsetFromRobot.getTranslation().getAngle().getDegrees() + 90;
     // gyro
     Pigeon2 gyro = new Pigeon2(SwerveConstants.kPigeonId, SwerveConstants.kCANBus.getName());
     Pigeon2Configuration gyroConfig;
@@ -393,12 +397,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                                 : kBlueAlliancePerspectiveRotation);
                 m_hasAppliedOperatorPerspective = true;
             });
-        }
-        else{
-            
+        } else {
+
             throttleLimelight("limelight-front", false);
             throttleLimelight("limelight-left", false);
         }
+
         // Update the pose
         robotPose = getState().Pose;
         limelightPoseUpdate("limelight-front");
@@ -457,10 +461,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         var turretSpeeds = turretVelocity();
         var chassisSpeeds = getRobotRelativeChassisSpeeds();
         var fieldSpeeds = convertToFieldRelative(
-            turretSpeeds.getX()+chassisSpeeds.vxMetersPerSecond, 
-            turretSpeeds.getY()+chassisSpeeds.vyMetersPerSecond);
+                turretSpeeds.getX() + chassisSpeeds.vxMetersPerSecond,
+                turretSpeeds.getY() + chassisSpeeds.vyMetersPerSecond);
 
-            SmartDashboard.putString("field speeds", fieldSpeeds.toString());
+        SmartDashboard.putString("field speeds", fieldSpeeds.toString());
 
         return new Translation2d(fieldSpeeds.getX(), fieldSpeeds.getY());
     }
@@ -545,7 +549,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
                         Math.pow(targetPoseRobotSpace.getZ(), 2));
         if (robotPoseEstimateTags != null) {
-            if (robotPoseEstimateTags.tagCount != 0 
+            if (robotPoseEstimateTags.tagCount != 0
                     && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
                     && distance < 3.5
                     && !(robotPose.getY() > ((0.95 * robotPose.getX()) + 4))) {
@@ -553,24 +557,37 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 // distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                 // robotPoseEstimateTags.timestampSeconds);
-                //  System.out.println("update Limelight");
+                // System.out.println("update Limelight");
                 addVisionMeasurement(robotPoseEstimateTags.pose, robotPoseEstimateTags.timestampSeconds,
                         VecBuilder.fill(Math.pow(distance, 2), Math.pow(distance, 2), 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
                 // robotPoseEstimateTurret.timestampSeconds);
 
-            }
-            else{
-             //   System.out.println("not using limelight");
+            } else {
+                // System.out.println("not using limelight");
             }
         }
         // } else {
         // System.out.println("limelight estimation null");
         // }
-    }
-    public void throttleLimelight( String limelightName, boolean turnOn ){
+
+        // Fetch the logged raw vision measurements
+
+
         
-        LimelightHelpers.SetThrottle( limelightName, turnOn? 100 : 0);
+        // var visionData = HootReplay.getStruct("camera pose", Pose2d.struct);
+        // if (visionData.status.isOK() && visionData.value.isPresent()) {
+        //     // now run regular vision processing on the vision data
+        //     var cameraPose = visionData.value.get();
+        //     if (isCameraPoseValid(cameraPose)) {
+        //         addVisionMeasurement(cameraPose, visionData.timestamp);
+        //     }
+        // }
+    }
+
+    public void throttleLimelight(String limelightName, boolean turnOn) {
+
+        LimelightHelpers.SetThrottle(limelightName, turnOn ? 100 : 0);
     }
 
     public boolean isFeeding() {

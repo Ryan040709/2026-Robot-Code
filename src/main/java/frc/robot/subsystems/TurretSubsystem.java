@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.ctre.phoenix6.HootReplay;
 import com.ctre.phoenix6.configs.TalonFXSConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicVoltage;
 import com.ctre.phoenix6.controls.PositionVoltage;
@@ -23,6 +24,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //our constants
 import frc.robot.Constants;
+import frc.robot.SwerveConstants;
 
 public class TurretSubsystem extends SubsystemBase {
     private static final Logger log = LogManager.getLogger(TurretSubsystem.class);
@@ -30,6 +32,7 @@ public class TurretSubsystem extends SubsystemBase {
     public DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
 
     private TalonFXS turret = new TalonFXS(10);
+    private TalonFXS turretHoot = new TalonFXS(10, SwerveConstants.kCANBus.getName());
     private MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
     Translation2d redHubPos = new Translation2d(11.98482, 4.03606); // red hub
@@ -74,6 +77,15 @@ public class TurretSubsystem extends SubsystemBase {
 
     public TurretSubsystem() {
 
+        // hoot testing stuff!
+
+        // stop and return to start of log
+        HootReplay.stop();
+        var startPos = turretHoot.getPosition().getValue();
+        // advance by 1 second and compare positions
+        HootReplay.stepTiming(1.0);
+        var endPos = turretHoot.getPosition().getValue();
+
         // pid
         TalonFXSConfiguration motorConfig = new TalonFXSConfiguration();
         motorConfig.MotorOutput.PeakForwardDutyCycle = Constants.TurretSubsystem.Turret_PeakForwardDutyCycle;
@@ -97,7 +109,7 @@ public class TurretSubsystem extends SubsystemBase {
         // Voltage
         motorConfig.Voltage.PeakForwardVoltage = Constants.TurretSubsystem.Turret_PeakForwardVoltage;
         motorConfig.Voltage.PeakReverseVoltage = Constants.TurretSubsystem.Turret_PeakReverseVoltage;
-        //motion magic
+        // motion magic
         motorConfig.MotionMagic.MotionMagicAcceleration = 2000;
         motorConfig.MotionMagic.MotionMagicCruiseVelocity = 500;
         // gear ratio
@@ -163,8 +175,8 @@ public class TurretSubsystem extends SubsystemBase {
     }
 
     public void determineLockingMethod(Pose2d turretTarget, Pose2d turretPose) {
-            turret.setControl(m_request.withPosition((calculateAngleToHub(turretTarget, turretPose))));
-            limelightTurret = false;
+        turret.setControl(m_request.withPosition((calculateAngleToHub(turretTarget, turretPose))));
+        limelightTurret = false;
     }
 
     public void setToZero() {
@@ -198,7 +210,7 @@ public class TurretSubsystem extends SubsystemBase {
         turretHubAngle = Math.toDegrees(Math.atan2(diffY, diffX));
         double goldenAngle = MathUtil.clamp(
                 MathUtil.inputModulus((turretHubAngle - turretPose.getRotation().getDegrees()), -30, 330), -30, 320);
-            SmartDashboard.putNumber("golden angle", goldenAngle);
+        SmartDashboard.putNumber("golden angle", goldenAngle);
         return goldenAngle;
 
     }
@@ -214,7 +226,7 @@ public class TurretSubsystem extends SubsystemBase {
     public boolean turretAtTarget(Pose2d turretTarget, Pose2d turretPose) {
         boolean atTarget = MathUtil.isNear(calculateAngleToHub(turretTarget, turretPose), turretPosition, 10);
         SmartDashboard.putBoolean("Turret is at Target", atTarget);
-        log.warn("turret is off {} degrees", calculateAngleToHub(turretTarget, turretPose)-turretPosition);
+        log.warn("turret is off {} degrees", calculateAngleToHub(turretTarget, turretPose) - turretPosition);
         return atTarget;
     }
 

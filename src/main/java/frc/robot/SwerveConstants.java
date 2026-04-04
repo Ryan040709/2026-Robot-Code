@@ -78,6 +78,7 @@ public class SwerveConstants {
     // All swerve devices must share the same CAN bus
     public static final CANBus kCANBus = new CANBus("1023", "./logs/example.hoot");
 
+
     // Theoretical free speed (m/s) at 12 V applied output;
     // This needs to be tuned to your individual robot
     public static final LinearVelocity kSpeedAt12Volts = MetersPerSecond.of(5.3020352);
