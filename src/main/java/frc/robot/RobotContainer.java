@@ -51,8 +51,7 @@ import frc.robot.commands.turret.ZeroTurret;
 public class RobotContainer {
 
         // kSpeedAt12Volts desired top speed
-        private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond); // keep at 0.5, Andy said
-                                                                                           // so...
+        private double MaxSpeed = 1 * SwerveConstants.kSpeedAt12Volts.in(MetersPerSecond);
         private double OverrideSpeed = .75;
 
         // was .75 if too fast

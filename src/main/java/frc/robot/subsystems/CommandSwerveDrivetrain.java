@@ -83,9 +83,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveSteerGains steerCharacterization = new SwerveRequest.SysIdSwerveSteerGains();
     private final SwerveRequest.SysIdSwerveRotation rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
-    // IMPORTANT: Old Turret Position = new Transform2d(5.6475 / 39.37, 2.9375 /
-    // 39.37, Rotation2d.fromDegrees(0));
-
     private static final Transform2d turretOffsetFromRobot = new Transform2d(5.625 / 39.37, -5.63954 / 39.37,
 
             Rotation2d.fromDegrees(0));
@@ -247,7 +244,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      *                                  and radians
      * @param visionStandardDeviation   The standard deviation for vision
      *                                  calculation
-     *                                  in the form [x, y, theta]ᵀ, with units in
+     *                                  in the form [x, y, z, theta]ᵀ, with units in
      *                                  meters
      *                                  and radians
      * @param modules                   Constants for each specific module
@@ -270,25 +267,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     private void setUpPoseEstimater() {
-        // poseEstimator = new SwerveDrivePoseEstimator(
-        // m_kinematics,
-        // gyro.getRotation2d(),
-        // getModulePositions(true),
-
-        // new Pose2d(3, 3, Rotation2d.fromDegrees(180)));
-
         SmartDashboard.putData("Field", m_Fields);
     }
-
-    // creating array for swerve module postions
-    // private SwerveModulePosition[] getModulePositions(boolean refresh) {
-    // SwerveModulePosition[] positions = {
-    // getModules()[0].getPosition(refresh),
-    // getModules()[1].getPosition(refresh),
-    // getModules()[2].getPosition(refresh),
-    // getModules()[3].getPosition(refresh) };
-    // return positions;
-    // }
 
     public ChassisSpeeds getRobotRelativeSpeeds() {
         return m_kinematics.toChassisSpeeds(getModuleStates());
@@ -575,15 +555,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         // Fetch the logged raw vision measurements
 
 
-        
-        // var visionData = HootReplay.getStruct("camera pose", Pose2d.struct);
-        // if (visionData.status.isOK() && visionData.value.isPresent()) {
-        //     // now run regular vision processing on the vision data
-        //     var cameraPose = visionData.value.get();
-        //     if (isCameraPoseValid(cameraPose)) {
-        //         addVisionMeasurement(cameraPose, visionData.timestamp);
-        //     }
-        // }
+
+        var visionData = HootReplay.getStruct("camera pose", Pose2d.struct);
+        if (visionData.status.isOK() && visionData.value.isPresent()) {
+            // now run regular vision processing on the vision data
+            var cameraPose = visionData.value.get();
+            if (true) {
+                addVisionMeasurement(cameraPose, visionData.timestamp);
+            }
+        }
     }
 
     public void throttleLimelight(String limelightName, boolean turnOn) {
