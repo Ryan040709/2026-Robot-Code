@@ -245,7 +245,6 @@ public class RobotContainer {
 
                 // intake commands
 
-                driverController.pov(180).whileTrue(intake_Outtake);
                 driverController.start().whileTrue(zeroTurret);
                 driverController.y().whileTrue(shooterCoast);
                 driverController.x().whileTrue(hopper_In);

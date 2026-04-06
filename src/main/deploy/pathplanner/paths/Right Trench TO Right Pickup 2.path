@@ -69,7 +69,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

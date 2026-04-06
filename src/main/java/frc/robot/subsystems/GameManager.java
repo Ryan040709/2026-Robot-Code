@@ -174,7 +174,7 @@ public class GameManager extends SubsystemBase {
     double warningColor = -.07;// gold strobe
     double endgameColor = 0.91;// violet
     double defaultColor = -0.85;// shot red
-    double vibrationPower = .1;
+    double vibrationPower = 0;
 
     if (DriverStation.isEnabled()) {
       // auto
