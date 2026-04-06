@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.65,
-        "y": 4.25
+        "x": 8.5,
+        "y": 5.25
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.40341292579393,
-        "y": 3.134493249241504
+        "x": 8.25341292579393,
+        "y": 4.134493249241504
       },
       "isLocked": false,
       "linkedName": "left far cutsweep end RAEL"
