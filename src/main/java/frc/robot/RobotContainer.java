@@ -247,13 +247,13 @@ public class RobotContainer {
 
                 driverController.start().whileTrue(zeroTurret);
                 driverController.y().whileTrue(shooterCoast);
-                driverController.x().whileTrue(hopper_In);
+                driverController.x().whileTrue(hopper_In.alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
                 driverController.leftTrigger(.5).whileTrue(hoodDown);
                 driverController.rightTrigger(.5).whileTrue(shooterAndHoodDriver);
                 driverController.rightBumper().whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
                                                         .alongWith(new Hopper_Out(hopperSubsystem, intakeSubsystem)));
-                driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem));
-                driverController.b().whileTrue(new Intake_Outtake(intakeSubsystem, hopperSubsystem));
+                driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem).alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
+                driverController.b().whileTrue(indexerSubsystem.unjamShooter().alongWith(new Intake_Outtake(intakeSubsystem, hopperSubsystem)));
 
         }
 

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.5,
-        "y": 6.9
+        "x": 8.25706134094151,
+        "y": 6.887132530120482
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.5,
-        "y": 6.0019140371801445
+        "x": 8.25706134094151,
+        "y": 5.989046567300626
       },
       "isLocked": false,
       "linkedName": "left far cutsweep start"
     },
     {
       "anchor": {
-        "x": 8.5,
-        "y": 5.25
+        "x": 8.25706134094151,
+        "y": 5.641373493975904
       },
       "prevControl": {
-        "x": 8.5,
-        "y": 5.564821708672014
+        "x": 8.25706134094151,
+        "y": 5.956195202647918
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
+    "maxVelocity": 1.5,
     "maxAcceleration": 3.0,
     "maxAngularVelocity": 540.0,
     "maxAngularAcceleration": 720.0,
@@ -41,14 +41,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.3,
-    "rotation": 59.99999999999999
+    "velocity": 1.0,
+    "rotation": 70.0
   },
   "reversed": false,
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 0.0,
-    "rotation": 59.99999999999999
+    "rotation": 70.0
   },
   "useDefaultConstraints": false
 }

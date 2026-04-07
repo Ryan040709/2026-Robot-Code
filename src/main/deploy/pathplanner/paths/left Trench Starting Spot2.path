@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.35,
-        "y": 7.686
+        "x": 4.414279600570612,
+        "y": 7.6125392296718974
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.341373493975904,
-        "y": 7.367695396972506
+        "x": 5.4493723252496435,
+        "y": 7.405520684736091
       },
       "isLocked": false,
       "linkedName": "left trench starting point FAR"
     },
     {
       "anchor": {
-        "x": 8.5,
-        "y": 6.9
+        "x": 8.25706134094151,
+        "y": 6.887132530120482
       },
       "prevControl": {
-        "x": 8.5,
-        "y": 7.568737399100954
+        "x": 8.062981455064193,
+        "y": 7.236476324699655
       },
       "nextControl": null,
       "isLocked": false,
@@ -39,12 +39,25 @@
   "eventMarkers": [
     {
       "name": "hopperOut",
-      "waypointRelativePos": 0.5,
+      "waypointRelativePos": 0.14332552693208658,
       "endWaypointRelativePos": null,
       "command": {
-        "type": "named",
+        "type": "parallel",
         "data": {
-          "name": "hopperOut"
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "hopperOut"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
         }
       }
     }
@@ -58,8 +71,8 @@
     "unlimited": true
   },
   "goalEndState": {
-    "velocity": 0.0,
-    "rotation": 59.99999999999999
+    "velocity": 1.0,
+    "rotation": 70.0
   },
   "reversed": false,
   "folder": "Auton Path Links",

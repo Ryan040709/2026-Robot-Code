@@ -85,14 +85,14 @@ public class IndexerSubsystem extends SubsystemBase {
         rampConfig.Voltage.PeakReverseVoltage = -12;
        
         rampMotor.getConfigurator().apply(rampConfig);
-        
+
      TalonFXConfiguration hopperConfig = new TalonFXConfiguration();        
         // motor "friction" type?
         hopperConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         hopperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         // regulars
         hopperConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        hopperConfig.CurrentLimits.SupplyCurrentLimit = 40;
+        hopperConfig.CurrentLimits.SupplyCurrentLimit = 7;
         // Voltage
         hopperConfig.Voltage.PeakForwardVoltage = 7;
         hopperConfig.Voltage.PeakReverseVoltage = -7;

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.5,
-        "y": 5.25
+        "x": 8.25706134094151,
+        "y": 5.641373493975904
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.25341292579393,
-        "y": 4.134493249241504
+        "x": 8.01047426673544,
+        "y": 4.525866743217408
       },
       "isLocked": false,
       "linkedName": "left far cutsweep end RAEL"
@@ -69,7 +69,7 @@
   "folder": "Auton Path Links",
   "idealStartingState": {
     "velocity": 3.0,
-    "rotation": 59.99999999999999
+    "rotation": 70.0
   },
   "useDefaultConstraints": true
 }

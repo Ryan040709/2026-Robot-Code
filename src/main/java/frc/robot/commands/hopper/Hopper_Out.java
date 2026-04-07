@@ -38,6 +38,6 @@ public class Hopper_Out extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return hopperSubsystem.atPosition(31);
+    return hopperSubsystem.atPosition(32);
   }
 }

@@ -35,7 +35,7 @@ public class HopperSubsystem extends SubsystemBase {
         extensionConfig.Voltage.PeakReverseVoltage = -6;
         //limits
         extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-        extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 31;
+        extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 32;
         extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
 
