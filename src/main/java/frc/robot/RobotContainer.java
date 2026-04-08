@@ -167,7 +167,7 @@ public class RobotContainer {
                 // SmartDashboard.putNumber("intake speed Back", 0.3);
 
                 configureBindings();
-                autoChooser = AutoBuilder.buildAutoChooser();
+                autoChooser = AutoBuilder.buildAutoChooserWithOptionsModifier(autos -> autos.filter((auto) -> !auto.getName().startsWith("test_")));
 
                 SmartDashboard.putData("autoChoose", autoChooser);
                 SmartDashboard.putData( CommandScheduler.getInstance());
