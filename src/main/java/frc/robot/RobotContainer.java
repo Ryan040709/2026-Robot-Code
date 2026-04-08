@@ -233,7 +233,7 @@ public class RobotContainer {
                 intakeSubsystem.setDefaultCommand(intake_Stop);
                 turret.setDefaultCommand(turret_Locking);
                 hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterStop);
+                shooter.setDefaultCommand(shooterCoast);
 
                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
                 manipulatorController.start().onTrue(Commands.runOnce(() -> gameManager.resetTimer(), gameManager));
