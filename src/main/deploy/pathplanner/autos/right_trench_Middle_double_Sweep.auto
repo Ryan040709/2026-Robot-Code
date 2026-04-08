@@ -98,7 +98,7 @@
                                 {
                                   "type": "wait",
                                   "data": {
-                                    "waitTime": 1.0
+                                    "waitTime": 0.75
                                   }
                                 },
                                 {
@@ -128,44 +128,6 @@
                                         "type": "wait",
                                         "data": {
                                           "waitTime": 0.5
-                                        }
-                                      },
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "hopperOut"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "race",
-                                  "data": {
-                                    "commands": [
-                                      {
-                                        "type": "wait",
-                                        "data": {
-                                          "waitTime": 0.5
-                                        }
-                                      },
-                                      {
-                                        "type": "named",
-                                        "data": {
-                                          "name": "hopperInHalfWay"
-                                        }
-                                      }
-                                    ]
-                                  }
-                                },
-                                {
-                                  "type": "race",
-                                  "data": {
-                                    "commands": [
-                                      {
-                                        "type": "wait",
-                                        "data": {
-                                          "waitTime": 0.2
                                         }
                                       },
                                       {
@@ -222,7 +184,7 @@
                                       {
                                         "type": "wait",
                                         "data": {
-                                          "waitTime": 0.75
+                                          "waitTime": 1.5
                                         }
                                       },
                                       {
@@ -260,7 +222,7 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
