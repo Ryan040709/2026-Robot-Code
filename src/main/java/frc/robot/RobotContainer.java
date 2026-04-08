@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
@@ -169,6 +170,7 @@ public class RobotContainer {
                 autoChooser = AutoBuilder.buildAutoChooser();
 
                 SmartDashboard.putData("autoChoose", autoChooser);
+                SmartDashboard.putData( CommandScheduler.getInstance());
 
         }
 
@@ -236,9 +238,12 @@ public class RobotContainer {
                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
                 manipulatorController.start().onTrue(Commands.runOnce(() -> gameManager.resetTimer(), gameManager));
                 manipulatorController.pov(270).onTrue(Commands.runOnce(() -> gameManager.lostAuto(), gameManager));
-                manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
+               // manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
                 manipulatorController.a().whileTrue(hopper_Out.alongWith(intake_Run));
-                manipulatorController.y().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem));
+                manipulatorController.y().whileTrue(new Hopper_In(hopperSubsystem).alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
+                manipulatorController.y().and(manipulatorController.pov(90))
+                                        .whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
+                                                .alongWith(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem)));
                 manipulatorController.x().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
                 manipulatorController.b().whileTrue(indexerSubsystem.unjamShooter());
 

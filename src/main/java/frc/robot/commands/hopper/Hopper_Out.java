@@ -26,7 +26,7 @@ public class Hopper_Out extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hopperSubsystem.setHopperPosition(31); 
+    hopperSubsystem.setHopperPosition(31.5); 
 
   }
 
@@ -38,6 +38,6 @@ public class Hopper_Out extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return hopperSubsystem.atPosition(32);
+    return hopperSubsystem.atPosition(31.5);
   }
 }

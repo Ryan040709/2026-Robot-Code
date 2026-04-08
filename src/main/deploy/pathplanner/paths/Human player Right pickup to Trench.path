@@ -62,13 +62,13 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0.0,
+    "velocity": 1.0,
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Auton Path Links",
+  "folder": "Ryan's autos",
   "idealStartingState": {
-    "velocity": 0.25,
+    "velocity": 1.5,
     "rotation": -70.0
   },
   "useDefaultConstraints": false

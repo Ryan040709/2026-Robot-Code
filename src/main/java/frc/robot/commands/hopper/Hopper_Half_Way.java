@@ -26,7 +26,7 @@ public class Hopper_Half_Way extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    hopperSubsystem.setHopperPosition(15);
+    hopperSubsystem.setHopperPosition(12);
     
   }
 

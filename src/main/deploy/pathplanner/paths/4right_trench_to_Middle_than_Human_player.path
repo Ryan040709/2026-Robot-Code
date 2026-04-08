@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.516,
-        "y": 0.5999999999999996
+        "x": 3.6912891566265067,
+        "y": 0.6036987951807224
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.281414220795722,
-        "y": 0.5135736602931615
+        "x": 3.4673564521058813,
+        "y": 0.49254959884499405
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "right first pass end"
     },
     {
       "anchor": {
-        "x": 0.26,
-        "y": 0.9000000000000004
+        "x": 0.6724,
+        "y": 0.724
       },
       "prevControl": {
-        "x": 0.7533454570171565,
-        "y": 0.9354833220100307
+        "x": 0.5797018184697438,
+        "y": 0.9561789119213535
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,6 +29,14 @@
     }
   ],
   "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2142292490118503,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": -90.0
+    },
     {
       "waypointRelativePos": 0.85,
       "rotationDegrees": 0.0
@@ -52,8 +60,8 @@
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
-    "velocity": 1.5,
-    "rotation": 0.0
+    "velocity": 1.0,
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

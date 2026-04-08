@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.636650602409638,
-        "y": 0.4616385542168677
+        "x": 4.42344578313253,
+        "y": 0.45071084337349476
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.767554216867469,
-        "y": 0.3086506024096388
+        "x": 6.554349397590361,
+        "y": 0.29772289156626586
       },
       "isLocked": false,
       "linkedName": null
@@ -20,8 +20,8 @@
         "y": 0.7785421686746998
       },
       "prevControl": {
-        "x": 7.150584892978588,
-        "y": 0.6912649128814644
+        "x": 7.150584892978586,
+        "y": 0.6912649128814633
       },
       "nextControl": {
         "x": 7.942168674698795,
@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 8.01866265060241,
-        "y": 2.2756385542168687
+        "y": 2.4504819277108436
       },
       "prevControl": {
         "x": 8.401132530120481,
-        "y": 1.2375060240963864
+        "y": 1.4123493975903614
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,8 +46,12 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.5,
-      "rotationDegrees": -90.0
+      "waypointRelativePos": 0.096442687747035,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.3802371541502008,
+      "rotationDegrees": -70.0
     }
   ],
   "constraintZones": [
@@ -69,7 +73,7 @@
   "eventMarkers": [
     {
       "name": "hopperOut",
-      "waypointRelativePos": 0.34747474747474266,
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "parallel",
@@ -87,7 +91,7 @@
     },
     {
       "name": "intake",
-      "waypointRelativePos": 0.8484848484848312,
+      "waypointRelativePos": 0.4590163934426249,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -106,14 +110,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 1.5,
+    "velocity": 0.25,
     "rotation": -70.0
   },
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -90.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }
