@@ -92,7 +92,7 @@ public class IndexerSubsystem extends SubsystemBase {
         hopperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         // regulars
         hopperConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        hopperConfig.CurrentLimits.SupplyCurrentLimit = 20;
+        hopperConfig.CurrentLimits.SupplyCurrentLimit = 10;
         // Voltage
         hopperConfig.Voltage.PeakForwardVoltage = 7;
         hopperConfig.Voltage.PeakReverseVoltage = -7;
@@ -102,7 +102,7 @@ public class IndexerSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
        beltSpeed =  SmartDashboard.getNumber("BeltSpeed", 60);
-       
+
        rollerSpeed = SmartDashboard.getNumber("rollerSpeed", 25);
        rampSpeed = SmartDashboard.getNumber("rampSpeed", 37);
 
