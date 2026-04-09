@@ -172,6 +172,16 @@ public class IndexerSubsystem extends SubsystemBase {
            stopIndexer();
         }
         );
+    };    public Command unjamBelt(){
+        return startEnd(()-> {
+            setBeltVelocity(-10); //50 starting velocity
+            setRollerVelocity(10);
+            setRampVelocity(37);
+        },
+        ()->{
+           stopIndexer();
+        }
+        );
     }
 }
 

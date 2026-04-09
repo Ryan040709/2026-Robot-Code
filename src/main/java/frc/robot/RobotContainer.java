@@ -246,6 +246,7 @@ public class RobotContainer {
                                                 .alongWith(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem)));
                 manipulatorController.x().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
                 manipulatorController.b().whileTrue(indexerSubsystem.unjamShooter());
+                manipulatorController.pov(180).whileTrue(indexerSubsystem.unjamBelt());
 
                 // intake commands
 
