@@ -563,14 +563,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
 
 
-        var visionData = HootReplay.getStruct("camera pose", Pose2d.struct);
-        if (visionData.status.isOK() && visionData.value.isPresent()) {
-            // now run regular vision processing on the vision data
-            var cameraPose = visionData.value.get();
-            if (true) {
-                addVisionMeasurement(cameraPose, visionData.timestamp);
-            }
-        }
+        // var visionData = HootReplay.getStruct("camera pose", Pose2d.struct);
+        // if (visionData.status.isOK() && visionData.value.isPresent()) {
+        //     // now run regular vision processing on the vision data
+        //     var cameraPose = visionData.value.get();
+        //     if (true) {
+        //         addVisionMeasurement(cameraPose, visionData.timestamp);
+        //     }
+        // }
     }
 
     public void throttleLimelight(String limelightName, boolean turnOn) {

@@ -49,7 +49,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
 
     public void IntakeForward(){
-         setIntakeVoltage(8);
+         setIntakeVoltage(6);
     }
     public void intakeReverse(){
         setIntakeVoltage(-6);

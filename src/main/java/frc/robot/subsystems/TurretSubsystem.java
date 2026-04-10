@@ -32,7 +32,7 @@ public class TurretSubsystem extends SubsystemBase {
     public DigitalInput zeroingSensor = new DigitalInput(0); // the magnetic sensor
 
     private TalonFXS turret = new TalonFXS(10);
-    private TalonFXS turretHoot = new TalonFXS(10, SwerveConstants.kCANBus.getName());
+  //  private TalonFXS turretHoot = new TalonFXS(10, SwerveConstants.kCANBus.getName());
     private MotionMagicVoltage m_request = new MotionMagicVoltage(0);
 
     Translation2d redHubPos = new Translation2d(11.98482, 4.03606); // red hub
@@ -80,11 +80,11 @@ public class TurretSubsystem extends SubsystemBase {
         // hoot testing stuff!
 
         // stop and return to start of log
-        HootReplay.stop();
-        var startPos = turretHoot.getPosition().getValue();
+        // HootReplay.stop();
+        // var startPos = turretHoot.getPosition().getValue();
         // advance by 1 second and compare positions
-        HootReplay.stepTiming(1.0);
-        var endPos = turretHoot.getPosition().getValue();
+        // HootReplay.stepTiming(1.0);
+        // var endPos = turretHoot.getPosition().getValue();
 
         // pid
         TalonFXSConfiguration motorConfig = new TalonFXSConfiguration();
