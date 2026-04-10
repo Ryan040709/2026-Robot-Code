@@ -64,7 +64,7 @@ public class HopperSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        SmartDashboard.putNumber("intake pivot position", extensionMotor.getPosition().getValueAsDouble());
+      //  SmartDashboard.putNumber("intake pivot position", extensionMotor.getPosition().getValueAsDouble());
     }
 
 }

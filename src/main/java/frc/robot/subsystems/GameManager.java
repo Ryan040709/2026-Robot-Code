@@ -93,16 +93,16 @@ public class GameManager extends SubsystemBase {
       }
     }
 
-    SmartDashboard.putNumber("timer", matchTimer());
+    //SmartDashboard.putNumber("timer", matchTimer());
 
-    isTeleop = DriverStation.isTeleop();
-    matchTimer = DriverStation.getMatchTime();
-    elapsedTime = Timer.getFPGATimestamp();
+    // isTeleop = DriverStation.isTeleop();
+    // matchTimer = DriverStation.getMatchTime();
+    // elapsedTime = Timer.getFPGATimestamp();
 
-    determineShift();
-    determineActiveHub();
+    // determineShift();
+    // determineActiveHub();
 
-    getMatchTime();
+    // getMatchTime();
 
   }
 

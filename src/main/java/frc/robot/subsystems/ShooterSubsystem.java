@@ -78,9 +78,9 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        if(timer.advanceIfElapsed(1)){
-            System.out.println(String.format("targetRpms: %f, actualRpms: %f", targetRPM , shooterMotorL.getVelocity().getValueAsDouble()));
-        }
+        // if(timer.advanceIfElapsed(1)){
+        //     System.out.println(String.format("targetRpms: %f, actualRpms: %f", targetRPM , shooterMotorL.getVelocity().getValueAsDouble()));
+        // }
 
         //SmartDashboard.putNumber("shooterRPMS", shooterMotorL.getVelocity().getValueAsDouble());
      //   SmartDashboard.putNumber("shooterAMPS", shooterMotorL.getSupplyCurrent().getValueAsDouble());

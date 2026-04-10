@@ -129,7 +129,7 @@ public class hoodSubsystem extends SubsystemBase {
     @Override
     public void periodic() {
 
-        SmartDashboard.putNumber("hood position", hood.getPosition().getValueAsDouble());
+       // SmartDashboard.putNumber("hood position", hood.getPosition().getValueAsDouble());
     }
 
 }

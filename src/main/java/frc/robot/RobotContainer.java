@@ -207,15 +207,6 @@ public class RobotContainer {
                                 drivetrain.applyRequest(() -> idle).ignoringDisable(true));
 
                 // Run SysId routines when holding back/start and X/Y.
-                // Note that each routine should be run exactly once in a single log.
-                driverController.back().and(driverController.y())
-                                .whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-                driverController.back().and(driverController.x())
-                                .whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-                driverController.start().and(driverController.y())
-                                .whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-                driverController.start().and(driverController.x())
-                                .whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
                 // Reset the field-centric heading on left bumper press.
                 driverController.leftBumper().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
@@ -229,7 +220,7 @@ public class RobotContainer {
                                                 drivetrain));
 
                 // game manager commands
-                gameManager.setDefaultCommand(Commands.run(() -> gameManager.determineActiveHub(), gameManager));
+                gameManager.setDefaultCommand(Commands.run(()->{}, gameManager));
                 intakeSubsystem.setDefaultCommand(intake_Stop);
                 turret.setDefaultCommand(turret_Locking);
                 hoodSubsystem.setDefaultCommand(hoodDown);
