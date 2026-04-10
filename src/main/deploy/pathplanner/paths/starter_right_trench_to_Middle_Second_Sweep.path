@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6912891566265067,
-        "y": 0.6036987951807224
+        "x": 4.42344578313253,
+        "y": 0.45071084337349476
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.9085731673019493,
-        "y": 0.7273420671561686
+        "x": 4.640729793807973,
+        "y": 0.5743541153489409
       },
       "isLocked": false,
-      "linkedName": "right first pass end"
+      "linkedName": "not dave's starting point"
     },
     {
       "anchor": {
@@ -53,7 +53,7 @@
       },
       "prevControl": {
         "x": 7.385865937863248,
-        "y": 3.3193289233081082
+        "y": 3.31932892330811
       },
       "nextControl": {
         "x": 7.296423218763256,
