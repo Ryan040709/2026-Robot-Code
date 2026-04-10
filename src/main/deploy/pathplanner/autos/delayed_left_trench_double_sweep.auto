@@ -61,7 +61,7 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "hoodUp"
+                                    "name": "intake"
                                   }
                                 },
                                 {
@@ -73,7 +73,13 @@
                                 {
                                   "type": "named",
                                   "data": {
-                                    "name": "intake"
+                                    "name": "hoodUp"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "turret-locking"
                                   }
                                 }
                               ]
@@ -83,13 +89,51 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "parallel",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "starter_right_trench_to_Middle_Second_Sweep"
+                              "pathName": "starter LEFT Trench TO LEFT CLOSE Sweep"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "left close CutSweep"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Cutsweep to left trench"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
                             }
                           }
                         ]
@@ -102,7 +146,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "hoodUp"
+                              "name": "intake"
                             }
                           },
                           {
@@ -120,7 +164,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake"
+                              "name": "hoodUp"
                             }
                           },
                           {
@@ -216,7 +260,7 @@
                                       {
                                         "type": "wait",
                                         "data": {
-                                          "waitTime": 1.5
+                                          "waitTime": 0.5
                                         }
                                       },
                                       {
@@ -241,13 +285,13 @@
                       }
                     },
                     {
-                      "type": "race",
+                      "type": "deadline",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "right_trench_to_Middle_Second_Sweep"
+                              "pathName": "LEFT Trench TO LEFT CLOSE Sweep"
                             }
                           },
                           {
@@ -260,13 +304,51 @@
                       }
                     },
                     {
-                      "type": "parallel",
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "left close CutSweep"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "deadline",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "path",
+                            "data": {
+                              "pathName": "Cutsweep to left trench"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "intake"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
                       "data": {
                         "commands": [
                           {
                             "type": "named",
                             "data": {
-                              "name": "hoodUp"
+                              "name": "intake"
                             }
                           },
                           {
@@ -284,7 +366,7 @@
                           {
                             "type": "named",
                             "data": {
-                              "name": "intake"
+                              "name": "hoodUp"
                             }
                           },
                           {
