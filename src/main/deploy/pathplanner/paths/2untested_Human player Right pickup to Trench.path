@@ -1,0 +1,75 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.269,
+        "y": 2.4504819277108436
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.8440481927710834,
+        "y": 3.007795180722892
+      },
+      "isLocked": false,
+      "linkedName": "right bump pickup 1"
+    },
+    {
+      "anchor": {
+        "x": 6.729192771084338,
+        "y": 2.0789397590361443
+      },
+      "prevControl": {
+        "x": 7.260514107543645,
+        "y": 3.242786496042247
+      },
+      "nextControl": {
+        "x": 5.811265060240966,
+        "y": 0.06824096385542022
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.6912891566265067,
+        "y": 0.6036987951807224
+      },
+      "prevControl": {
+        "x": 6.48878313253012,
+        "y": 0.5927710843373495
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "right first pass end"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.4666666666666548,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 1.0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Ryan's autos",
+  "idealStartingState": {
+    "velocity": 1.5,
+    "rotation": -70.0
+  },
+  "useDefaultConstraints": false
+}

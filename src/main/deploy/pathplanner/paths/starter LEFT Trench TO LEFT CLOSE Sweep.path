@@ -1,0 +1,71 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.414279600570612,
+        "y": 7.6125392296718974
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.68062785656865,
+        "y": 7.446836888395297
+      },
+      "isLocked": false,
+      "linkedName": "left trench starting point FAR"
+    },
+    {
+      "anchor": {
+        "x": 6.182807228915664,
+        "y": 7.3023855421686745
+      },
+      "prevControl": {
+        "x": 5.210240963855422,
+        "y": 7.652072289156626
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Left side second sweep"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5335968379446622,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "hopperOut",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "hopperOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 1.5,
+    "rotation": 86.90594194108323
+  },
+  "reversed": false,
+  "folder": "Auton Path Links",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}

@@ -17,12 +17,6 @@
                       "data": {
                         "commands": [
                           {
-                            "type": "path",
-                            "data": {
-                              "pathName": "1right_trench_to_Middle_than_Human_player"
-                            }
-                          },
-                          {
                             "type": "race",
                             "data": {
                               "commands": [
@@ -45,13 +39,57 @@
                       }
                     },
                     {
+                      "type": "parallel",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "race",
+                            "data": {
+                              "commands": [
+                                {
+                                  "type": "wait",
+                                  "data": {
+                                    "waitTime": 1.5
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "shoot"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "hoodUp"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "indexShooter"
+                                  }
+                                },
+                                {
+                                  "type": "named",
+                                  "data": {
+                                    "name": "intake"
+                                  }
+                                }
+                              ]
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
                       "type": "race",
                       "data": {
                         "commands": [
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "Right pickup to Trench"
+                              "pathName": "starter_right_trench_to_Middle_Second_Sweep"
                             }
                           }
                         ]
@@ -209,7 +247,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "starter_right_trench_to_Middle_Second_Sweep"
+                              "pathName": "right_trench_to_Middle_Second_Sweep"
                             }
                           },
                           {
