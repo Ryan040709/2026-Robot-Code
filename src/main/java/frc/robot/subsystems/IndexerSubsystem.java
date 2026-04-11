@@ -164,9 +164,9 @@ public class IndexerSubsystem extends SubsystemBase {
     }
     public Command unjamShooter(){
         return startEnd(()-> {
-            setBeltVelocity(60); //50 starting velocity
+            setBeltVelocity(80); //50 starting velocity
             setRollerVelocity(-10);
-            setRampVelocity(37);
+            setRampVelocity(50);
         },
         ()->{
            stopIndexer();
