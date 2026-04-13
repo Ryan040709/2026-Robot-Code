@@ -1,0 +1,154 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.5055180722891564,
+        "y": 4.155204819277109
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.806144578313253,
+        "y": 4.483036144578314
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 2.150481927710843,
+        "y": 5.138698795180724
+      },
+      "prevControl": {
+        "x": 2.8119749623493977,
+        "y": 5.151846197289157
+      },
+      "nextControl": {
+        "x": 1.488988893072288,
+        "y": 5.12555139307229
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7735903614457831,
+        "y": 5.138698795180724
+      },
+      "prevControl": {
+        "x": 0.8905622915505422,
+        "y": 4.9177518160939595
+      },
+      "nextControl": {
+        "x": 0.6566184313410237,
+        "y": 5.359645774267489
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.7735903614457831,
+        "y": 7.105686746987953
+      },
+      "prevControl": {
+        "x": 0.6861686746987952,
+        "y": 6.515590361445785
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.7057142857142729,
+      "rotationDegrees": -58.859992723610155
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.8311850311850273,
+      "maxWaypointRelativePos": 3.0,
+      "constraints": {
+        "maxVelocity": 0.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "shoot",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shoot"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "indexShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "hoodUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "turret-locking"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "hopperOut"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 1.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -62.78388844269264
+  },
+  "reversed": false,
+  "folder": "middle auto",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}

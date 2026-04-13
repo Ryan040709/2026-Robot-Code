@@ -51,6 +51,9 @@ public class IntakeSubsystem extends SubsystemBase {
     public void IntakeForward(){
          setIntakeVoltage(6);
     }
+    public void AutoIntakeForward(){
+         setIntakeVoltage(7);
+    }
     public void intakeReverse(){
         setIntakeVoltage(-6);
     }

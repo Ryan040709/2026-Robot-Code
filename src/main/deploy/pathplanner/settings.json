@@ -4,9 +4,11 @@
   "holonomicMode": true,
   "pathFolders": [
     "Auton Path Links",
-    "Split path test",
+    "middle auto",
     "New Robot Autos",
     "Ryan's autos",
+    "Split path test",
+    "bump autos",
     "three shoot auto"
   ],
   "autoFolders": [

@@ -30,6 +30,7 @@ import frc.robot.subsystems.hoodSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.commands.intake.Intake_Run;
+import frc.robot.commands.intake.Auto_Intake_Run;
 import frc.robot.commands.intake.Intake_Outtake;
 import frc.robot.commands.intake.Intake_Stop;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
@@ -136,7 +137,7 @@ public class RobotContainer {
 
                 // in the bumper intake commands
                 NamedCommands.registerCommand("intake-outtake", intake_Outtake);
-                NamedCommands.registerCommand("intake", intake_Run);
+                NamedCommands.registerCommand("intake", new Auto_Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain));
                 NamedCommands.registerCommand("intake-stop", intake_Stop);
                 NamedCommands.registerCommand("hopperOut", hopper_Out);
                 NamedCommands.registerCommand("hopperIn", hopper_In);

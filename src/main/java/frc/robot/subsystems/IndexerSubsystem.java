@@ -19,9 +19,9 @@ public class IndexerSubsystem extends SubsystemBase {
     private TalonFX rampMotor = new TalonFX(20);
     private TalonFX hopperMotor = new TalonFX(21);
 
-    double rollerSpeed;
-    double beltSpeed;
-    double rampSpeed;
+    double dashboardRollerSpeed;
+    double dashboardBeltSpeed;
+    double dashboardRampSpeed;
 
     public IndexerSubsystem() {
 
@@ -101,10 +101,11 @@ public class IndexerSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-       beltSpeed =  SmartDashboard.getNumber("BeltSpeed", 60);
+       dashboardBeltSpeed =  SmartDashboard.getNumber("BeltSpeed", 60);
 
-       rollerSpeed = SmartDashboard.getNumber("rollerSpeed", 25);
-       rampSpeed = SmartDashboard.getNumber("rampSpeed", 37);
+       dashboardRollerSpeed = SmartDashboard.getNumber("rollerSpeed", 25);
+       dashboardRampSpeed = SmartDashboard.getNumber("rampSpeed", 37);
+       //SmartDashboard.putNumber("rampSpeed",37);
 
     }
 
@@ -148,7 +149,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
     public void setIndexSpeed(double beltSpeed, double rollerSpeed, double rampSpeed, double hopperVoltage){
         setBeltVelocity(beltSpeed); 
-        setRollerVelocity(rollerSpeed);        
+        setRollerVelocity(rollerSpeed);
         setRampVelocity(rampSpeed);
         setHopperVoltage(hopperVoltage);
     }

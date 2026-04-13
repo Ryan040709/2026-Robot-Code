@@ -19,7 +19,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "1right_trench_to_Middle_than_Human_player"
+                              "pathName": "new right trench first sweep"
                             }
                           },
                           {
@@ -39,19 +39,6 @@
                                   }
                                 }
                               ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "race",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Right pickup to Trench"
                             }
                           }
                         ]

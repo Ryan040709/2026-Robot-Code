@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 8.25706134094151,
-        "y": 5.859927710843374
+        "y": 5.182409638554216
       },
       "prevControl": null,
       "nextControl": {
         "x": 8.01047426673544,
-        "y": 4.744420960084878
+        "y": 4.06690288779572
       },
       "isLocked": false,
       "linkedName": "left far cutsweep end RAEL"

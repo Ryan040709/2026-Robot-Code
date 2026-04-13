@@ -1,0 +1,205 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.0465542168674697,
+        "y": 2.505120481927711
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.7624337349397585,
+        "y": 1.9805903614457838
+      },
+      "isLocked": false,
+      "linkedName": "right bump first pass end"
+    },
+    {
+      "anchor": {
+        "x": 3.2213975903614456,
+        "y": 0.5599879518072293
+      },
+      "prevControl": {
+        "x": 2.9154216867469875,
+        "y": 1.0626626506024104
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "right bump shoot end"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "shoot",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "indexShooter"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "turret-locking"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shoot"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "hoodUp"
+              }
+            },
+            {
+              "type": "sequential",
+              "data": {
+                "commands": [
+                  {
+                    "type": "wait",
+                    "data": {
+                      "waitTime": 1.0
+                    }
+                  },
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 0.3
+                          }
+                        },
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "hopperIn"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 0.5
+                          }
+                        },
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "hopperOut"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 0.5
+                          }
+                        },
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "hopperIn"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 0.5
+                          }
+                        },
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "hopperOut"
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "race",
+                    "data": {
+                      "commands": [
+                        {
+                          "type": "wait",
+                          "data": {
+                            "waitTime": 1.5
+                          }
+                        },
+                        {
+                          "type": "named",
+                          "data": {
+                            "name": "hopperIn"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 0.6,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 260.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.6,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "bump autos",
+  "idealStartingState": {
+    "velocity": 0.0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": false
+}
