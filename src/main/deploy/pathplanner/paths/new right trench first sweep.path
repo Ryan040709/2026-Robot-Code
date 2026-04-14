@@ -16,15 +16,15 @@
     },
     {
       "anchor": {
-        "x": 8.160722891566266,
+        "x": 8.379277108433735,
         "y": 1.2921445783132537
       },
       "prevControl": {
-        "x": 7.959469827030714,
-        "y": 0.9999153740011552
+        "x": 8.178024043898183,
+        "y": 0.9999153740011553
       },
       "nextControl": {
-        "x": 8.475508912118693,
+        "x": 8.694063128986162,
         "y": 1.749229137631144
       },
       "isLocked": false,
@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 7.8219638554216875,
-        "y": 2.9531566265060234
+        "x": 7.931240963855423,
+        "y": 2.516048192771084
       },
       "prevControl": {
-        "x": 8.338582539771751,
-        "y": 2.9657570822218777
+        "x": 8.707108433734941,
+        "y": 2.7018192771084335
       },
       "nextControl": {
-        "x": 7.3739277108433745,
-        "y": 2.9422289156626507
+        "x": 7.495391079970738,
+        "y": 2.4116897698691173
       },
       "isLocked": false,
       "linkedName": null
@@ -78,7 +78,7 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.8374581939799375,
+      "waypointRelativePos": 0.771428571428577,
       "rotationDegrees": -70.0
     },
     {
@@ -98,9 +98,9 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 1.1499036608863191,
-      "maxWaypointRelativePos": 2.3583815028901682,
+      "maxWaypointRelativePos": 2.1887733887733916,
       "constraints": {
-        "maxVelocity": 1.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 3.0,
         "maxAngularVelocity": 540.0,
         "maxAngularAcceleration": 720.0,
@@ -111,6 +111,17 @@
   ],
   "pointTowardsZones": [],
   "eventMarkers": [
+    {
+      "name": "zero-turret",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0.9513513513513506,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "zero-turret"
+        }
+      }
+    },
     {
       "name": "hopperOut",
       "waypointRelativePos": 0.18188824662813385,
@@ -134,6 +145,17 @@
           ]
         }
       }
+    },
+    {
+      "name": "turret-locking",
+      "waypointRelativePos": 2.907276507276474,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "turret-locking"
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -152,7 +174,7 @@
   "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": false
 }

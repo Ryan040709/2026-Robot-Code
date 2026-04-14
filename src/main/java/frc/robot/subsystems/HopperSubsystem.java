@@ -29,18 +29,18 @@ public class HopperSubsystem extends SubsystemBase {
         extensionConfig.Slot0.kI = 0;
         extensionConfig.Slot0.kD = 0.2;
         extensionConfig.CurrentLimits.SupplyCurrentLimitEnable = true;
-        extensionConfig.CurrentLimits.SupplyCurrentLimit = 7;
+        extensionConfig.CurrentLimits.SupplyCurrentLimit = 8;
         // Voltage
-        extensionConfig.Voltage.PeakForwardVoltage = 6;
-        extensionConfig.Voltage.PeakReverseVoltage = -6;
+        extensionConfig.Voltage.PeakForwardVoltage = 10;
+        extensionConfig.Voltage.PeakReverseVoltage = -10;
         //limits
         extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
         extensionConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 32;
         extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
         extensionConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 0;
 
-        extensionConfig.MotionMagic.MotionMagicAcceleration = 90;
-        extensionConfig.MotionMagic.MotionMagicCruiseVelocity = 50;
+        extensionConfig.MotionMagic.MotionMagicAcceleration = 200;
+        extensionConfig.MotionMagic.MotionMagicCruiseVelocity = 70;
 
         extensionMotor.getConfigurator().apply(extensionConfig);
         

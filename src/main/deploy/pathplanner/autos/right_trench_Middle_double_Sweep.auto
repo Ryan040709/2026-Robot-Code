@@ -21,25 +21,6 @@
                             "data": {
                               "pathName": "new right trench first sweep"
                             }
-                          },
-                          {
-                            "type": "race",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "zero-turret"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.25
-                                  }
-                                }
-                              ]
-                            }
                           }
                         ]
                       }
@@ -52,12 +33,6 @@
                             "type": "named",
                             "data": {
                               "name": "hoodUp"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
                             }
                           },
                           {
@@ -171,7 +146,7 @@
                                       {
                                         "type": "named",
                                         "data": {
-                                          "name": "hopperIn"
+                                          "name": "hopperInHalfWay"
                                         }
                                       }
                                     ]
@@ -216,12 +191,6 @@
                             "type": "named",
                             "data": {
                               "name": "hoodUp"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "shoot"
                             }
                           },
                           {
@@ -354,6 +323,12 @@
                       }
                     }
                   ]
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "shoot"
                 }
               }
             ]
