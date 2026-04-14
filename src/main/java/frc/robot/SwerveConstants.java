@@ -76,7 +76,7 @@ public class SwerveConstants {
 
     // CAN bus that the devices are located on;
     // All swerve devices must share the same CAN bus
-    public static final CANBus kCANBus = new CANBus("1023", "./logs/example.hoot");
+    public static final CANBus kCANBus = new CANBus("1023", "frc.robot.hoot.rio_2026-04-13_22-25-19.hoot");
 
 
     // Theoretical free speed (m/s) at 12 V applied output;
