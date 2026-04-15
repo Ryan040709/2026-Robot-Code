@@ -73,7 +73,7 @@ public class IndexerSubsystem extends SubsystemBase {
         rampConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         rampConfig.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
         // regulars
-        rampConfig.Slot0.kP = 0.5;
+        rampConfig.Slot0.kP = 0.7;
         rampConfig.Slot0.kI = 0;
         rampConfig.Slot0.kD = 0;
         rampConfig.Slot0.kS = .4;

@@ -33,6 +33,13 @@ public class IntakeSubsystem extends SubsystemBase {
         // Voltage
         intakeConfig.Voltage.PeakForwardVoltage = 12;
         intakeConfig.Voltage.PeakReverseVoltage = -12;
+        //motion magic
+        intakeConfig.Slot0.kP = .129;
+        intakeConfig.Slot0.kD = .01;
+        intakeConfig.Slot0.kS = .4;
+        intakeConfig.Slot0.kV = .2125;
+        intakeConfig.Feedback.SensorToMechanismRatio = 1.75;
+
         
         intakeMotor1.getConfigurator().apply(intakeConfig);
         intakeMotor2.getConfigurator().apply(intakeConfig);
@@ -46,13 +53,16 @@ public class IntakeSubsystem extends SubsystemBase {
     private void setIntakeVoltage(double targetVoltage) {
         intakeMotor1.setVoltage(targetVoltage);
     }
+    private void setIntakeVelocity(double setVelocity){
+        intakeMotor1.setControl(velocity.withVelocity(setVelocity));
+    }
 
 
     public void IntakeForward(){
-         setIntakeVoltage(6);
+         setIntakeVelocity(35);
     }
     public void AutoIntakeForward(){
-         setIntakeVoltage(7);
+         setIntakeVelocity(40);
     }
     public void intakeReverse(){
         setIntakeVoltage(-6);
