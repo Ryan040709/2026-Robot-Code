@@ -19,64 +19,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "left Trench Starting Spot2"
-                            }
-                          },
-                          {
-                            "type": "race",
-                            "data": {
-                              "commands": [
-                                {
-                                  "type": "named",
-                                  "data": {
-                                    "name": "zero-turret"
-                                  }
-                                },
-                                {
-                                  "type": "wait",
-                                  "data": {
-                                    "waitTime": 0.25
-                                  }
-                                }
-                              ]
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "left far CutSweep"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "far Cutsweep to left trench"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
+                              "pathName": "New left double sweep first pass"
                             }
                           }
                         ]
@@ -108,6 +51,12 @@
                             "type": "named",
                             "data": {
                               "name": "hoodUp"
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "turret-locking"
                             }
                           },
                           {
@@ -203,7 +152,7 @@
                                       {
                                         "type": "wait",
                                         "data": {
-                                          "waitTime": 1.0
+                                          "waitTime": 1.25
                                         }
                                       },
                                       {
@@ -217,12 +166,6 @@
                                 }
                               ]
                             }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "turret-locking"
-                            }
                           }
                         ]
                       }
@@ -234,51 +177,7 @@
                           {
                             "type": "path",
                             "data": {
-                              "pathName": "LEFT Trench TO LEFT CLOSE Sweep"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "left close CutSweep"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
-                            }
-                          }
-                        ]
-                      }
-                    },
-                    {
-                      "type": "deadline",
-                      "data": {
-                        "commands": [
-                          {
-                            "type": "path",
-                            "data": {
-                              "pathName": "Cutsweep to left trench"
-                            }
-                          },
-                          {
-                            "type": "named",
-                            "data": {
-                              "name": "intake"
+                              "pathName": "New left double sweep second pass"
                             }
                           }
                         ]

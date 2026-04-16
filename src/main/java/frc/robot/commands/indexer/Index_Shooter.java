@@ -50,6 +50,7 @@ public class Index_Shooter extends Command {
       }
     } else {
       indexerSubsystem.setRollerVelocity(0);
+      indexerSubsystem.setRampVelocity(0);
     }
   }
 

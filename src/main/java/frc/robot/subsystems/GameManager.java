@@ -21,6 +21,7 @@ import frc.robot.Constants;
 public class GameManager extends SubsystemBase {
 
   public enum ShiftList {
+    
     Autonomous, // active for both
     Transistion, // active for both
     One, // alternates
@@ -42,6 +43,7 @@ public class GameManager extends SubsystemBase {
 
   public double matchTimer = DriverStation.getMatchTime();
   public double elapsedTime = Timer.getFPGATimestamp();
+  Timer isDisabledTimer = new Timer();
 
   boolean active = false;
 
@@ -72,12 +74,14 @@ public class GameManager extends SubsystemBase {
     alwaysActiveShifts.add(ShiftList.EndGame);
     timer.reset();
     timer.start();
+    isDisabledTimer.start();
     SmartDashboard.putBoolean("won Auto", wonAuto);
   }
 
   @Override
   public void periodic() {
-    if (!hasAlliance || DriverStation.isDisabled()) {
+    if (!hasAlliance ||(isDisabledTimer.advanceIfElapsed(4) && DriverStation.isDisabled() )
+    ) {
       Optional<Alliance> alliance = DriverStation.getAlliance();
       if (alliance.isPresent()) {
 

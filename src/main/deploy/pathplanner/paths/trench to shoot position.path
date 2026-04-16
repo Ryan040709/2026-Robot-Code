@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.6861686746987952,
+        "y": 7.280530120481927
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.6861686746987952,
+        "y": 7.280530120481927
+      },
+      "isLocked": false,
+      "linkedName": "trench pass end"
+    },
+    {
+      "anchor": {
+        "x": 2.0958433734939756,
+        "y": 4.920144578313253
+      },
+      "prevControl": {
+        "x": 2.0739879518072284,
+        "y": 5.783433734939759
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "Ryan's autos",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -75.57922687248899
+  },
+  "useDefaultConstraints": true
+}

@@ -9,15 +9,9 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "zero-turret"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 0.25
+                  "pathName": "middle to trench"
                 }
               }
             ]
@@ -26,7 +20,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "middle to trench"
+            "pathName": "trench to shoot position"
           }
         },
         {
@@ -36,25 +30,7 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "shoot"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "hoodUp"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
                   "name": "intake"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "indexShooter"
                 }
               },
               {
@@ -66,7 +42,121 @@
               {
                 "type": "named",
                 "data": {
-                  "name": "hopperIn"
+                  "name": "shoot"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "indexShooter"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "hoodUp"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.75
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.3
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "hopperInHalfWay"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.5
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "hopperOut"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.6
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "hopperIn"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 0.5
+                            }
+                          },
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "hopperOut"
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "hopperIn"
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
                 }
               }
             ]

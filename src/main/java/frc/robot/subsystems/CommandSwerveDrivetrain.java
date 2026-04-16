@@ -41,6 +41,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -105,6 +106,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
      Pose2d turretOffset;
      ChassisSpeeds robotRelativeSpeed = new ChassisSpeeds();
      ChassisSpeeds fieldRelativeSpeed = new ChassisSpeeds();
+     Timer isDisabledTimer = new Timer();
     /*
      * SysId routine for characterizing translation. This is used to find PID gains
      * for the drive motors.
@@ -188,6 +190,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         setUpPoseEstimater();
         PathPlannerSetup();
+        
+        isDisabledTimer.start();
 
     }
 
@@ -368,7 +372,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * occurs during testing.
          */
 
-        if (!m_hasAppliedOperatorPerspective || DriverStation.isDisabled()) {
+        if (!m_hasAppliedOperatorPerspective ||(isDisabledTimer.advanceIfElapsed(4) && DriverStation.isDisabled() )
+             ) {
             throttleLimelight("limelight-front", true);
             throttleLimelight("limelight-left", true);
             DriverStation.getAlliance().ifPresent(allianceColor -> {
