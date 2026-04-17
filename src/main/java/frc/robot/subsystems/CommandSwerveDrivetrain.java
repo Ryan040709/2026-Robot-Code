@@ -545,7 +545,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             if (robotPoseEstimateTags.tagCount != 0
                     && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
                     && distance < 3.5
-                    && !(robotPose.getY() > ((0.95 * robotPose.getX()) + 4))) {
+
+                    && !(robotPose.getY() > ((0.71 * robotPose.getX()) + 5.5))) {
                 // poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75,
                 // distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
@@ -593,7 +594,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         double Huby = 4.03606;
         Translation2d feedPosition = new Translation2d(
                 GameManager.isBlueAlliance ? 0.5 : 15,
-                getPose().getY() > Huby ? 6.75 : 1.25);
+                getPose().getY() > Huby ? 6.5 : 1.50);
         return new Pose2d(feedPosition.minus(swimOffset), Rotation2d.fromDegrees(0));
     }
 

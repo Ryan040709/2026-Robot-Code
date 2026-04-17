@@ -225,10 +225,10 @@ public class RobotContainer {
                 intakeSubsystem.setDefaultCommand(intake_Stop);
                 turret.setDefaultCommand(turret_Locking);
                 hoodSubsystem.setDefaultCommand(hoodDown);
-                shooter.setDefaultCommand(shooterStop);
+                shooter.setDefaultCommand(shooterCoast);
 
                 manipulatorController.rightBumper().whileTrue(shooterAndHood);
-                //manipulatorController.start().onTrue(Commands.runOnce(() -> gameManager.resetTimer(), gameManager));
+                manipulatorController.start().onTrue(hopperSubsystem.zeroExtention());
                 //manipulatorController.pov(270).onTrue(Commands.runOnce(() -> gameManager.lostAuto(), gameManager));
                // manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
                 manipulatorController.a().whileTrue(hopper_Out.alongWith(intake_Run));

@@ -58,6 +58,9 @@ public class HopperSubsystem extends SubsystemBase {
     public boolean PastPosition(double position){
         return extensionMotor.getPosition().getValueAsDouble() > position;
     }
+    public Command zeroExtention(){
+       return runOnce(()->extensionMotor.setPosition(0));
+    }
 
 
 
