@@ -92,7 +92,7 @@ public class ShooterSubsystem extends SubsystemBase {
         double closeHubM = 4.67989; // 6.99334;
         double closeHubB = 37; // 38.81499;
         double farHubM = 6.48875;
-        double farHubB = 28.85963;
+        double farHubB = 30;
         double feedM = 3.43042;
         double feedB = 40.27793;
         if (isFeeding) {

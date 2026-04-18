@@ -545,8 +545,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             if (robotPoseEstimateTags.tagCount != 0
                     && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
                     && distance < 3.5
-
-                    && !(robotPose.getY() > ((0.71 * robotPose.getX()) + 5.5))) {
+                    //&& !(robotPose.getY() > ((0.71 * robotPose.getX()) + 5.5))
+                    ) {
                 // poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75,
                 // distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
