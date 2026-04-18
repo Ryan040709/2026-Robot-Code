@@ -1,0 +1,151 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.5732667617689007,
+        "y": 0.44452211126961516
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.790550772444343,
+        "y": 0.5681653832450613
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.772838801711839,
+        "y": 0.6036987951807224
+      },
+      "prevControl": {
+        "x": 3.866132530120482,
+        "y": 0.352361445783132
+      },
+      "nextControl": {
+        "x": 6.519870971811752,
+        "y": 0.702170745656313
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 6.117240963855421,
+        "y": 3.2154216867469883
+      },
+      "prevControl": {
+        "x": 5.833120481927711,
+        "y": 2.843879518072289
+      },
+      "nextControl": {
+        "x": 6.398947331876642,
+        "y": 3.5838069372362793
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.998288159771754,
+        "y": 3.4074750356633388
+      },
+      "prevControl": {
+        "x": 7.925420646032134,
+        "y": 3.785475263187607
+      },
+      "nextControl": {
+        "x": 8.173131533265732,
+        "y": 2.500475035663339
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.772838801711839,
+        "y": 0.6036987951807224
+      },
+      "prevControl": {
+        "x": 6.445072289156626,
+        "y": 0.8987469879518073
+      },
+      "nextControl": {
+        "x": 5.3614827137383765,
+        "y": 0.423151600480128
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.6912891566265067,
+        "y": 0.6036987951807224
+      },
+      "prevControl": {
+        "x": 3.9411926123524386,
+        "y": 0.5967516507143162
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "second sweep end"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8972332015810216,
+      "rotationDegrees": 180.0
+    },
+    {
+      "waypointRelativePos": 1.40133779264214,
+      "rotationDegrees": -90.0
+    },
+    {
+      "waypointRelativePos": 2.470355731225288,
+      "rotationDegrees": -179.6271910016845
+    },
+    {
+      "waypointRelativePos": 3.2604735883424145,
+      "rotationDegrees": 70.0
+    },
+    {
+      "waypointRelativePos": 3.9536367503189846,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "hopperOut",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "hopperOut"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Ryan's autos",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}
