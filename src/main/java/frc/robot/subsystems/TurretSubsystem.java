@@ -214,6 +214,9 @@ public class TurretSubsystem extends SubsystemBase {
         return goldenAngle;
 
     }
+    public void maunaulTurretPosition(double setAngle){
+        turret.setControl(m_request.withPosition(setAngle));
+    }
 
     public void setTurretPower(double setSpeed) {
         turret.set(setSpeed);

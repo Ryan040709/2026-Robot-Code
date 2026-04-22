@@ -75,6 +75,7 @@ public class ShooterSubsystem extends SubsystemBase {
     public void SetShooterRPMS(double setRPMS) {
         shooterMotorL.setControl(m_velocity.withVelocity(setRPMS));
     }
+    
 
     @Override
     public void periodic() {

@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.42344578313253,
-        "y": 7.663
+        "x": 3.516,
+        "y": 7.63021686746988
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.423445783132531,
-        "y": 7.663
+        "x": 4.516000000000002,
+        "y": 7.63021686746988
       },
       "isLocked": false,
       "linkedName": null
@@ -32,16 +32,16 @@
     },
     {
       "anchor": {
-        "x": 7.98587951807229,
-        "y": 5.094987951807229
+        "x": 8.040518072289156,
+        "y": 5.105915662650602
       },
       "prevControl": {
-        "x": 8.426240429007233,
-        "y": 5.0061432066186
+        "x": 8.4808789832241,
+        "y": 5.017070917461973
       },
       "nextControl": {
-        "x": 6.740120481927709,
-        "y": 5.3463253012048195
+        "x": 6.794759036144576,
+        "y": 5.357253012048193
       },
       "isLocked": false,
       "linkedName": null
@@ -78,12 +78,16 @@
   ],
   "rotationTargets": [
     {
+      "waypointRelativePos": 0.2799999999999976,
+      "rotationDegrees": 180.0
+    },
+    {
       "waypointRelativePos": 0.8378870673952631,
-      "rotationDegrees": 85.91910910743874
+      "rotationDegrees": 87.87403008640231
     },
     {
       "waypointRelativePos": 1.5428571428571185,
-      "rotationDegrees": 90.48775639757986
+      "rotationDegrees": 87.25801808891941
     },
     {
       "waypointRelativePos": 2.085714285714288,
@@ -97,7 +101,7 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 1.170893970893977,
+      "minWaypointRelativePos": 1.2082176568572993,
       "maxWaypointRelativePos": 2.0889812889813046,
       "constraints": {
         "maxVelocity": 1.5,
@@ -112,19 +116,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "zero-turret",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": 0.7640199888950675,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "zero-turret"
-        }
-      }
-    },
-    {
       "name": "hopperOut",
-      "waypointRelativePos": 0.15301455301455963,
+      "waypointRelativePos": 0.3126819126819109,
       "endWaypointRelativePos": null,
       "command": {
         "type": "parallel",
@@ -167,14 +160,14 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.5,
     "rotation": 180.0
   },
   "reversed": false,
   "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 91.49745463931232
+    "rotation": 180.0
   },
   "useDefaultConstraints": false
 }

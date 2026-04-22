@@ -34,10 +34,15 @@ import frc.robot.commands.intake.Auto_Intake_Run;
 import frc.robot.commands.intake.Intake_Outtake;
 import frc.robot.commands.intake.Intake_Stop;
 import frc.robot.commands.shooter.Shooter_RunToRPM;
+import frc.robot.commands.shooter.left_Tower_Manual;
+import frc.robot.commands.shooter.left_Trench_Manual;
 import frc.robot.commands.shooter.Hood_SetToPosition;
 import frc.robot.commands.shooter.OverrideHoodPosition;
+import frc.robot.commands.shooter.Right_Tower_Manual;
+import frc.robot.commands.shooter.Right_Trench_Manual;
 import frc.robot.commands.shooter.ShooterStop;
 import frc.robot.commands.shooter.ShooterToRPMS;
+import frc.robot.commands.shooter.Shooter_Default_Shot;
 import frc.robot.commands.SetLEDColor;
 import frc.robot.commands.resetLEDTimer;
 import frc.robot.commands.hopper.Hopper_Half_Way;
@@ -233,13 +238,15 @@ public class RobotContainer {
                // manipulatorController.pov(90).onTrue(Commands.runOnce(() -> gameManager.wonAuto(), gameManager));
                 manipulatorController.a().whileTrue(hopper_Out.alongWith(intake_Run));
                 manipulatorController.y().whileTrue(new Hopper_In(hopperSubsystem).alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
-                manipulatorController.y().and(manipulatorController.pov(90))
-                                        .whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
-                                                .alongWith(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem)));
+                // manipulatorController.y().and(manipulatorController.pov(90))
+                //                         .whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
+                //                                 .alongWith(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem)));
                 manipulatorController.x().whileTrue(intake_Outtake.alongWith(indexerSubsystem.unjamShooter()));
                 manipulatorController.b().whileTrue(indexerSubsystem.unjamShooter());
-                manipulatorController.pov(180).whileTrue(indexerSubsystem.unjamBelt());
-
+                manipulatorController.povLeft().whileTrue(new left_Trench_Manual(shooter, drivetrain, turret).alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem)));
+                manipulatorController.povRight().whileTrue(new Right_Trench_Manual(shooter, drivetrain, turret).alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem)));
+                manipulatorController.povUp().whileTrue(new Right_Tower_Manual(shooter, drivetrain, turret).alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem)));
+                manipulatorController.povDown().whileTrue(new left_Tower_Manual(shooter, drivetrain, turret).alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem)));
                 // intake commands
 
                 driverController.start().whileTrue(zeroTurret);
@@ -251,6 +258,7 @@ public class RobotContainer {
                                                         .alongWith(new Hopper_Out(hopperSubsystem, intakeSubsystem)));
                 driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem).alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
                 driverController.b().whileTrue(indexerSubsystem.unjamShooter().alongWith(new Intake_Outtake(intakeSubsystem, hopperSubsystem)));
+               // driverController.pov(180).whileTrue(new Shooter_Default_Shot(shooter, drivetrain, turret).alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem)));
 
         }
 

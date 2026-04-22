@@ -1,0 +1,160 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.516,
+        "y": 7.475
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.270686746987952,
+        "y": 7.00733734939759
+      },
+      "isLocked": false,
+      "linkedName": "left trench start"
+    },
+    {
+      "anchor": {
+        "x": 0.8173012048192771,
+        "y": 4.767156626506025
+      },
+      "prevControl": {
+        "x": 1.053701416720865,
+        "y": 4.204298979121294
+      },
+      "nextControl": {
+        "x": 0.5878192771084336,
+        "y": 5.313542168674698
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 0.6861686746987952,
+        "y": 7.280530120481927
+      },
+      "prevControl": {
+        "x": 0.729879518072289,
+        "y": 6.362602409638553
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "trench pass end"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.26571428571428185,
+      "rotationDegrees": -130.29120785141458
+    },
+    {
+      "waypointRelativePos": 1.0771428571428303,
+      "rotationDegrees": -70.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 1.2041580041580022,
+      "maxWaypointRelativePos": 2.0,
+      "constraints": {
+        "maxVelocity": 0.75,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 180.0,
+        "maxAngularAcceleration": 180.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "shoot",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0.7683991683991703,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "shoot"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "turret-locking"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "hoodUp"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "indexShooter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.9812889812889879,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "hopperOut"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.5,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -75.57922687248899
+  },
+  "reversed": false,
+  "folder": "Ryan's autos",
+  "idealStartingState": {
+    "velocity": 1.5,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}
