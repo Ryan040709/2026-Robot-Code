@@ -3,6 +3,11 @@ package frc.robot.subsystems;
 import static edu.wpi.first.units.Units.Second;
 import static edu.wpi.first.units.Units.Volts;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.function.Supplier;
 
@@ -24,6 +29,8 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import com.ctre.phoenix6.HootReplay;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.controller.HolonomicDriveController;
@@ -37,6 +44,9 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.networktables.StructArrayPublisher;
+import edu.wpi.first.networktables.StructPublisher;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -54,6 +64,9 @@ import frc.robot.subsystems.LimelightHelpers.PoseEstimate;
 
 public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Subsystem {
     private static final Logger log = LogManager.getLogger(CommandSwerveDrivetrain.class);
+    public static AprilTagFieldLayout aprilTagLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+    Map<String, StructArrayPublisher<Pose3d>> tagPublishers = new HashMap<>();
+    Map<String, StructPublisher<Pose2d>> posePublishers = new HashMap<>();
 
     private static final double kSimLoopPeriod = 0.004; // 4 ms
     private static final Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
@@ -103,10 +116,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private SendableChooser<Boolean> visionSwitch;
     private Pose2d target = new Pose2d();
     Pose2d robotPose = new Pose2d();
-     Pose2d turretOffset;
-     ChassisSpeeds robotRelativeSpeed = new ChassisSpeeds();
-     ChassisSpeeds fieldRelativeSpeed = new ChassisSpeeds();
-     Timer isDisabledTimer = new Timer();
+    Pose2d turretOffset;
+    ChassisSpeeds robotRelativeSpeed = new ChassisSpeeds();
+    ChassisSpeeds fieldRelativeSpeed = new ChassisSpeeds();
+    Timer isDisabledTimer = new Timer();
     /*
      * SysId routine for characterizing translation. This is used to find PID gains
      * for the drive motors.
@@ -190,7 +203,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         setUpPoseEstimater();
         PathPlannerSetup();
-        
+
         isDisabledTimer.start();
 
     }
@@ -219,8 +232,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             startSimThread();
         }
         gyroConfig = new Pigeon2Configuration();
-        gyroConfig.GyroTrim.GyroScalarZ = -
-        1.37;
+        gyroConfig.GyroTrim.GyroScalarZ = -1.37;
         gyro.getConfigurator().apply(gyroConfig);
 
         setUpPoseEstimater();
@@ -275,8 +287,6 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private void setUpPoseEstimater() {
         SmartDashboard.putData("Field", m_Fields);
     }
-
-
 
     public void driveRobotRelative(ChassisSpeeds robotRelativeSpeeds) {
 
@@ -372,8 +382,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
          * occurs during testing.
          */
 
-        if (!m_hasAppliedOperatorPerspective ||(isDisabledTimer.advanceIfElapsed(4) && DriverStation.isDisabled() )
-             ) {
+        if (!m_hasAppliedOperatorPerspective || (isDisabledTimer.advanceIfElapsed(4) && DriverStation.isDisabled())) {
             throttleLimelight("limelight-front", true);
             throttleLimelight("limelight-left", true);
             DriverStation.getAlliance().ifPresent(allianceColor -> {
@@ -396,12 +405,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         robotPose = getState().Pose;
         // poseEstimator.update(gyroAngle, currentPositions);
 
-
         m_Fields.setRobotPose(getPose());
         computeTurretTaget();
         turretOffset = getPose().transformBy(turretOffsetFromRobot);
         robotRelativeSpeed = m_kinematics.toChassisSpeeds(getModuleStates());
         fieldRelativeSpeed = computeFieldRelativeSpeeds();
+
+        List<Pose3d> tagPoses = new LinkedList<>();
+        // Add tag poses
 
     }
 
@@ -440,10 +451,11 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     // geting the speed of the swerves
-    public ChassisSpeeds getRobotFieldRelativeSpeeds(){
+    public ChassisSpeeds getRobotFieldRelativeSpeeds() {
         return fieldRelativeSpeed;
-    } 
-    public ChassisSpeeds computeFieldRelativeSpeeds(){
+    }
+
+    public ChassisSpeeds computeFieldRelativeSpeeds() {
         var speeds = getRobotRelativeChassisSpeeds();
         var fieldSpeeds = convertToFieldRelative(speeds.vxMetersPerSecond, speeds.vyMetersPerSecond);
 
@@ -457,7 +469,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 turretSpeeds.getX() + chassisSpeeds.vxMetersPerSecond,
                 turretSpeeds.getY() + chassisSpeeds.vyMetersPerSecond);
 
-        //SmartDashboard.putString("field speeds", fieldSpeeds.toString());
+        // SmartDashboard.putString("field speeds", fieldSpeeds.toString());
 
         return new Translation2d(fieldSpeeds.getX(), fieldSpeeds.getY());
     }
@@ -537,6 +549,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightname);
 
         Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace(limelightname);
+        LimelightHelpers.SetIMUMode(limelightname, 0);
         double distance = Math.sqrt(
                 Math.pow(targetPoseRobotSpace.getX(), 2) +
                         Math.pow(targetPoseRobotSpace.getY(), 2) +
@@ -544,9 +557,9 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (robotPoseEstimateTags != null) {
             if (robotPoseEstimateTags.tagCount != 0
                     && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
-                    //&& distance < 3.5
-                    //&& !(robotPose.getY() > ((0.71 * robotPose.getX()) + 5.5))
-                    ) {
+            // && distance < 3.5
+            // && !(robotPose.getY() > ((0.71 * robotPose.getX()) + 5.5))
+            ) {
                 // poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(distance * 0.75,
                 // distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
@@ -560,6 +573,23 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             } else {
                 // System.out.println("not using limelight");
             }
+            posePublishers
+                    .computeIfAbsent(limelightname + "/pose estimate",
+                            (name) -> NetworkTableInstance.getDefault().getStructTopic(name, Pose2d.struct)
+                                    .publish())
+                    .set(robotPoseEstimateTags.pose);
+
+            ArrayList<Pose3d> tagPoses = new ArrayList<>();
+            for (var tag : robotPoseEstimateTags.rawFiducials) {
+                aprilTagLayout.getTagPose(tag.id).ifPresent(tagPoses::add);
+            }
+            tagPublishers
+                    .computeIfAbsent(limelightname + "/tag poses",
+                            (name) -> NetworkTableInstance.getDefault()
+                                    .getStructArrayTopic(name, Pose3d.struct)
+                                    .publish())
+                    .set(tagPoses.toArray(new Pose3d[tagPoses.size()]));
+
         }
         // } else {
         // System.out.println("limelight estimation null");
@@ -567,15 +597,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
         // Fetch the logged raw vision measurements
 
-
-
         // var visionData = HootReplay.getStruct("camera pose", Pose2d.struct);
         // if (visionData.status.isOK() && visionData.value.isPresent()) {
-        //     // now run regular vision processing on the vision data
-        //     var cameraPose = visionData.value.get();
-        //     if (true) {
-        //         addVisionMeasurement(cameraPose, visionData.timestamp);
-        //     }
+        // // now run regular vision processing on the vision data
+        // var cameraPose = visionData.value.get();
+        // if (true) {
+        // addVisionMeasurement(cameraPose, visionData.timestamp);
+        // }
         // }
     }
 
@@ -621,7 +649,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         boolean feeding = isFeeding();
         Translation2d swimoffset = getTurretFieldRelativeSpeeds().times(ShooterSubsystem.tof);
 
-        //log.info("feeding {}", isFeeding());
+        // log.info("feeding {}", isFeeding());
 
         target = new Pose2d(
                 feeding ? feedingTargets(swimoffset).getTranslation() : getHubTarget(swimoffset).getTranslation(),
