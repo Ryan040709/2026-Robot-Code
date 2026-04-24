@@ -189,7 +189,7 @@ public class RobotContainer {
                                         if (driverController.leftBumper().getAsBoolean()) {
                                                 OverrideSpeed = 0.25;
                                         } else {
-                                                OverrideSpeed = 0.75;
+                                                OverrideSpeed = .75;
                                         }
                                         return drive
                                                         // Drive forward with negative Y (forward) Drive left with
@@ -252,7 +252,7 @@ public class RobotContainer {
                 driverController.start().whileTrue(zeroTurret);
                 driverController.y().whileTrue(shooterCoast);
                 driverController.x().whileTrue(hopper_In.alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
-                driverController.leftTrigger(.5).whileTrue(hoodDown);
+                driverController.leftTrigger(.5).whileTrue(drivetrain.updateLinmelightWith1Tag()).whileFalse(drivetrain.updateLinmelightWith2Tag());
                 driverController.rightTrigger(.5).whileTrue(shooterAndHoodDriver);
                 driverController.rightBumper().whileTrue(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)
                                                         .alongWith(new Hopper_Out(hopperSubsystem, intakeSubsystem)));

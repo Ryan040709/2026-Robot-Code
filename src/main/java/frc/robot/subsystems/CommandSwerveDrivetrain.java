@@ -68,6 +68,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     Map<String, StructArrayPublisher<Pose3d>> tagPublishers = new HashMap<>();
     Map<String, StructPublisher<Pose2d>> posePublishers = new HashMap<>();
 
+
     private static final double kSimLoopPeriod = 0.004; // 4 ms
     private static final Translation2d BlueHubPosition = new Translation2d(4.62554, 4.03606);
     private static final Translation2d RedHubPosistion = new Translation2d(11.98482, 4.03606);
@@ -120,6 +121,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     ChassisSpeeds robotRelativeSpeed = new ChassisSpeeds();
     ChassisSpeeds fieldRelativeSpeed = new ChassisSpeeds();
     Timer isDisabledTimer = new Timer();
+    double requiredTagNumber = 2;
     /*
      * SysId routine for characterizing translation. This is used to find PID gains
      * for the drive motors.
@@ -548,14 +550,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 getPose().getRotation().getDegrees(), 0, 0, 0, 0, 0);
         PoseEstimate robotPoseEstimateTags = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(limelightname);
 
-        Pose3d targetPoseRobotSpace = LimelightHelpers.getTargetPose3d_RobotSpace(limelightname);
         LimelightHelpers.SetIMUMode(limelightname, 0);
-        double distance = Math.sqrt(
-                Math.pow(targetPoseRobotSpace.getX(), 2) +
-                        Math.pow(targetPoseRobotSpace.getY(), 2) +
-                        Math.pow(targetPoseRobotSpace.getZ(), 2));
+        double distance = robotPoseEstimateTags.avgTagDist;
         if (robotPoseEstimateTags != null) {
-            if (robotPoseEstimateTags.tagCount != 0
+            if (robotPoseEstimateTags.tagCount >= 1
                     && gyro.getAngularVelocityZWorld().getValueAsDouble() < 60
             // && distance < 3.5
             // && !(robotPose.getY() > ((0.71 * robotPose.getX()) + 5.5))
@@ -564,9 +562,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
                 // distance * 0.75, 9999999));
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTags.pose,
                 // robotPoseEstimateTags.timestampSeconds);
-                // System.out.println("update Limelight");
+                 //System.out.println("update Limelight");
+                 double standardDeviation = robotPoseEstimateTags.tagCount > 2? .5 : (robotPoseEstimateTags.tagCount == 1 ? 16 : distance) ;
+                 
                 addVisionMeasurement(robotPoseEstimateTags.pose, robotPoseEstimateTags.timestampSeconds,
-                        VecBuilder.fill(Math.pow(distance, 2), Math.pow(distance, 2), 9999999));
+                VecBuilder.fill(standardDeviation, standardDeviation, 9999999));
+                    
                 // poseEstimator.addVisionMeasurement(robotPoseEstimateTurret.pose,
                 // robotPoseEstimateTurret.timestampSeconds);
 
@@ -610,6 +611,15 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public void throttleLimelight(String limelightName, boolean turnOn) {
 
         LimelightHelpers.SetThrottle(limelightName, turnOn ? 100 : 0);
+    }
+    public void setRequiredTag(double numberOfTags){
+        requiredTagNumber = numberOfTags;
+    }
+    public Command updateLinmelightWith1Tag(){
+        return runOnce(()-> setRequiredTag(1));
+    }
+    public Command updateLinmelightWith2Tag(){
+        return runOnce(()-> setRequiredTag(2));
     }
 
     public boolean isFeeding() {

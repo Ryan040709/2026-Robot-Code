@@ -174,7 +174,7 @@
   "folder": "Ryan's autos",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 91.49745463931232
+    "rotation": 90.0
   },
   "useDefaultConstraints": false
 }
