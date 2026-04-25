@@ -387,6 +387,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         if (!m_hasAppliedOperatorPerspective || (isDisabledTimer.advanceIfElapsed(4) && DriverStation.isDisabled())) {
             throttleLimelight("limelight-front", true);
             throttleLimelight("limelight-left", true);
+            throttleLimelight("limelight-intake", true);
             DriverStation.getAlliance().ifPresent(allianceColor -> {
                 setOperatorPerspectiveForward(
                         allianceColor == Alliance.Red
@@ -398,12 +399,14 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
 
             throttleLimelight("limelight-front", false);
             throttleLimelight("limelight-left", false);
+            throttleLimelight("limelight-intake", false);
         }
 
         // Update the pose
         robotPose = getState().Pose;
         limelightPoseUpdate("limelight-front");
         limelightPoseUpdate("limelight-left");
+        limelightPoseUpdate("limelight-intake");
         robotPose = getState().Pose;
         // poseEstimator.update(gyroAngle, currentPositions);
 
