@@ -49,6 +49,7 @@ import frc.robot.commands.hopper.Hopper_Half_Way;
 import frc.robot.commands.hopper.Hopper_In;
 import frc.robot.commands.hopper.Hopper_Out;
 import frc.robot.commands.indexer.Index_Shooter;
+import frc.robot.commands.turret.TurretToZeroPosition;
 import frc.robot.commands.turret.Turret_Locking;
 //turret commands
 import frc.robot.commands.turret.Turret_Toggle;
@@ -186,11 +187,11 @@ public class RobotContainer {
                 drivetrain.setDefaultCommand(
                                 // Drivetrain will execute this command periodically
                                 drivetrain.applyRequest(() -> {
-                                        if (driverController.leftBumper().getAsBoolean()) {
-                                                OverrideSpeed = 0.25;
-                                        } else {
-                                                OverrideSpeed = .75;
-                                        }
+                                        // if (driverController.leftBumper().getAsBoolean()) {
+                                        //         OverrideSpeed = 0.25;
+                                        // } else {
+                                        //         OverrideSpeed = .75;
+                                        // }
                                         return drive
                                                         // Drive forward with negative Y (forward) Drive left with
                                                         // negative X
@@ -250,6 +251,7 @@ public class RobotContainer {
                 // intake commands
 
                 driverController.start().whileTrue(zeroTurret);
+                driverController.back().whileTrue(new TurretToZeroPosition(turret));
                 driverController.y().whileTrue(shooterCoast);
                 driverController.x().whileTrue(hopper_In.alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
                 driverController.leftTrigger(.5).whileTrue(drivetrain.updateLinmelightWith1Tag()).whileFalse(drivetrain.updateLinmelightWith2Tag());
