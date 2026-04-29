@@ -2,6 +2,7 @@ package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
+import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -13,9 +14,9 @@ public class Robot extends TimedRobot {
     private final RobotContainer robotContainer;
 
     /* log and replay timestamp and joystick data */
-    private final HootAutoReplay timeAndJoystickReplay = new HootAutoReplay()
-        .withTimestampReplay()
-        .withJoystickReplay();
+    // private final HootAutoReplay timeAndJoystickReplay = new HootAutoReplay()
+    //     .withTimestampReplay()
+    //     .withJoystickReplay();
 
     public Robot() {
         robotContainer = new RobotContainer();
@@ -24,8 +25,11 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotPeriodic() {
-        timeAndJoystickReplay.update();
+       // timeAndJoystickReplay.update();
+        Threads.setCurrentThreadPriority(true, 99);
         CommandScheduler.getInstance().run(); 
+        Threads.setCurrentThreadPriority(false, 10);
+
     }
 
     @Override

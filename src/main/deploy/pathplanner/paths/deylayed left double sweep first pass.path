@@ -1,0 +1,180 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.516,
+        "y": 7.619289156626506
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.516000000000002,
+        "y": 7.619289156626506
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 8.160722891566266,
+        "y": 7.029192771084338
+      },
+      "prevControl": {
+        "x": 7.652397418977896,
+        "y": 7.495157787623675
+      },
+      "nextControl": {
+        "x": 8.471250708969976,
+        "y": 6.744542271797606
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 7.98587951807229,
+        "y": 5.094987951807229
+      },
+      "prevControl": {
+        "x": 8.426240429007233,
+        "y": 5.0061432066186
+      },
+      "nextControl": {
+        "x": 6.740120481927709,
+        "y": 5.3463253012048195
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.275807228915662,
+        "y": 7.475
+      },
+      "prevControl": {
+        "x": 6.390433734939759,
+        "y": 7.520939759036144
+      },
+      "nextControl": {
+        "x": 4.172576421656445,
+        "y": 7.42952991906004
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.516,
+        "y": 7.475
+      },
+      "prevControl": {
+        "x": 3.844277108433735,
+        "y": 7.433518072289157
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "left trench start"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.8378870673952631,
+      "rotationDegrees": 85.91910910743874
+    },
+    {
+      "waypointRelativePos": 1.5428571428571185,
+      "rotationDegrees": 90.48775639757986
+    },
+    {
+      "waypointRelativePos": 2.085714285714288,
+      "rotationDegrees": -40.49575181437313
+    },
+    {
+      "waypointRelativePos": 2.8914285714285786,
+      "rotationDegrees": 180.0
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.971309771309771,
+      "maxWaypointRelativePos": 2.0889812889813046,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 540.0,
+        "maxAngularAcceleration": 720.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "zero-turret",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": 0.7640199888950675,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "zero-turret"
+        }
+      }
+    },
+    {
+      "name": "hopperOut",
+      "waypointRelativePos": 0.15301455301455963,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "hopperOut"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "turret-locking",
+      "waypointRelativePos": 2.4963908939477983,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "turret-locking"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "Ryan's autos",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}
