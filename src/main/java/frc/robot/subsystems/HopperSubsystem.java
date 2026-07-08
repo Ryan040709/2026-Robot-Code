@@ -61,7 +61,16 @@ public class HopperSubsystem extends SubsystemBase {
     public Command zeroExtention(){
        return runOnce(()->extensionMotor.setPosition(0));
     }
-
+    public Command addToHopperZero(){
+        return runOnce(()-> {
+            extensionMotor.setPosition(extensionMotor.getPosition().getValueAsDouble() + .25);
+        });
+    }
+    public Command subtractFromHopperZero(){
+        return runOnce(()-> {
+            extensionMotor.setPosition(extensionMotor.getPosition().getValueAsDouble() - .25);
+        });
+    }
 
 
 

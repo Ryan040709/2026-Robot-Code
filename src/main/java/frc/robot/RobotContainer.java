@@ -220,11 +220,13 @@ public class RobotContainer {
 
                 drivetrain.registerTelemetry(logger::telemeterize);
 
-                driverController.pov(0).whileTrue(turret_Toggle);
+                // driverController.pov(0).whileTrue(turret_Toggle);
 
-                driverController.pov(90)
-                                .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
-                                                drivetrain));
+                // driverController.pov(90)
+                //                 .whileTrue(Commands.run(() -> drivetrain.resetPose(new Pose2d(8, 4, new Rotation2d(0))),
+                //                                 drivetrain));
+
+
 
                 // game manager commands
                 gameManager.setDefaultCommand(Commands.run(()->{}, gameManager));
@@ -261,7 +263,8 @@ public class RobotContainer {
                 driverController.a().whileTrue(new Hopper_Half_Way(hopperSubsystem, intakeSubsystem).alongWith(new Intake_Run(intakeSubsystem, hopperSubsystem, turret, drivetrain)));
                 driverController.b().whileTrue(indexerSubsystem.unjamShooter().alongWith(new Intake_Outtake(intakeSubsystem, hopperSubsystem)));
                // driverController.pov(180).whileTrue(new Shooter_Default_Shot(shooter, drivetrain, turret).alongWith(new Index_Shooter(indexerSubsystem, drivetrain, turret, hoodSubsystem)));
-
+                driverController.povUp().onTrue(hopperSubsystem.subtractFromHopperZero());
+                driverController.povDown().onTrue(hopperSubsystem.addToHopperZero());
         }
 
         public Command getAutonomousCommand() {
